@@ -1,28 +1,16 @@
 import React from 'react'
 
-export type PropsKBRD = {
-  FIRST: string
-  RIGHT: string
-  RIGHT1: string
-  RIGHT2: string
-  RIGHT3: string
-  LEFT: string
-  LEFT1: string
-  LEFT2: string
-  LEFT3: string
-}
+export const KBRD: React.FC<{ STRING: string }> = ({ STRING }) => {
+  const FIRST: string = STRING.slice(0, 1)
+  const RIGHT: string = STRING.slice(1, 35)
+  const RIGHT1: string = STRING.slice(35, 105)
+  const RIGHT2: string = STRING.slice(105, 175)
+  const RIGHT3: string = STRING.slice(175, 245)
+  const LEFT: string = STRING.slice(-35)
+  const LEFT1: string = STRING.slice(-105, -35)
+  const LEFT2: string = STRING.slice(-175, -105)
+  const LEFT3: string = STRING.slice(-245, -175)
 
-export const KBRD: React.FC<PropsKBRD> = ({
-  FIRST = '',
-  RIGHT = '',
-  RIGHT1 = '',
-  RIGHT2 = '',
-  RIGHT3 = '',
-  LEFT = '',
-  LEFT1 = '',
-  LEFT2 = '',
-  LEFT3 = '',
-}: PropsKBRD) => {
   const formating = (str: string) => {
     return str
       .split('')
