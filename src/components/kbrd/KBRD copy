@@ -1,0 +1,64 @@
+import React, { useState, useEffect, useRef } from 'react'
+import { ILETTER } from './KBRD.container'
+
+export const KBRD: React.FC<{ ARRAY: ILETTER[] }> = ({ ARRAY }) => {
+  const [test, setTest] = useState(0)
+  const rendersCount = useRef(1)
+
+  useEffect(() => {
+    rendersCount.current++
+  })
+
+  const L: number = ARRAY.length
+  const FIRST: ILETTER[] = ARRAY.slice(0, 1)
+  const RIGHT: ILETTER[] = ARRAY.slice(1, 34)
+  const RIGHT1: ILETTER[] = ARRAY.slice(35, 105)
+  const RIGHT2: ILETTER[] = ARRAY.slice(105, 175)
+  const RIGHT3: ILETTER[] = ARRAY.slice(175, 245)
+  const LEFT: ILETTER[] = ARRAY.slice(-35)
+  const LEFT1: ILETTER[] = ARRAY.slice(-105, -35)
+  const LEFT2: ILETTER[] = ARRAY.slice(-175, -105)
+  const LEFT3: ILETTER[] = ARRAY.slice(-245, -175)
+
+  const formating = (arr: ILETTER[]) => {
+    return arr.map((el, i) =>
+      el.value !== ' ' ? (
+        <div key={i}>{el.value}</div>
+      ) : (
+        <div key={i}>{'\u00A0'}</div>
+      )
+    )
+  }
+
+  const rowing = (arr: ILETTER[]) => {
+    return <div className="w-full flex flex-row">{formating(arr)}</div>
+  }
+
+  return (
+    <>
+      <div className="w-1000 mt-12 md:mt-32  font-courier text-2xl flex flex-col space-y-4">
+        {rowing(LEFT3)}
+        {rowing(LEFT2)}
+        {rowing(LEFT1)}
+
+        <div className="flex flex-row">
+          {rowing(LEFT)}
+
+          <div className="bg-red-600">{rowing(FIRST)}</div>
+
+          {rowing(RIGHT)}
+        </div>
+
+        {rowing(RIGHT1)}
+        {rowing(RIGHT2)}
+        {rowing(RIGHT3)}
+
+        <div>
+          <button className="bg-green-500 p-3 rounded-full justify-self-end	">
+            {rendersCount.current}
+          </button>
+        </div>
+      </div>
+    </>
+  )
+}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { KBRD } from './KBRD'
 import { letter1, letter2 } from '../../static/letters'
-import { shuffleArray } from '../../utils/shuffleArray'
 
 // const test1: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
 
@@ -11,25 +10,22 @@ export const KBRDContainer: React.FC = () => {
 
   const [keyDown, setKeyDown] = useState('')
 
-  const rendersCount = useRef(1)
-
-  useEffect(() => {
-    setSTRING(letter1)
-  }, [])
+  const rendersCount = useRef(0)
 
   useEffect(() => {
     rendersCount.current++
   })
 
   useEffect(() => {
-    function keyListener(e: React.KeyboardEvent) {
-      e.preventDefault()
-      if (e.key === 'Shift') {
-        return
-      }
-      setKeyDown('')
-      setKeyDown(e.key)
-    }
+    setSTRING(letter1)
+    // function keyListener(e: React.KeyboardEvent) {
+    //   e.preventDefault()
+    //   if (e.key === 'Shift') {
+    //     return
+    //   }
+    //   setKeyDown('')
+    //   setKeyDown(e.key)
+    // }
 
     document.addEventListener(
       'keydown',
@@ -38,8 +34,21 @@ export const KBRDContainer: React.FC = () => {
         if (e.key === 'Shift') {
           return
         }
-        setKeyDown('')
+        // setKeyDown('')
         setKeyDown(e.key)
+        console.log(e.key)
+        if (e.key === STRING[0]) {
+          setSTRING((str) => {
+            let inter = str.split('')
+            let a = inter[0]
+            for (let i = 0; i < str.length - 1; i++) {
+              inter[i] = str[i + 1]
+            }
+            inter[inter.length - 1] = a
+            return inter.join('')
+          })
+        }
+        // setKeyDown('')
       },
       false
     )
@@ -63,6 +72,7 @@ export const KBRDContainer: React.FC = () => {
     if (keyDown === STRING[0]) {
       handleSuccess()
     }
+    setKeyDown('')
   }, [keyDown])
 
   function handleSuccess(): void {
@@ -75,7 +85,7 @@ export const KBRDContainer: React.FC = () => {
       inter[inter.length - 1] = a
       return inter.join('')
     })
-    setTest((test) => test + 1)
+    // setTest((test) => test + 1)
   }
 
   return (
@@ -83,7 +93,7 @@ export const KBRDContainer: React.FC = () => {
       <div className="m-10 p-2 flex flex-row gap-2 rounded-full bg-red-200">
         <button
           className="bg-green-500 p-3 rounded-full"
-          onClick={handleSuccess}
+          // onClick={handleSuccess}
         >
           SUCCESS
         </button>
