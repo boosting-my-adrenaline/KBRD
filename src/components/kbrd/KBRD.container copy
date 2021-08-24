@@ -1,91 +1,97 @@
-// import React, { useState, useEffect, useRef } from 'react'
-// import { KBRD } from './KBRD'
-// import { letter1, letter2, startLetter } from '../../static/letters'
+import React, { useState, useEffect, useRef } from 'react'
+import { KBRD } from './KBRD'
+import { letter1, letter2, startLetter } from '../../static/letters'
 
-// export interface ILETTER {
-//   value: string
-//   error: boolean
-// }
+export interface ILETTER {
+  value: string
+  error: boolean
+}
 
-// export const KBRDContainer: React.FC = () => {
-//   const [ARRAY, setARRAY] = useState<ILETTER[]>(startLetter)
+export const KBRDContainer: React.FC = () => {
+  const [ARRAY, setARRAY] = useState<ILETTER[]>(startLetter)
 
-//   const [test, setTest] = useState(0)
+  const [test, setTest] = useState(0)
 
-//   const [keyDown, setKeyDown] = useState('')
+  const [keyDown, setKeyDown] = useState('')
+  const [lamp, setLamp] = useState(0)
 
-//   const rendersCount = useRef(1)
+  const rendersCount = useRef(1)
 
-//   useEffect(() => {
-//     setARRAY(letter1.split('').map((el) => ({ value: el, error: false })))
-//   }, [])
+  useEffect(() => {
+    rendersCount.current++
+  })
 
-//   useEffect(() => {
-//     rendersCount.current++
-//   })
+  useEffect(() => {
+    setARRAY(
+      letter1
+        .toLowerCase()
+        .split('')
+        .map((el) => ({ value: el, error: false }))
+    )
+  }, [])
 
-//   useEffect(() => {
-//     document.addEventListener('keydown', (e) => {
-//       e.preventDefault()
-//       if (e.key === 'Shift') {
-//         return
-//       }
-//       // setKeyDown('')
-//       setKeyDown(e.key)
-//     })
-//     // return () => {
-//     //   document.removeEventListener(
-//     //     'keydown',
-//     //     (e) => {
-//     //       e.preventDefault()
-//     //       if (e.key === 'Shift') {
-//     //         return
-//     //       }
-//     //       // setKeyDown('')
-//     //       // setKeyDown(e.key)
-//     //     },
-//     //     false
-//     //   )
-//     // }
-//   }, [])
+  useEffect(() => {
+    if (keyDown === ARRAY[0].value) {
+      setARRAY((arr) => {
+        arr.push(arr.shift() as ILETTER)
 
-//   useEffect(() => {
-//     if (keyDown === ARRAY[0].value) {
-//       handleSuccess()
-//     }
-//   }, [keyDown])
+        return arr
+      })
+      setTest((test) => test + 1)
+    }
+  }, [keyDown])
 
-//   function handleSuccess(): void {
-//     setARRAY((str) => {
-//       let inter = str
-//       let a = inter[0]
-//       for (let i = 0; i < str.length - 1; i++) {
-//         inter[i] = str[i + 1]
-//       }
-//       inter[inter.length - 1] = a
-//       return inter
-//     })
-//     setTest((test) => test + 1)
-//   }
+  useEffect(() => {
+    setARRAY((arr) => {
+      arr.unshift(arr.pop() as ILETTER)
+      return arr
+    })
+  }, [test])
 
-//   return (
-//     <div className="flex flex-col font-courier">
-//       <div className="m-10 p-2 flex flex-row gap-2 rounded-full bg-red-200">
-//         <button
-//           className="bg-green-500 p-3 rounded-full"
-//           onClick={handleSuccess}
-//         >
-//           SUCCESS
-//         </button>
-//         <button className="bg-green-500 p-3 rounded-full justify-self-end	">
-//           {rendersCount.current}
-//         </button>
-//         <button className="bg-green-500 p-3 rounded-full justify-self-end	">
-//           {keyDown}
-//         </button>
-//       </div>
+  const handleEvent = (event: KeyboardEvent) => {
+    const { key } = event
+    setKeyDown(key)
+    setKeyDown('')
+  }
 
-//       <KBRD ARRAY={ARRAY} />
-//     </div>
-//   )
-// }
+  useEffect(() => {
+    window.addEventListener('keydown', (e) => {
+      handleEvent(e)
+    })
+
+    return () => {
+      window.removeEventListener('keydown', (e) => {
+        handleEvent(e)
+      })
+    }
+  }, [])
+
+  return (
+    <div className="flex flex-col font-courier">
+      <div className="m-10 p-2 flex flex-row gap-2 rounded-full bg-red-200">
+        <button
+          className="bg-green-500 p-3 rounded-full"
+          // onClick={() => handleSuccess}
+        >
+          SUCCESS
+        </button>
+        <button className="bg-green-500 p-3 rounded-full justify-self-end	">
+          Renders: {rendersCount.current}
+        </button>
+        <button className="bg-green-500 p-3 rounded-full justify-self-end	">
+          {keyDown}
+        </button>
+        <button className="bg-purple-500 p-3 rounded-full justify-self-end	">
+          {test}
+        </button>
+        {lamp ? (
+          <button className="bg-red-500 p-3 rounded-full justify-self-end	ml-auto">
+            LAMP: {lamp}
+          </button>
+        ) : null}
+      </div>
+
+      <KBRD ARRAY={ARRAY} />
+    </div>
+  )
+}
