@@ -23,7 +23,7 @@ export const KBRD: React.FC<{ STRING: string }> = ({ STRING }) => {
 
   return (
     <>
-      <div className="w-1000 mt-12 md:mt-32 bg-red-100 font-courier text-2xl flex flex-col space-y-4">
+      <div className="w-1000 mt-12 md:mt-32  font-courier text-2xl flex flex-col space-y-4">
         {rowing(LEFT3)}
         {rowing(LEFT2)}
         {rowing(LEFT1)}
@@ -31,7 +31,7 @@ export const KBRD: React.FC<{ STRING: string }> = ({ STRING }) => {
         <div className="flex flex-row">
           {rowing(LEFT)}
 
-          <div className="bg-red-600">{rowing(FIRST)}</div>
+          <div className="bg-purple-200 rounded-sm">{rowing(FIRST)}</div>
 
           {rowing(RIGHT)}
         </div>
@@ -39,8 +39,6 @@ export const KBRD: React.FC<{ STRING: string }> = ({ STRING }) => {
         {rowing(RIGHT1)}
         {rowing(RIGHT2)}
         {rowing(RIGHT3)}
-
-        <div></div>
       </div>
     </>
   )

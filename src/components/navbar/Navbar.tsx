@@ -1,40 +1,106 @@
 import React, { useState, useEffect, useRef } from 'react'
 import samurai from './../../static/samurai.svg'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation, useHistory } from 'react-router-dom'
+import { useKeyPress } from '../../utils/useKeyPress'
+import { ALeft } from './nav-components/ALeft'
+import { ARight } from './nav-components/ARight'
 
 export const Navbar: React.FC = () => {
-  const renderCount = useRef(1)
+  const location = useLocation()
+  const Path = location.pathname
+
+  const history = useHistory()
+
+  const leftArrowClick = useKeyPress('ArrowLeft')
+  const rightArrowClick = useKeyPress('ArrowRight')
 
   useEffect(() => {
-    renderCount.current++
-  })
+    if (leftArrowClick) {
+      changeLink('left')
+    }
+  }, [leftArrowClick])
 
-  const links = ['KBRD', 'JSON', 'Info'].map((link: string) => (
-    <NavLink exact to={`/${link.toLowerCase()}`}>
-      <a className="text:2xl md:text-4xl  flex-row  transition-all underline hover:no-underline  text-gray-800 hover:text-black cursor-pointer">
+  useEffect(() => {
+    if (rightArrowClick) {
+      changeLink('right')
+    }
+  }, [rightArrowClick])
+
+  const [current, setCurrent] = useState(location.pathname)
+
+  const ArrowLeft: boolean = useKeyPress('ArrowLeft')
+  const ArrowRight: boolean = useKeyPress('ArrowRight')
+
+  const chapters = ['KBRD', 'JSON', 'Info']
+
+  const links = chapters.map((link: string) => (
+    <NavLink key={link} exact to={`/${link.toLowerCase()}`}>
+      <a
+        className="outline-none text:2xl md:text-4xl  flex-row rounded-md transition-all underline hover:no-underline  text-gray-800 hover:text-black cursor-pointer"
+        style={{
+          padding: Path === '/' + link.toLowerCase() ? '2px 10px 2px 8px' : '',
+          backgroundColor:
+            Path === '/' + link.toLowerCase() ? 'rgb(254, 202, 202)' : '',
+        }}
+      >
         {link}
       </a>
     </NavLink>
   ))
 
+  function changeLink(direction: string): void {
+    let currentI = chapters.map((el) => el.toLowerCase()).indexOf(Path.slice(1))
+    if (direction === 'right') {
+      if (Path === '/') {
+        return history.push('/' + chapters[0].toLowerCase())
+      }
+
+      const getNextI = (cur: number) => {
+        if (cur === chapters.length - 1) {
+          return 0
+        } else {
+          return cur + 1
+        }
+      }
+      const nextI = getNextI(currentI)
+      history.push('/' + chapters[nextI].toLowerCase())
+    } else if (direction === 'left') {
+      if (Path === '/') {
+        return history.push('/' + chapters[chapters.length - 1].toLowerCase())
+      }
+
+      const getNextI = (cur: number) => {
+        if (cur === 0) {
+          return chapters.length - 1
+        } else {
+          return cur - 1
+        }
+      }
+      const nextI = getNextI(currentI)
+      history.push('/' + chapters[nextI].toLowerCase())
+    }
+  }
+
   return (
     <>
       <div
-        className="w-full flex justify-center border-red-500  border-b h-10 md:h-16 transition-all duration-500 bg-red-400 shadow-xl font-courier "
+        className="w-full flex justify-center border-red-500 border-b h-10 md:h-16 transition-all duration-500 bg-red-400 shadow-2xl font-courier "
         style={{ position: 'sticky' }}
       >
-        <div className="w-1000 2k:w-1500 3k:w-2000 flex items-center gap-x-4 mx-5">
-          <a className="flex-grow">
+        <div className="w-1000 2k:w-1500 3k:w-2000 flex items-center gap-x-4 mx-9">
+          <a className="flex-grow outline-none">
             <NavLink exact to="/">
               <img
                 src={samurai}
                 alt=""
-                className="w-10 h-10 md:w-16 md:h-16 transition duration-500 cursor-pointer hover:scale-110 "
-              />{' '}
+                className="w-10 h-10 md:w-16 md:h-16 transition duration-900 cursor-pointer hover:scale-110 "
+              />
             </NavLink>
           </a>
 
+          <ALeft />
           {links}
+          <ARight />
         </div>
       </div>
     </>
