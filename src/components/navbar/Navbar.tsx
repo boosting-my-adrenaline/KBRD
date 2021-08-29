@@ -31,7 +31,7 @@ export const Navbar: React.FC = () => {
   const ArrowLeft: boolean = useKeyPress('ArrowLeft')
   const ArrowRight: boolean = useKeyPress('ArrowRight')
 
-  const chapters = ['KBRD', 'JSON', 'Info']
+  const chapters = ['KBRD', 'JSON', 'INFO']
 
   const links = chapters.map((link: string) => (
     <NavLink key={link} exact to={`/${link.toLowerCase()}`}>

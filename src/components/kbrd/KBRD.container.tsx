@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { KBRD } from './KBRD'
+import { KBRDlayout } from './KBRD.layout'
 import { KEYS, letter1, letter2 } from '../../static/letters'
+
+interface IHistoryOfFailed {
+  desired: string
+  pressed: string
+  previous: string
+}
 
 export const KBRDContainer: React.FC = () => {
   const [STRING, setSTRING] = useState<string>('')
@@ -9,15 +16,27 @@ export const KBRDContainer: React.FC = () => {
 
   const rendersCount = useRef(0)
 
-  const successTypes = useRef(0)
+  const successAndFailedTypes = useRef(0)
   const failureTypes = useRef(0)
+  const successTypes =
+    successAndFailedTypes.current - failureTypes.current < 0
+      ? 0
+      : successAndFailedTypes.current - failureTypes.current
   const failureInARow = useRef(0)
   const streakRow = useRef(0)
 
-  const failureArray = useRef([null])
+  const failedTypeStatus = useRef(false)
+  const escapeFailedTypeStatus = useRef(false)
+  const failedTypesIndexes = useRef([] as number[])
+
+  const historyOfFailed = useRef([] as IHistoryOfFailed[])
 
   const lastKey = useRef('')
-  const capslockKey = useRef(false)
+  const prelastKey = useRef('')
+
+  useEffect(() => {
+    prelastKey.current = lastKey.current
+  }, [keyDown])
 
   useEffect(() => {
     rendersCount.current++
@@ -54,8 +73,6 @@ export const KBRDContainer: React.FC = () => {
     }
     if (keyDown === ' ') {
       lastKey.current = 'Space'
-    } else if (keyDown === 'CapsLock') {
-      capslockKey.current = !capslockKey.current
     } else if (KEYS.includes(keyDown)) {
       lastKey.current = keyDown
     }
@@ -63,8 +80,20 @@ export const KBRDContainer: React.FC = () => {
 
   function SUCCESS(): void {
     setSTRING((str) => str.substring(1) + str[0])
-    successTypes.current++
-    failureInARow.current = 0
+    successAndFailedTypes.current++
+    failedTypesIndexes.current = failedTypesIndexes.current
+      .map((el) => el + 1)
+      .filter((el) => el <= 245)
+    if (failedTypeStatus.current && !escapeFailedTypeStatus.current) {
+      failedTypesIndexes.current = [...failedTypesIndexes.current, 1]
+    }
+    failedTypeStatus.current = false
+    if (escapeFailedTypeStatus.current) {
+      escapeFailedTypeStatus.current = false
+    }
+    if (failureInARow.current !== 0) {
+      failureInARow.current = 0
+    }
   }
 
   function FAILURE(): void {
@@ -77,6 +106,7 @@ export const KBRDContainer: React.FC = () => {
       SUCCESS()
       SUCCESS()
       SUCCESS()
+      escapeFailedTypeStatus.current = true
       failureTypes.current--
       streakRow.current = 0
     } else {
@@ -86,12 +116,23 @@ export const KBRDContainer: React.FC = () => {
     if (failureInARow.current === 0) {
       failureInARow.current = 1
       failureTypes.current++
+      historyOfFailed.current = [
+        ...historyOfFailed.current,
+        {
+          desired: STRING[0] === ' ' ? 'Space' : STRING[0],
+          pressed: keyDown === ' ' ? 'Space' : keyDown,
+          previous: prelastKey.current,
+        },
+      ]
+      console.log(historyOfFailed.current)
+
+      failedTypeStatus.current = true
     }
   }
 
   return (
-    <div className="flex flex-col justify-center align-center font-courier">
-      <div className="m-10 p-2 flex flex-row gap-2 rounded-full bg-red-200">
+    <div className="flex flex-col justify-center align-center font-courier ">
+      <div className="Lore m-10 p-2 flex flex-row gap-2 rounded-full bg-red-200">
         <button className="bg-green-500 p-3 rounded-full" onClick={SUCCESS}>
           SUCCESS
         </button>
@@ -100,20 +141,16 @@ export const KBRDContainer: React.FC = () => {
         </button>
 
         <div className="ml-auto">
-          {capslockKey.current ? (
-            <button className="bg-red-500 p-3 rounded-full justify-self-end	">
-              CAPSLOCK
-            </button>
-          ) : null}
-          <button className="bg-green-500 p-3 rounded-full justify-self-end	">
+          {/* <button className="bg-green-500 p-3 rounded-full justify-self-end	">
             ROW:{failureInARow.current}
           </button>
           <button className="bg-green-500 p-3 rounded-full justify-self-end	">
             STREAK:{streakRow.current}
-          </button>
+          </button> */}
+
           <button>{'\u00A0'}</button>
           <button className="bg-green-500 p-3 rounded-full justify-self-end	">
-            S:{successTypes.current}
+            S:{successTypes}
           </button>
           <button className="bg-red-500 p-3 rounded-full justify-self-end	">
             F:{failureTypes.current}
@@ -125,10 +162,19 @@ export const KBRDContainer: React.FC = () => {
               ? '\u00A0' + lastKey.current + '\u00A0'
               : lastKey.current}
           </button>
+          <button className="bg-purple-400 p-3 rounded-full justify-self-end	">
+            {prelastKey.current === ''
+              ? '\u00A0'.repeat(3)
+              : prelastKey.current.length === 1
+              ? '\u00A0' + prelastKey.current + '\u00A0'
+              : prelastKey.current}
+          </button>
         </div>
       </div>
-
-      <KBRD STRING={STRING} />
+      <div className="mt-12 md:mt-32 flex justify-center align-center">
+        <KBRD STRING={STRING} />
+        <KBRDlayout failedTypesIndexes={failedTypesIndexes.current} />
+      </div>
     </div>
   )
 }
