@@ -23,7 +23,8 @@ export const KBRDlayout: React.FC<{ failedTypesIndexes: number[] }> = ({
           style={{
             backgroundColor: failedTypesIndexes.includes(i)
               ? ''
-              : 'transparent',
+              : // : 'transparent',
+                'rgba(50, 50, 50, 0.2)',
           }}
         >
           {'\u00A0'}
@@ -35,7 +36,7 @@ export const KBRDlayout: React.FC<{ failedTypesIndexes: number[] }> = ({
 
   return (
     <div
-      className="w-1000 font-courier text-2xl flex flex-col justify-center align-center space-y-4 "
+      className="w-1000 font-courier text-2xl flex flex-col justify-center align-center space-y-4 shadow-inner bg-grey-200"
       style={{
         position: 'absolute',
         alignSelf: 'center',

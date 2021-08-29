@@ -136,6 +136,26 @@ export const KBRDContainer: React.FC = () => {
         <button className="bg-green-500 p-3 rounded-full" onClick={SUCCESS}>
           SUCCESS
         </button>
+        <button
+          className="bg-green-500 p-3 rounded-full"
+          onClick={() => {
+            for (let i = 0; i < 10; i++) {
+              SUCCESS()
+            }
+          }}
+        >
+          x10
+        </button>
+        <button
+          className="bg-green-500 p-3 rounded-full"
+          onClick={() => {
+            for (let i = 0; i < 100; i++) {
+              SUCCESS()
+            }
+          }}
+        >
+          x100
+        </button>
         <button className="bg-green-500 p-3 rounded-full justify-self-end	">
           {rendersCount.current}
         </button>
@@ -172,7 +192,7 @@ export const KBRDContainer: React.FC = () => {
         </div>
       </div>
       <div className="mt-12 md:mt-32 flex justify-center align-center">
-        <KBRD STRING={STRING} />
+        <KBRD STRING={STRING} overall={successAndFailedTypes.current} />
         <KBRDlayout failedTypesIndexes={failedTypesIndexes.current} />
       </div>
     </div>

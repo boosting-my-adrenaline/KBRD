@@ -13,7 +13,7 @@ export const App: React.FC = () => {
       {/* <Width /> */}
       <div className="flex justify-center">
         <Switch>
-          <Route path="/kbrd" component={KBRDContainer} />
+          <Route path="/book" component={KBRDContainer} />
         </Switch>
       </div>
     </div>
