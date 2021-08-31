@@ -36,11 +36,16 @@ export const Navbar: React.FC = () => {
   const links = chapters.map((link: string) => (
     <NavLink key={link} exact to={`/${link.toLowerCase()}`}>
       <a
-        className="outline-none text:2xl md:text-4xl  flex-row rounded-md transition-all underline hover:no-underline  text-gray-800 hover:text-black cursor-pointer"
+        className="outline-none text:2xl md:text-4xl border-red-500 flex-row rounded-md transition-all underline hover:no-underline  text-gray-800 hover:text-black cursor-pointer"
         style={{
           padding: Path === '/' + link.toLowerCase() ? '2px 10px 2px 8px' : '',
           backgroundColor:
             Path === '/' + link.toLowerCase() ? 'rgb(254, 202, 202)' : '',
+          // borderWidth: Path === '/' + link.toLowerCase() ? '1px' : '',
+          boxShadow:
+            Path === '/' + link.toLowerCase()
+              ? '2px 2px 5px 2px rgba(128, 0, 0, 1)'
+              : '',
         }}
       >
         {link}
@@ -84,8 +89,8 @@ export const Navbar: React.FC = () => {
   return (
     <>
       <div
-        className="w-full flex justify-center border-red-500 border-b h-10 md:h-16 transition-all duration-500 bg-red-400 shadow-2xl font-courier "
-        style={{ position: 'sticky' }}
+        className="z-50 w-full top-0 left-0 right-0 flex justify-center border-red-500 border-b h-10 md:h-16 transition-all duration-500 bg-red-400 shadow-2xl font-courier "
+        style={{ position: 'fixed' }}
       >
         <div className="w-1000 2k:w-1500 3k:w-2000 flex items-center gap-x-4 mx-9">
           <a className="flex-grow outline-none">

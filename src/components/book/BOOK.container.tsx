@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { KBRD } from './KBRD'
-import { KBRDlayout } from './KBRD.layout'
+import { BOOKBook } from './BOOK.book'
+import { BOOKLayout } from './BOOK.layout'
 import { KEYS, letter1, letter2 } from '../../static/letters'
+import WAVES from './../../static/wavesBG1.svg'
+import WAVES2 from './../../static/wavesBG2.svg'
 
 interface IHistoryOfFailed {
   desired: string
@@ -9,10 +11,12 @@ interface IHistoryOfFailed {
   previous: string
 }
 
-export const KBRDContainer: React.FC = () => {
+export const BOOKContainer: React.FC = () => {
   const [STRING, setSTRING] = useState<string>('')
 
   const [keyDown, setKeyDown] = useState('')
+
+  const [smoothBook, setSmoothBook] = useState(true)
 
   const rendersCount = useRef(0)
 
@@ -131,8 +135,20 @@ export const KBRDContainer: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center align-center font-courier ">
-      <div className="Lore m-10 p-2 flex flex-row gap-2 rounded-full bg-red-200">
+    <div
+      className="overflow-y-hidden w-full fixed bottom-0 left-0 right-0 top-0 flex flex-col justify-center align-center font-courier border-2 border-grey-900 "
+      style={{
+        backgroundImage: `url(${WAVES2})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'bottom',
+        backgroundSize: '100%',
+      }}
+    >
+      {' '}
+      <div
+        className=" mx-10 p-2 flex flex-row gap-2 rounded-full bg-red-200 "
+        style={{ transform: 'translateY(-135px)' }}
+      >
         <button className="bg-green-500 p-3 rounded-full" onClick={SUCCESS}>
           SUCCESS
         </button>
@@ -161,13 +177,6 @@ export const KBRDContainer: React.FC = () => {
         </button>
 
         <div className="ml-auto">
-          {/* <button className="bg-green-500 p-3 rounded-full justify-self-end	">
-            ROW:{failureInARow.current}
-          </button>
-          <button className="bg-green-500 p-3 rounded-full justify-self-end	">
-            STREAK:{streakRow.current}
-          </button> */}
-
           <button>{'\u00A0'}</button>
           <button className="bg-green-500 p-3 rounded-full justify-self-end	">
             S:{successTypes}
@@ -191,9 +200,15 @@ export const KBRDContainer: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="mt-12 md:mt-32 flex justify-center align-center">
-        <KBRD STRING={STRING} overall={successAndFailedTypes.current} />
-        <KBRDlayout failedTypesIndexes={failedTypesIndexes.current} />
+      <div
+        className=" mt-8 md:mt-18 flex justify-center items-start "
+        style={{ transform: 'translateY(-150px)' }}
+      >
+        <BOOKBook STRING={STRING} overall={successAndFailedTypes.current} />
+        <BOOKLayout
+          failedTypesIndexes={failedTypesIndexes.current}
+          overall={successAndFailedTypes.current}
+        />
       </div>
     </div>
   )
