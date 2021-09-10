@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { BOOKBook } from './BOOK.book'
 import { BOOKLayout } from './BOOK.layout'
+import { BOOKBackground } from './BOOK.background'
 import { KEYS, letter1, letter2 } from '../../static/letters'
-import WAVES from './../../static/wavesBG1.svg'
-import WAVES2 from './../../static/wavesBG2.svg'
+// import WAVES from './../../static/wavesBG1.svg'
+// import WAVES2 from './../../static/wavesBG2.svg'
+// import WAVES3 from './../../static/bgFinal.svg'
+import { Width } from '../../utils/getWidth'
 
 interface IHistoryOfFailed {
   desired: string
@@ -16,7 +19,7 @@ export const BOOKContainer: React.FC = () => {
 
   const [keyDown, setKeyDown] = useState('')
 
-  const [smoothBook, setSmoothBook] = useState(true)
+  const [animationBook, setAnimationBook] = useState(true)
 
   const rendersCount = useRef(0)
 
@@ -37,6 +40,14 @@ export const BOOKContainer: React.FC = () => {
 
   const lastKey = useRef('')
   const prelastKey = useRef('')
+
+  const [appear, setAppear] = useState(false)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAppear(true)
+    }, 250)
+  }, [])
 
   useEffect(() => {
     prelastKey.current = lastKey.current
@@ -136,20 +147,24 @@ export const BOOKContainer: React.FC = () => {
 
   return (
     <div
-      className="overflow-y-hidden w-full fixed bottom-0 left-0 right-0 top-0 flex flex-col justify-center align-center font-courier border-2 border-grey-900 "
-      style={{
-        backgroundImage: `url(${WAVES2})`,
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'bottom',
-        backgroundSize: '100%',
-      }}
+      className="overflow-y-hidden w-full 1k fixed bottom-0 left-0 right-0 top-0 flex flex-col justify-center align-center font-courier border-2 border-grey-900 "
+      // style={{
+      //   backgroundImage: `url(${WAVES3})`,
+      //   backgroundRepeat: 'no-repeat',
+      //   backgroundPosition: 'bottom',
+      //   backgroundSize: '100%',
+      // }}
     >
-      {' '}
+      <BOOKBackground />{' '}
       <div
-        className=" mx-10 p-2 flex flex-row gap-2 rounded-full bg-red-200 "
-        style={{ transform: 'translateY(-135px)' }}
+        className=" mx-10 p-2 flex flex-row gap-2 rounded-full bg-red-200"
+        style={{
+          transform: 'translateY(-135px)',
+          opacity: !appear ? '0' : '1',
+          transition: '0.5s ease',
+        }}
       >
-        <button className="bg-green-500 p-3 rounded-full" onClick={SUCCESS}>
+        {/* <button className="bg-green-500 p-3 rounded-full" onClick={SUCCESS}>
           SUCCESS
         </button>
         <button
@@ -174,6 +189,19 @@ export const BOOKContainer: React.FC = () => {
         </button>
         <button className="bg-green-500 p-3 rounded-full justify-self-end	">
           {rendersCount.current}
+        </button> */}
+        <button
+          tabIndex={-1}
+          className="bg-green-500 p-3 rounded-full justify-self-end	outline-none transition"
+          style={{
+            backgroundColor: animationBook ? 'lightcoral' : '#ccbbbb',
+          }}
+          onMouseDown={(e) => {
+            e.preventDefault()
+            setAnimationBook((p) => !p)
+          }}
+        >
+          animation{animationBook}
         </button>
 
         <div className="ml-auto">
@@ -201,10 +229,14 @@ export const BOOKContainer: React.FC = () => {
         </div>
       </div>
       <div
-        className=" mt-8 md:mt-18 flex justify-center items-start "
+        className="invisible 1k:visible  mt-8 md:mt-18 flex justify-center items-start "
         style={{ transform: 'translateY(-150px)' }}
       >
-        <BOOKBook STRING={STRING} overall={successAndFailedTypes.current} />
+        <BOOKBook
+          STRING={STRING}
+          overall={successAndFailedTypes.current}
+          animation={animationBook}
+        />
         <BOOKLayout
           failedTypesIndexes={failedTypesIndexes.current}
           overall={successAndFailedTypes.current}

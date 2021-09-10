@@ -5,6 +5,8 @@ import { useKeyPress } from '../../utils/useKeyPress'
 import { ALeft } from './nav-components/ALeft'
 import { ARight } from './nav-components/ARight'
 
+//emberlyn
+
 export const Navbar: React.FC = () => {
   const location = useLocation()
   const Path = location.pathname
@@ -31,7 +33,7 @@ export const Navbar: React.FC = () => {
   const ArrowLeft: boolean = useKeyPress('ArrowLeft')
   const ArrowRight: boolean = useKeyPress('ArrowRight')
 
-  const chapters = ['BOOK', 'JSON', 'INFO']
+  const chapters = ['BOOK', 'TAP', 'INFO']
 
   const links = chapters.map((link: string) => (
     <NavLink key={link} exact to={`/${link.toLowerCase()}`}>

@@ -7,19 +7,20 @@ import {
   formationForRIGHT,
 } from './book-utils/stringFormation'
 
-export const BOOKBook: React.FC<{ STRING: string; overall: number }> = ({
-  STRING,
-  overall,
-}) => {
-  const rawFIRST: string = STRING.slice(0, 1)
-  const rawRIGHT: string = STRING.slice(0, 35)
-  const rawRIGHT1: string = STRING.slice(35, 105)
-  const rawRIGHT2: string = STRING.slice(105, 175)
-  const rawRIGHT3: string = STRING.slice(175, 245)
-  const rawLEFT: string = STRING.slice(-35)
-  const rawLEFT1: string = STRING.slice(-105, -35)
-  const rawLEFT2: string = STRING.slice(-175, -105)
-  const rawLEFT3: string = STRING.slice(-245, -175)
+export const BOOKBook: React.FC<{
+  STRING: string
+  overall: number
+  animation: boolean
+}> = ({ STRING, overall, animation }) => {
+  // const rawFIRST: string = STRING.slice(0, 1)
+  // const rawRIGHT: string = STRING.slice(0, 35)
+  // const rawRIGHT1: string = STRING.slice(35, 105)
+  // const rawRIGHT2: string = STRING.slice(105, 175)
+  // const rawRIGHT3: string = STRING.slice(175, 245)
+  // const rawLEFT: string = STRING.slice(-35)
+  // const rawLEFT1: string = STRING.slice(-105, -35)
+  // const rawLEFT2: string = STRING.slice(-175, -105)
+  // const rawLEFT3: string = STRING.slice(-245, -175)
 
   const [ts, setTs] = useState(0)
   const [appear, setAppear] = useState(false)
@@ -31,7 +32,7 @@ export const BOOKBook: React.FC<{ STRING: string; overall: number }> = ({
   }, [])
 
   useEffect(() => {
-    setTs((prev) => 0 - 14.4065 * (overall + 1))
+    setTs(() => 0 - 14.4065 * (overall + 1))
   }, [STRING])
 
   const testString = letter1
@@ -68,7 +69,7 @@ export const BOOKBook: React.FC<{ STRING: string; overall: number }> = ({
         className="w-1000 z-10 font-courier text-2xl flex flex-col space-y-4  "
         style={{
           transform: `translateX(${ts}px)`,
-          transition: '0.2s ease 0.0s',
+          transition: animation ? '0.2s ease 0.0s' : '',
           // boxShadow: '5px 5px 10px 10px rgba(0,0,0,1)',
           // paddingLeft: `${-ts}px`,
         }}

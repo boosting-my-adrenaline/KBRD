@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
 
-function getWindowDimensions(): { width: number; height: number } {
-  const { innerWidth: width, innerHeight: height } = window
-  return {
-    width,
-    height,
-  }
-}
-
 export const Width: React.FC = () => {
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   )
+
+  function getWindowDimensions(): { width: number; height: number } {
+    const { innerWidth: width, innerHeight: height } = window
+    return {
+      width,
+      height,
+    }
+  }
 
   useEffect(() => {
     function handleResize() {
@@ -22,5 +22,10 @@ export const Width: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  return <div>{window.innerWidth}</div>
+  return (
+    <div>
+      {/* <div>W1 :{window.innerWidth}</div> */}
+      <div>W2 :{windowDimensions.width}</div>
+    </div>
+  )
 }

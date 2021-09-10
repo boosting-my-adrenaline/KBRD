@@ -1,4 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { letter1 } from '../../static/letters'
+import {
+  formationForLEFT1,
+  formationForLEFT2,
+  formationForLEFT3,
+  formationForRIGHT,
+} from './book-utils/stringFormation'
 
 export const BOOKLayout: React.FC<{
   failedTypesIndexes: number[]
@@ -36,7 +43,7 @@ export const BOOKLayout: React.FC<{
 
   const Border = (
     <div
-      className="z-30  bg-red-100 w-20 rounded-md"
+      className="z-30 bg-red-100 w-20 rounded-md"
       // style={{ boxShadow: '0px 0px 5px 10px rgba(0, 0, 0, 0.1)' }} //rgba(254, 226, 226, 1)
       style={{ transform: 'translateY(-5px)' }}
     >
@@ -55,7 +62,7 @@ export const BOOKLayout: React.FC<{
 
   return (
     <div
-      className=" font-courier text-2xl flex flex-row justify-between items-stretch  space-y-4 "
+      className="font-courier text-2xl flex flex-row justify-between items-stretch space-y-4 "
       style={{
         position: 'absolute',
         alignSelf: 'center',
@@ -63,7 +70,7 @@ export const BOOKLayout: React.FC<{
     >
       {Border}
       <div
-        className="w-1000 font-courier text-2xl flex flex-col  space-y-4"
+        className="w-1000 font-courier text-2xl flex flex-col space-y-4"
         style={{
           transform: 'translateY(-8px)',
           opacity: !appear ? '0' : '1',

@@ -8,11 +8,7 @@ module.exports = {
       1500: '1500px',
       2000: '2000px',
     },
-    // height: {
-    //   1000: '1008px',
-    //   1500: '1500px',
-    //   2000: '2000px',
-    // },
+
     fontFamily: {
       courier: 'courier',
     },
@@ -22,6 +18,7 @@ module.exports = {
     },
     extend: {
       screens: {
+        '1k': '1000px',
         '3xl': '1600px',
         '2k': '2000px',
         '3k': '3000px',
