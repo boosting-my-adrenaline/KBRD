@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { letter1 } from '../../static/letters'
 import {
   formationForLEFT1,
   formationForLEFT2,
@@ -11,7 +10,8 @@ export const BOOKBook: React.FC<{
   STRING: string
   overall: number
   animation: boolean
-}> = ({ STRING, overall, animation }) => {
+  currentString: string
+}> = ({ STRING, overall, animation, currentString }) => {
   // const rawFIRST: string = STRING.slice(0, 1)
   // const rawRIGHT: string = STRING.slice(0, 35)
   // const rawRIGHT1: string = STRING.slice(35, 105)
@@ -35,20 +35,18 @@ export const BOOKBook: React.FC<{
     setTs(() => 0 - 14.4065 * (overall + 1))
   }, [STRING])
 
-  const testString = letter1
-
-  const RIGHT: string = formationForRIGHT(overall, testString)
   const RIGHT1: string =
-    '\u00A0'.repeat(overall) + testString.slice(34 + overall, 106 + overall)
+    '\u00A0'.repeat(overall) + currentString.slice(34 + overall, 106 + overall)
   const RIGHT2: string =
-    '\u00A0'.repeat(overall) + testString.slice(104 + overall, 176 + overall)
+    '\u00A0'.repeat(overall) + currentString.slice(104 + overall, 176 + overall)
   const RIGHT3: string =
-    '\u00A0'.repeat(overall) + testString.slice(174 + overall, 246 + overall)
+    '\u00A0'.repeat(overall) + currentString.slice(174 + overall, 246 + overall)
   const LEFT: string = ''
 
-  const LEFT1: string = formationForLEFT1(overall, testString)
-  const LEFT2: string = formationForLEFT2(overall, testString)
-  const LEFT3: string = formationForLEFT3(overall, testString)
+  const RIGHT: string = formationForRIGHT(overall, currentString)
+  const LEFT1: string = formationForLEFT1(overall, currentString)
+  const LEFT2: string = formationForLEFT2(overall, currentString)
+  const LEFT3: string = formationForLEFT3(overall, currentString)
 
   const formating = (str: string) => {
     return str
@@ -62,7 +60,7 @@ export const BOOKBook: React.FC<{
 
   return (
     <div
-      className="z-30 border-5 border-grey-900 rounded-xl"
+      className="visible z-30 border-5 border-grey-900 rounded-xl"
       style={{ opacity: !appear ? '0' : '1', transition: '1s ease' }}
     >
       <div

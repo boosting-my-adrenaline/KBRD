@@ -4,12 +4,17 @@ import { NavLink, useLocation, useHistory } from 'react-router-dom'
 import { useKeyPress } from '../../utils/useKeyPress'
 import { ALeft } from './nav-components/ALeft'
 import { ARight } from './nav-components/ARight'
-
-//emberlyn
+import { Chapters, Directions } from '../../types/nav'
+import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { useAction } from '../../hooks/useAction'
 
 export const Navbar: React.FC = () => {
   const location = useLocation()
   const Path = location.pathname
+
+  const currentChapter = useTypedSelector((state) => state.nav.chapter)
+
+  const { changeChapter } = useAction()
 
   const history = useHistory()
 
@@ -17,14 +22,20 @@ export const Navbar: React.FC = () => {
   const rightArrowClick = useKeyPress('ArrowRight')
 
   useEffect(() => {
+    currentChapter !== 'MAIN'
+      ? history.push(`/${currentChapter.toLowerCase()}`)
+      : history.push('/')
+  }, [currentChapter])
+
+  useEffect(() => {
     if (leftArrowClick) {
-      changeLink('left')
+      changeLink('LEFT' as Directions)
     }
   }, [leftArrowClick])
 
   useEffect(() => {
     if (rightArrowClick) {
-      changeLink('right')
+      changeLink('RIGHT' as Directions)
     }
   }, [rightArrowClick])
 
@@ -33,81 +44,89 @@ export const Navbar: React.FC = () => {
   const ArrowLeft: boolean = useKeyPress('ArrowLeft')
   const ArrowRight: boolean = useKeyPress('ArrowRight')
 
-  const chapters = ['BOOK', 'TAP', 'INFO']
+  const getColors = (): string[] => {
+    if (currentChapter === 'BOOK') {
+      return ['red', 'rgba(128, 0, 0, 1)']
+    } else if (currentChapter === 'TAP') {
+      return ['blue', 'rgba(30, 58, 138, 1)']
+    }
+    return ['green', 'rgba(6, 78, 59, 1)']
+  }
 
-  const links = chapters.map((link: string) => (
-    <NavLink key={link} exact to={`/${link.toLowerCase()}`}>
+  const [ThemeColor, ShadowColor] = getColors()
+
+  const chapters = Object.keys(Chapters).splice(1)
+  const links = chapters.map((LINK) => (
+    <>
       <a
-        className="outline-none text:2xl md:text-4xl border-red-500 flex-row rounded-md transition-all underline hover:no-underline  text-gray-800 hover:text-black cursor-pointer"
+        className={`outline-none text:2xl md:text-4xl border-${ThemeColor}-500
+         flex-row rounded-md transition-all underline hover:no-underline  text-gray-800 hover:text-black cursor-pointer ${
+           Path === '/' + LINK.toLowerCase() && `bg-${ThemeColor}-200`
+         }`}
         style={{
-          padding: Path === '/' + link.toLowerCase() ? '2px 10px 2px 8px' : '',
-          backgroundColor:
-            Path === '/' + link.toLowerCase() ? 'rgb(254, 202, 202)' : '',
-          // borderWidth: Path === '/' + link.toLowerCase() ? '1px' : '',
+          padding: Path === '/' + LINK.toLowerCase() ? '2px 10px 2px 8px' : '',
           boxShadow:
-            Path === '/' + link.toLowerCase()
-              ? '2px 2px 5px 2px rgba(128, 0, 0, 1)'
+            Path === '/' + LINK.toLowerCase()
+              ? `2px 2px 5px 2px ${ShadowColor}`
               : '',
         }}
+        onClick={() => onClick(LINK as Chapters)}
       >
-        {link}
+        {LINK}
       </a>
-    </NavLink>
+    </>
   ))
 
-  function changeLink(direction: string): void {
-    let currentI = chapters.map((el) => el.toLowerCase()).indexOf(Path.slice(1))
-    if (direction === 'right') {
-      if (Path === '/') {
-        return history.push('/' + chapters[0].toLowerCase())
-      }
+  function changeLink(dir: Directions) {
+    const curIndex = chapters.indexOf(currentChapter)
 
-      const getNextI = (cur: number) => {
-        if (cur === chapters.length - 1) {
-          return 0
-        } else {
-          return cur + 1
-        }
-      }
-      const nextI = getNextI(currentI)
-      history.push('/' + chapters[nextI].toLowerCase())
-    } else if (direction === 'left') {
-      if (Path === '/') {
-        return history.push('/' + chapters[chapters.length - 1].toLowerCase())
-      }
-
-      const getNextI = (cur: number) => {
-        if (cur === 0) {
-          return chapters.length - 1
-        } else {
-          return cur - 1
-        }
-      }
-      const nextI = getNextI(currentI)
-      history.push('/' + chapters[nextI].toLowerCase())
+    if (dir === 'LEFT') {
+      currentChapter === 'MAIN'
+        ? changeChapter(chapters[chapters.length - 1] as Chapters)
+        : curIndex === 0
+        ? changeChapter(chapters[chapters.length - 1] as Chapters)
+        : changeChapter(chapters[curIndex - 1] as Chapters)
+    } else if (dir === 'RIGHT') {
+      currentChapter === 'MAIN'
+        ? changeChapter(chapters[0] as Chapters)
+        : curIndex === chapters.length - 1
+        ? changeChapter(chapters[0] as Chapters)
+        : changeChapter(chapters[curIndex + 1] as Chapters)
     }
+  }
+
+  function onClick(link: Chapters): void {
+    changeChapter(link)
   }
 
   return (
     <>
       <div
-        className="z-50 w-full top-0 left-0 right-0 flex justify-center border-red-500 border-b h-10 md:h-16 transition-all duration-500 bg-red-400 shadow-2xl font-courier "
-        style={{ position: 'fixed' }}
+        className={`z-50 w-full fixed top-0 left-0 right-0 flex justify-center
+         border-${ThemeColor}-500 border-b h-10 md:h-16 transition-all duration-500 
+         bg-${ThemeColor}-400 shadow-2xl font-courier `}
+        style={{
+          transition: '1.25s ease-in-out',
+          boxShadow: `0 2px 10px 2px ${ShadowColor}`,
+        }}
       >
         <div className="w-1000 2k:w-1500 3k:w-2000 flex items-center gap-x-4 mx-9">
-          <a className="flex-grow outline-none">
-            <NavLink exact to="/">
+          <a className="flex-grow outline-none flex">
+            <div
+              className={`p-1  rounded-full`}
+              onClick={() => changeChapter(Chapters.MAIN)}
+            >
               <img
                 src={samurai}
                 alt=""
                 className="w-10 h-10 md:w-16 md:h-16 transition duration-900 cursor-pointer hover:scale-110 "
               />
-            </NavLink>
+            </div>
           </a>
 
-          <ALeft />
+          <ALeft onClick={changeLink} chapter={currentChapter} />
           {links}
-          <ARight />
+          <ARight onClick={changeLink} chapter={currentChapter} />
         </div>
       </div>
     </>

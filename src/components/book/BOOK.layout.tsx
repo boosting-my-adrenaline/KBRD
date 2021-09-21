@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import { letter1 } from '../../static/letters'
+import React, { useState, useEffect, useRef } from 'react'
 import {
   formationForLEFT1,
   formationForLEFT2,
@@ -10,7 +9,8 @@ import {
 export const BOOKLayout: React.FC<{
   failedTypesIndexes: number[]
   overall: number
-}> = ({ failedTypesIndexes, overall }) => {
+  currentString: string
+}> = ({ failedTypesIndexes, overall, currentString }) => {
   const [ts, setTs] = useState(0)
 
   const [appear, setAppear] = useState(false)
@@ -21,25 +21,15 @@ export const BOOKLayout: React.FC<{
     }, 1000)
   }, [])
 
-  function fillWithAreas(from: number, to: number) {
-    let row = []
-    for (let i = from; i <= to; i++) {
-      row.push(
-        <div
-          key={i}
-          className="rounded-md bg-red-300"
-          style={{
-            backgroundColor: failedTypesIndexes.includes(i)
-              ? ''
-              : 'transparent',
-          }}
-        >
-          {'\u00A0'}
-        </div>
-      )
-    }
-    return row
-  }
+  const stringFormated = useRef(
+    Array.from({ length: 70 }, (_, i) => i) as number[]
+  )
+  // useEffect(() => {
+  //   // stringFormated.current = stringFormated.current.filter(
+  //   //   (el) => !failedTypesIndexes.includes(el)
+  //   // )
+  //   // setTs((ts) => ts + 1)
+  // }, [failedTypesIndexes])
 
   const Border = (
     <div
@@ -62,7 +52,7 @@ export const BOOKLayout: React.FC<{
 
   return (
     <div
-      className="font-courier text-2xl flex flex-row justify-between items-stretch space-y-4 "
+      className="invisible font-courier text-2xl flex flex-row justify-between items-stretch space-y-4 "
       style={{
         position: 'absolute',
         alignSelf: 'center',
@@ -77,11 +67,27 @@ export const BOOKLayout: React.FC<{
           transition: '0.5s ease',
         }}
       >
-        <div className="flex flex-row-reverse ">{fillWithAreas(176, 245)}</div>
+        {/* <div className="flex flex-row-reverse ">{fillWithAreas(176, 245)}</div>
         <div className="flex flex-row-reverse ">{fillWithAreas(106, 175)}</div>
-        <div className="flex flex-row-reverse ">{fillWithAreas(36, 105)}</div>
+        <div className="flex flex-row-reverse ">{fillWithAreas(36, 105)}</div> */}
         <div className="flex flex-row">
-          <div className="flex flex-row-reverse ">{fillWithAreas(1, 35)}</div>
+          {/* <div className="flex flex-row-reverse ">{fillWithAreas(1, 35)}</div> */}
+          <div className="flex flex-row-reverse">
+            {stringFormated.current
+              .filter((el) => el > overall && el < 35)
+              .map((el) =>
+                failedTypesIndexes.includes(el) ? (
+                  <div style={{ backgroundColor: 'red', borderRadius: 4 }}>
+                    {'\u00A0'}
+                  </div>
+                ) : (
+                  <div style={{ backgroundColor: 'grey', borderRadius: 4 }}>
+                    {'\u00A0'}
+                  </div>
+                )
+              )}
+          </div>
+
           <div key={0} className="animate-pulse rounded-sm bg-purple-300">
             {'\u00A0'}
           </div>

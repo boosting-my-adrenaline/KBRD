@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { BOOKBook } from './BOOK.book'
 import { BOOKLayout } from './BOOK.layout'
-import { BOOKBackground } from './BOOK.background'
-import { KEYS, letter1, letter2 } from '../../static/letters'
-// import WAVES from './../../static/wavesBG1.svg'
-// import WAVES2 from './../../static/wavesBG2.svg'
-// import WAVES3 from './../../static/bgFinal.svg'
+
+import { KEYS, letter1 } from '../../static/letters'
+
 import { Width } from '../../utils/getWidth'
 
 interface IHistoryOfFailed {
@@ -96,11 +94,14 @@ export const BOOKContainer: React.FC = () => {
   function SUCCESS(): void {
     setSTRING((str) => str.substring(1) + str[0])
     successAndFailedTypes.current++
-    failedTypesIndexes.current = failedTypesIndexes.current
-      .map((el) => el + 1)
-      .filter((el) => el <= 245)
+    // failedTypesIndexes.current = failedTypesIndexes.current
+    //   // .map((el) => el + 1)
+    //   .filter((el) => el <= 245)
     if (failedTypeStatus.current && !escapeFailedTypeStatus.current) {
-      failedTypesIndexes.current = [...failedTypesIndexes.current, 1]
+      failedTypesIndexes.current = [
+        ...failedTypesIndexes.current,
+        successAndFailedTypes.current,
+      ]
     }
     failedTypeStatus.current = false
     if (escapeFailedTypeStatus.current) {
@@ -146,50 +147,15 @@ export const BOOKContainer: React.FC = () => {
   }
 
   return (
-    <div
-      className="overflow-y-hidden w-full 1k fixed bottom-0 left-0 right-0 top-0 flex flex-col justify-center align-center font-courier border-2 border-grey-900 "
-      // style={{
-      //   backgroundImage: `url(${WAVES3})`,
-      //   backgroundRepeat: 'no-repeat',
-      //   backgroundPosition: 'bottom',
-      //   backgroundSize: '100%',
-      // }}
-    >
-      <BOOKBackground />{' '}
+    <div className="overflow-y-hidden w-full  flex flex-col justify-center align-center font-courier border-2 border-grey-900 ">
       <div
-        className=" mx-10 p-2 flex flex-row gap-2 rounded-full bg-red-200"
+        className=" mx-10 mt-40 p-2 flex flex-row gap-2 rounded-full bg-red-200"
         style={{
           transform: 'translateY(-135px)',
           opacity: !appear ? '0' : '1',
           transition: '0.5s ease',
         }}
       >
-        {/* <button className="bg-green-500 p-3 rounded-full" onClick={SUCCESS}>
-          SUCCESS
-        </button>
-        <button
-          className="bg-green-500 p-3 rounded-full"
-          onClick={() => {
-            for (let i = 0; i < 10; i++) {
-              SUCCESS()
-            }
-          }}
-        >
-          x10
-        </button>
-        <button
-          className="bg-green-500 p-3 rounded-full"
-          onClick={() => {
-            for (let i = 0; i < 100; i++) {
-              SUCCESS()
-            }
-          }}
-        >
-          x100
-        </button>
-        <button className="bg-green-500 p-3 rounded-full justify-self-end	">
-          {rendersCount.current}
-        </button> */}
         <button
           tabIndex={-1}
           className="bg-green-500 p-3 rounded-full justify-self-end	outline-none transition"
@@ -203,8 +169,20 @@ export const BOOKContainer: React.FC = () => {
         >
           animation{animationBook}
         </button>
+        <button
+          className="bg-blue-300 p-3 rounded-full justify-self-end	outline-none transition"
+          onClick={() => {}}
+        >
+          swipe
+        </button>
 
         <div className="ml-auto">
+          <button className="bg-green-500 p-3 rounded-full justify-self-end	">
+            FTI:{[...failedTypesIndexes.current].join('-')}
+          </button>
+          <button className="bg-green-500 p-3 rounded-full justify-self-end	">
+            OA:{successAndFailedTypes.current}
+          </button>
           <button>{'\u00A0'}</button>
           <button className="bg-green-500 p-3 rounded-full justify-self-end	">
             S:{successTypes}
@@ -229,17 +207,19 @@ export const BOOKContainer: React.FC = () => {
         </div>
       </div>
       <div
-        className="invisible 1k:visible  mt-8 md:mt-18 flex justify-center items-start "
+        className="invisible 1k:visible  mt-16 md:mt-18 flex justify-center items-start "
         style={{ transform: 'translateY(-150px)' }}
       >
         <BOOKBook
           STRING={STRING}
           overall={successAndFailedTypes.current}
           animation={animationBook}
+          currentString={letter1}
         />
         <BOOKLayout
           failedTypesIndexes={failedTypesIndexes.current}
           overall={successAndFailedTypes.current}
+          currentString={letter1}
         />
       </div>
     </div>
