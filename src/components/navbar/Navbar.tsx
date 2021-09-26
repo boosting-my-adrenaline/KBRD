@@ -107,7 +107,7 @@ export const Navbar: React.FC = () => {
          bg-${ThemeColor}-400 shadow-2xl font-courier `}
         style={{
           transition: '1.25s ease-in-out',
-          boxShadow: `0 2px 10px 2px ${ShadowColor}`,
+          boxShadow: `0 1px 5px 1px ${ShadowColor}`,
         }}
       >
         <div className="w-1000 2k:w-1500 3k:w-2000 flex items-center gap-x-4 mx-9">

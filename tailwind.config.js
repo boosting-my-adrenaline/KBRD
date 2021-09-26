@@ -27,7 +27,15 @@ module.exports = {
   },
   variants: {
     extend: {
-      transform: ['hover', 'responsive'],
+      transform: ['hover', 'responsive', 'focus', 'active'],
+      backgroundColor: ['active'],
+      border: ['hover'],
+      transitionProperty: [
+        'responsive',
+        'motion-safe',
+        'motion-reduce',
+        'hover',
+      ],
     },
   },
   plugins: [],

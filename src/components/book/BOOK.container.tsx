@@ -61,6 +61,8 @@ export const BOOKContainer: React.FC = () => {
 
   const handleEvent = (event: KeyboardEvent) => {
     const { key } = event
+    console.log(key)
+
     if (KEYS.includes(key)) {
       setKeyDown(key)
       setKeyDown('')

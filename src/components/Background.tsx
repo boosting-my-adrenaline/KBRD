@@ -29,25 +29,18 @@ export const Background: React.FC = () => {
     if (currentChapter === 'BOOK') {
       return 8500
     } else if (currentChapter === 'TAP') {
-      return 13530
+      return 13300
     }
     return 1950
   }
 
   return (
     <div
+      className={`fixed top-0 bottom-0 right-0 z-0`}
       style={{
-        position: 'fixed',
         width: BGWidth(),
         backgroundColor: 'rgb(219, 234, 254)',
         transition: '1.25s ease-in-out',
-        top: 0,
-        bottom: 0,
-        right: 0,
-        // display: 'flex',
-        alignItems: 'stretch',
-        justifyContent: 'center',
-        // transform: `translateX(-${4150 - windowDimensions.width}px)`,
       }}
     >
       <svg
