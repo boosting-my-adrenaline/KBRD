@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { TAPshootingFrame } from './TAP.shooting.frame'
+import { KeyColor } from '../TAP.shooting'
 
 interface IProps {
   cells: Array<string | null>
@@ -7,6 +8,10 @@ interface IProps {
   missclicks: number
   running: boolean
   handleStart(): void
+  started: boolean
+  handleRunning(): void
+  keyColor: KeyColor
+  newGame: boolean
 }
 
 export const TAPtap: React.FC<IProps> = ({
@@ -15,6 +20,10 @@ export const TAPtap: React.FC<IProps> = ({
   missclicks,
   running,
   handleStart,
+  started,
+  handleRunning,
+  keyColor,
+  newGame,
 }) => {
   const [frameColor, setFrameColor] = useState('transparent')
 
@@ -52,7 +61,7 @@ export const TAPtap: React.FC<IProps> = ({
       >
         <div
           className={` ${!cells[cell] && `hidden`}
-               bg-red-500 rounded-full flex justify-center items-center font-courier uppercase`}
+               bg-${keyColor}-500  rounded-full flex justify-center items-center font-courier uppercase`}
           style={{
             width: 80,
             height: 80,
@@ -66,7 +75,7 @@ export const TAPtap: React.FC<IProps> = ({
             className={`bg-black absolute mt-14 rounded-full ${
               !(cells[cell] === 'j' || cells[cell] === 'f') && 'hidden'
             } ${bluring && 'hidden'}`}
-            style={{ height: 2, width: 18, transition: '0.25s ' }}
+            style={{ height: 2, width: 18, transition: '0.5s ease' }}
           ></div>
         </div>
       </div>
@@ -83,11 +92,15 @@ export const TAPtap: React.FC<IProps> = ({
         }}
       >
         <TAPshootingFrame
-          bluring={bluring}
+          // bluring={bluring}
+          isThereCells={cells.filter((el) => el).length > 0}
           frameColor={frameColor}
           cellsLength={cells.length}
           handleStart={handleStart}
           running={running}
+          started={started}
+          handleRunning={handleRunning}
+          newGame={newGame}
         />
 
         <div className="flex flex-row justify-center gap-20">

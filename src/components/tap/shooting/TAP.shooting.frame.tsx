@@ -1,19 +1,29 @@
-import React, { useState, useEffect } from 'react'
+import { fontWeight } from '@mui/system'
+import React, { useState, useEffect, useRef } from 'react'
+import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 
 interface IProps {
   frameColor: string
-  bluring: boolean
+  // bluring: boolean
   cellsLength: number
   handleStart(): void
   running: boolean
+  started: boolean
+  handleRunning(): void
+  isThereCells: boolean
+  newGame: boolean
 }
 
 export const TAPshootingFrame: React.FC<IProps> = ({
-  bluring,
+  // bluring,
   frameColor,
   cellsLength,
   handleStart,
   running,
+  started,
+  handleRunning,
+  isThereCells,
+  newGame,
 }) => {
   const [dimensions, setDimensions] = useState({
     width: 766,
@@ -40,47 +50,52 @@ export const TAPshootingFrame: React.FC<IProps> = ({
     }
   }, [cellsLength])
 
-  const [startButton, setStartButton] = useState(false)
   const [starter, setStarter] = useState(0)
-  const [stopper, setStopper] = useState(-1)
+  const [stopper, setStopper] = useState(0)
+  const [bluring, setBluring] = useState(true)
 
-  useEffect(() => {}, [starter])
+  const [TY, setTY] = useState(0)
 
-  useEffect(() => {
-    if (starter === stopper) {
-      setStarter((prev) => prev + 1)
-    } else {
-      setStopper((prev) => prev + 1)
+  useDidMountEffect(() => {
+    started ? setStarter((prev) => prev + 1) : setStopper((prev) => prev + 1)
+  }, [started])
+
+  useDidMountEffect(() => {
+    setTY((prev) => prev - 1200)
+    let id1 = setTimeout(() => setTY((prev) => prev - 600), 1000)
+    let id2 = setTimeout(() => setTY((prev) => prev - 600), 2000)
+    let id3 = setTimeout(() => setTY((prev) => prev - 600), 3000)
+    let id4 = setTimeout(() => setTY((prev) => prev - 600), 4000)
+    let id5 = setTimeout(() => handleRunning(), 3200)
+    let id6 = setTimeout(() => setBluring(false), 3100)
+    let id7 = setTimeout(() => setTY(0), 3500)
+
+    return () => {
+      clearTimeout(id1)
+      clearTimeout(id2)
+      clearTimeout(id3)
+      clearTimeout(id4)
+      clearTimeout(id5)
+      clearTimeout(id6)
+      clearTimeout(id7)
     }
-  }, [startButton])
+  }, [starter])
 
-  useEffect(() => {
-    if (!running) {
-      setTimeout(() => setStartButton(false), 100)
-    } else {
-      setStartButton(true)
-    }
-  }, [running])
+  useDidMountEffect(() => {
+    handleRunning()
+    setBluring(true)
+    setTimeout(() => setTY(0))
+  }, [stopper])
 
-  const handleStartButton = (): void => {
-    if (!running) {
-      setStartButton(true)
-      setStarter((prev) => prev + 1)
-      setTimeout(() => handleStart(), 100)
-    } else {
-      handleStart()
-      setTimeout(() => setStartButton(false), 100)
-      setStopper((prev) => prev + 1)
-    }
-  }
+  useEffect(() => {}, [started])
 
   return (
     <>
       {' '}
       <div
-        className="absolute flex justify-center items-center "
+        className="absolute flex justify-center items-center overflow-y-hidden"
         style={{
-          backdropFilter: bluring ? 'blur(15px)' : '',
+          backdropFilter: bluring && isThereCells ? 'blur(15px)' : '',
           width: dimensions.width,
           height: dimensions.height,
           clipPath: dimensions.clipPath2,
@@ -90,40 +105,60 @@ export const TAPshootingFrame: React.FC<IProps> = ({
         <div
           //inside
           className={`flex flex-row justify-center items-center  ${
-            bluring || `hidden`
+            !bluring && `hidden`
           }`}
           style={{
             transition: '0.3s ease',
             transform: 'rotateZ(0deg) translateX(0px)',
           }}
         >
-          {
-            <div
-              className="absolute flex flex-row justify-center items-center gap-24"
-              style={{
-                transition: '0.3s ease',
-                transform: `rotateZ(0deg) translateY(${
-                  startButton ? -600 : 0
-                }px)`,
-              }}
-            >
+          <div
+            className="absolute flex flex-row justify-center items-center gap-24"
+            style={{
+              transition: '0.3s ease',
+              transform: `rotateZ(0deg) translateY(${TY}px)`,
+            }}
+          >
+            {newGame ? (
               <div
-                className="rounded-3xl bg-blue-400 border-2 border-blue-600"
-                style={{ width: 100, height: 400, transition: '0.25s ease' }}
-              ></div>
-              <div
-                className="rounded-3xl bg-blue-400 border-2 border-blue-600"
-                style={{ width: 100, height: 400, transition: '0.25s ease' }}
-              ></div>
-            </div>
-          }
+                onMouseDown={handleStart}
+                className={`flex flex-col items-center justify-center font-courier cursor-pointer text-${
+                  started ? '' : 'blue'
+                }-600`}
+                style={{
+                  width: '700px',
+                  fontSize: '4em',
+                  fontWeight: 700,
+                  transition: '0.1s ease-in',
+                }}
+              >
+                <div className=""> PRESS SPACE BAR</div>
+
+                <div className=""> OR</div>
+
+                <div className=""> TAP TO START</div>
+              </div>
+            ) : (
+              <>
+                <div
+                  className="rounded-3xl bg-blue-400 border-2 border-blue-600"
+                  style={{ width: 100, height: 400, transition: '0.25s ease' }}
+                ></div>
+                <div
+                  className="rounded-3xl bg-blue-400 border-2 border-blue-600"
+                  style={{ width: 100, height: 400, transition: '0.25s ease' }}
+                ></div>
+              </>
+            )}
+          </div>
+
           <div
             className="absolute flex flex-row justify-center items-center overflow-visible"
             style={{
               transition: '0.3s ease',
               width: 500,
               height: 500,
-              transform: `translateY(${-600}px)`,
+              transform: `translateY(${TY + 1200}px)`,
             }}
           >
             <svg
@@ -136,7 +171,7 @@ export const TAPshootingFrame: React.FC<IProps> = ({
               <g fill="none" fillRule="evenodd">
                 <path
                   d="M15.117 13.49c1.146 0 2.134-.335 2.963-1.008.828-.673 1.243-1.64 1.243-2.898 0-.96-.331-1.785-.991-2.476-.66-.692-1.551-1.038-2.673-1.038-.76 0-1.386.106-1.878.318-.493.212-.882.492-1.17.84-.285.35-.556.799-.812 1.347a70.661 70.661 0 00-.701 1.552c-.124.26-.35.467-.673.616a2.64 2.64 0 01-1.121.225c-.5 0-.956-.203-1.374-.608-.417-.405-.626-.944-.626-1.617 0-.648.196-1.33.589-2.046.392-.717.965-1.4 1.719-2.047.754-.648 1.692-1.168 2.813-1.561 1.122-.392 2.374-.59 3.757-.59 1.209 0 2.312.166 3.309.497.997.33 1.863.807 2.598 1.43a6.175 6.175 0 011.664 2.168c.373.822.56 1.707.56 2.654 0 1.246-.271 2.315-.813 3.206-.542.89-1.318 1.76-2.327 2.607.972.523 1.79 1.122 2.458 1.794a6.904 6.904 0 011.505 2.234 6.88 6.88 0 01.504 2.645 8.253 8.253 0 01-.682 3.29 8.383 8.383 0 01-2.01 2.83c-.884.83-1.934 1.478-3.15 1.945-1.214.468-2.556.7-4.027.7-1.495 0-2.835-.267-4.018-.802-1.184-.536-2.16-1.206-2.926-2.01-.766-.803-1.346-1.635-1.738-2.495-.393-.86-.59-1.57-.59-2.131 0-.723.235-1.305.702-1.748.467-.442 1.05-.663 1.748-.663.349 0 .685.103 1.009.308.324.206.536.452.636.739.648 1.732 1.342 3.018 2.084 3.859.74.842 1.785 1.262 3.13 1.262.773 0 1.518-.19 2.234-.57.717-.38 1.309-.944 1.776-1.692.467-.747.7-1.613.7-2.598 0-1.458-.398-2.601-1.195-3.43-.798-.828-1.907-1.243-3.327-1.243-.25 0-.636.025-1.16.075-.523.05-.86.075-1.01.075-.684 0-1.214-.171-1.588-.514-.373-.343-.56-.82-.56-1.43 0-.598.224-1.081.673-1.45.448-.366 1.115-.55 2-.55h.766z"
-                  fill="##60a5fa"
+                  fill="#60a5fa"
                 />
                 <path
                   d="M15.117 13.49c1.146 0 2.134-.335 2.963-1.008.828-.673 1.243-1.64 1.243-2.898 0-.96-.331-1.785-.991-2.476-.66-.692-1.551-1.038-2.673-1.038-.76 0-1.386.106-1.878.318-.493.212-.882.492-1.17.84-.285.35-.556.799-.812 1.347a70.661 70.661 0 00-.701 1.552c-.124.26-.35.467-.673.616a2.64 2.64 0 01-1.121.225c-.5 0-.956-.203-1.374-.608-.417-.405-.626-.944-.626-1.617 0-.648.196-1.33.589-2.046.392-.717.965-1.4 1.719-2.047.754-.648 1.692-1.168 2.813-1.561 1.122-.392 2.374-.59 3.757-.59 1.209 0 2.312.166 3.309.497.997.33 1.863.807 2.598 1.43a6.175 6.175 0 011.664 2.168c.373.822.56 1.707.56 2.654 0 1.246-.271 2.315-.813 3.206-.542.89-1.318 1.76-2.327 2.607.972.523 1.79 1.122 2.458 1.794a6.904 6.904 0 011.505 2.234 6.88 6.88 0 01.504 2.645 8.253 8.253 0 01-.682 3.29 8.383 8.383 0 01-2.01 2.83c-.884.83-1.934 1.478-3.15 1.945-1.214.468-2.556.7-4.027.7-1.495 0-2.835-.267-4.018-.802-1.184-.536-2.16-1.206-2.926-2.01-.766-.803-1.346-1.635-1.738-2.495-.393-.86-.59-1.57-.59-2.131 0-.723.235-1.305.702-1.748.467-.442 1.05-.663 1.748-.663.349 0 .685.103 1.009.308.324.206.536.452.636.739.648 1.732 1.342 3.018 2.084 3.859.74.842 1.785 1.262 3.13 1.262.773 0 1.518-.19 2.234-.57.717-.38 1.309-.944 1.776-1.692.467-.747.7-1.613.7-2.598 0-1.458-.398-2.601-1.195-3.43-.798-.828-1.907-1.243-3.327-1.243-.25 0-.636.025-1.16.075-.523.05-.86.075-1.01.075-.684 0-1.214-.171-1.588-.514-.373-.343-.56-.82-.56-1.43 0-.598.224-1.081.673-1.45.448-.366 1.115-.55 2-.55h.766z"
@@ -165,7 +200,7 @@ export const TAPshootingFrame: React.FC<IProps> = ({
                 transition: '0.3s ease',
                 width: 500,
                 height: 500,
-                transform: `translateY(${-600}px)`,
+                transform: `translateY(${TY + 1800}px)`,
               }}
             >
               <svg
@@ -209,7 +244,7 @@ export const TAPshootingFrame: React.FC<IProps> = ({
                 transition: '0.3s ease',
                 width: 500,
                 height: 500,
-                transform: `translateY(${-600}px)`,
+                transform: `translateY(${TY + 2400}px)`,
               }}
             >
               <svg
@@ -280,9 +315,13 @@ export const TAPshootingFrame: React.FC<IProps> = ({
           clipPath: dimensions.clipPath1,
         }}
       ></div>
-      <button onClick={handleStartButton}>
-        TEST -- starter: {starter} -- stopper: {stopper}
-      </button>
+      {/* <div className="flex flex-row gap-36">
+        <button>
+          ST?{started ? 1 : 0} -- starter: {starter} -- stopper: {stopper}
+        </button>
+        <button onClick={() => setTY((prev) => prev - 600)}>-</button>
+        <button onClick={() => setTY((prev) => prev + 600)}>+</button>
+      </div> */}
     </>
   )
 }

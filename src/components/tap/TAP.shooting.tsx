@@ -3,10 +3,13 @@ import { TAPshootingButtons } from './shooting/TAP.shooting.buttons'
 import { TAPshootingModal } from './shooting/TAP.shooting.modal'
 import { TAPshootingTimers } from './shooting/TAP.timers'
 import { TAPtap } from './shooting/TAP.tap'
+import { useDidMountEffect } from '../../utils/useDidMountEffect'
 
 // type faze = 'on' | 'off'
 
 type CellsAmount = 7 | 19 | 29
+
+export type KeyColor = 'red' | 'green' | 'blue' | 'yellow' | 'purple' | 'pink'
 
 export const TAPshooting: React.FC = () => {
   const alphabet: string = 'abcdefghijklmnopqrstuvwxyz'
@@ -30,15 +33,36 @@ export const TAPshooting: React.FC = () => {
     setModalOpen(false)
     clearCells()
     setFuse(0)
+    setNewGame(true)
   }
 
   const [running, setRunning] = useState(false)
-  // const [started, setStarted] = useState(false)
+  const [started, setStarted] = useState(false)
+
+  const handleRunning = (): void => {
+    if (!running) {
+      setRunning(true)
+    } else {
+      setRunning(false)
+    }
+  }
+
+  useEffect(() => {})
+
+  const [newGame, setNewGame] = useState(true)
+
+  useDidMountEffect(() => {
+    setTimeout(() => {
+      setNewGame(false)
+    }, 150)
+  }, [started])
 
   const handleOpenModal = (): void => {
-    setRunning(false)
+    // setRunning(false)
+    setStarted(false)
     setModalOpen(true)
     setMissclicks(0)
+
     setTimeout(() => handleCloseModal(), 1500)
   }
 
@@ -117,7 +141,7 @@ export const TAPshooting: React.FC = () => {
   }
 
   const handleStart = (): void => {
-    setRunning((prev) => !prev)
+    setStarted((prev) => !prev)
   }
 
   const handleEvent = (event: KeyboardEvent): void => {
@@ -134,7 +158,7 @@ export const TAPshooting: React.FC = () => {
         setMissclicks((prev) => prev + 1)
       }
     }
-    if (lastKey === ' ') {
+    if (lastKey === ' ' && started == running) {
       handleStart()
     }
   }, [lastKey])
@@ -156,6 +180,8 @@ export const TAPshooting: React.FC = () => {
     }
   }, [tick])
 
+  const [keyColor, setKeyColor] = useState<KeyColor>('red')
+
   return (
     <div
       className="flex flex-col "
@@ -176,7 +202,7 @@ export const TAPshooting: React.FC = () => {
         />
       </>
       {/* <button onClick={handleOpenModal}>TEST</button> */}
-      {/* <h2>fuse: {fuse}</h2> */}
+      {/* <h2>newGame: {newGame ? 1 : 0}</h2> */}
 
       <TAPshootingButtons
         limit={limit}
@@ -186,6 +212,9 @@ export const TAPshooting: React.FC = () => {
         intervalPush={intervalPush}
         setIntervalPush={setIntervalPush}
         pushCell={pushCell}
+        started={started}
+        keyColor={keyColor}
+        setKeyColor={setKeyColor}
       />
       {/* <div
         style={{
@@ -203,12 +232,18 @@ export const TAPshooting: React.FC = () => {
       {/* <h1>fuse: {fuse}</h1> */}
       {/* <h1>clength: {cells.length}</h1>
       <h1>limit: {limit}</h1> */}
+      {/* <h1>started? {started ? 1 : 0}</h1> */}
+      {/* <h1>running? {running ? 1 : 0}</h1> */}
       <TAPtap
+        keyColor={keyColor}
         handleStart={handleStart}
         cells={cells}
         missclicks={missclicks}
         bluring={!running && cells.filter((el) => el).length > 0}
         running={running}
+        started={started}
+        newGame={newGame}
+        handleRunning={handleRunning}
       />
     </div>
   )

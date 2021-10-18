@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { TAPshootingIntervalSlider } from './TAP.shooting.intervalSlider'
 import { TAPshootingLimitSlider } from './TAP.shooting.limitSlider'
+import { TAPshootingKeyStyle } from './TAP.shooting.keyStyle'
+import { KeyColor } from '../TAP.shooting'
 
 type IProps = {
   limit: number
@@ -10,6 +12,9 @@ type IProps = {
   intervalPush: number
   setIntervalPush(int: number): void
   pushCell(): void
+  started: boolean
+  keyColor: KeyColor
+  setKeyColor(color: KeyColor): void
 }
 
 export const TAPshootingButtons: React.FC<IProps> = ({
@@ -20,41 +25,41 @@ export const TAPshootingButtons: React.FC<IProps> = ({
   intervalPush,
   setIntervalPush,
   pushCell,
+  started,
+  keyColor,
+  setKeyColor,
 }) => {
   const [bluring, setBluring] = useState(0)
   const [bluringTag, setBluringTag] = useState('START')
-  const [starter, setStarter] = useState(false)
 
   useEffect(() => {
     setBluring(100)
     setTimeout(() => {
-      running ? setBluringTag('PAUSE') : setBluringTag('START')
+      if (started && !running) {
+        setBluringTag('READY')
+      } else if (started && running) {
+        setBluringTag('PAUSE')
+      } else if (!started && !running) {
+        setBluringTag('START')
+      }
+      // running ? setBluringTag('PAUSE') : setBluringTag('START')
     }, 50)
     setTimeout(() => {
       setBluring(0)
     }, 100)
-  }, [running])
+  }, [running, started])
 
-  const startButton = (): void => {
-    if (running) {
-      setBluring(100)
-      setTimeout(() => {
-        running ? setBluringTag('PAUSE') : setBluringTag('START')
-      }, 50)
-      setTimeout(() => {
-        setBluring(0)
-      }, 100)
+  const handleStartButton = (): void => {
+    if (started == running) {
+      handleStart()
     }
-  }
-
-  const handleStarter = (): void => {
-    starter ? setStarter(false) : setStarter(true)
   }
 
   return (
     <div className="flex flex-row justify-center items-center  border-red-600 h-32 mb-10 relative gap-10 font-courier">
+      <TAPshootingKeyStyle keyColor={keyColor} setKeyColor={setKeyColor} />
       <div className="flex flex-col items bg-blue-300 shadow-2xl py-2 px-5 rounded-xl border-2 border-blue-400">
-        <h2 className="text-3xl text-right mr-10">{intervalPush} ms</h2>
+        <h2 className="text-2xl text-right mr-12">{intervalPush} ms</h2>
         <TAPshootingIntervalSlider
           intervalPush={intervalPush}
           setIntervalPush={setIntervalPush}
@@ -62,24 +67,34 @@ export const TAPshootingButtons: React.FC<IProps> = ({
       </div>
       <button
         className={`flex flex-col items bg-${
-          running ? 'red' : 'green'
-        }-300 shadow-2xl py-6 px-10  rounded-xl text-3xl outline-none
-    active:bg-${running ? 'red' : 'green'}-200 border-2 border-${
-          running ? 'red' : 'green'
+          bluringTag === 'PAUSE'
+            ? 'red'
+            : bluringTag === 'START'
+            ? 'green'
+            : 'blue'
+        }-300 shadow-2xl py-6 px-10  rounded-xl text-2xl outline-none
+    active:bg-${
+      bluringTag === 'PAUSE' ? 'red' : bluringTag === 'START' ? 'green' : 'blue'
+    }-200 border-2 border-${
+          bluringTag === 'PAUSE'
+            ? 'red'
+            : bluringTag === 'START'
+            ? 'green'
+            : 'blue'
         }-400 transition-hover`}
         style={{
           textShadow: `0px 0px ${bluring}px rgba(0, 0, 0, 1)`,
           color: 'transparent',
           transition: '0.25s ease',
         }}
-        onMouseDown={handleStart}
+        onMouseDown={handleStartButton}
       >
         {bluringTag}
         <div
           className="bg-black absolute mt-10 rounded-full"
           style={{
             height: 2,
-            width: 90,
+            width: 70,
           }}
         >
           {' '}
@@ -87,8 +102,24 @@ export const TAPshootingButtons: React.FC<IProps> = ({
         </div>
       </button>
       <div className="flex flex-col items bg-blue-300 shadow-2xl py-2 px-5 rounded-xl border-2 border-blue-400">
-        <h2 className="text-3xl ml-5">Limit: {limit}</h2>
+        <h2 className="text-2xl ml-8">Limit: {limit}</h2>
         <TAPshootingLimitSlider limit={limit} setLimit={setLimit} />
+      </div>
+      <div className="invisible flex flex-col justify-center align-center">
+        <div className="flex flex-row justify-center align-start gap-6">
+          <button
+            className={`
+               bg-red-500 rounded-full flex justify-center items-center font-courier uppercase`}
+            style={{
+              width: 50,
+              height: 50,
+              fontSize: '2.1em',
+              transition: '0.1s ease',
+            }}
+          >
+            R
+          </button>
+        </div>
       </div>
       {/* <button onClick={() => pushCell()}>Add</button> */}
     </div>
