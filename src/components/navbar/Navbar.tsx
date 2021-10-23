@@ -8,24 +8,20 @@ import { Chapters, Directions } from '../../types/nav'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useAction } from '../../hooks/useAction'
 
-export const Navbar: React.FC = () => {
+interface IProps {
+  block: boolean
+}
+
+export const Navbar: React.FC<IProps> = ({ block }) => {
   const location = useLocation()
   const Path = location.pathname
 
-  const currentChapter = useTypedSelector((state) => state.nav.chapter)
+  const chapter = useTypedSelector((state) => state.nav.chapter)
 
   const { changeChapter } = useAction()
 
-  const history = useHistory()
-
   const leftArrowClick = useKeyPress('ArrowLeft')
   const rightArrowClick = useKeyPress('ArrowRight')
-
-  useEffect(() => {
-    currentChapter !== 'MAIN'
-      ? history.push(`/${currentChapter.toLowerCase()}`)
-      : history.push('/')
-  }, [currentChapter])
 
   useEffect(() => {
     if (leftArrowClick) {
@@ -45,9 +41,9 @@ export const Navbar: React.FC = () => {
   const ArrowRight: boolean = useKeyPress('ArrowRight')
 
   const getColors = (): string[] => {
-    if (currentChapter === 'BOOK') {
+    if (chapter === 'BOOK') {
       return ['red', 'rgba(128, 0, 0, 1)']
-    } else if (currentChapter === 'TAP') {
+    } else if (chapter === 'TAP') {
       return ['blue', 'rgba(30, 58, 138, 1)']
     }
     return ['green', 'rgba(6, 78, 59, 1)']
@@ -59,16 +55,13 @@ export const Navbar: React.FC = () => {
   const links = chapters.map((LINK) => (
     <>
       <a
-        className={`outline-none text:2xl md:text-4xl border-${ThemeColor}-500
+        className={`outline-none text:2xl md:text-4xl border-${ThemeColor}-500 select-none
          flex-row rounded-md transition-all underline hover:no-underline  text-gray-800 hover:text-black cursor-pointer ${
-           Path === '/' + LINK.toLowerCase() && `bg-${ThemeColor}-200`
+           chapter === LINK && `bg-${ThemeColor}-200`
          }`}
         style={{
-          padding: Path === '/' + LINK.toLowerCase() ? '2px 10px 2px 8px' : '',
-          boxShadow:
-            Path === '/' + LINK.toLowerCase()
-              ? `2px 2px 5px 2px ${ShadowColor}`
-              : '',
+          padding: chapter === LINK ? '2px 10px 2px 8px' : '',
+          boxShadow: chapter === LINK ? `2px 2px 5px 2px ${ShadowColor}` : '',
         }}
         onClick={() => onClick(LINK as Chapters)}
       >
@@ -78,16 +71,18 @@ export const Navbar: React.FC = () => {
   ))
 
   function changeLink(dir: Directions) {
-    const curIndex = chapters.indexOf(currentChapter)
+    if (block) return
+
+    const curIndex = chapters.indexOf(chapter)
 
     if (dir === 'LEFT') {
-      currentChapter === 'MAIN'
+      chapter === 'MAIN'
         ? changeChapter(chapters[chapters.length - 1] as Chapters)
         : curIndex === 0
         ? changeChapter(chapters[chapters.length - 1] as Chapters)
         : changeChapter(chapters[curIndex - 1] as Chapters)
     } else if (dir === 'RIGHT') {
-      currentChapter === 'MAIN'
+      chapter === 'MAIN'
         ? changeChapter(chapters[0] as Chapters)
         : curIndex === chapters.length - 1
         ? changeChapter(chapters[0] as Chapters)
@@ -96,6 +91,7 @@ export const Navbar: React.FC = () => {
   }
 
   function onClick(link: Chapters): void {
+    if (block) return
     changeChapter(link)
   }
 
@@ -111,6 +107,8 @@ export const Navbar: React.FC = () => {
         }}
       >
         <div className="w-1000 2k:w-1500 3k:w-2000 flex items-center gap-x-4 mx-9">
+          {/* <span>:{chapter}</span> */}
+          {/* <span>:{block ? 'block' : 'not'}</span> */}
           <a className="flex-grow outline-none flex">
             <div
               className={`p-1  rounded-full`}
@@ -124,9 +122,9 @@ export const Navbar: React.FC = () => {
             </div>
           </a>
 
-          <ALeft onClick={changeLink} chapter={currentChapter} />
+          <ALeft onClick={changeLink} chapter={chapter} />
           {links}
-          <ARight onClick={changeLink} chapter={currentChapter} />
+          <ARight onClick={changeLink} chapter={chapter} />
         </div>
       </div>
     </>

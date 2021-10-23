@@ -2,7 +2,7 @@ import { NavActionTypes } from './nav.types'
 import { Chapters, NavState, NavAction } from '../../types/nav'
 
 const initialState: NavState = {
-  chapter: Chapters.TAP,
+  chapter: Chapters.MAIN,
 }
 
 export const navReducer = (

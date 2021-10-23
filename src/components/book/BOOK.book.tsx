@@ -1,4 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { Chapters } from '../../types/nav'
+import { FadeText } from '../../utils/FadeText'
+import { useDidMountEffect } from '../../utils/useDidMountEffect'
 import {
   formationForLEFT1,
   formationForLEFT2,
@@ -11,7 +14,8 @@ export const BOOKBook: React.FC<{
   overall: number
   animation: boolean
   currentString: string
-}> = ({ STRING, overall, animation, currentString }) => {
+  chapter: Chapters
+}> = ({ STRING, overall, animation, currentString, chapter }) => {
   // const rawFIRST: string = STRING.slice(0, 1)
   // const rawRIGHT: string = STRING.slice(0, 35)
   // const rawRIGHT1: string = STRING.slice(35, 105)
@@ -26,10 +30,17 @@ export const BOOKBook: React.FC<{
   const [appear, setAppear] = useState(false)
 
   useEffect(() => {
-    setTimeout(() => {
+    let id = setTimeout(() => {
       setAppear(true)
-    }, 500)
+    }, 300)
+    return () => clearTimeout(id)
   }, [])
+
+  useDidMountEffect(() => {
+    setTimeout(() => {
+      setAppear(false)
+    }, 0)
+  }, [chapter])
 
   useEffect(() => {
     setTs(() => 0 - 14.4065 * (overall + 1))
@@ -49,9 +60,18 @@ export const BOOKBook: React.FC<{
   const LEFT3: string = formationForLEFT3(overall, currentString)
 
   const formating = (str: string) => {
-    return str
-      .split('')
-      .map((el) => (el !== ' ' ? <div>{el}</div> : <div>{'\u00A0'}</div>))
+    return (
+      str
+        .split('')
+        // .map((el) => (el !== ' ' ? <div>{el}</div> : <div>{'\u00A0'}</div>))
+        .map((el) =>
+          el !== ' ' ? (
+            <FadeText title={el} delay={[300, 1500]} hide={1} />
+          ) : (
+            <div className="select-none">{'\u00A0'}</div>
+          )
+        )
+    )
   }
 
   const rowing = (str: string) => {

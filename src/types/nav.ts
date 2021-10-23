@@ -9,6 +9,7 @@ export enum Chapters {
   MAIN = 'MAIN',
   BOOK = 'BOOK',
   TAP = 'TAP',
+  INFO = 'INFO',
 }
 
 export interface NavState {

@@ -7,7 +7,7 @@ export const useDidMountEffect = (
   const initialRender = useRef(true)
 
   useEffect(() => {
-    // let effectReturns: void | (() => void | undefined) = () => {};
+    let effectReturns: void | (() => void | undefined) = () => {}
 
     if (initialRender.current) {
       initialRender.current = false
@@ -16,8 +16,8 @@ export const useDidMountEffect = (
       func()
     }
 
-    // if (effectReturns && typeof effectReturns === 'function') {
-    //   return effectReturns
-    // }
+    if (effectReturns && typeof effectReturns === 'function') {
+      return effectReturns
+    }
   }, deps)
 }

@@ -5,6 +5,8 @@ import { BOOKLayout } from './BOOK.layout'
 import { KEYS, letter1 } from '../../static/letters'
 
 import { Width } from '../../utils/getWidth'
+import { useDidMountEffect } from '../../utils/useDidMountEffect'
+import { useTypedSelector } from '../../hooks/useTypedSelector'
 
 interface IHistoryOfFailed {
   desired: string
@@ -39,13 +41,22 @@ export const BOOKContainer: React.FC = () => {
   const lastKey = useRef('')
   const prelastKey = useRef('')
 
-  const [appear, setAppear] = useState(false)
+  const [appear, setAppear] = useState(true)
+
+  const chapter = useTypedSelector((state) => state.nav.chapter)
 
   useEffect(() => {
-    setTimeout(() => {
+    let id = setTimeout(() => {
       setAppear(true)
-    }, 250)
+    }, 5600)
+    return () => clearTimeout(id)
   }, [])
+
+  useDidMountEffect(() => {
+    setTimeout(() => {
+      setAppear(false)
+    }, 250)
+  }, [chapter])
 
   useEffect(() => {
     prelastKey.current = lastKey.current
@@ -155,7 +166,7 @@ export const BOOKContainer: React.FC = () => {
         style={{
           transform: 'translateY(-135px)',
           opacity: !appear ? '0' : '1',
-          transition: '0.5s ease',
+          transition: '1s ease-in-out',
         }}
       >
         <button
@@ -217,6 +228,7 @@ export const BOOKContainer: React.FC = () => {
           overall={successAndFailedTypes.current}
           animation={animationBook}
           currentString={letter1}
+          chapter={chapter}
         />
         <BOOKLayout
           failedTypesIndexes={failedTypesIndexes.current}

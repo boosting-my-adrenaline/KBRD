@@ -4,6 +4,7 @@ import { TAPshootingModal } from './shooting/TAP.shooting.modal'
 import { TAPshootingTimers } from './shooting/TAP.timers'
 import { TAPtap } from './shooting/TAP.tap'
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
+import { useTypedSelector } from '../../hooks/useTypedSelector'
 
 // type faze = 'on' | 'off'
 
@@ -18,12 +19,20 @@ export const TAPshooting: React.FC = () => {
     Array.from({ length: 29 }, (_, i) => null)
   )
   const [appear, setAppear] = useState(false)
+  const chapter = useTypedSelector((state) => state.nav.chapter)
 
   useEffect(() => {
-    setTimeout(() => {
+    let id = setTimeout(() => {
       setAppear(true)
     }, 250)
+    return () => clearTimeout(id)
   }, [])
+
+  useDidMountEffect(() => {
+    setTimeout(() => {
+      setAppear(false)
+    }, 50)
+  }, [chapter])
 
   const [missclicks, setMissclicks] = useState(0)
 
@@ -187,7 +196,7 @@ export const TAPshooting: React.FC = () => {
       className="flex flex-col "
       style={{
         transform: 'translateY(-30px)',
-        transition: '0.5s ease-in-out',
+        transition: '1s ease',
         opacity: !appear ? '0' : '1',
       }}
     >

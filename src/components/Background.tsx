@@ -29,7 +29,7 @@ export const Background: React.FC = () => {
     if (currentChapter === 'BOOK') {
       return 8500
     } else if (currentChapter === 'TAP') {
-      return 13300
+      return 13100
     }
     return 1950
   }
