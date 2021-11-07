@@ -27,7 +27,7 @@ export const ALeft: React.FC<IProps> = ({
 
   return (
     <div
-      className={`outline-none invisible md:visible p-1 mx-5 rounded-md bg-${ThemeColor}-200 border border-${ThemeColor}-500 transition duration-150 hover:bg-${ThemeColor}-100`}
+      className={`outline-none cursor-pointer invisible md:visible p-1 mx-5 rounded-md bg-${ThemeColor}-200 border border-${ThemeColor}-500 transition duration-150 hover:bg-${ThemeColor}-100`}
       style={{
         boxShadow: ArrowLeft
           ? `1px 1px 4px 1px ${ShadowColor}`

@@ -6,6 +6,7 @@ export enum Directions {
 }
 
 export enum Chapters {
+  AUTH = 'AUTH',
   MAIN = 'MAIN',
   BOOK = 'BOOK',
   TAP = 'TAP',

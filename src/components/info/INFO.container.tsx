@@ -2,23 +2,24 @@ import React, { useState, useEffect } from 'react'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { FadeText } from '../../utils/FadeText'
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
+import { INFOslide } from './INFO.slide'
 
 export const INFOcontainer: React.FC = () => {
-  const [appear, setAppear] = useState(false)
+  const [appear, setAppear] = useState(true)
   const chapter = useTypedSelector((state) => state.nav.chapter)
 
-  useEffect(() => {
-    let id = setTimeout(() => {
-      setAppear(true)
-    }, 250)
-    return () => clearTimeout(id)
-  }, [])
+  // useEffect(() => {
+  //   let id = setTimeout(() => {
+  //     setAppear(true)
+  //   }, 250)
+  //   return () => clearTimeout(id)
+  // }, [])
 
-  useDidMountEffect(() => {
-    setTimeout(() => {
-      setAppear(false)
-    }, 50)
-  }, [chapter])
+  // useDidMountEffect(() => {
+  //   setTimeout(() => {
+  //     setAppear(false)
+  //   }, 50)
+  // }, [chapter])
 
   const lorem = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur sed
   ratione voluptates repudiandae reprehenderit adipisci impedit qui nihil,
@@ -38,13 +39,13 @@ export const INFOcontainer: React.FC = () => {
 
   return (
     <div
-      className="flex flex-col "
+      className="flex flex-col justify-center items-center z-20"
       style={{
         transition: '1s ease',
-        opacity: !appear ? '0' : '1',
+        // opacity: !appear ? '0' : '1',
       }}
     >
-      <FadeText title={lorem} delay={[500, 1200]} hide={chapter} />
+      <INFOslide chapter={chapter} />
     </div>
   )
 }

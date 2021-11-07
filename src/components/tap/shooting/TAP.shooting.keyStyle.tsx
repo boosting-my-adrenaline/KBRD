@@ -54,39 +54,51 @@ export const TAPshootingKeyStyle: React.FC<IProps> = ({
   }
 
   return (
-    <div className="flex flex-col justify-center align-center">
-      <div className="flex flex-row justify-center align-start gap-6">
-        <div
-          className={`
+    <div
+      className={'flex justify-center items-center'}
+      style={{
+        transform: `translateY(${open ? 30 : 0}px) translateX(${
+          open ? -10 : 0
+        }px)`,
+        transition: '0.3s ease',
+      }}
+    >
+      <div className="flex flex-col justify-center align-center  border-black">
+        <div className="flex flex-row justify-center align-start gap-2">
+          <div
+            className={`
                bg-${
                  open ? 'bg-gray-400' : keyColor
-               }-500  rounded-full flex flex-col justify-center items-center gap-2 font-courier uppercase cursor-pointer `}
-          style={{
-            overflow: 'hidden',
-            width: open ? 200 : 50,
-            height: open ? 200 : 50,
-            border: '1px solid #505050',
-            // opacity: open ? 0 : ,
-            // fontSize: '2.1em',
-            transition: '0.3s ease',
-            transform: `rotate(${-rotating}deg)`,
-          }}
-          onMouseDown={handleOpen}
-        >
-          <div className={`flex flex-row justify-center items-center gap-3  `}>
-            <div>{getElement(0)}</div>
-            <div>{getElement(1)}</div>
-          </div>
-          <div
-            className={`flex flex-row justify-center items-center  `}
-            style={{ gap: 80 }}
+               }-500  rounded-full flex flex-col justify-center items-center gap-0 font-courier uppercase cursor-pointer `}
+            style={{
+              overflow: 'hidden',
+              width: open ? 175 : 50,
+              height: open ? 175 : 50,
+              border: '1px solid #505050',
+              // opacity: open ? 0 : ,
+              // fontSize: '2.1em',
+              transition: '0.3s ease',
+              transform: `rotate(${-rotating}deg) `,
+            }}
+            onMouseDown={handleOpen}
           >
-            <div>{getElement(2)}</div>
-            <div>{getElement(3)}</div>
-          </div>
-          <div className={`flex flex-row justify-center items-center gap-3 `}>
-            <div>{getElement(4)}</div>
-            <div>{getElement(5)}</div>
+            <div
+              className={`flex flex-row justify-center items-center gap-2  `}
+            >
+              <div>{getElement(0)}</div>
+              <div>{getElement(1)}</div>
+            </div>
+            <div
+              className={`flex flex-row justify-center items-center  `}
+              style={{ gap: 60 }}
+            >
+              <div>{getElement(2)}</div>
+              <div>{getElement(3)}</div>
+            </div>
+            <div className={`flex flex-row justify-center items-center gap-2 `}>
+              <div>{getElement(4)}</div>
+              <div>{getElement(5)}</div>
+            </div>
           </div>
         </div>
       </div>

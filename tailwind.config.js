@@ -11,7 +11,9 @@ module.exports = {
 
     fontFamily: {
       courier: 'courier',
+      roboto: `Roboto Condensed', sans-serif`,
     },
+
     transform: {
       none: 'none',
       'scale-110-and-rotate-90': 'scale(1.1) rotate(90deg)',
@@ -29,6 +31,7 @@ module.exports = {
     extend: {
       transform: ['hover', 'responsive', 'focus', 'active'],
       backgroundColor: ['active'],
+      color: ['active', 'hover'],
       border: ['hover'],
       transitionProperty: [
         'responsive',

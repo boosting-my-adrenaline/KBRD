@@ -6,7 +6,9 @@ import { ALeft } from './nav-components/ALeft'
 import { ARight } from './nav-components/ARight'
 import { Chapters, Directions } from '../../types/nav'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { useAction } from '../../hooks/useAction'
+import { useNavAction } from '../../hooks/useAction'
+import { chapters } from '../../redux/nav/nav.types'
+import { AuthMiniature } from './nav-components/AuthMiniature'
 
 interface IProps {
   block: boolean
@@ -16,9 +18,11 @@ export const Navbar: React.FC<IProps> = ({ block }) => {
   const location = useLocation()
   const Path = location.pathname
 
+  const isOpened = useTypedSelector((state) => state.auth.isOpened)
+
   const chapter = useTypedSelector((state) => state.nav.chapter)
 
-  const { changeChapter } = useAction()
+  const { changeChapter } = useNavAction()
 
   const leftArrowClick = useKeyPress('ArrowLeft')
   const rightArrowClick = useKeyPress('ArrowRight')
@@ -51,7 +55,6 @@ export const Navbar: React.FC<IProps> = ({ block }) => {
 
   const [ThemeColor, ShadowColor] = getColors()
 
-  const chapters = Object.keys(Chapters).splice(1)
   const links = chapters.map((LINK) => (
     <>
       <a
@@ -71,7 +74,7 @@ export const Navbar: React.FC<IProps> = ({ block }) => {
   ))
 
   function changeLink(dir: Directions) {
-    if (block) return
+    if (block || isOpened) return
 
     const curIndex = chapters.indexOf(chapter)
 
@@ -100,13 +103,13 @@ export const Navbar: React.FC<IProps> = ({ block }) => {
       <div
         className={`z-50 w-full fixed top-0 left-0 right-0 flex justify-center
          border-${ThemeColor}-500 border-b h-10 md:h-16 transition-all duration-500 
-         bg-${ThemeColor}-400 shadow-2xl font-courier `}
+         bg-${ThemeColor}-400  font-courier `}
         style={{
           transition: '1.25s ease-in-out',
           boxShadow: `0 1px 5px 1px ${ShadowColor}`,
         }}
       >
-        <div className="w-1000 2k:w-1500 3k:w-2000 flex items-center gap-x-4 mx-9">
+        <div className="w-1000 2k:w-1500 3k:w-2000 flex items-center gap-x-4 mx-9 ">
           {/* <span>:{chapter}</span> */}
           {/* <span>:{block ? 'block' : 'not'}</span> */}
           <a className="flex-grow outline-none flex">
@@ -125,6 +128,7 @@ export const Navbar: React.FC<IProps> = ({ block }) => {
           <ALeft onClick={changeLink} chapter={chapter} />
           {links}
           <ARight onClick={changeLink} chapter={chapter} />
+          <AuthMiniature />
         </div>
       </div>
     </>

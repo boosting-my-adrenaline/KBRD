@@ -97,7 +97,6 @@ export const TAPtap: React.FC<IProps> = ({
           frameColor={frameColor}
           cellsLength={cells.length}
           handleStart={handleStart}
-          running={running}
           started={started}
           handleRunning={handleRunning}
           newGame={newGame}

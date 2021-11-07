@@ -4,10 +4,8 @@ import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 
 interface IProps {
   frameColor: string
-  // bluring: boolean
   cellsLength: number
   handleStart(): void
-  running: boolean
   started: boolean
   handleRunning(): void
   isThereCells: boolean
@@ -15,11 +13,9 @@ interface IProps {
 }
 
 export const TAPshootingFrame: React.FC<IProps> = ({
-  // bluring,
   frameColor,
   cellsLength,
   handleStart,
-  running,
   started,
   handleRunning,
   isThereCells,

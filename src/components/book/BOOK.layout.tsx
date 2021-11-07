@@ -52,13 +52,13 @@ export const BOOKLayout: React.FC<{
 
   return (
     <div
-      className="invisible font-courier text-2xl flex flex-row justify-between items-stretch space-y-4 "
+      className="visible font-courier text-2xl flex flex-row justify-between items-stretch space-y-4 "
       style={{
         position: 'absolute',
         alignSelf: 'center',
       }}
     >
-      {Border}
+      {/* {Border} */}
       <div
         className="w-1000 font-courier text-2xl flex flex-col space-y-4"
         style={{
@@ -96,7 +96,7 @@ export const BOOKLayout: React.FC<{
         <div className="flex flex-row ">{'\u00A0'}</div>
         <div className="flex flex-row ">{'\u00A0'}</div>
       </div>
-      {Border}
+      {/* {Border} */}
     </div>
   )
 }

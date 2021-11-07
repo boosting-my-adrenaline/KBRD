@@ -4,7 +4,7 @@ import { BOOKLayout } from './BOOK.layout'
 
 import { KEYS, letter1 } from '../../static/letters'
 
-import { Width } from '../../utils/getWidth'
+// import { Width } from '../../utils/GetWidth'
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 
@@ -41,14 +41,14 @@ export const BOOKContainer: React.FC = () => {
   const lastKey = useRef('')
   const prelastKey = useRef('')
 
-  const [appear, setAppear] = useState(true)
+  const [appear, setAppear] = useState(false)
 
   const chapter = useTypedSelector((state) => state.nav.chapter)
 
   useEffect(() => {
     let id = setTimeout(() => {
       setAppear(true)
-    }, 5600)
+    }, 100)
     return () => clearTimeout(id)
   }, [])
 

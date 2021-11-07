@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { chapters } from '../../redux/nav/nav.types'
 import { Chapters } from '../../types/nav'
 import { Slide } from './components/Slide'
 
 export const MAINcontainer: React.FC = () => {
   const chapter = useTypedSelector((state) => state.nav.chapter)
-
-  const chapters = Object.keys(Chapters).splice(1)
 
   const slides = chapters.map((el, i) => (
     <Slide key={el} title={el as Chapters} queue={i} chapter={chapter} />
