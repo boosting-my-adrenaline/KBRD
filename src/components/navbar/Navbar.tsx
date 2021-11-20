@@ -16,7 +16,6 @@ interface IProps {
 
 export const Navbar: React.FC<IProps> = ({ block }) => {
   const location = useLocation()
-  const Path = location.pathname
 
   const isOpened = useTypedSelector((state) => state.auth.isOpened)
 

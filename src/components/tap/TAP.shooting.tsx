@@ -155,6 +155,7 @@ export const TAPshooting: React.FC = () => {
 
   const handleEvent = (event: KeyboardEvent): void => {
     const { key } = event
+    if (!key) return
     setLastKey('')
     setLastKey(key.toLowerCase())
   }

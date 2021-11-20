@@ -4,7 +4,7 @@ export interface User {
   id: number
   user_name: string
   pass_word: string
-  photo: null | any
+  photo: null | string
   name: null | string
   second_name: null | string
   sex: null | 'male' | 'female' | `don't identify`
@@ -13,13 +13,14 @@ export interface User {
 
 export interface InitialState {
   isOpened: boolean
-  user: null | number
+  user: null | User
+  remembered: null | User
   users: User[]
 }
 
 export interface LogIn {
   type: AuthActionTypes.LOG_IN
-  payload: number
+  payload: { user: User; rememeber: boolean }
 }
 
 export interface LogOut {

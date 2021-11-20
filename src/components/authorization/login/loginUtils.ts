@@ -4,12 +4,12 @@ export const loginAttempt = (
   users: User[],
   username: string,
   password: string
-): null | number => {
-  let id: null | number = null
+): null | User => {
+  let USER: null | User = null
   users.forEach((user) => {
     if (user.user_name === username && user.pass_word === password) {
-      id = user.id
+      USER = user
     }
   })
-  return id
+  return USER
 }

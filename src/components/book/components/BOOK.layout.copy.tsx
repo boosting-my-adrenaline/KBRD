@@ -1,21 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Chapters } from '../../types/nav'
-import { FadeText } from '../../utils/FadeText'
-import { useDidMountEffect } from '../../utils/useDidMountEffect'
+import { Chapters } from '../../../types/nav'
+import { FadeText } from '../../../utils/FadeText'
+import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 import {
   formationForLEFT1,
   formationForLEFT2,
   formationForLEFT3,
   formationForRIGHT,
-} from './book-utils/stringFormation'
+  formationForRIGHTLayout,
+} from '../book-utils/stringFormation'
 
-export const BOOKBook: React.FC<{
+interface IProps {
+  failedTypesIndexes: number[]
   STRING: string
   overall: number
   animation: boolean
   currentString: string
   chapter: Chapters
-}> = ({ STRING, overall, animation, currentString, chapter }) => {
+}
+
+export const BOOKLayout: React.FC<IProps> = ({
+  STRING,
+  overall,
+  animation,
+  currentString,
+  chapter,
+  failedTypesIndexes,
+}) => {
   // const rawFIRST: string = STRING.slice(0, 1)
   // const rawRIGHT: string = STRING.slice(0, 35)
   // const rawRIGHT1: string = STRING.slice(35, 105)
@@ -43,21 +54,23 @@ export const BOOKBook: React.FC<{
   }, [chapter])
 
   useEffect(() => {
-    setTs(() => 0 - 14.4065 * (overall + 1))
+    setTs(() => 0 - 14.414 * (overall + 1))
   }, [STRING])
 
-  const RIGHT1: string =
-    '\u00A0'.repeat(overall) + currentString.slice(34 + overall, 106 + overall)
-  const RIGHT2: string =
-    '\u00A0'.repeat(overall) + currentString.slice(104 + overall, 176 + overall)
-  const RIGHT3: string =
-    '\u00A0'.repeat(overall) + currentString.slice(174 + overall, 246 + overall)
-  const LEFT: string = ''
+  const [arr, setArr] = useState<string>('1'.repeat(500))
 
-  const RIGHT: string = formationForRIGHT(overall, currentString)
-  const LEFT1: string = formationForLEFT1(overall, currentString)
-  const LEFT2: string = formationForLEFT2(overall, currentString)
-  const LEFT3: string = formationForLEFT3(overall, currentString)
+  useDidMountEffect(() => {
+    setArr((prev) => {
+      let arr = prev.split('')
+      failedTypesIndexes.forEach((el) => (arr[el - 1] = '0'))
+      return arr.join('')
+    })
+  }, [overall])
+
+  const RIGHT: string = formationForRIGHTLayout(overall, arr)
+  const LEFT1: string = formationForLEFT1(overall, arr)
+  const LEFT2: string = formationForLEFT2(overall, arr)
+  const LEFT3: string = formationForLEFT3(overall, arr)
 
   const formating = (str: string) => {
     return (
@@ -65,10 +78,16 @@ export const BOOKBook: React.FC<{
         .split('')
         // .map((el) => (el !== ' ' ? <div>{el}</div> : <div>{'\u00A0'}</div>))
         .map((el) =>
-          el !== ' ' ? (
-            <FadeText title={el} delay={[300, 1500]} hide={1} />
+          el !== '0' ? (
+            <div className="select-none bg-red-100">
+              {'\u00A0'}
+              {/* {el} */}
+            </div>
           ) : (
-            <div className="select-none">{'\u00A0'}</div>
+            <div className="select-none rounded-sm bg-red-400">
+              {'\u00A0'}
+              {/* {el} */}
+            </div>
           )
         )
     )
@@ -80,14 +99,18 @@ export const BOOKBook: React.FC<{
 
   return (
     <div
-      className="visible z-30 border-5 border-grey-900 rounded-xl"
-      style={{ opacity: !appear ? '0' : '1', transition: '1s ease' }}
+      className="absolute visible z-30 border-5 border-grey-900 rounded-xl"
+      style={{
+        opacity: !appear ? '0' : '1',
+        transition: '1s ease',
+        transform: 'translateX(0px)',
+      }}
     >
       <div
         className="w-1000 z-10 font-courier text-2xl flex flex-col space-y-4  "
         style={{
           transform: `translateX(${ts}px)`,
-          transition: animation ? '0.2s ease 0.0s' : '',
+          transition: animation ? '0.25s ease 0.0s' : '',
           // boxShadow: '5px 5px 10px 10px rgba(0,0,0,1)',
           // paddingLeft: `${-ts}px`,
         }}
@@ -96,17 +119,11 @@ export const BOOKBook: React.FC<{
         {rowing(LEFT2)}
         {rowing(LEFT1)}
 
-        <div className="flex flex-row">
-          {rowing(LEFT)}
+        <div className="flex flex-row">{rowing(RIGHT)}</div>
 
-          {/* <div className=" rounded-sm">{rowing(FIRST)}</div> */}
-
-          {rowing(RIGHT)}
-        </div>
-
-        {rowing(RIGHT1)}
-        {rowing(RIGHT2)}
-        {rowing(RIGHT3)}
+        <div>{'\u0A00'}</div>
+        <div>{'\u0A00'}</div>
+        <div>{'\u0A00'}</div>
       </div>
     </div>
   )

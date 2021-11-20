@@ -35,11 +35,11 @@ export const App: React.FC = () => {
     }
   }, [chapter])
 
-  const [initialScreen, setInitialScreen] = useState(true)
+  const [initialScreen, setInitialScreen] = useState(false)
 
-  useEffect(() => {
-    setTimeout(() => setInitialScreen(false), 1000)
-  }, [])
+  // useEffect(() => {
+  //   setTimeout(() => setInitialScreen(false), 1000)
+  // }, [])
 
   return (
     <>

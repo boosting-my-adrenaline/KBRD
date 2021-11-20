@@ -26,7 +26,7 @@ export const AUTHloginContainer: React.FC<IProps> = () => {
     // console.log(response)
     setTimeout(() => {
       if (response) {
-        logIn(response)
+        logIn(response, rememberMe)
         setUsername('')
         setPassword('')
         setOpenOff()

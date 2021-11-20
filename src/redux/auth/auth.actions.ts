@@ -1,9 +1,9 @@
-import { AuthActions } from '../../types/auth'
+import { AuthActions, User } from '../../types/auth'
 import { AuthActionTypes } from './auth.types'
 
-export const logIn = (id: number): AuthActions => ({
+export const logIn = (user: User, rememeber: boolean): AuthActions => ({
   type: AuthActionTypes.LOG_IN,
-  payload: id,
+  payload: { user, rememeber },
 })
 
 export const logOut = (): AuthActions => ({

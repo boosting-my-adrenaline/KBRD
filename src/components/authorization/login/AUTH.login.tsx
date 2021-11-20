@@ -65,6 +65,7 @@ export const AUTHlogin: React.FC<IProps> = ({
             style={{ width: '100%', fontFamily: 'courier' }}
             label="USERNAME"
             type="username"
+            id="login"
             variant="outlined"
             helperText={usernameError ? 'incorrect username or password' : ' '}
             error={usernameError}
@@ -79,7 +80,7 @@ export const AUTHlogin: React.FC<IProps> = ({
           <TextField
             style={{ width: '100%' }}
             label="PASSWORD"
-            // id="password"
+            id="password"
             type={showPassword ? 'text' : 'password'}
             variant="outlined"
             helperText={passwordError ? 'incorrect username or password' : ' '}

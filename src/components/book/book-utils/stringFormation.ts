@@ -102,3 +102,21 @@ export function formationForLEFT3(OA: number, TS: string): string {
     return '\u00A0'.repeat(OA) + TS.slice(OA - 246, OA - 174)
   }
 }
+
+export function formationForRIGHTLayout(OA: number, TS: string): string {
+  if (OA < 36) {
+    return (
+      '\u00A0'.repeat(OA) +
+      TS.split('')
+        .reverse()
+        .join('')
+        .slice(0, 36 - OA)
+        .split('')
+        .reverse()
+        .join('') +
+      TS.slice(0, 36 + OA)
+    )
+  } else {
+    return '\u00A0'.repeat(OA) + TS.slice(OA - 36, 36 + OA)
+  }
+}

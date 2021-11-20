@@ -1,15 +1,32 @@
 import React, { useEffect, useState } from 'react'
-import { useAuthAction, useNavAction } from '../../../hooks/useAction'
+import { useAuthAction } from '../../../hooks/useAction'
 import { useTypedSelector } from '../../../hooks/useTypedSelector'
-import AS from '../../../static/AS.jpeg'
+
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 import { AUTHcontainer } from '../../authorization/AUTH.container'
+import { PROFILEcontainer } from '../../profile/PROFILE.container'
+import { PhotoMiniature } from './PhotoMiniature'
 
 export const AuthMiniature: React.FC = ({}) => {
-  const isLoggedIn = useTypedSelector((state) => state.auth.user !== null)
+  const user = useTypedSelector((state) => state.auth.user)
+  // const users = useTypedSelector((state) => state.auth.users)
+  const isLoggedIn = !!user
+
+  // const getUserInfo = (array: User[], id: number | null) => {
+  //   let result: null | User = null
+  //   array.forEach((el) => {
+  //     if (el.id === id) {
+  //       return result === el
+  //     }
+  //   })
+
+  //   return result
+  // }
+
+  // const userInfo: User | null = getUserInfo(users, user)
 
   const { setOpenOn, setOpenOff } = useAuthAction()
-  const open = useTypedSelector((state) => state.auth.isOpened)
+  const isOpen = useTypedSelector((state) => state.auth.isOpened)
 
   const chapter = useTypedSelector((state) => state.nav.chapter)
   const [appear, setAppear] = useState(true)
@@ -21,7 +38,7 @@ export const AuthMiniature: React.FC = ({}) => {
     return () => {
       clearTimeout(id)
     }
-  }, [open])
+  }, [isOpen])
 
   useDidMountEffect(() => {
     setOpenOff()
@@ -35,7 +52,7 @@ export const AuthMiniature: React.FC = ({}) => {
         height: 50,
       }}
     >
-      {open ? (
+      {isOpen ? (
         <div
           style={{
             position: 'fixed',
@@ -53,29 +70,38 @@ export const AuthMiniature: React.FC = ({}) => {
       {
         <div
           className={`absolute z-50  border border-black overflow-hidden ml-8 ${
-            open ? '' : 'cursor-pointer'
+            isOpen ? '' : 'cursor-pointer'
           }`}
           style={{
-            borderRadius: !open ? 1000 : 10,
-            width: !open ? 80 : 1150,
-            height: !open ? 50 : 700,
+            borderRadius: !isOpen ? 1000 : 10,
+            width: !isOpen ? 80 : 1150,
+            height: !isOpen ? 50 : 700,
             transition: '0.4s ease',
-            transform: `translateX(${!open ? 0 : -490}px) translateY(${
-              !open ? 0 : 410
+            transform: `translateX(${!isOpen ? 0 : -490}px) translateY(${
+              !isOpen ? 0 : 410
             }px)`,
+            boxShadow: isOpen ? '2px 5px 20px 10px rgba(0,0,0,0.1)' : '',
           }}
           onClick={() => {
             // isLoggedIn ? logOut() : logIn()
-            if (!open) setOpenOn()
+            if (!isOpen) setOpenOn()
           }}
         >
-          {!open ? (
+          {/* <div
+            className={`absolute `}
+            style={{ top: 100, right: 200, zIndex: 50 }}
+          >
+            <PhotoMiniature />
+          </div> */}
+          {!isOpen ? (
             <>
               {isLoggedIn ? (
-                <>
+                <div className={`flex items-center justify-center`}>
                   {!appear ? (
                     <div
-                      className={`bg-white`}
+                      className={`${
+                        isLoggedIn ? `bg-purple-100` : `bg-yellow-200`
+                      }`}
                       style={{
                         width: '100%',
                         height: 1050,
@@ -84,17 +110,12 @@ export const AuthMiniature: React.FC = ({}) => {
                       {' '}
                     </div>
                   ) : (
-                    <img
-                      alt="lolo"
-                      src={AS}
-                      className={`w-16 h-16`}
-                      style={{ opacity: appear ? 1 : 0, transition: '0.3s' }}
-                    />
+                    <PhotoMiniature />
                   )}
-                </>
+                </div>
               ) : (
                 <div
-                  className={`bg-white w-full h-full flex justify-center items-center`}
+                  className={`bg-yellow-100 w-full h-full flex justify-center items-center`}
                 >
                   {' '}
                   Log in
@@ -102,7 +123,7 @@ export const AuthMiniature: React.FC = ({}) => {
               )}
             </>
           ) : (
-            <AUTHcontainer />
+            <>{isLoggedIn ? <PROFILEcontainer /> : <AUTHcontainer />}</>
           )}
         </div>
       }

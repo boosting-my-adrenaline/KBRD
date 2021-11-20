@@ -9,6 +9,7 @@ import {
 } from '../auth.types'
 import { SignupUsernameColor } from '../auth.types'
 import { ErrorOutline, VisibilityOff, Visibility } from '@material-ui/icons'
+import { useTypedSelector } from '../../../hooks/useTypedSelector'
 
 const theme = createTheme({
   typography: {
@@ -99,11 +100,15 @@ export const AUTHlsignup: React.FC<IProps> = ({
     return () => clearTimeout(id)
   }, [showPassword2])
 
+  ////////
+  const users = useTypedSelector((state) => state.auth.users)
+
   return (
     <div
       className={`flex flex-col justify-evenly items-center gap-2 font-courier no-select box-border`}
       style={{ width: '400px', height: '400px' }}
     >
+      {/* {noErrors ? 'no errors' : 'error'} */}
       <ThemeProvider theme={theme}>
         <div style={{ width: '100%', marginBottom: '' }}>
           <TextField
@@ -181,6 +186,7 @@ export const AUTHlsignup: React.FC<IProps> = ({
             >
               SUBMIT
             </Button>
+            {/* <Button onMouseDown={() => console.log(users)}>USERS</Button> */}
           </div>
         </div>
       </ThemeProvider>

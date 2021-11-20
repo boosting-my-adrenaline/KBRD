@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { BOOKBook } from './BOOK.book'
-import { BOOKLayout } from './BOOK.layout'
+import { BOOKBook } from './components/BOOK.book'
+import { BOOKLayout } from './components/BOOK.layout.copy'
 
 import { KEYS, letter1 } from '../../static/letters'
 
 // import { Width } from '../../utils/GetWidth'
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { BOOKpointer } from './components/BOOK.pointer'
+import { BOOKframe } from './components/BOOK.frame'
 
 interface IHistoryOfFailed {
   desired: string
@@ -184,9 +186,23 @@ export const BOOKContainer: React.FC = () => {
         </button>
         <button
           className="bg-blue-300 p-3 rounded-full justify-self-end	outline-none transition"
-          onClick={() => {}}
+          onMouseDown={() => {
+            for (let i = 0; i < 10; i++) {
+              SUCCESS()
+            }
+          }}
         >
-          swipe
+          x10
+        </button>
+        <button
+          className="bg-blue-300 p-3 rounded-full justify-self-end	outline-none transition"
+          onMouseDown={() => {
+            for (let i = 0; i < 100; i++) {
+              SUCCESS()
+            }
+          }}
+        >
+          x100
         </button>
 
         <div className="ml-auto">
@@ -234,7 +250,12 @@ export const BOOKContainer: React.FC = () => {
           failedTypesIndexes={failedTypesIndexes.current}
           overall={successAndFailedTypes.current}
           currentString={letter1}
+          STRING={STRING}
+          animation={animationBook}
+          chapter={chapter}
         />
+        <BOOKpointer overall={successAndFailedTypes.current} />
+        <BOOKframe />
       </div>
     </div>
   )

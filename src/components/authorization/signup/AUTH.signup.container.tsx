@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useAuthAction } from '../../../hooks/useAction'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 import { PasswordState, UsernameState } from '../auth.types'
 import { AUTHlsignup } from './AUTH.signup'
@@ -80,8 +81,8 @@ export const AUTHsignupContainer: React.FC = ({}) => {
       usernameState === 'error' ||
       passwordState === 'error' ||
       password2State === 'error' ||
-      !username ||
-      !password ||
+      // !username ||
+      // !password ||
       !password2
     ) {
       setNoErrors(false)
@@ -90,25 +91,44 @@ export const AUTHsignupContainer: React.FC = ({}) => {
     }
   }, [usernameState, passwordState, password2State])
 
-  const handleSumbit = (): void => {
-    setUsernameState(signUpUsernameCheck(username)[0])
-    setUsernameMessage(signUpUsernameCheck(username)[1])
+  const { signUp, setOpenOff } = useAuthAction()
 
-    setPasswordState(signupPasswordCheck(password)[0])
-    setPasswordMessage(signupPasswordCheck(password)[1])
+  const handleSumbit = (): void => {
+    console.log('start')
+
+    if (!username) {
+      setUsernameState(signUpUsernameCheck(username)[0])
+      setUsernameMessage(signUpUsernameCheck(username)[1])
+    }
+    console.log('1')
+
+    if (!password) {
+      setPasswordState(signupPasswordCheck(password)[0])
+      setPasswordMessage(signupPasswordCheck(password)[1])
+    }
+    console.log('2')
 
     if (!password2 || password2 !== password) {
       setPassword2State('error')
+      setPassword2Message('passwords do not match')
     }
-    if (!noErrors || !username || !password || !password2) return
+
+    console.log('3')
+
+    if (!noErrors || !username || !password || !password2)
+      return console.log('sgw')
+    setTimeout(() => setOpenOff(), 100)
+
+    setTimeout(() => signUp({ username, password }), 200)
+
+    setTimeout(() => setOpenOff(), 500)
 
     console.log(username, password)
 
-    setUsername('')
-    setPassword('')
-    setPassword2('')
-
-    let id0 = setTimeout(() => {
+    setTimeout(() => {
+      setUsername('')
+      setPassword('')
+      setPassword2('')
       setUsernameState('default')
       setPasswordState('default')
       setPassword2State('default')
@@ -116,6 +136,7 @@ export const AUTHsignupContainer: React.FC = ({}) => {
       setPasswordMessage('')
       setPassword2Message('')
     }, 1050)
+    console.log('end')
   }
 
   return (
