@@ -17,6 +17,7 @@ interface IProps {
   animation: boolean
   currentString: string
   chapter: Chapters
+  show: boolean
 }
 
 export const BOOKLayoutHighlighter: React.FC<IProps> = ({
@@ -26,6 +27,7 @@ export const BOOKLayoutHighlighter: React.FC<IProps> = ({
   currentString,
   chapter,
   failedTypesIndexes,
+  show,
 }) => {
   // const rawFIRST: string = STRING.slice(0, 1)
   // const rawRIGHT: string = STRING.slice(0, 35)
@@ -40,6 +42,10 @@ export const BOOKLayoutHighlighter: React.FC<IProps> = ({
   const [ts, setTs] = useState(0)
   const [appear, setAppear] = useState(false)
 
+  useDidMountEffect(() => {
+    setAppear(show)
+  }, [show])
+
   useEffect(() => {
     let id = setTimeout(() => {
       setAppear(true)
@@ -53,6 +59,17 @@ export const BOOKLayoutHighlighter: React.FC<IProps> = ({
     }, 0)
   }, [chapter])
 
+  const [extraAppear, setExtraAppear] = useState(true)
+
+  useDidMountEffect(() => {
+    setExtraAppear(false)
+    let id = setTimeout(() => setExtraAppear(true), 500)
+    return () => {
+      clearTimeout(id)
+      setExtraAppear(true)
+    }
+  }, [currentString])
+
   useEffect(() => {
     setTs(() => 0 - 14.414 * (overall + 1))
   }, [STRING])
@@ -63,7 +80,6 @@ export const BOOKLayoutHighlighter: React.FC<IProps> = ({
     '\u00A0'.repeat(overall) + currentString.slice(104 + overall, 176 + overall)
   const RIGHT3: string =
     '\u00A0'.repeat(overall) + currentString.slice(174 + overall, 246 + overall)
-  const LEFT: string = ''
 
   const RIGHT: string = formationForRIGHTLayout(overall, currentString)
   const LEFT1: string = formationForLEFT1(overall, currentString)
@@ -82,7 +98,7 @@ export const BOOKLayoutHighlighter: React.FC<IProps> = ({
               {/* {el} */}
             </div>
           ) : (
-            <div className="select-none rounded-sm bg-red-200">
+            <div className="select-none bg-red-200">
               {'\u00A0'}
               {/* {el} */}
             </div>
@@ -99,7 +115,7 @@ export const BOOKLayoutHighlighter: React.FC<IProps> = ({
     <div
       className="absolute visible z-30 border-5 border-grey-900 rounded-xl"
       style={{
-        opacity: !appear ? '0' : '1',
+        opacity: appear && extraAppear ? 1 : 0,
         transition: '1s ease',
         transform: 'translateX(0px)',
       }}
@@ -108,7 +124,7 @@ export const BOOKLayoutHighlighter: React.FC<IProps> = ({
         className="w-1000 z-10 font-courier text-2xl flex flex-col space-y-4  "
         style={{
           transform: `translateX(${ts}px)`,
-          transition: animation ? '0.25s ease 0.0s' : '',
+          transition: animation && appear ? '0.25s ease 0.0s' : '',
           // boxShadow: '5px 5px 10px 10px rgba(0,0,0,1)',
           // paddingLeft: `${-ts}px`,
         }}

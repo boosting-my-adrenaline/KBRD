@@ -67,6 +67,15 @@ export const BOOKLayout: React.FC<IProps> = ({
     })
   }, [overall])
 
+  useDidMountEffect(() => {
+    setArr('1'.repeat(500))
+    setArr((prev) => {
+      let arr = prev.split('')
+      failedTypesIndexes.forEach((el) => (arr[el - 1] = '^'))
+      return arr.join('')
+    })
+  }, [currentString])
+
   const RIGHT: string = formationForRIGHTLayout(overall, arr)
   const LEFT1: string = formationForLEFT1(overall, arr)
   const LEFT2: string = formationForLEFT2(overall, arr)
@@ -122,9 +131,9 @@ export const BOOKLayout: React.FC<IProps> = ({
 
         <div className="flex flex-row">{rowing(RIGHT)}</div>
 
-        <div>{'\u0A00'}</div>
-        <div>{'\u0A00'}</div>
-        <div>{'\u0A00'}</div>
+        {/* <div>{'\u0A00'}</div> */}
+        {/* <div>{'\u0A00'}</div> */}
+        {/* <div>{'\u0A00'}</div> */}
       </div>
     </div>
   )

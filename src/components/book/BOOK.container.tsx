@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { BOOKBook } from './components/BOOK.book'
 import { BOOKLayout } from './components/BOOK.layout'
 
-import { KEYS, letter1 } from '../../static/letters'
+import { KEYS, letter1 } from './components/strings/strings'
 
 // import { Width } from '../../utils/GetWidth'
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
@@ -11,15 +11,32 @@ import { BOOKpointer } from './components/BOOK.pointer'
 import { BOOKframe } from './components/BOOK.frame'
 import { BOOKLayoutHighlighter } from './components/BOOK.layout.highlighter'
 import { BOOKbuttons } from './components/BOOK.buttons'
-
-interface IHistoryOfFailed {
-  desired: string
-  pressed: string
-  previous: string
-}
+import { BOOKstring } from './components/strings/BOOK.string'
+import { moveString, shuffle } from './components/strings/stringFormation'
 
 export const BOOKContainer: React.FC = () => {
-  const [STRING, setSTRING] = useState<string>('')
+  const [currentString, setCurrentString] = useState(shuffle(letter1))
+  const [STRING, setSTRING] = useState<string>(currentString)
+
+  // useEffect(() => {
+  //   setSTRING(currentString)
+  //   // successAndFailedTypes.current = 0
+  //   // failedTypesIndexes.current = []
+  //   // failureTypes.current = 0
+  // }, [currentString])
+
+  function handleStringErase(STR: string): void {
+    setCurrentString(STR)
+    setSTRING(STR)
+    successAndFailedTypes.current = 0
+    failedTypesIndexes.current = []
+    failureTypes.current = 0
+  }
+
+  function handleStringNoErase(STR: string): void {
+    setCurrentString(STR)
+    setSTRING(moveString(STR, successAndFailedTypes.current))
+  }
 
   const [keyDown, setKeyDown] = useState('')
 
@@ -38,12 +55,20 @@ export const BOOKContainer: React.FC = () => {
 
   const failedTypeStatus = useRef(false)
   const escapeFailedTypeStatus = useRef(false)
-  const failedTypesIndexes = useRef([] as number[])
+  const failedTypesIndexes = useRef<number[]>([])
 
-  const historyOfFailed = useRef([] as IHistoryOfFailed[])
+  const historyOfFailed = useRef<
+    {
+      desired: string
+      pressed: string
+      previous: string
+    }[]
+  >([])
 
   const lastKey = useRef('')
   const prelastKey = useRef('')
+
+  const [hightlighter, setHighlighter] = useState(true)
 
   const [appear, setAppear] = useState(false)
 
@@ -69,10 +94,6 @@ export const BOOKContainer: React.FC = () => {
   useEffect(() => {
     rendersCount.current++
   })
-
-  useEffect(() => {
-    setSTRING(letter1)
-  }, [])
 
   const handleEvent = (event: KeyboardEvent) => {
     const { key } = event
@@ -111,9 +132,6 @@ export const BOOKContainer: React.FC = () => {
   function SUCCESS(): void {
     setSTRING((str) => str.substring(1) + str[0])
     successAndFailedTypes.current++
-    // failedTypesIndexes.current = failedTypesIndexes.current
-    //   // .map((el) => el + 1)
-    //   .filter((el) => el <= 245)
     if (failedTypeStatus.current && !escapeFailedTypeStatus.current) {
       failedTypesIndexes.current = [
         ...failedTypesIndexes.current,
@@ -174,6 +192,9 @@ export const BOOKContainer: React.FC = () => {
         failureTypes={failureTypes}
         successAndFailedTypes={successAndFailedTypes}
         failedTypesIndexes={failedTypesIndexes}
+        highlighter={hightlighter}
+        setHighlighter={setHighlighter}
+        STRING={STRING}
       />
       <div
         className="invisible 1k:visible  mt-16 md:mt-18 flex justify-center items-start "
@@ -183,13 +204,13 @@ export const BOOKContainer: React.FC = () => {
           STRING={STRING}
           overall={successAndFailedTypes.current}
           animation={animationBook}
-          currentString={letter1}
+          currentString={currentString}
           chapter={chapter}
         />
         <BOOKLayout
           failedTypesIndexes={failedTypesIndexes.current}
           overall={successAndFailedTypes.current}
-          currentString={letter1}
+          currentString={currentString}
           STRING={STRING}
           animation={animationBook}
           chapter={chapter}
@@ -197,12 +218,22 @@ export const BOOKContainer: React.FC = () => {
         <BOOKLayoutHighlighter
           failedTypesIndexes={failedTypesIndexes.current}
           overall={successAndFailedTypes.current}
-          currentString={letter1}
+          currentString={currentString}
           STRING={STRING}
           animation={animationBook}
           chapter={chapter}
+          show={hightlighter}
         />
         <BOOKpointer overall={successAndFailedTypes.current} />
+        <BOOKstring
+          // STRING={STRING}
+          // setSTRING={setSTRING}
+          // setCurrentString={setCurrentString}
+          currentString={currentString}
+          handleStringErase={handleStringErase}
+          handleStringNoErase={handleStringNoErase}
+          overall={successAndFailedTypes.current}
+        />
         <BOOKframe />
       </div>
     </div>

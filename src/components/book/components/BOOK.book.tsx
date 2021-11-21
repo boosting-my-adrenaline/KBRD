@@ -49,6 +49,17 @@ export const BOOKBook: React.FC<{
   const LEFT2: string = formationForLEFT2(overall, currentString)
   const LEFT3: string = formationForLEFT3(overall, currentString)
 
+  const [extraAppear, setExtraAppear] = useState(true)
+
+  useDidMountEffect(() => {
+    setExtraAppear(false)
+    let id = setTimeout(() => setExtraAppear(true), 200)
+    return () => {
+      clearTimeout(id)
+      setExtraAppear(true)
+    }
+  }, [currentString])
+
   const formating = (str: string) => {
     return (
       str
@@ -56,8 +67,15 @@ export const BOOKBook: React.FC<{
         // .map((el) => (el !== ' ' ? <div>{el}</div> : <div>{'\u00A0'}</div>))
         .map((el) =>
           el !== ' ' ? (
-            <div className={`bg-red-00 `}>
-              <FadeText title={el} delay={[300, 1500]} hide={1} />
+            <div
+              className={`bg-red-00 `}
+              style={{
+                opacity: extraAppear ? 1 : 0,
+                transition: '0.3s ease-in-out',
+              }}
+            >
+              <FadeText title={el} delay={[300, 1000]} hide={1} />
+              {/* {el} */}
             </div>
           ) : (
             <div className="select-none ">{'\u00A0'}</div>

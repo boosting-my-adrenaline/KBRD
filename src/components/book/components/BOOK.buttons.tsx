@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useTypedSelector } from '../../../hooks/useTypedSelector'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
+import { BOOKbuttonVisual } from './BOOK.buttonVisual'
 
 interface IProps {
   animationBook: boolean
@@ -19,6 +20,9 @@ interface IProps {
   failedTypesIndexes: {
     current: number[]
   }
+  highlighter: boolean
+  setHighlighter(turn: boolean): void
+  STRING: string
 }
 
 export const BOOKbuttons: React.FC<IProps> = ({
@@ -30,6 +34,9 @@ export const BOOKbuttons: React.FC<IProps> = ({
   failureTypes,
   successAndFailedTypes,
   failedTypesIndexes,
+  setHighlighter,
+  highlighter,
+  STRING,
 }) => {
   const [appear, setAppear] = useState(false)
 
@@ -38,38 +45,36 @@ export const BOOKbuttons: React.FC<IProps> = ({
   useEffect(() => {
     let id = setTimeout(() => {
       setAppear(true)
-    }, 100)
+    }, 700)
     return () => clearTimeout(id)
   }, [])
 
   useDidMountEffect(() => {
     setTimeout(() => {
       setAppear(false)
-    }, 250)
+    }, 0)
   }, [chapter])
 
   return (
     <div
-      className=" mx-10 mt-40 p-2 flex flex-row gap-2 rounded-full bg-red-200"
+      className=" mx-60 mt-40 p-2 flex flex-row gap-2 rounded-full bg-red-00"
       style={{
         transform: 'translateY(-135px)',
         opacity: !appear ? '0' : '1',
-        transition: '1s ease-in-out',
+        transition: '0.5s ease-in-out',
       }}
     >
-      <button
-        tabIndex={-1}
-        className="bg-green-500 p-3 rounded-full justify-self-end	outline-none transition"
-        style={{
-          backgroundColor: animationBook ? 'lightcoral' : '#ccbbbb',
-        }}
-        onMouseDown={(e) => {
-          e.preventDefault()
-          setAnimationBook(!animationBook)
-        }}
-      >
-        animation{animationBook}
-      </button>
+      {}
+      <BOOKbuttonVisual
+        tag={'animation'}
+        onClick={setAnimationBook}
+        active={animationBook}
+      />
+      <BOOKbuttonVisual
+        tag={'hightlighter'}
+        onClick={setHighlighter}
+        active={highlighter}
+      />
       <button
         className="bg-blue-300 p-3 rounded-full justify-self-end	outline-none transition"
         onMouseDown={() => {
@@ -90,7 +95,7 @@ export const BOOKbuttons: React.FC<IProps> = ({
       >
         x100
       </button>
-
+      S:{STRING[0]}
       <div className="ml-auto">
         <button className="bg-green-500 p-3 rounded-full justify-self-end	">
           FTI:{[...failedTypesIndexes.current].join('-')}
