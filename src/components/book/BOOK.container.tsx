@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { BOOKBook } from './components/BOOK.book'
-import { BOOKLayout } from './components/BOOK.layout.copy'
+import { BOOKLayout } from './components/BOOK.layout'
 
 import { KEYS, letter1 } from '../../static/letters'
 
@@ -9,6 +9,8 @@ import { useDidMountEffect } from '../../utils/useDidMountEffect'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { BOOKpointer } from './components/BOOK.pointer'
 import { BOOKframe } from './components/BOOK.frame'
+import { BOOKLayoutHighlighter } from './components/BOOK.layout.highlighter'
+import { BOOKbuttons } from './components/BOOK.buttons'
 
 interface IHistoryOfFailed {
   desired: string
@@ -163,78 +165,16 @@ export const BOOKContainer: React.FC = () => {
 
   return (
     <div className="overflow-y-hidden w-full  flex flex-col justify-center align-center font-courier border-2 border-grey-900 ">
-      <div
-        className=" mx-10 mt-40 p-2 flex flex-row gap-2 rounded-full bg-red-200"
-        style={{
-          transform: 'translateY(-135px)',
-          opacity: !appear ? '0' : '1',
-          transition: '1s ease-in-out',
-        }}
-      >
-        <button
-          tabIndex={-1}
-          className="bg-green-500 p-3 rounded-full justify-self-end	outline-none transition"
-          style={{
-            backgroundColor: animationBook ? 'lightcoral' : '#ccbbbb',
-          }}
-          onMouseDown={(e) => {
-            e.preventDefault()
-            setAnimationBook((p) => !p)
-          }}
-        >
-          animation{animationBook}
-        </button>
-        <button
-          className="bg-blue-300 p-3 rounded-full justify-self-end	outline-none transition"
-          onMouseDown={() => {
-            for (let i = 0; i < 10; i++) {
-              SUCCESS()
-            }
-          }}
-        >
-          x10
-        </button>
-        <button
-          className="bg-blue-300 p-3 rounded-full justify-self-end	outline-none transition"
-          onMouseDown={() => {
-            for (let i = 0; i < 100; i++) {
-              SUCCESS()
-            }
-          }}
-        >
-          x100
-        </button>
-
-        <div className="ml-auto">
-          <button className="bg-green-500 p-3 rounded-full justify-self-end	">
-            FTI:{[...failedTypesIndexes.current].join('-')}
-          </button>
-          <button className="bg-green-500 p-3 rounded-full justify-self-end	">
-            OA:{successAndFailedTypes.current}
-          </button>
-          <button>{'\u00A0'}</button>
-          <button className="bg-green-500 p-3 rounded-full justify-self-end	">
-            S:{successTypes}
-          </button>
-          <button className="bg-red-500 p-3 rounded-full justify-self-end	">
-            F:{failureTypes.current}
-          </button>
-          <button className="bg-purple-500 p-3 rounded-full justify-self-end	">
-            {lastKey.current === ''
-              ? '\u00A0'.repeat(3)
-              : lastKey.current.length === 1
-              ? '\u00A0' + lastKey.current + '\u00A0'
-              : lastKey.current}
-          </button>
-          <button className="bg-purple-400 p-3 rounded-full justify-self-end	">
-            {prelastKey.current === ''
-              ? '\u00A0'.repeat(3)
-              : prelastKey.current.length === 1
-              ? '\u00A0' + prelastKey.current + '\u00A0'
-              : prelastKey.current}
-          </button>
-        </div>
-      </div>
+      <BOOKbuttons
+        animationBook={animationBook}
+        setAnimationBook={setAnimationBook}
+        SUCCESS={SUCCESS}
+        lastKey={lastKey}
+        successTypes={successTypes}
+        failureTypes={failureTypes}
+        successAndFailedTypes={successAndFailedTypes}
+        failedTypesIndexes={failedTypesIndexes}
+      />
       <div
         className="invisible 1k:visible  mt-16 md:mt-18 flex justify-center items-start "
         style={{ transform: 'translateY(-150px)' }}
@@ -247,6 +187,14 @@ export const BOOKContainer: React.FC = () => {
           chapter={chapter}
         />
         <BOOKLayout
+          failedTypesIndexes={failedTypesIndexes.current}
+          overall={successAndFailedTypes.current}
+          currentString={letter1}
+          STRING={STRING}
+          animation={animationBook}
+          chapter={chapter}
+        />
+        <BOOKLayoutHighlighter
           failedTypesIndexes={failedTypesIndexes.current}
           overall={successAndFailedTypes.current}
           currentString={letter1}

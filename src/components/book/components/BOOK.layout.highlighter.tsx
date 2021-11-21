@@ -19,7 +19,7 @@ interface IProps {
   chapter: Chapters
 }
 
-export const BOOKLayout: React.FC<IProps> = ({
+export const BOOKLayoutHighlighter: React.FC<IProps> = ({
   STRING,
   overall,
   animation,
@@ -57,20 +57,18 @@ export const BOOKLayout: React.FC<IProps> = ({
     setTs(() => 0 - 14.414 * (overall + 1))
   }, [STRING])
 
-  const [arr, setArr] = useState<string>('1'.repeat(500))
+  const RIGHT1: string =
+    '\u00A0'.repeat(overall) + currentString.slice(34 + overall, 106 + overall)
+  const RIGHT2: string =
+    '\u00A0'.repeat(overall) + currentString.slice(104 + overall, 176 + overall)
+  const RIGHT3: string =
+    '\u00A0'.repeat(overall) + currentString.slice(174 + overall, 246 + overall)
+  const LEFT: string = ''
 
-  useDidMountEffect(() => {
-    setArr((prev) => {
-      let arr = prev.split('')
-      failedTypesIndexes.forEach((el) => (arr[el - 1] = '0'))
-      return arr.join('')
-    })
-  }, [overall])
-
-  const RIGHT: string = formationForRIGHTLayout(overall, arr)
-  const LEFT1: string = formationForLEFT1(overall, arr)
-  const LEFT2: string = formationForLEFT2(overall, arr)
-  const LEFT3: string = formationForLEFT3(overall, arr)
+  const RIGHT: string = formationForRIGHTLayout(overall, currentString)
+  const LEFT1: string = formationForLEFT1(overall, currentString)
+  const LEFT2: string = formationForLEFT2(overall, currentString)
+  const LEFT3: string = formationForLEFT3(overall, currentString)
 
   const formating = (str: string) => {
     return (
@@ -78,13 +76,13 @@ export const BOOKLayout: React.FC<IProps> = ({
         .split('')
         // .map((el) => (el !== ' ' ? <div>{el}</div> : <div>{'\u00A0'}</div>))
         .map((el) =>
-          el !== '0' ? (
+          el === ' ' ? (
             <div className="select-none bg-red-100">
               {'\u00A0'}
               {/* {el} */}
             </div>
           ) : (
-            <div className="select-none rounded-sm bg-red-400">
+            <div className="select-none rounded-sm bg-red-200">
               {'\u00A0'}
               {/* {el} */}
             </div>
@@ -121,9 +119,9 @@ export const BOOKLayout: React.FC<IProps> = ({
 
         <div className="flex flex-row">{rowing(RIGHT)}</div>
 
-        <div>{'\u0A00'}</div>
-        <div>{'\u0A00'}</div>
-        <div>{'\u0A00'}</div>
+        {rowing(RIGHT1)}
+        {rowing(RIGHT2)}
+        {rowing(RIGHT3)}
       </div>
     </div>
   )

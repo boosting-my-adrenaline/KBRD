@@ -40,23 +40,28 @@ export const BOOKpointer: React.FC<IProps> = ({ overall }) => {
 
   return (
     <div
-      className={'absolute text-2xl space-y-4 z-50'}
+      className={'absolute text-2xl space-y-4 z-30'}
       style={{ opacity: !appear ? '0' : '1', transition: '1s ease-in-out' }}
     >
       <div>{'\u00A0'}</div>
       <div>{'\u00A0'}</div>
       <div>{'\u00A0'}</div>
-      <div className={`absolute flex flex-row items-start justify-start `}>
+      <div
+        className={`absolute flex flex-row items-start justify-start `}
+        style={{ transform: 'translate(8px, -0px)' }}
+      >
         <div
-          className={`${
+          className={`absolute ${
             show ? 'visible' : 'invisible'
-          } border-md  border-black rounded-sm  animate-pulse z-0`}
+          } border-md  border-black rounded-sm  animate-pulse z-50`}
           style={{
-            transform: 'translate(8px, -0px)',
             boxShadow: '0 0 2px 2px rgba(0, 0, 0, 0.5)',
             transition: '0.01s ease-in-out',
           }}
         >
+          {'\u00A0'}
+        </div>
+        <div className={`rounded-sm bg-purple-200 animate-pulse z-10`}>
           {'\u00A0'}
         </div>
       </div>
