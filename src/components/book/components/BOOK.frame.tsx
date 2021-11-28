@@ -21,7 +21,7 @@ export const BOOKframe: React.FC = () => {
 
   return (
     <div
-      className={`z-50 visible absolute text-2xl flex flex-row`}
+      className={`z-50 visible absolute text-2xl flex flex-row select-none`}
       style={{ opacity: !appear ? '0' : '1', transition: '0.5s ease-in-out' }}
     >
       <div className={` bg-red-100`} style={{ width: 10000 }}>

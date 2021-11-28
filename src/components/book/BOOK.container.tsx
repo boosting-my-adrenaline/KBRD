@@ -2,28 +2,26 @@ import React, { useState, useEffect, useRef } from 'react'
 import { BOOKBook } from './components/BOOK.book'
 import { BOOKLayout } from './components/BOOK.layout'
 
-import { KEYS, letter1 } from './components/strings/strings'
+import {
+  capitals,
+  KEYS,
+  letter1,
+  notCapitals,
+} from './components/strings/strings'
 
 // import { Width } from '../../utils/GetWidth'
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { BOOKpointer } from './components/BOOK.pointer'
 import { BOOKframe } from './components/BOOK.frame'
-import { BOOKLayoutHighlighter } from './components/BOOK.layout.highlighter'
 import { BOOKbuttons } from './components/BOOK.buttons'
 import { BOOKstring } from './components/strings/BOOK.string'
 import { moveString, shuffle } from './components/strings/stringFormation'
+import { useKeyPress } from '../../utils/useKeyPress'
 
 export const BOOKContainer: React.FC = () => {
   const [currentString, setCurrentString] = useState(shuffle(letter1))
   const [STRING, setSTRING] = useState<string>(currentString)
-
-  // useEffect(() => {
-  //   setSTRING(currentString)
-  //   // successAndFailedTypes.current = 0
-  //   // failedTypesIndexes.current = []
-  //   // failureTypes.current = 0
-  // }, [currentString])
 
   function handleStringErase(STR: string): void {
     setCurrentString(STR)
@@ -57,22 +55,39 @@ export const BOOKContainer: React.FC = () => {
   const escapeFailedTypeStatus = useRef(false)
   const failedTypesIndexes = useRef<number[]>([])
 
-  const historyOfFailed = useRef<
-    {
-      desired: string
-      pressed: string
-      previous: string
-    }[]
-  >([])
+  // const historyOfFailed = useRef<
+  //   {
+  //     desired: string
+  //     pressed: string
+  //     previous: string
+  //   }[]
+  // >([])
 
   const lastKey = useRef('')
   const prelastKey = useRef('')
 
   const [hightlighter, setHighlighter] = useState(true)
 
-  const [appear, setAppear] = useState(false)
-
   const chapter = useTypedSelector((state) => state.nav.chapter)
+
+  const caps = useKeyPress('CapsLock')
+  const shift = useKeyPress('Shift')
+  const [capsDown, setCapsDown] = useState(caps)
+  const [shiftDown, setShiftDown] = useState(shift)
+
+  useDidMountEffect(() => setCapsDown(caps), [caps])
+  useDidMountEffect(() => setShiftDown(shift), [shift])
+
+  useDidMountEffect(() => {
+    if (!caps && !shift && capitals.includes(keyDown)) {
+      setCapsDown(true)
+    }
+    if (caps && notCapitals.includes(keyDown)) {
+      setCapsDown(false)
+    }
+  }, [keyDown])
+
+  const [appear, setAppear] = useState(false)
 
   useEffect(() => {
     let id = setTimeout(() => {
@@ -167,37 +182,38 @@ export const BOOKContainer: React.FC = () => {
     if (failureInARow.current === 0) {
       failureInARow.current = 1
       failureTypes.current++
-      historyOfFailed.current = [
-        ...historyOfFailed.current,
-        {
-          desired: STRING[0] === ' ' ? 'Space' : STRING[0],
-          pressed: keyDown === ' ' ? 'Space' : keyDown,
-          previous: prelastKey.current,
-        },
-      ]
-      console.log(historyOfFailed.current)
+      // historyOfFailed.current = [
+      //   ...historyOfFailed.current,
+      //   {
+      //     desired: STRING[0] === ' ' ? 'Space' : STRING[0],
+      //     pressed: keyDown === ' ' ? 'Space' : keyDown,
+      //     previous: prelastKey.current,
+      //   },
+      // ]
+      // console.log(historyOfFailed.current)
 
       failedTypeStatus.current = true
     }
   }
 
+  const renders = useRef<number>(0)
+
+  useEffect(() => {
+    renders.current++
+  })
+
   return (
-    <div className="overflow-y-hidden w-full  flex flex-col justify-center align-center font-courier border-2 border-grey-900 ">
+    <div className="overflow-y-hidden w-full overflow-x-hidden  flex flex-col justify-center align-center font-courier border-2 border-grey-900 ">
       <BOOKbuttons
         animationBook={animationBook}
         setAnimationBook={setAnimationBook}
         SUCCESS={SUCCESS}
-        lastKey={lastKey}
-        successTypes={successTypes}
-        failureTypes={failureTypes}
-        successAndFailedTypes={successAndFailedTypes}
-        failedTypesIndexes={failedTypesIndexes}
         highlighter={hightlighter}
         setHighlighter={setHighlighter}
         STRING={STRING}
       />
       <div
-        className="invisible 1k:visible  mt-16 md:mt-18 flex justify-center items-start "
+        className="invisible 1k:visible  mt-36 md:mt-32 flex justify-center items-start "
         style={{ transform: 'translateY(-150px)' }}
       >
         <BOOKBook
@@ -214,25 +230,16 @@ export const BOOKContainer: React.FC = () => {
           STRING={STRING}
           animation={animationBook}
           chapter={chapter}
+          highlighter={hightlighter}
         />
-        <BOOKLayoutHighlighter
-          failedTypesIndexes={failedTypesIndexes.current}
-          overall={successAndFailedTypes.current}
-          currentString={currentString}
-          STRING={STRING}
-          animation={animationBook}
-          chapter={chapter}
-          show={hightlighter}
-        />
+
         <BOOKpointer overall={successAndFailedTypes.current} />
         <BOOKstring
-          // STRING={STRING}
-          // setSTRING={setSTRING}
-          // setCurrentString={setCurrentString}
           currentString={currentString}
           handleStringErase={handleStringErase}
           handleStringNoErase={handleStringNoErase}
           overall={successAndFailedTypes.current}
+          uppercase={shift || caps}
         />
         <BOOKframe />
       </div>

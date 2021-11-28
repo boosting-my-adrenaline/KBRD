@@ -46,7 +46,7 @@ export const AuthMiniature: React.FC = ({}) => {
 
   return (
     <div
-      className={`flex justify-center items-center`}
+      className={`flex justify-center items-center `}
       style={{
         width: 80,
         height: 50,

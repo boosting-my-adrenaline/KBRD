@@ -9,6 +9,8 @@ import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useNavAction } from '../../hooks/useAction'
 import { chapters } from '../../redux/nav/nav.types'
 import { AuthMiniature } from './nav-components/AuthMiniature'
+import { NAVarrowLeft } from './nav-components/ALeftPage'
+import { NAVarrowRight } from './nav-components/ARightPage'
 
 interface IProps {
   block: boolean
@@ -130,6 +132,8 @@ export const Navbar: React.FC<IProps> = ({ block }) => {
           <AuthMiniature />
         </div>
       </div>
+      <NAVarrowLeft chapter={chapter} onClick={changeLink} />
+      <NAVarrowRight chapter={chapter} onClick={changeLink} />
     </>
   )
 }

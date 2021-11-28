@@ -38,6 +38,17 @@ export const BOOKbuttonVisual: React.FC<IProps> = ({
       >
         {tag}
       </button>
+      {/* <div
+        className={`absolute bg-${active ? 'gray-200' : 'gray-100'}`}
+        style={{
+          width: 80,
+          height: 3,
+          top: 80,
+          borderRadius: '50%',
+          transition: '1s ease-in-out',
+          boxShadow: `0 0 6px 5px ${active ? '#e5e7eb' : '#F3F4F6'}`,
+        }}
+      ></div> */}
     </div>
   )
 }

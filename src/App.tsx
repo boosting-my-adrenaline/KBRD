@@ -4,7 +4,7 @@ import { BOOKContainer } from './components/book/BOOK.container'
 import { TAPContainer } from './components/tap/TAP.container'
 import { Navbar } from './components/navbar/Navbar'
 import { Switch, Route, useHistory, useLocation } from 'react-router-dom'
-// import { Width } from './utils/GetWidth'
+import { Width } from './utils/GetWidth'
 import { useTypedSelector } from './hooks/useTypedSelector'
 import { Background } from './components/Background'
 import { MAINcontainer } from './components/main/MAIN.container'
@@ -48,7 +48,9 @@ export const App: React.FC = () => {
         <Background />
         <div style={{ marginTop: 100 }}>
           {/* <div> W:{Width}</div> */}
-          {/* <Width /> */}
+          <div className="z-50 absolute top-10">
+            <Width />
+          </div>
           <Switch>
             <Route path="/" exact component={MAINcontainer} />
             <Route path="/tap" exact component={TAPContainer} />

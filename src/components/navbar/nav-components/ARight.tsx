@@ -30,7 +30,7 @@ export const ARight: React.FC<IProps> = ({ onClick, chapter }) => {
           ? `1px 1px 4px 1px ${ShadowColor}`
           : `2px 2px 4px 3px ${ShadowColor}`,
       }}
-      onClick={() => onClick('LEFT' as Directions)}
+      onClick={() => onClick('RIGHT' as Directions)}
     >
       <img
         alt="AL"

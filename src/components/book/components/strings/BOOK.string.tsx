@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useDidMountEffect } from '../../../../utils/useDidMountEffect'
 import { BOOKbuttonVisual } from '../BOOK.buttonVisual'
-import { moveString, removePunctuation, shuffle } from './stringFormation'
+import {
+  hackString,
+  lowerAll,
+  lowerAllWithSkip,
+  moveString,
+  removePunctuation,
+  shuffle,
+  upperAll,
+  upperAllWithSkip,
+} from './stringFormation'
 import { letter1, letter2, letter3, letter4 } from './strings'
 
 interface IProps {
@@ -12,6 +21,7 @@ interface IProps {
   currentString: string
   handleStringErase(str: string): void
   handleStringNoErase(str: string): void
+  uppercase: boolean
 }
 
 export const BOOKstring: React.FC<IProps> = ({
@@ -22,34 +32,56 @@ export const BOOKstring: React.FC<IProps> = ({
   handleStringErase,
   handleStringNoErase,
   overall,
+  uppercase,
 }) => {
-  const [punctuation, setPunctuation] = useState(true)
   const [now, setNow] = useState(currentString)
 
   useDidMountEffect(() => {
-    handleString(now)
+    handleString(now, true)
   }, [now])
 
-  function handleString(string: string) {
-    if (punctuation) {
-      return handleStringErase(string)
-    }
-    handleStringErase(string)
-  }
+  const [punctuation, setPunctuation] = useState(true)
+  const [caseSensitivity, setCaseSensetivity] = useState(true)
 
-  function handleShuffle() {
-    if (punctuation) {
-      return handleStringErase(removePunctuation(shuffle(now), overall))
+  function handleString(string: string, erase: boolean) {
+    if (!punctuation) {
+      string = removePunctuation(string, overall)
     }
-    handleStringErase(shuffle(now))
+
+    if (!caseSensitivity) {
+      if (uppercase) {
+        string = upperAll(string)
+      } else {
+        string = lowerAll(string)
+      }
+    }
+    if (erase) {
+      handleStringErase(string)
+    } else {
+      handleStringNoErase(string)
+    }
   }
 
   useDidMountEffect(() => {
-    if (!punctuation) {
-      return handleStringNoErase(removePunctuation(now, overall))
-    }
-    handleStringNoErase(now)
-  }, [punctuation])
+    handleString(now, false)
+  }, [punctuation, caseSensitivity, uppercase])
+
+  const handleShuffle = () => {
+    handleString(shuffle(now), true)
+  }
+
+  /////////////
+  // useEffect(() => {
+  //   if (overall >= 100) {
+  //     handleShuffle()
+  //   }
+  // }, [overall])
+
+  /////
+
+  const handleHackString = () => {
+    handleString(hackString(), true)
+  }
 
   return (
     <div
@@ -59,13 +91,20 @@ export const BOOKstring: React.FC<IProps> = ({
       <button onMouseDown={() => setNow(letter2)}>2</button>
       <button onMouseDown={() => setNow(letter3)}>3</button>
       <button onMouseDown={() => setNow(letter4)}>4</button>
-      <button onMouseDown={() => handleShuffle}>shuffle</button>
-
+      <button onMouseDown={handleHackString}>HS</button>
+      <button onMouseDown={handleShuffle}>shuffle</button>
+      overall: {overall}
       <BOOKbuttonVisual
         tag={`punctuation`}
         active={punctuation}
         onClick={setPunctuation}
       />
+      <BOOKbuttonVisual
+        tag={`case`}
+        active={caseSensitivity}
+        onClick={setCaseSensetivity}
+      />
+      {uppercase ? 1 : 0}
     </div>
   )
 }

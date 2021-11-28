@@ -6,7 +6,6 @@ import {
   formationForLEFT1,
   formationForLEFT2,
   formationForLEFT3,
-  formationForRIGHT,
   formationForRIGHTLayout,
 } from '../book-utils/stringFormation'
 
@@ -17,6 +16,7 @@ interface IProps {
   animation: boolean
   currentString: string
   chapter: Chapters
+  highlighter: boolean
 }
 
 export const BOOKLayout: React.FC<IProps> = ({
@@ -26,6 +26,7 @@ export const BOOKLayout: React.FC<IProps> = ({
   currentString,
   chapter,
   failedTypesIndexes,
+  highlighter,
 }) => {
   // const rawFIRST: string = STRING.slice(0, 1)
   // const rawRIGHT: string = STRING.slice(0, 35)
@@ -39,17 +40,20 @@ export const BOOKLayout: React.FC<IProps> = ({
 
   const [ts, setTs] = useState(0)
   const [appear, setAppear] = useState(false)
+  const [highlighterAppear, setHighlighterAppear] = useState(true)
 
   useEffect(() => {
     let id = setTimeout(() => {
       setAppear(true)
-    }, 300)
+      // setHighlighterAppear(true)
+    }, 400)
     return () => clearTimeout(id)
   }, [])
 
   useDidMountEffect(() => {
     setTimeout(() => {
       setAppear(false)
+      // setHighlighterAppear(false)
     }, 0)
   }, [chapter])
 
@@ -57,7 +61,18 @@ export const BOOKLayout: React.FC<IProps> = ({
     setTs(() => 0 - 14.414 * (overall + 1))
   }, [STRING])
 
-  const [arr, setArr] = useState<string>('1'.repeat(500))
+  const [extraAppear, setExtraAppear] = useState(true)
+
+  useDidMountEffect(() => {
+    setExtraAppear(false)
+    let id = setTimeout(() => setExtraAppear(true), 500)
+    return () => {
+      clearTimeout(id)
+      setExtraAppear(true)
+    }
+  }, [currentString])
+
+  const [arr, setArr] = useState<string>(currentString)
 
   useDidMountEffect(() => {
     setArr((prev) => {
@@ -68,13 +83,20 @@ export const BOOKLayout: React.FC<IProps> = ({
   }, [overall])
 
   useDidMountEffect(() => {
-    setArr('1'.repeat(500))
+    setArr(currentString)
     setArr((prev) => {
       let arr = prev.split('')
       failedTypesIndexes.forEach((el) => (arr[el - 1] = '^'))
       return arr.join('')
     })
   }, [currentString])
+
+  const RIGHT1: string =
+    '\u00A0'.repeat(overall) + currentString.slice(34 + overall, 106 + overall)
+  const RIGHT2: string =
+    '\u00A0'.repeat(overall) + currentString.slice(104 + overall, 176 + overall)
+  const RIGHT3: string =
+    '\u00A0'.repeat(overall) + currentString.slice(174 + overall, 246 + overall)
 
   const RIGHT: string = formationForRIGHTLayout(overall, arr)
   const LEFT1: string = formationForLEFT1(overall, arr)
@@ -87,17 +109,47 @@ export const BOOKLayout: React.FC<IProps> = ({
         .split('')
         // .map((el) => (el !== ' ' ? <div>{el}</div> : <div>{'\u00A0'}</div>))
         .map((el) =>
-          el !== '^' ? (
-            <div className="select-none bg-red-10">
-              {'\u00A0'}
-              {/* {el} */}
-            </div>
-          ) : (
-            <div className="select-none rounded-sm bg-red-400">
-              {'\u00A0'}
-              {/* {el} */}
-            </div>
-          )
+          // el !== '^' ? (
+          //   <div className="select-none bg-red-10">
+          //     {'\u00A0'}
+          //     {/* {el} */}
+          //   </div>
+          // ) : (
+          //   <div className="select-none rounded-sm bg-red-400">
+          //     {'\u00A0'}
+          //     {/* {el} */}
+          //   </div>
+          // )
+          {
+            if (el === '^') {
+              return (
+                <div className="select-none bg-red-400 rounded-sm">
+                  {'\u00A0'}
+                  {/* {el} */}
+                </div>
+              )
+            } else if (el === ' ') {
+              return (
+                <div className="select-none bg-red-100">
+                  {'\u00A0'}
+                  {/* {el} */}
+                </div>
+              )
+            } else {
+              return (
+                <div
+                  className="select-none bg-red-200"
+                  style={{
+                    transition: '0.75s ease',
+                    opacity: extraAppear && highlighter ? 1 : 0,
+                  }}
+                >
+                  {'\u00A0'}
+                  {/* {el} */}
+                </div>
+              )
+            }
+          }
         )
     )
   }
@@ -131,9 +183,9 @@ export const BOOKLayout: React.FC<IProps> = ({
 
         <div className="flex flex-row">{rowing(RIGHT)}</div>
 
-        {/* <div>{'\u0A00'}</div> */}
-        {/* <div>{'\u0A00'}</div> */}
-        {/* <div>{'\u0A00'}</div> */}
+        {rowing(RIGHT1)}
+        {rowing(RIGHT2)}
+        {rowing(RIGHT3)}
       </div>
     </div>
   )

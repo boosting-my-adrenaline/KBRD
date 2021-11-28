@@ -74,7 +74,13 @@ export const BOOKBook: React.FC<{
                 transition: '0.3s ease-in-out',
               }}
             >
-              <FadeText title={el} delay={[300, 1000]} hide={1} />
+              <FadeText
+                title={el}
+                delay={[300, 1000]}
+                hide={1}
+                // blink={el}
+                // blink={currentString}
+              />
               {/* {el} */}
             </div>
           ) : (

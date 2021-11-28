@@ -18,7 +18,7 @@ export const TAPshootingIntervalSlider: React.FC<IProps> = ({
   return (
     <Box sx={{ width: 200 }} className="flex flex-row transform-translateX-">
       <Slider
-        valueLabelDisplay="auto"
+        // valueLabelDisplay="auto"
         value={intervalPush}
         onChange={handleChange}
         step={100}

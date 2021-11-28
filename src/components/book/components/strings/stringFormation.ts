@@ -1,3 +1,5 @@
+import { getRandom } from './../../../../utils/getRandom'
+import { s500 } from './strings'
 import { shuffleArray } from '../../../../utils/shuffleArray'
 
 export const shuffle = (STR: string): string => {
@@ -41,6 +43,60 @@ export const removePunctuation = (STR: string, skip: number): string => {
   }
 }
 
+export const lowerAll = (STR: string): string => {
+  return STR.toLowerCase()
+}
+
+export const upperAll = (STR: string): string => {
+  return STR.toUpperCase()
+}
+
+export const lowerAllWithSkip = (STR: string, skip: number): string => {
+  if (skip < 245) {
+    return (
+      STR.slice(0, skip) +
+      STR.slice(skip, STR.length - skip).toLowerCase() +
+      STR.slice(-skip)
+    )
+  } else {
+    return STR.slice(0, skip) + STR.slice(skip).toLowerCase()
+  }
+}
+
+export const upperAllWithSkip = (STR: string, skip: number): string => {
+  if (skip < 245) {
+    return (
+      STR.slice(0, skip) +
+      STR.slice(skip, STR.length - skip).toUpperCase() +
+      STR.slice(-skip)
+    )
+  } else {
+    return STR.slice(0, skip) + STR.slice(skip).toUpperCase()
+  }
+}
+
 export const moveString = (STR: string, skip: number): string => {
   return STR.slice(skip) + STR.slice(0, skip)
+}
+
+export const hackString = (): string => {
+  const symbols =
+    '!@#$%&*-+<>?/\\!@#$%&*-+<>?/\\!@#$%&*-+<>?/\\0123456789qwertyuiopasdfghjklzxcvbnm;:'.split(
+      ''
+    )
+  const spaces = [' ', ' ', ' ', '  ', '   ']
+  let STR = shuffle(s500)
+    .split('')
+    .map((el) => {
+      if (el === ' ') {
+        return spaces[Math.floor(Math.random() * spaces.length)]
+      } else if (el === '.') {
+        return '.'
+      } else {
+        return symbols[Math.floor(Math.random() * symbols.length - 1)]
+      }
+    })
+    .join('')
+
+  return shuffle(STR)
 }
