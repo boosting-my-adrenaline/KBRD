@@ -6,9 +6,10 @@ import { Directions, Chapters } from '../../../types/nav'
 type IProps = {
   onClick(dir: Directions): void
   chapter: Chapters
+  isOpened: boolean
 }
 
-export const ARight: React.FC<IProps> = ({ onClick, chapter }) => {
+export const ARight: React.FC<IProps> = ({ onClick, chapter, isOpened }) => {
   const ArrowRight: boolean = useKeyPress('ArrowRight')
 
   const getBGandBorderColors = (): string[] => {
@@ -24,19 +25,28 @@ export const ARight: React.FC<IProps> = ({ onClick, chapter }) => {
 
   return (
     <div
-      className={`outline-none cursor-pointer invisible md:visible p-1 mx-5 rounded-md bg-${ThemeColor}-200 border border-${ThemeColor}-500 transition duration-150 hover:bg-${ThemeColor}-100`}
       style={{
-        boxShadow: ArrowRight
-          ? `1px 1px 4px 1px ${ShadowColor}`
-          : `2px 2px 4px 3px ${ShadowColor}`,
+        transition: '0.5s ease-in-out',
+        transform: ` translateY(${isOpened ? -100 : 0}px)`,
       }}
-      onClick={() => onClick('RIGHT' as Directions)}
     >
-      <img
-        alt="AL"
-        src={ArrowLeftLogo}
-        className="w-6 h-6 transform -rotate-180"
-      />
+      <div
+        className={`outline-none cursor-pointer invisible md:visible p-1 mx-5 rounded-md bg-${ThemeColor}-200 border border-${ThemeColor}-500 transition duration-150 hover:bg-${ThemeColor}-100 flex items-center justify-center`}
+        style={{
+          width: 34,
+          height: 34,
+          boxShadow: ArrowRight
+            ? `1px 1px 4px 1px ${ShadowColor}`
+            : `2px 2px 4px 3px ${ShadowColor}`,
+        }}
+        onClick={() => onClick('RIGHT' as Directions)}
+      >
+        <img
+          alt="AL"
+          src={ArrowLeftLogo}
+          className="w-6 h-6 transform -rotate-180"
+        />
+      </div>
     </div>
   )
 }

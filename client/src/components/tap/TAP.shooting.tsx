@@ -199,6 +199,7 @@ export const TAPshooting: React.FC = () => {
         transform: 'translateY(-30px)',
         transition: '1s ease',
         opacity: !appear ? '0' : '1',
+        marginTop: 50,
       }}
     >
       <>

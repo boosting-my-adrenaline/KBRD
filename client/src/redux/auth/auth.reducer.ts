@@ -6,16 +6,7 @@ import { addNewItem } from '../../utils/modifier'
 
 const initialState: InitialState = {
   isOpened: false,
-  user: {
-    id: 1,
-    user_name: 'vozduh',
-    pass_word: '12345',
-    photo: null,
-    name: null,
-    second_name: null,
-    sex: null,
-    birthday: null,
-  },
+  user: null,
   remembered: null,
   users: [
     {

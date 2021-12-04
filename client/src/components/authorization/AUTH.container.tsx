@@ -7,18 +7,6 @@ import { AUTHsignupContainer } from './signup/AUTH.signup.container'
 export const AUTHcontainer: React.FC = ({}) => {
   const chapter = useTypedSelector((state) => state.nav.chapter)
 
-  const [appear, setAppear] = useState(false)
-
-  useEffect(() => {
-    let id = setTimeout(() => setAppear(true), 50)
-    return () => clearTimeout(id)
-  }, [])
-
-  useDidMountEffect(() => {
-    let id = setTimeout(() => setAppear(false), 100)
-    return () => clearTimeout(id)
-  }, [chapter])
-
   const [isSigningUp, setISU] = useState(true)
   const [rotating, setRotating] = useState(0)
 
@@ -37,14 +25,13 @@ export const AUTHcontainer: React.FC = ({}) => {
         className={`z-20 fixed top-0 right-0 left-0 bottom-0 flex justify-center items-center bg-yellow-100`}
       >
         <div
-          className={`z-20  items-center justify-center `}
+          className={`  z-20  items-center justify-center `}
           style={{
-            // opacity: appear ? 1 : 0,
             transition: '1s ease',
           }}
         >
           <div
-            className={`absolute top-0 left-0 z-20 flex flex-row `}
+            className={` absolute top-0 left-0 z-20 flex flex-row `}
             style={{ width: WIDTH }}
           >
             <div
@@ -71,9 +58,10 @@ export const AUTHcontainer: React.FC = ({}) => {
             </div>
           </div>
           <div
-            className={`fixed top-0 right-0 left-0 h-16 flex flex-row justify-center `}
+            className={` fixed top-0 right-0 left-0  flex flex-row justify-center `}
             style={{
               transform: `rotateY(${rotating}deg)`,
+              height: 65,
               transition: '1s ease-out',
             }}
           >
@@ -95,6 +83,7 @@ export const AUTHcontainer: React.FC = ({}) => {
                 borderLeftColor: 'black',
                 borderBottomColor: 'black',
                 borderBottomLeftRadius: 10,
+                borderTopRightRadius: 10,
               }}
             ></div>
           </div>

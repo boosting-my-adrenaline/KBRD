@@ -9,9 +9,14 @@ import { ArrowRight } from '@material-ui/icons'
 interface IProps {
   onClick(dir: Directions): void
   chapter: Chapters
+  isOpened: boolean
 }
 
-export const NAVarrowRight: React.FC<IProps> = ({ onClick, chapter }) => {
+export const NAVarrowRight: React.FC<IProps> = ({
+  onClick,
+  chapter,
+  isOpened,
+}) => {
   const ArrowRight: boolean = useKeyPress('ArrowRight')
 
   const getColors = (): string[] => {
@@ -49,7 +54,7 @@ export const NAVarrowRight: React.FC<IProps> = ({ onClick, chapter }) => {
         right: -350,
         width: 75,
         height: 75,
-        transform: `translateX(${show ? -400 : 0}px)`,
+        transform: `translateX(${show && !isOpened ? -400 : 0}px)`,
         transition: '1.0s ease-in-out',
       }}
       onClick={() => onClick('RIGHT' as Directions)}

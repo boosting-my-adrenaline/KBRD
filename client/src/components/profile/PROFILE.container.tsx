@@ -105,6 +105,7 @@ export const PROFILEcontainer: React.FC = () => {
               style={{
                 transform: `rotateY(${rotating}deg)`,
                 transition: '1s ease-out',
+                height: 65,
               }}
             >
               <div

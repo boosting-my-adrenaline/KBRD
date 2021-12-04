@@ -203,7 +203,7 @@ export const BOOKContainer: React.FC = () => {
   })
 
   return (
-    <div className="overflow-y-hidden w-full overflow-x-hidden  flex flex-col justify-center align-center font-courier border-2 border-grey-900 ">
+    <div className=" overflow-y-hidden w-full overflow-x-hidden  flex flex-col justify-center align-center font-courier ">
       <BOOKbuttons
         animationBook={animationBook}
         setAnimationBook={setAnimationBook}

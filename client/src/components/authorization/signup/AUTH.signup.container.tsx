@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
-import { useAuthAction } from '../../../hooks/useAction'
+import { useHttp } from '../../../hooks/http.hook'
+import { useAuthAction, useNavAction } from '../../../hooks/useAction'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 import { PasswordState, UsernameState } from '../auth.types'
 import { AUTHlsignup } from './AUTH.signup'
 import { signupPasswordCheck, signUpUsernameCheck } from './signupUtils'
 
 export const AUTHsignupContainer: React.FC = ({}) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [password2, setPassword2] = useState('')
+  const [username, setUsername] = useState('test1234')
+  const [password, setPassword] = useState('1234')
+  const [password2, setPassword2] = useState('1234')
 
   const [usernameMessage, setUsernameMessage] = useState<null | string>(null)
   const [passwordMessage, setPasswordMessage] = useState<null | string>(null)
@@ -17,6 +18,25 @@ export const AUTHsignupContainer: React.FC = ({}) => {
   const [usernameState, setUsernameState] = useState<UsernameState>('default')
   const [passwordState, setPasswordState] = useState<PasswordState>('default')
   const [password2State, setPassword2State] = useState<UsernameState>('default')
+
+  const { loading, request, error, clearError } = useHttp()
+
+  const { setLoadingOn, setLoadingOff } = useNavAction()
+
+  useDidMountEffect(() => {
+    if (loading) {
+      setLoadingOn()
+    } else {
+      setLoadingOff()
+    }
+  }, [loading])
+
+  useDidMountEffect(() => {
+    if (error === 'TAKEN') {
+      setUsernameState('error')
+      setUsernameMessage('username is already taken')
+    }
+  }, [error])
 
   useDidMountEffect(() => {
     setUsernameState('default')
@@ -93,7 +113,7 @@ export const AUTHsignupContainer: React.FC = ({}) => {
 
   const { signUp, setOpenOff } = useAuthAction()
 
-  const handleSumbit = (): void => {
+  const handleSumbit = async () => {
     console.log('start')
 
     if (!username) {
@@ -116,26 +136,33 @@ export const AUTHsignupContainer: React.FC = ({}) => {
     console.log('3')
 
     if (!noErrors || !username || !password || !password2)
-      return console.log('sgw')
-    setTimeout(() => setOpenOff(), 100)
+      return console.log('something is wrong')
+    // setTimeout(() => setOpenOff(), 100)
 
-    setTimeout(() => signUp({ username, password }), 200)
+    // setTimeout(() => signUp({ username, password }), 200)
 
-    setTimeout(() => setOpenOff(), 500)
+    try {
+      const data = await request('/api/auth/register/', 'POST', {
+        email: username,
+        password,
+      })
+    } catch {}
 
-    console.log(username, password)
+    // setTimeout(() => setOpenOff(), 500)
 
-    setTimeout(() => {
-      setUsername('')
-      setPassword('')
-      setPassword2('')
-      setUsernameState('default')
-      setPasswordState('default')
-      setPassword2State('default')
-      setUsernameMessage('')
-      setPasswordMessage('')
-      setPassword2Message('')
-    }, 1050)
+    // // console.log(username, password)
+
+    // setTimeout(() => {
+    //   setUsername('')
+    //   setPassword('')
+    //   setPassword2('')
+    //   setUsernameState('default')
+    //   setPasswordState('default')
+    //   setPassword2State('default')
+    //   setUsernameMessage('')
+    //   setPasswordMessage('')
+    //   setPassword2Message('')
+    // }, 1050)
     console.log('end')
   }
 
@@ -156,6 +183,7 @@ export const AUTHsignupContainer: React.FC = ({}) => {
         password2State={password2State}
         noErrors={noErrors}
         handleSubmit={handleSumbit}
+        isLoading={loading}
       />
     </>
   )

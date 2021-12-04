@@ -8,9 +8,14 @@ import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 interface IProps {
   onClick(dir: Directions): void
   chapter: Chapters
+  isOpened: boolean
 }
 
-export const NAVarrowLeft: React.FC<IProps> = ({ onClick, chapter }) => {
+export const NAVarrowLeft: React.FC<IProps> = ({
+  onClick,
+  chapter,
+  isOpened,
+}) => {
   const ArrowLeft: boolean = useKeyPress('ArrowLeft')
 
   const getColors = (): string[] => {
@@ -48,7 +53,7 @@ export const NAVarrowLeft: React.FC<IProps> = ({ onClick, chapter }) => {
         left: -350,
         width: 75,
         height: 75,
-        transform: `translateX(${show ? 400 : 0}px)`,
+        transform: `translateX(${show && !isOpened ? 400 : 0}px)`,
         transition: '1s ease-in-out',
       }}
       onClick={() => onClick('LEFT' as Directions)}

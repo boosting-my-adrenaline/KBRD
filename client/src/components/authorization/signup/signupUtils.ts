@@ -9,14 +9,18 @@ export const signUpUsernameCheck = (
 ): [status: UsernameState, message: string] => {
   if (!username.split('').every((el) => usernameAllowed.includes(el))) {
     return ['error', 'username must contain only a-z, A-Z, 0-9, _']
+  } else if (
+    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '_'].includes(
+      username[0]
+    )
+  ) {
+    return ['error', 'username must start with a letter']
   } else if (username.length <= 1) {
     return ['error', 'username must contain at least 2 characters']
   } else if (username.length > 25) {
     return ['error', 'username must contain 2-25 characters']
   } else if (username.split('').every((el) => '1234567890_'.includes(el))) {
     return ['error', 'username must contain a-z or A-Z']
-  } else if (1 > 2) {
-    return ['error', 'this username is already taken']
   } else {
     return ['success', '']
   }

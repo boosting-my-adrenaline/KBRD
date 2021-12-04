@@ -1,24 +1,23 @@
 import { useState, useCallback } from 'react'
 
-const requestHeaders: HeadersInit = new Headers()
-requestHeaders.set('Content-type', 'application/json')
-
 export const useHttp = () => {
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState<null | string>(null)
 
   const request = useCallback(
-    async (
-      url: string,
-      method: string = 'GET',
-      body = null,
-      headers: { 'Content-Type': string }
-    ) => {
+    async (url: string, method: string = 'GET', body, headers = {}) => {
       setLoading(true)
+      console.log('statring useHttp hook')
       try {
-        if (body) {
+        console.log('starting try in hook')
+        console.log('bodyJSONed: ', JSON.stringify(body))
+        console.log('body: ', body)
+        if (body.email && body.password) {
           body = JSON.stringify(body)
+          console.log(body)
           headers['Content-Type'] = 'application/json'
+        } else {
+          console.log('body is undefined???')
         }
 
         const response = await fetch(url, {
@@ -36,6 +35,7 @@ export const useHttp = () => {
 
         return data
       } catch (e: any) {
+        console.log('error:', e.message)
         setLoading(false)
         setError(e.message)
         throw e

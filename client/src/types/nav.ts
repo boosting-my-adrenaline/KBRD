@@ -15,6 +15,7 @@ export enum Chapters {
 
 export interface NavState {
   chapter: Chapters
+  isLoading: boolean
 }
 
 export interface ChangeChapter {
@@ -22,4 +23,12 @@ export interface ChangeChapter {
   payload: Chapters
 }
 
-export type NavAction = ChangeChapter
+export interface SetLoadingOn {
+  type: NavActionTypes.SET_LOADING_ON
+}
+
+export interface SetLoadingOff {
+  type: NavActionTypes.SET_LOADING_OFF
+}
+
+export type NavAction = ChangeChapter | SetLoadingOn | SetLoadingOff

@@ -12,7 +12,7 @@ export const BOOKbuttonVisual: React.FC<IProps> = ({
   active,
 }) => {
   return (
-    <div className={`flex items-center justify-center`}>
+    <div className={` flex items-center justify-center`}>
       <button
         tabIndex={-1}
         className="z-10 bg-green-500 p-3 rounded-full justify-self-end outline-none "

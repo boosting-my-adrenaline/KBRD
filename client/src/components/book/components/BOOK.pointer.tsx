@@ -40,7 +40,7 @@ export const BOOKpointer: React.FC<IProps> = ({ overall }) => {
 
   return (
     <div
-      className={'absolute text-2xl space-y-4  select-none'}
+      className={' absolute text-2xl space-y-4  select-none'}
       style={{
         opacity: !appear ? '0' : '1',
         transition: '1s ease-in-out',

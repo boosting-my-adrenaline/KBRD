@@ -1,29 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react'
-import samurai from './../../static/samurai.svg'
+import SAMURAI from './../../static/profiles/samurai.svg'
+import TEST from './../../static/profiles/test.svg'
 import { NavLink, useLocation, useHistory } from 'react-router-dom'
 import { useKeyPress } from '../../utils/useKeyPress'
 import { ALeft } from './nav-components/ALeft'
 import { ARight } from './nav-components/ARight'
 import { Chapters, Directions } from '../../types/nav'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { useNavAction } from '../../hooks/useAction'
+import { useAuthAction, useNavAction } from '../../hooks/useAction'
 import { chapters } from '../../redux/nav/nav.types'
 import { AuthMiniature } from './nav-components/AuthMiniature'
 import { NAVarrowLeft } from './nav-components/ALeftPage'
 import { NAVarrowRight } from './nav-components/ARightPage'
+import { HexagonRounded } from '../loading/HexagonRounded'
 
 interface IProps {
   block: boolean
 }
 
 export const Navbar: React.FC<IProps> = ({ block }) => {
-  const location = useLocation()
-
   const isOpened = useTypedSelector((state) => state.auth.isOpened)
 
   const chapter = useTypedSelector((state) => state.nav.chapter)
+  const isLoading = useTypedSelector((state) => state.nav.isLoading)
 
   const { changeChapter } = useNavAction()
+  const { setOpenOn, setOpenOff } = useAuthAction()
 
   const leftArrowClick = useKeyPress('ArrowLeft')
   const rightArrowClick = useKeyPress('ArrowRight')
@@ -39,11 +41,6 @@ export const Navbar: React.FC<IProps> = ({ block }) => {
       changeLink('RIGHT' as Directions)
     }
   }, [rightArrowClick])
-
-  const [current, setCurrent] = useState(location.pathname)
-
-  const ArrowLeft: boolean = useKeyPress('ArrowLeft')
-  const ArrowRight: boolean = useKeyPress('ArrowRight')
 
   const getColors = (): string[] => {
     if (chapter === 'BOOK') {
@@ -102,38 +99,65 @@ export const Navbar: React.FC<IProps> = ({ block }) => {
   return (
     <>
       <div
-        className={`z-50 w-full fixed top-0 left-0 right-0 flex justify-center
+        className={`z-50 w-full fixed top-0 left-0 right-0 flex justify-center items-center
          border-${ThemeColor}-500 border-b h-10 md:h-16 transition-all duration-500 
-         bg-${ThemeColor}-400  font-courier `}
+         bg-${ThemeColor}-400  font-courier flex flex-col`}
         style={{
           transition: '1.25s ease-in-out',
+          // height: 65,
           boxShadow: `0 1px 5px 1px ${ShadowColor}`,
         }}
       >
-        <div className="w-1000 2k:w-1500 3k:w-2000 flex items-center gap-x-4 mx-9 ">
-          {/* <span>:{chapter}</span> */}
-          {/* <span>:{block ? 'block' : 'not'}</span> */}
+        <div
+          className="w-1000 2k:w-1500 3k:w-2000 flex items-center gap-x-4 mx-9 "
+          style={{
+            transform: `perspective(1000px) rotateX(${
+              isLoading ? -90 : 0
+            }deg) translateY(${!isLoading ? 0 : -10}px) translateZ(${
+              isLoading ? -55 : 0
+            }px)`,
+            transition: '0.3s ease-in-out',
+            height: 65,
+          }}
+        >
           <a className="flex-grow outline-none flex">
             <div
-              className={`p-1  rounded-full`}
-              onClick={() => changeChapter(Chapters.MAIN)}
+              className={`p-1 rounded-full cursor-pointer`}
+              // onClick={() => changeChapter(Chapters.MAIN)}
             >
-              <img
-                src={samurai}
+              {/* <img
+                src={SAMURAI}
                 alt=""
                 className="w-10 h-10 md:w-16 md:h-16 transition duration-900 cursor-pointer hover:scale-110 "
-              />
+              /> */}
+              {/* <img
+                src={TEST}
+                alt=""
+                className="w-10 h-10 md:w-16 md:h-16 transition duration-900 cursor-pointer hover:scale-110 "
+              /> */}
+              <HexagonRounded onClick={() => changeChapter(Chapters.MAIN)} />
+              <div></div>
             </div>
           </a>
 
-          <ALeft onClick={changeLink} chapter={chapter} />
+          <ALeft onClick={changeLink} chapter={chapter} isOpened={isOpened} />
           {links}
-          <ARight onClick={changeLink} chapter={chapter} />
-          <AuthMiniature />
+          <ARight onClick={changeLink} chapter={chapter} isOpened={isOpened} />
+          <div style={{ zIndex: 20 }}>
+            <AuthMiniature />
+          </div>
         </div>
       </div>
-      <NAVarrowLeft chapter={chapter} onClick={changeLink} />
-      <NAVarrowRight chapter={chapter} onClick={changeLink} />
+      <NAVarrowLeft
+        chapter={chapter}
+        onClick={changeLink}
+        isOpened={isOpened}
+      />
+      <NAVarrowRight
+        chapter={chapter}
+        onClick={changeLink}
+        isOpened={isOpened}
+      />
     </>
   )
 }

@@ -25,7 +25,7 @@ export const Width: React.FC = () => {
   return (
     <div>
       {/* <div>W1 :{window.innerWidth}</div> */}
-      <div>W2 :{windowDimensions.width}</div>
+      <div style={{ fontSize: 40 }}>W2 :{windowDimensions.width}</div>
     </div>
   )
 }

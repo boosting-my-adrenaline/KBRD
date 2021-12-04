@@ -1,5 +1,6 @@
 {
-  "port": 5000,
+  "port": 5005,
   "jwtSecret": "mern",
-  "mongoUri": "mongodb+srv://anakin:IlRsdRjWZHrOvJX7@cluster0.tmqca.mongodb.net/app?retryWrites=true&w=majority"
+  "mongoUri": "mongodb+srv://anakin:IlRsdRjWZHrOvJX7@cluster0.tmqca.mongodb.net/app?retryWrites=true&w=majority",
+  "baseUrl": "http://localhost:5005"
 }

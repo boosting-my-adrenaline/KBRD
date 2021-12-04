@@ -33,6 +33,7 @@ interface IProps {
   password2State: PasswordState
   noErrors: boolean
   handleSubmit(): void
+  isLoading: boolean
 }
 
 export const AUTHlsignup: React.FC<IProps> = ({
@@ -50,6 +51,7 @@ export const AUTHlsignup: React.FC<IProps> = ({
   password2State,
   noErrors,
   handleSubmit,
+  isLoading,
 }) => {
   const [usernameColor, setUsernameColor] =
     useState<SignupUsernameColor>('info')
@@ -183,6 +185,7 @@ export const AUTHlsignup: React.FC<IProps> = ({
               size={`large`}
               color={noErrors ? 'info' : 'error'}
               onMouseDown={handleSubmit}
+              disabled={isLoading}
             >
               SUBMIT
             </Button>

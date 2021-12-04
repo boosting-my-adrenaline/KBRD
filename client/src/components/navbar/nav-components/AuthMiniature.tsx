@@ -4,6 +4,7 @@ import { useTypedSelector } from '../../../hooks/useTypedSelector'
 
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 import { AUTHcontainer } from '../../authorization/AUTH.container'
+import { PerspectiveController } from '../../PerspectiveController'
 import { PROFILEcontainer } from '../../profile/PROFILE.container'
 import { PhotoMiniature } from './PhotoMiniature'
 
@@ -44,55 +45,69 @@ export const AuthMiniature: React.FC = ({}) => {
     setOpenOff()
   }, [chapter])
 
+  const [perspective, setPerspective] = useState([0, 0, 48])
+
+  const handleSetPerspective = (
+    perspective: number,
+    marginTop: number,
+    marginLeft: number
+  ) => {
+    setPerspective([perspective, marginTop, marginLeft])
+  }
+
   return (
     <div
       className={`flex justify-center items-center `}
       style={{
         width: 80,
         height: 50,
+        zIndex: 2021,
       }}
     >
-      {isOpen ? (
-        <div
-          style={{
-            position: 'fixed',
-            backgroundColor: 'rgba(50, 50, 50, 0.2)',
-            top: 65,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            cursor: 'pointer',
-            zIndex: 49,
-          }}
-          onClick={() => setOpenOff()}
-        ></div>
-      ) : null}
+      <PerspectiveController setPerspective2={handleSetPerspective} />
+      {/* {
+        // isOpen ? (
+        1 ? (
+          <div
+            style={{
+              position: 'fixed',
+              // backgroundColor: 'rgba(50, 50, 50, 0.2)',
+              backgroundColor: 'red',
+              top: 65,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              cursor: 'pointer',
+              zIndex: 49,
+            }}
+            onClick={() => setOpenOff()}
+          ></div>
+        ) : null
+      } */}
       {
         <div
-          className={`absolute z-50  border border-black overflow-hidden ml-8 ${
+          className={`absolute z-50  border border-black overflow-hidden  ${
             isOpen ? '' : 'cursor-pointer'
           }`}
           style={{
             borderRadius: !isOpen ? 1000 : 10,
+            // opacity: 0.2,
+            marginLeft: isOpen ? perspective[2] : 0,
+            marginTop: isOpen ? perspective[1] : 0,
             width: !isOpen ? 80 : 1150,
             height: !isOpen ? 50 : 700,
             transition: '0.4s ease',
             transform: `translateX(${!isOpen ? 0 : -490}px) translateY(${
               !isOpen ? 0 : 410
-            }px)`,
+            }px) 
+            perspective(1000px) 
+            translateZ(${perspective[0]}px)`,
             boxShadow: isOpen ? '2px 5px 20px 10px rgba(0,0,0,0.1)' : '',
           }}
           onClick={() => {
-            // isLoggedIn ? logOut() : logIn()
             if (!isOpen) setOpenOn()
           }}
         >
-          {/* <div
-            className={`absolute `}
-            style={{ top: 100, right: 200, zIndex: 50 }}
-          >
-            <PhotoMiniature />
-          </div> */}
           {!isOpen ? (
             <>
               {isLoggedIn ? (
@@ -115,7 +130,7 @@ export const AuthMiniature: React.FC = ({}) => {
                 </div>
               ) : (
                 <div
-                  className={`bg-yellow-100 w-full h-full flex justify-center items-center`}
+                  className={`bg-yellow-100 w-f h-f flex justify-center items-center`}
                 >
                   {' '}
                   Log in

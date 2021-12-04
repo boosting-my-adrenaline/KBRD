@@ -4,9 +4,13 @@ module.exports = {
 
   theme: {
     width: {
+      f: '100%',
       1000: '1008px',
       1500: '1500px',
       2000: '2000px',
+    },
+    height: {
+      f: '100%',
     },
 
     fontFamily: {
@@ -22,6 +26,7 @@ module.exports = {
       screens: {
         '1k': '1000px',
         '135k': '1350px',
+        '160k': '1600px',
         '3xl': '1600px',
         '2k': '2000px',
         '3k': '3000px',

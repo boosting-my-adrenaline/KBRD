@@ -33,7 +33,7 @@ export const BOOKframe: React.FC = () => {
         <div>{'\u00A0'}</div>
         <div>{'\u00A0'}</div>
       </div>
-      <div className={`space-y-4  border-black`} style={{ width: 1007 }}>
+      <div className={`space-y-4  `} style={{ width: 1007 }}>
         <div>{'\u00A0'}</div>
         <div>{'\u00A0'}</div>
         <div>{'\u00A0'}</div>
