@@ -72,18 +72,23 @@ export const BOOKContainer: React.FC = () => {
 
   const caps = useKeyPress('CapsLock')
   const shift = useKeyPress('Shift')
-  const [capsDown, setCapsDown] = useState(caps)
-  const [shiftDown, setShiftDown] = useState(shift)
 
-  useDidMountEffect(() => setCapsDown(caps), [caps])
-  useDidMountEffect(() => setShiftDown(shift), [shift])
+  const capsKey = useRef(false)
+  const shiftKey = useRef(false)
+
+  useDidMountEffect(() => {
+    capsKey.current = caps
+  }, [caps])
+  useDidMountEffect(() => {
+    shiftKey.current = shift
+  }, [shift])
 
   useDidMountEffect(() => {
     if (!caps && !shift && capitals.includes(keyDown)) {
-      setCapsDown(true)
+      capsKey.current = true
     }
     if (caps && notCapitals.includes(keyDown)) {
-      setCapsDown(false)
+      capsKey.current = false
     }
   }, [keyDown])
 
@@ -203,7 +208,12 @@ export const BOOKContainer: React.FC = () => {
   })
 
   return (
-    <div className=" overflow-y-hidden w-full overflow-x-hidden  flex flex-col justify-center align-center font-courier ">
+    <div
+      className={` overflow-y-hidden w-full overflow-x-hidden  flex flex-col justify-center align-center font-courier opacity-${
+        appear ? 100 : 0
+      }`}
+      style={{ transition: '0.5s ease' }}
+    >
       <BOOKbuttons
         animationBook={animationBook}
         setAnimationBook={setAnimationBook}

@@ -5,9 +5,19 @@ interface IProps {
   L?: number
   W?: number
   marg?: number
+  side?: number
+  side2?: [number, number]
+  empty?: boolean
 }
 
-export const GridHex: React.FC<IProps> = ({ L = 10, W = 10, marg = 0 }) => {
+export const GridHex: React.FC<IProps> = ({
+  L = 10,
+  W = 10,
+  marg = 0,
+  side = 200,
+  side2 = [195, 220],
+  empty = false,
+}) => {
   const [pos, setPos] = useState(0)
 
   const [show, setShow] = useState(false)
@@ -54,7 +64,11 @@ export const GridHex: React.FC<IProps> = ({ L = 10, W = 10, marg = 0 }) => {
           }}
         >
           {Array.from({ length: W }, () => {}).map((el) => (
-            <Hexagon side={200} side2={show ? 195 : 220} />
+            <Hexagon
+              side={side}
+              side2={show ? side2[0] : side2[1]}
+              empty={empty}
+            />
           ))}
         </div>
       ))}

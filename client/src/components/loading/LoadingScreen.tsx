@@ -9,18 +9,7 @@ interface IProps {
 }
 
 export const LoadingScreen: React.FC<IProps> = ({ show }) => {
-  const [showing, setShowing] = useState(0)
-  const [hiding, setHiding] = useState(0)
-
   const [borders, setBorders] = useState(false)
-
-  useDidMountEffect(() => {
-    if (show) {
-      setShowing((prev) => prev + 1)
-    } else {
-      setHiding((prev) => prev + 1)
-    }
-  }, [show])
 
   useDidMountEffect(() => {
     setBorders(true)

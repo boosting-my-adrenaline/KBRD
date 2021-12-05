@@ -3,6 +3,7 @@ import { TAPshootingIntervalSlider } from './TAP.shooting.intervalSlider'
 import { TAPshootingLimitSlider } from './TAP.shooting.limitSlider'
 import { TAPshootingKeyStyle } from './TAP.shooting.keyStyle'
 import { KeyColor } from '../TAP.shooting'
+import { TAPshootingKeyType } from './TAP.shooting.keyType'
 
 type IProps = {
   limit: number
@@ -105,23 +106,7 @@ export const TAPshootingButtons: React.FC<IProps> = ({
         <h2 className="text-2xl ml-8">Limit: {limit}</h2>
         <TAPshootingLimitSlider limit={limit} setLimit={setLimit} />
       </div>
-      <div className="invisible flex flex-col justify-center align-center">
-        <div className="flex flex-row justify-center align-start gap-6">
-          <button
-            className={`
-               bg-red-500 rounded-full flex justify-center items-center font-courier uppercase`}
-            style={{
-              width: 50,
-              height: 50,
-              fontSize: '2.1em',
-              transition: '0.1s ease',
-            }}
-          >
-            R
-          </button>
-        </div>
-      </div>
-      {/* <button onClick={() => pushCell()}>Add</button> */}
+      <TAPshootingKeyType keyColor={keyColor} setKeyColor={setKeyColor} />
     </div>
   )
 }

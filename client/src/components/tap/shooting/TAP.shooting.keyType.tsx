@@ -6,7 +6,7 @@ interface IProps {
   setKeyColor(color: KeyColor): void
 }
 
-export const TAPshootingKeyStyle: React.FC<IProps> = ({
+export const TAPshootingKeyType: React.FC<IProps> = ({
   keyColor,
   setKeyColor,
 }) => {
@@ -59,7 +59,7 @@ export const TAPshootingKeyStyle: React.FC<IProps> = ({
       style={{
         height: 20,
         transform: `translateY(${open ? 30 : 0}px) translateX(${
-          open ? -10 : 0
+          open ? 10 : 0
         }px)`,
         transition: '0.3s ease',
       }}

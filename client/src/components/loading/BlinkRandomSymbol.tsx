@@ -11,24 +11,26 @@ interface IProps {
 
 export const BlinkRandomSymbol: React.FC<IProps> = ({
   delay = 0,
-  interval = [400, 2000],
+  interval = [1000, 3000],
   setIsSymbol,
 }) => {
-  const [symbol, setSymbol] = useState(' ')
-  const [show, setShow] = useState(false)
-
+  // const [symbol, setSymbol] = useState(' ')
+  const symbol = useRef(' ')
   const used = useRef('I')
 
+  const [show, setShow] = useState(false)
+
   const handleChange = (s: string, del: number) => {
-    if (!firstHandle.current) {
-      setShow(false)
-      setTimeout(() => setSymbol(s), 410)
-      setTimeout(() => setShow(true), del)
-    } else {
-      setTimeout(() => setSymbol(s), del * 0.5)
-      setTimeout(() => setShow(true), del * 0.5)
-      firstHandle.current = false
-    }
+    // if (!firstHandle.current || 1) {
+    setShow(false)
+    setTimeout(() => (symbol.current = s), 410)
+    // setTimeout(() => setSymbol(s), 410)
+    setTimeout(() => setShow(true), del)
+    // } else {
+    //   setTimeout(() => setSymbol(s), del * 0.5)
+    //   setTimeout(() => setShow(true), del * 0.5)
+    //   firstHandle.current = false
+    // }
   }
 
   useDidMountEffect(() => {
@@ -38,8 +40,6 @@ export const BlinkRandomSymbol: React.FC<IProps> = ({
       setIsSymbol(false)
     }
   }, [show])
-
-  const firstHandle = useRef(true)
 
   const handleTimeout = () => {
     let symbol1 = getRandomLetter(used.current)
@@ -65,7 +65,7 @@ export const BlinkRandomSymbol: React.FC<IProps> = ({
         transform: `rotate(${''}deg)`,
       }}
     >
-      {symbol}
+      {symbol.current}
     </div>
   )
 }

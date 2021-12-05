@@ -71,11 +71,11 @@ export const BOOKstring: React.FC<IProps> = ({
   }
 
   ///////////
-  useEffect(() => {
-    if (overall >= 50) {
-      handleShuffle()
-    }
-  }, [overall])
+  // useEffect(() => {
+  //   if (overall >= 50) {
+  //     handleShuffle()
+  //   }
+  // }, [overall])
 
   /////
 

@@ -4,7 +4,6 @@ import { useKeyPress } from '../../../utils/useKeyPress'
 import { useDispatch } from 'react-redux'
 import ArrowLeftLogo from '../../../static/ArrowLeft.svg'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
-import { ArrowRight } from '@material-ui/icons'
 
 interface IProps {
   onClick(dir: Directions): void
@@ -48,14 +47,17 @@ export const NAVarrowRight: React.FC<IProps> = ({
 
   return (
     <div
-      className={`absolute  z-50 outline-none cursor-pointer invisible 135k:visible p-1  rounded-xl bg-${ThemeColor}-200 border border-${ThemeColor}-500 transition duration-150 hover:bg-${ThemeColor}-100 flex items-center justify-center`}
+      className={`absolute  z-50 outline-none cursor-pointer invisible 135k:visible p-1  rounded-xl bg-${ThemeColor}-200 border border-${ThemeColor}-500 transition duration-150 hover:bg-${ThemeColor}-100 flex items-center justify-center opacity-${
+        show && !isOpened ? 100 : 0
+      }`}
       style={{
         top: 400,
-        right: -350,
+        right: 50,
         width: 75,
         height: 75,
-        transform: `translateX(${show && !isOpened ? -400 : 0}px)`,
-        transition: '1.0s ease-in-out',
+        // transform: `translateX(${show && !isOpened ? -50 : 350}px)`,
+
+        transition: '1.3s ease-in-out',
       }}
       onClick={() => onClick('RIGHT' as Directions)}
     >

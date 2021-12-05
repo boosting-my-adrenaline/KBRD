@@ -16,6 +16,7 @@ import { LoadingScreen } from './components/loading/LoadingScreen'
 import { useAuthAction, useNavAction } from './hooks/useAction'
 import { PerspectiveController } from './components/PerspectiveController'
 import { margin } from '@mui/system'
+import { Below1000 } from './components/belowSupportedResolution/Below1000'
 
 export const App: React.FC = () => {
   const history = useHistory()
@@ -37,7 +38,7 @@ export const App: React.FC = () => {
     if (!block) {
       setBlock(true)
       setTimeout(() => changeCurrentChapter(chapter), 1100)
-      setTimeout(() => setBlock(false), 1100)
+      setTimeout(() => setBlock(false), 1500)
     }
   }, [chapter])
 
@@ -49,61 +50,70 @@ export const App: React.FC = () => {
 
   const isLoading = useTypedSelector((state) => state.nav.isLoading)
   const { setLoadingOn, setLoadingOff } = useNavAction()
-  const [perspective, setPerspective] = useState([0, 100])
+  const [perspective, setPerspective] = useState<[number, number, boolean]>([
+    0,
+    100,
+    true,
+  ])
 
-  const handleSetPerspective = (perspective: number, margin: number) => {
-    setPerspective([perspective, margin])
+  const handleSetPerspective = (
+    perspective: number,
+    margin: number,
+    is1000plus: boolean
+  ) => {
+    setPerspective([perspective, margin, is1000plus])
   }
 
   const isOpened = useTypedSelector((state) => state.auth.isOpened)
   const { setOpenOff } = useAuthAction()
 
   return (
-    <div>
+    <div className={''}>
       <BlurScreen show={initialScreen} />
       <PerspectiveController setPerspective={handleSetPerspective} />
-      <button
+      {perspective[2] ? null : <Below1000 />}
+      {/* <button
         onClick={() => {
           isLoading ? setLoadingOff() : setLoadingOn()
         }}
         style={{ zIndex: 2022, position: 'absolute', top: 120, left: 120 }}
       >
         TEST
-      </button>
-      <LoadingScreen show={isLoading} />
-      <div
-        style={{
-          opacity: initialScreen ? 0 : 1,
-          transition: '1.5s ease',
-        }}
-      >
-        <Navbar block={block} />
-        <Background />
-
+      </button> */}
+      {/* <LoadingScreen show={isLoading} /> */}
+      {perspective[2] ? (
         <div
-          className={`fixed right-0 left-0 top-0 bottom-0 bg-gray-400 z-40 opacity-${
-            isOpened ? '50 cursor-pointer' : '0'
-          }`}
           style={{
-            transition: '0.4s ease-in-out',
-            display: isOpened ? 'block' : 'none',
+            opacity: initialScreen ? 0 : 1,
+            transition: '1.5s ease',
           }}
-          onMouseDown={() => setOpenOff()}
-        ></div>
+        >
+          <Navbar block={block} />
+          <Background />
 
-        {perspective[1] === 0 && perspective[0] === 0 ? null : (
           <div
-            className={`overflow-hidden`}
+            className={`fixed right-0 left-0 top-0 bottom-0 bg-gray-400 z-40  opacity-${
+              isOpened ? '50 cursor-pointer' : '0'
+            }`}
+            style={{
+              transition: '0.4s ease-in-out',
+              display: isOpened ? 'block' : 'none',
+            }}
+            onMouseDown={() => setOpenOff()}
+          ></div>
+
+          <div
+            // className={`overflow-y-hidden`}
             style={{
               marginTop: perspective[1],
               transform: `perspective(1000px) translateZ(${perspective[0]}px)`,
               // transition: '0.05s ease-in-out',
             }}
           >
-            <div className="z-50 absolute top-10">
+            {/* <div className="z-50 absolute top-2">
               <Width />
-              p: {perspective[0]}, m: {perspective[1]}
-            </div>
+              isBelow? {!perspective[2] ? 'below' : 'above'}
+            </div> */}
             <Switch>
               <Route path="/" exact component={MAINcontainer} />
               <Route path="/tap" exact component={TAPContainer} />
@@ -112,8 +122,8 @@ export const App: React.FC = () => {
               <Route path="/auth" exact component={AUTHcontainer} />
             </Switch>
           </div>
-        )}
-      </div>
+        </div>
+      ) : null}
     </div>
   )
 }

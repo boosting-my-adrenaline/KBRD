@@ -28,13 +28,13 @@ export const FadeText: React.FC<IProps> = ({
     />
   ))
 
-  return <span>{symbols}</span>
+  return <>{symbols}</>
 }
 
 interface IProps2 {
   symbol: string
   delay: [number, number]
-  hide: any
+  hide?: any
   multiple: boolean
   blink: any
 }
@@ -42,7 +42,7 @@ interface IProps2 {
 const TagSymbol: React.FC<IProps2> = ({
   symbol,
   delay,
-  hide,
+  hide = 1,
   multiple,
   blink,
 }) => {

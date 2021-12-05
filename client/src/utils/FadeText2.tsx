@@ -7,6 +7,7 @@ interface IProps {
   hide: any
   delay: number
   component: 'h1' | 'h3'
+  highlighter?: boolean
 }
 
 export const FadeText2: React.FC<IProps> = ({
@@ -14,6 +15,7 @@ export const FadeText2: React.FC<IProps> = ({
   hide,
   delay,
   component,
+  highlighter = false,
 }) => {
   const symbols = title.split('').map((el, i) => (
     <TagSymbol
@@ -22,12 +24,13 @@ export const FadeText2: React.FC<IProps> = ({
       hide={hide}
       i={i}
       delay={delay}
+      highlighter={highlighter}
     />
   ))
 
   if (component === 'h1') return <h1 className={`text-3xl pb-4`}>{symbols}</h1>
 
-  return <h3 className={`text-gray-700`}>{symbols}</h3>
+  return <h3>{symbols}</h3>
 }
 
 interface IProps2 {
@@ -35,9 +38,16 @@ interface IProps2 {
   hide: any
   i: number
   delay: number
+  highlighter: boolean
 }
 
-const TagSymbol: React.FC<IProps2> = ({ symbol, hide, i, delay }) => {
+const TagSymbol: React.FC<IProps2> = ({
+  symbol,
+  hide,
+  i,
+  delay,
+  highlighter,
+}) => {
   const [show, setShow] = useState(false)
 
   const calcDelay = i + Math.floor(Math.random() * delay)
@@ -54,5 +64,13 @@ const TagSymbol: React.FC<IProps2> = ({ symbol, hide, i, delay }) => {
     return () => clearTimeout(id)
   }, [hide])
 
-  return <span style={{ opacity: show ? 1 : 0 }}>{symbol}</span>
+  return (
+    <span
+      className={`opacity-${show ? 100 : 0} select-none ${
+        highlighter ? `bg-red-600` : ``
+      }`}
+    >
+      {symbol}
+    </span>
+  )
 }

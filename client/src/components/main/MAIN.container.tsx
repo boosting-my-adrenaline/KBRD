@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { chapters } from '../../redux/nav/nav.types'
 import { Chapters } from '../../types/nav'
+import { useDidMountEffect } from '../../utils/useDidMountEffect'
 import { PerspectiveController } from '../PerspectiveController'
 import { Slide } from './components/Slide'
 
@@ -15,9 +16,15 @@ export const MAINcontainer: React.FC = () => {
   const [load, setLoad] = useState(false)
   const [marginT, setMarginT] = useState(0)
 
-  useEffect(() => {
-    setTimeout(() => setLoad(true), 150)
-  }, [])
+  // useEffect(() => {
+  //   let id = setTimeout(() => setLoad(true), 450)
+  //   return () => clearTimeout(id)
+  // }, [])
+
+  // useDidMountEffect(() => {
+  //   let id = setTimeout(() => setLoad(false), 400)
+  //   return () => clearTimeout(id)
+  // }, [chapter])
 
   return (
     <>
@@ -28,13 +35,12 @@ export const MAINcontainer: React.FC = () => {
           paddingBottom: 50,
           gap: 50,
           transition: '0.2s ease',
-          opacity: 1,
           // opacity: `${load ? 1 : 0}`,
+          opacity: 1,
         }}
       >
         {slides}
       </div>
-      mt: {marginT}
       <PerspectiveController setMainMT={setMarginT} />
     </>
   )

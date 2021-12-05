@@ -31,9 +31,11 @@ export const NAVarrowLeft: React.FC<IProps> = ({
   const [show, setShow] = useState(false)
 
   useEffect(() => {
+    let id = setTimeout(() => console.log(' '), 10000)
     if ([Chapters.BOOK, Chapters.TAP, Chapters.INFO].includes(chapter)) {
-      setShow(true)
+      id = setTimeout(() => setShow(true), 300)
     }
+    return () => clearTimeout(id)
   }, [])
 
   useDidMountEffect(() => {
@@ -47,13 +49,14 @@ export const NAVarrowLeft: React.FC<IProps> = ({
 
   return (
     <div
-      className={`absolute z-50 outline-none cursor-pointer invisible 135k:visible p-1  rounded-xl bg-${ThemeColor}-200 border border-${ThemeColor}-500 transition duration-150 hover:bg-${ThemeColor}-100 flex items-center justify-center`}
+      className={`absolute z-50 outline-none cursor-pointer invisible 135k:visible p-1  rounded-xl bg-${ThemeColor}-200 border border-${ThemeColor}-500 transition duration-150 hover:bg-${ThemeColor}-100 flex items-center justify-center
+      opacity-${show && !isOpened ? 100 : 0}`}
       style={{
         top: 400,
-        left: -350,
+        left: 50,
         width: 75,
         height: 75,
-        transform: `translateX(${show && !isOpened ? 400 : 0}px)`,
+        // transform: `translateX(${show && !isOpened ? 400 : 0}px)`,
         transition: '1s ease-in-out',
       }}
       onClick={() => onClick('LEFT' as Directions)}
