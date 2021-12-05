@@ -40,11 +40,11 @@ export const BOOKpointer: React.FC<IProps> = ({ overall }) => {
 
   return (
     <div
-      className={' absolute text-2xl space-y-4  select-none'}
+      className={' absolute text-2xl space-y-4  select-none border-black boder'}
       style={{
         opacity: !appear ? '0' : '1',
         transition: '1s ease-in-out',
-        zIndex: 31,
+        zIndex: 32,
       }}
     >
       <div>{'\u00A0'}</div>
@@ -52,7 +52,7 @@ export const BOOKpointer: React.FC<IProps> = ({ overall }) => {
       <div>{'\u00A0'}</div>
       <div
         className={`absolute flex flex-row items-start justify-start `}
-        style={{ transform: 'translate(8px, -0px)' }}
+        style={{ transform: 'translate(7px, -96px)' }}
       >
         <div
           className={`absolute ${

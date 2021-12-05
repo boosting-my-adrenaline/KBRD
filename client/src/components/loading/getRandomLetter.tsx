@@ -1,4 +1,4 @@
-import { notCapitals } from '../book/components/strings/strings'
+import { notCapitals } from '../book-redone/components/strings/strings'
 
 export const getRandomLetter = (used: string): string => {
   let array = notCapitals.filter((el) => !used.includes(el))

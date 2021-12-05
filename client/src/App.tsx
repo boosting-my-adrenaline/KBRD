@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { BOOKContainer } from './components/book/BOOK.container'
+import { BOOKContainer } from './components/book-redone/BOOK.container'
 import { TAPContainer } from './components/tap/TAP.container'
 import { Navbar } from './components/navbar/Navbar'
 import { Switch, Route, useHistory, useLocation } from 'react-router-dom'

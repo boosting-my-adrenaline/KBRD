@@ -94,7 +94,7 @@ export const BOOKBook: React.FC<{
 
   return (
     <div
-      className="visible z-40 borde-5 border-grey-900 rounded-xl"
+      className="invisible z-40 borde-5 border-grey-900 rounded-xl"
       style={{ opacity: !appear ? '0' : '1', transition: '0.7s ease-in-out' }}
     >
       <div
