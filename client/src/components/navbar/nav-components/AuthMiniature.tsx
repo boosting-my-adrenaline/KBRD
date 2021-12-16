@@ -55,6 +55,24 @@ export const AuthMiniature: React.FC = ({}) => {
     setPerspective([perspective, marginTop, marginLeft])
   }
 
+  const [hover, setHover] = useState(false)
+
+  // useDidMountEffect(() => {
+  //   if (hover) {
+  //     setParams((prev) => {
+  //       let arr = prev
+  //       arr[1] = arr[1] - 10
+  //       return arr
+  //     })
+  //   } else {
+  //     setParams((prev) => {
+  //       let arr = prev
+  //       arr[1] = arr[1] + 10
+  //       return arr
+  //     })
+  //   }
+  // }, [hover])
+
   return (
     <div
       className={`flex justify-center items-center `}
@@ -62,6 +80,7 @@ export const AuthMiniature: React.FC = ({}) => {
         width: 80,
         height: 50,
         zIndex: 2021,
+        // opacity: 0.6,
       }}
     >
       <PerspectiveController setPerspective2={handleSetPerspective} />
@@ -98,20 +117,24 @@ export const AuthMiniature: React.FC = ({}) => {
             height: !isOpen ? 50 : 700,
             transition: '0.4s ease',
             transform: `translateX(${!isOpen ? 0 : -490}px) translateY(${
-              !isOpen ? 0 : 410
+              !isOpen ? (hover ? -3 : 0) : 410
             }px) 
             perspective(1000px) 
             translateZ(${perspective[0]}px)`,
             boxShadow: isOpen ? '2px 5px 20px 10px rgba(0,0,0,0.1)' : '',
           }}
-          onClick={() => {
+          onMouseDown={() => {
             if (!isOpen) setOpenOn()
           }}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
         >
           {!isOpen ? (
             <>
               {isLoggedIn ? (
-                <div className={`flex items-center justify-center`}>
+                <div
+                  className={`flex items-center justify-center overflow-hidden`}
+                >
                   {!appear ? (
                     <div
                       className={`${

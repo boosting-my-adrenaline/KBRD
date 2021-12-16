@@ -24,13 +24,26 @@ export const FadeText3: React.FC<IProps> = ({
 
   const text = result.map((el) => {
     if (el !== ' ') {
-      return (
-        <span className={`bg-${bg} rounded-sm px-1 text-${font}`}>
-          {el.split('').map((elem) => (
-            <FadeText title={elem} delay={delay} hide={0} />
-          ))}
-        </span>
-      )
+      if (el !== result[0]) {
+        return (
+          <span className={`bg-${bg} rounded-sm px-1 text-${font}`}>
+            {el.split('').map((elem) => (
+              <FadeText title={elem} delay={delay} hide={0} />
+            ))}
+          </span>
+        )
+      } else {
+        return (
+          <span
+            className={`bg-${bg} rounded-sm px-1 text-${font}`}
+            style={{ transform: 'translateY(2px)' }}
+          >
+            {el.split('').map((elem) => (
+              <FadeText title={elem} delay={delay} hide={0} />
+            ))}
+          </span>
+        )
+      }
     } else {
       return <span>{`\u00A0`}</span>
     }

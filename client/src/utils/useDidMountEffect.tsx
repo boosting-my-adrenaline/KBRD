@@ -1,7 +1,7 @@
 import { useEffect, EffectCallback, DependencyList, useRef } from 'react'
 
 export const useDidMountEffect = (
-  func: EffectCallback,
+  func: EffectCallback | any,
   deps?: DependencyList
 ) => {
   const initialRender = useRef(true)
@@ -12,8 +12,7 @@ export const useDidMountEffect = (
     if (initialRender.current) {
       initialRender.current = false
     } else {
-      // effectReturns =
-      func()
+      effectReturns = func()
     }
 
     if (effectReturns && typeof effectReturns === 'function') {

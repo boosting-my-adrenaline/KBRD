@@ -3,7 +3,7 @@ import { TAPshooting } from './TAP.shooting'
 
 export const TAPContainer: React.FC = () => {
   return (
-    <div className={`overflow-hidden`}>
+    <div className={``}>
       <TAPshooting />
     </div>
   )

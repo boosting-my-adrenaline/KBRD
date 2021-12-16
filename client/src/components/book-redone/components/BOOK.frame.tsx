@@ -14,9 +14,10 @@ export const BOOKframe: React.FC = () => {
   }, [])
 
   useDidMountEffect(() => {
-    setTimeout(() => {
+    let id = setTimeout(() => {
       setAppear(false)
     }, 0)
+    return () => clearTimeout(id)
   }, [chapter])
 
   return (

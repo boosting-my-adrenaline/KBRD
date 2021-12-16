@@ -57,7 +57,7 @@ export const TAPshootingButtons: React.FC<IProps> = ({
   }
 
   return (
-    <div className="flex flex-row justify-center items-center  border-red-600 h-32 mb-10 relative gap-10 font-courier">
+    <div className="flex flex-row justify-center items-center  h-32 mb-10 relative gap-10 font-courier border border-red-800">
       <TAPshootingKeyStyle keyColor={keyColor} setKeyColor={setKeyColor} />
       <div className="flex flex-col items bg-blue-300 shadow-2xl py-2 px-5 rounded-xl border-2 border-blue-400">
         <h2 className="text-2xl text-right mr-12">{intervalPush} ms</h2>

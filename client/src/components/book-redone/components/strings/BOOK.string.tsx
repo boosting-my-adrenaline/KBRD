@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { Chapters } from '../../../../types/nav'
 import { useDidMountEffect } from '../../../../utils/useDidMountEffect'
-import { BOOKbuttonVisual } from '../BOOK.buttonVisual'
+import { BOOKbuttonVisual } from '../buttons/BOOK.buttonVisual'
 import {
   hackString,
   lowerAll,
@@ -22,6 +23,10 @@ interface IProps {
   handleStringErase(str: string): void
   handleStringNoErase(str: string): void
   uppercase: boolean
+  punctuation: boolean
+  caseSensitivity: boolean
+  chapter: Chapters
+  running: boolean
 }
 
 export const BOOKstring: React.FC<IProps> = ({
@@ -30,15 +35,33 @@ export const BOOKstring: React.FC<IProps> = ({
   handleStringNoErase,
   overall,
   uppercase,
+  punctuation,
+  caseSensitivity,
+  chapter,
+  running,
 }) => {
   const [now, setNow] = useState(currentString)
+  const choosenString = useRef<null | string>(null)
+
+  const [appear, setAppear] = useState(false)
+
+  useEffect(() => {
+    let id = setTimeout(() => {
+      setAppear(true)
+    }, 2500)
+    return () => clearTimeout(id)
+  }, [])
+
+  useDidMountEffect(() => {
+    let id = setTimeout(() => {
+      setAppear(false)
+    }, 10)
+    return () => clearTimeout(id)
+  }, [chapter])
 
   useDidMountEffect(() => {
     handleString(now, true)
   }, [now])
-
-  const [punctuation, setPunctuation] = useState(true)
-  const [caseSensitivity, setCaseSensetivity] = useState(true)
 
   function handleString(string: string, erase: boolean) {
     if (!punctuation) {
@@ -65,41 +88,63 @@ export const BOOKstring: React.FC<IProps> = ({
 
   const handleShuffle = () => {
     handleString(shuffle(now), true)
+    // handleString('12345', true)
   }
-
-  ///////////
-  // useEffect(() => {
-  //   if (overall >= 50) {
-  //     handleShuffle()
-  //   }
-  // }, [overall])
-
-  /////
 
   const handleHackString = () => {
     handleString(hackString(), true)
   }
 
+  const examples = [
+    { title: `Example #1`, str: letter1 },
+    { title: `Example #2`, str: letter3 },
+    { title: `Example #3`, str: letter4 },
+  ]
+
+  const handleSetString = (str: string, title: string) => {
+    setNow(str)
+    choosenString.current = title
+  }
+
+  const handleRandom = () => {
+    let n = Math.floor(Math.random() * examples.length)
+    handleSetString(examples[n].str, examples[n].title)
+  }
+
+  const exampleButton = (title: string, str: string) => {
+    return (
+      <div
+        className={`mx-2 bg-red-200 cursor-pointer border-`}
+        onMouseDown={() => handleSetString(str, title)}
+      >
+        {title}
+      </div>
+    )
+  }
+
+  const exampleButtons = examples.map((el) => exampleButton(el.title, el.str))
+  const [hover, setHover] = useState(false)
+
   return (
-    <div className={`z-50 text-xl transform  flex gap-8`}>
-      <button onMouseDown={() => setNow(letter1)}>1</button>
-      <button onMouseDown={() => setNow(letter2)}>2</button>
-      <button onMouseDown={() => setNow(letter3)}>3</button>
-      <button onMouseDown={() => setNow(letter4)}>4</button>
-      <button onMouseDown={handleHackString}>HS</button>
-      <button onMouseDown={handleShuffle}>shuffle</button>
-      overall: {overall}
-      <BOOKbuttonVisual
-        tag={`punctuation`}
-        active={punctuation}
-        onClick={setPunctuation}
-      />
-      <BOOKbuttonVisual
-        tag={`case`}
-        active={caseSensitivity}
-        onClick={setCaseSensetivity}
-      />
-      {uppercase ? 1 : 0}
+    <div
+      className={`z-50 text-xl transform  flex items-center border-black borde my-4 text-gray-800 opacity-${
+        !appear ? 0 : 100
+      }`}
+      style={{ width: 1000, transition: '0.8s ease-in-out' }}
+     
+    >
+      <div
+        className={`w-f flex gap-8 items-center opacity-${
+          running && !hover ? 80 : 100
+        }`}
+        style={{ transition: '0.2s ease-in-out' }}
+      >
+        {exampleButtons}
+        <div onMouseDown={handleHackString}>HS</div>
+        <div onMouseDown={handleShuffle}>shuffle</div>
+        <div onMouseDown={handleRandom}>random</div>
+        now: {choosenString.current}
+      </div>
     </div>
   )
 }

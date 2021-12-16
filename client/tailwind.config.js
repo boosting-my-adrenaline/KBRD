@@ -11,6 +11,7 @@ module.exports = {
     },
     height: {
       f: '100%',
+      px: '1px',
     },
 
     fontFamily: {

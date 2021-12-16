@@ -19,6 +19,7 @@ import { BOOKstring } from './components/strings/BOOK.string'
 import { moveString, shuffle } from './components/strings/stringFormation'
 import { useKeyPress } from '../../utils/useKeyPress'
 import { BOOKfailures } from './components/BOOK.failures'
+import { BOOKstats } from './components/BOOK.stats'
 
 export const BOOKContainer: React.FC = () => {
   const [currentString, setCurrentString] = useState(shuffle(letter1))
@@ -74,24 +75,27 @@ export const BOOKContainer: React.FC = () => {
   const caps = useKeyPress('CapsLock')
   const shift = useKeyPress('Shift')
 
-  const capsKey = useRef(false)
+  const [capsKey, setCapsKey] = useState(false)
   const shiftKey = useRef(false)
 
   useDidMountEffect(() => {
-    capsKey.current = caps
+    setCapsKey(caps)
   }, [caps])
+
   useDidMountEffect(() => {
     shiftKey.current = shift
   }, [shift])
 
   useDidMountEffect(() => {
     if (!caps && !shift && capitals.includes(keyDown)) {
-      capsKey.current = true
+      setCapsKey(true)
     }
     if (caps && notCapitals.includes(keyDown)) {
-      capsKey.current = false
+      setCapsKey(false)
     }
   }, [keyDown])
+
+  const capsError = useRef(0)
 
   const [appear, setAppear] = useState(false)
 
@@ -103,9 +107,10 @@ export const BOOKContainer: React.FC = () => {
   }, [])
 
   useDidMountEffect(() => {
-    setTimeout(() => {
+    let id = setTimeout(() => {
       setAppear(false)
     }, 250)
+    return () => clearTimeout(id)
   }, [chapter])
 
   useEffect(() => {
@@ -118,7 +123,7 @@ export const BOOKContainer: React.FC = () => {
 
   const handleEvent = (event: KeyboardEvent) => {
     const { key } = event
-    console.log(key)
+    // console.log(key)
 
     if (KEYS.includes(key)) {
       setKeyDown(key)
@@ -142,7 +147,11 @@ export const BOOKContainer: React.FC = () => {
       SUCCESS()
     } else if (keyDown !== STRING[0] && KEYS.includes(keyDown)) {
       FAILURE()
+      if (keyDown.toLowerCase() === STRING[0].toLowerCase() && capsKey) {
+        capsError.current++
+      }
     }
+
     if (keyDown === ' ') {
       lastKey.current = 'Space'
     } else if (KEYS.includes(keyDown)) {
@@ -153,9 +162,8 @@ export const BOOKContainer: React.FC = () => {
   function SUCCESS(): void {
     setSTRING((str) => str.substring(1) + str[0])
     successAndFailedTypes.current++
-    failedTypesIndexes.current = failedTypesIndexes.current
-      .map((el) => el + 1)
-      .filter((el) => el <= 245)
+    failedTypesIndexes.current = failedTypesIndexes.current.map((el) => el + 1)
+    // .filter((el) => el <= 245)
     if (failedTypeStatus.current && !escapeFailedTypeStatus.current) {
       failedTypesIndexes.current = [...failedTypesIndexes.current, 1]
     }
@@ -196,11 +204,14 @@ export const BOOKContainer: React.FC = () => {
           previous: prelastKey.current,
         },
       ]
-      console.log(historyOfFailed.current)
+      // console.log(historyOfFailed.current)
 
       failedTypeStatus.current = true
     }
   }
+
+  const [punctuation, setPunctuation] = useState(true)
+  const [caseSensitivity, setCaseSensetivity] = useState(true)
 
   const renders = useRef<number>(0)
 
@@ -208,12 +219,22 @@ export const BOOKContainer: React.FC = () => {
     renders.current++
   })
 
+  const [running, setRunning] = useState(false)
+  useDidMountEffect(() => {
+    setRunning(true)
+
+    let id = setTimeout(() => setRunning(false), 2000)
+
+    return () => clearTimeout(id)
+  }, [successAndFailedTypes.current])
+
   return (
     <div
-      className={` overflow-y-hidden w-full overflow-x-hidden  flex flex-col justify-center align-center font-courier opacity-${
-        // appear ? 100 : 0
-        100
-      }`}
+      className={`borde order-black w-f  flex flex-col
+       justify-center items-center font-courier opacity-${
+         appear ? 100 : 0
+         //  100
+       }`}
       style={{ transition: '0.5s ease' }}
     >
       <BOOKbuttons
@@ -223,15 +244,26 @@ export const BOOKContainer: React.FC = () => {
         highlighter={hightlighter}
         setHighlighter={setHighlighter}
         STRING={STRING}
+        punctuation={punctuation}
+        caseSensitivity={caseSensitivity}
+        setCaseSensetivity={setCaseSensetivity}
+        setPunctuation={setPunctuation}
+        caps={capsKey}
+        capsError={capsError.current}
+        running={running}
       />
-
+      <BOOKstats
+        overall={successAndFailedTypes.current}
+        failedTypesIndexes={failedTypesIndexes.current}
+        chapter={chapter}
+      />
       <div
-        className="invisible 1k:visible   flex flex-col justify-center items-center w-f border-black border"
+        className="invisible 1k:visible   flex flex-col justify-center items-center w-f border-black borde"
         // style={{ transform: 'translateY(-150px)' }}
       >
         <div
-          className="invisible 1k:visible  flex flex-col
-        justify-center items-center border border-red-900"
+          className={`invisible 1k:visible  flex flex-col
+        justify-center items-center bordr border-red-900 my-10`}
         >
           <BOOKBook
             STRING={STRING}
@@ -250,20 +282,24 @@ export const BOOKContainer: React.FC = () => {
             chapter={chapter}
             highlighter={hightlighter}
           />
-          <BOOKfailures failedTypesIndexes={failedTypesIndexes.current} />
+          <BOOKfailures
+            failedTypesIndexes={failedTypesIndexes.current}
+            chapter={chapter}
+          />
           <BOOKpointer overall={successAndFailedTypes.current} />
         </div>
       </div>
-      {/* <BOOKstring
+      <BOOKstring
         currentString={currentString}
         handleStringErase={handleStringErase}
         handleStringNoErase={handleStringNoErase}
         overall={successAndFailedTypes.current}
-        uppercase={shift || caps}
-      /> */}
-      <div className={`absolute top-10 left-10 z-50`}>
-        f: {failedTypesIndexes.current}
-      </div>
+        uppercase={shiftKey.current || capsKey}
+        punctuation={punctuation}
+        caseSensitivity={caseSensitivity}
+        chapter={chapter}
+        running={running}
+      />
     </div>
   )
 }

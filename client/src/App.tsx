@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import { BOOKContainer } from './components/book-redone/BOOK.container'
 import { TAPContainer } from './components/tap/TAP.container'
@@ -6,7 +6,7 @@ import { Navbar } from './components/navbar/Navbar'
 import { Switch, Route, useHistory, useLocation } from 'react-router-dom'
 import { Width } from './utils/GetWidth'
 import { useTypedSelector } from './hooks/useTypedSelector'
-import { Background } from './components/Background'
+import { Background } from './components/BackgroundPlain'
 import { MAINcontainer } from './components/main/MAIN.container'
 import { Chapters } from './types/nav'
 import { INFOcontainer } from './components/info/INFO.container'
@@ -15,30 +15,64 @@ import { AUTHcontainer } from './components/authorization/AUTH.container'
 import { LoadingScreen } from './components/loading/LoadingScreen'
 import { useAuthAction, useNavAction } from './hooks/useAction'
 import { PerspectiveController } from './components/PerspectiveController'
-import { margin } from '@mui/system'
 import { Below1000 } from './components/belowSupportedResolution/Below1000'
+import { NotFound } from './components/NotFound'
 
 export const App: React.FC = () => {
   const history = useHistory()
   const chapter = useTypedSelector((state) => state.nav.chapter)
 
-  const [timer, setTimer] = useState(1)
+  // const [timer, setTimer] = useState(1)
 
   useEffect(() => {
-    setInterval(() => setTimer((prev) => prev + 1), 100)
+    // setInterval(() => setTimer((prev) => prev + 1), 100)
   }, [])
 
   const [block, setBlock] = useState(false)
 
   const changeCurrentChapter = (chap: Chapters): void => {
-    chap !== 'MAIN' ? history.push(`/${chap.toLowerCase()}`) : history.push('/')
+    // chap !== 'MAIN' ? history.push(`/${chap.toLowerCase()}`) : history.push('/')
+    if (chap === Chapters.MAIN) {
+      history.push('/')
+    } else if (chap === Chapters.NOT_FOUND) {
+      history.push('/not_found')
+    } else {
+      history.push(`/${chap.toLowerCase()}`)
+    }
   }
 
   useEffect(() => {
-    if (!block) {
-      setBlock(true)
-      setTimeout(() => changeCurrentChapter(chapter), 1100)
-      setTimeout(() => setBlock(false), 1500)
+    if (block) return
+
+    setBlock(true)
+    let id = setTimeout(() => changeCurrentChapter(chapter), 1100)
+
+    let id2 = setTimeout(() => setBlock(false), 1700)
+    // if (!block) {
+    //   setBlock(true)
+
+    //   setTimeout(() => {
+    //     if (!block) {
+    //       // setTimeout(() => changeCurrentChapter(chapter), 1100)
+    //       // setTimeout(() => setBlock(false), 1500)
+    //       changeCurrentChapter(chapter)
+    //     }
+    //   }, 1100)
+
+    //   setTimeout(() => {
+    //     if (!block) {
+    //       setBlock(false)
+    //       // setTimeout(() => changeCurrentChapter(chapter), 1100)
+    //       // setTimeout(() => setBlock(false), 1500)
+    //       // changeCurrentChapter(chapter)
+    //     }
+    //   }, 1700)
+    // }
+
+    return () => {
+      clearTimeout(id)
+      clearTimeout(id2)
+      setBlock(false)
     }
   }, [chapter])
 
@@ -49,7 +83,7 @@ export const App: React.FC = () => {
   }, [])
 
   const isLoading = useTypedSelector((state) => state.nav.isLoading)
-  const { setLoadingOn, setLoadingOff } = useNavAction()
+  // const { setLoadingOn, setLoadingOff } = useNavAction()
   const [perspective, setPerspective] = useState<[number, number, boolean]>([
     0,
     100,
@@ -67,20 +101,21 @@ export const App: React.FC = () => {
   const isOpened = useTypedSelector((state) => state.auth.isOpened)
   const { setOpenOff } = useAuthAction()
 
+  const renders = useRef(0)
+
+  useEffect(() => {
+    renders.current++
+  })
+
   return (
     <div className={''}>
       <BlurScreen show={initialScreen} />
       <PerspectiveController setPerspective={handleSetPerspective} />
+      {/* <div className={`absolute top-8 left-8 `} style={{ zIndex: 999999 }}>
+        renders: {renders.current}
+      </div> */}
       {perspective[2] ? null : <Below1000 />}
-      {/* <button
-        onClick={() => {
-          isLoading ? setLoadingOff() : setLoadingOn()
-        }}
-        style={{ zIndex: 2022, position: 'absolute', top: 120, left: 120 }}
-      >
-        TEST
-      </button> */}
-      {/* <LoadingScreen show={isLoading} /> */}
+
       {perspective[2] ? (
         <div
           style={{
@@ -103,7 +138,6 @@ export const App: React.FC = () => {
           ></div>
 
           <div
-            // className={`overflow-y-hidden`}
             style={{
               marginTop: perspective[1],
               transform: `perspective(1000px) translateZ(${perspective[0]}px)`,
@@ -112,7 +146,6 @@ export const App: React.FC = () => {
           >
             {/* <div className="z-50 absolute top-2">
               <Width />
-              isBelow? {!perspective[2] ? 'below' : 'above'}
             </div> */}
             <Switch>
               <Route path="/" exact component={MAINcontainer} />
@@ -120,7 +153,9 @@ export const App: React.FC = () => {
               <Route path="/book" exact component={BOOKContainer} />
               <Route path="/info" exact component={INFOcontainer} />
               <Route path="/auth" exact component={AUTHcontainer} />
+              <Route component={NotFound} />
             </Switch>
+            {/* <BOOKContainer /> */}
           </div>
         </div>
       ) : null}

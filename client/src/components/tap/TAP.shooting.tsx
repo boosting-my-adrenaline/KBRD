@@ -29,9 +29,10 @@ export const TAPshooting: React.FC = () => {
   }, [])
 
   useDidMountEffect(() => {
-    setTimeout(() => {
+    let id = setTimeout(() => {
       setAppear(false)
     }, 50)
+    return () => clearTimeout(id)
   }, [chapter])
 
   const [missclicks, setMissclicks] = useState(0)
@@ -199,7 +200,8 @@ export const TAPshooting: React.FC = () => {
         transform: 'translateY(-30px)',
         transition: '1s ease',
         opacity: !appear ? '0' : '1',
-        marginTop: 50,
+        marginTop: -50,
+        border: '1px solid black',
       }}
     >
       <>

@@ -1,12 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Chapters } from '../../../types/nav'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
-import {
-  formationForLEFT1,
-  formationForLEFT2,
-  formationForLEFT3,
-  formationForRIGHTLayout,
-} from '../book-utils/stringFormation'
 
 interface IProps {
   failedTypesIndexes: number[]
@@ -32,14 +26,15 @@ export const BOOKLayout: React.FC<IProps> = ({
   useEffect(() => {
     let id = setTimeout(() => {
       setAppear(true)
-    }, 400)
+    }, 900)
     return () => clearTimeout(id)
   }, [])
 
   useDidMountEffect(() => {
-    setTimeout(() => {
+    let id = setTimeout(() => {
       setAppear(false)
-    }, 0)
+    }, 300)
+    return () => clearTimeout(id)
   }, [chapter])
 
   const [extraAppear, setExtraAppear] = useState([true, true])
@@ -87,7 +82,7 @@ export const BOOKLayout: React.FC<IProps> = ({
     return str.split('').map((el) => {
       if (el === ' ') {
         return (
-          <div className="select-none bg-red-100">
+          <div className="select-none bg-red-00">
             {'\u00A0'}
             {/* {el} */}
           </div>
@@ -95,7 +90,7 @@ export const BOOKLayout: React.FC<IProps> = ({
       } else {
         return (
           <div
-            className="select-none bg-red-200"
+            className="select-none bg-ed-200 flex justify-center items-center"
             style={{
               // transition: extraAppear[1] ? '0.75s ease' : 'none',
               opacity: extraAppear[0] && highlighter ? 1 : 0,
@@ -103,6 +98,12 @@ export const BOOKLayout: React.FC<IProps> = ({
           >
             {'\u00A0'}
             {/* {el} */}
+            <div
+              className={`absolute bg-red-200 rounded-sm`}
+              style={{ padding: '0 2px' }}
+            >
+              {'\u00A0'}
+            </div>
           </div>
         )
       }

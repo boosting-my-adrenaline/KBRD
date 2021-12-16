@@ -1,8 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { Chapters } from '../../../types/nav'
+import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 
-export const BOOKfailures: React.FC<{ failedTypesIndexes: number[] }> = ({
-  failedTypesIndexes,
-}) => {
+export const BOOKfailures: React.FC<{
+  failedTypesIndexes: number[]
+  chapter: Chapters
+}> = ({ failedTypesIndexes, chapter }) => {
+  const [appear, setAppear] = useState(false)
+
+  useEffect(() => {
+    let id = setTimeout(() => {
+      setAppear(true)
+    }, 100)
+    return () => clearTimeout(id)
+  }, [])
+
+  useDidMountEffect(() => {
+    let id = setTimeout(() => {
+      setAppear(false)
+    }, 250)
+
+    return () => clearTimeout(id)
+  }, [chapter])
+
   const filling = [1, 2, 3, 4, 5, 6, 7].map((el) => (
     <div key={el} className="flex flex-row ">
       {Array.from({ length: 70 }, (_, i) => i + 1).map((letter) => (
@@ -40,6 +60,8 @@ export const BOOKfailures: React.FC<{ failedTypesIndexes: number[] }> = ({
         position: 'absolute',
         alignSelf: 'center',
         zIndex: 35,
+        opacity: appear ? 1 : 0,
+        transition: '0.4s ease-in-out',
       }}
     >
       <div className="flex flex-row-reverse ">{fillWithAreas(176, 245)}</div>

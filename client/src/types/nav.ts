@@ -11,6 +11,7 @@ export enum Chapters {
   BOOK = 'BOOK',
   TAP = 'TAP',
   INFO = 'INFO',
+  NOT_FOUND = 'NOTFOUND',
 }
 
 export interface NavState {

@@ -45,13 +45,7 @@ export const Background: React.FC = () => {
 
   const [ts, setTs] = useState(0)
 
-  // useEffect(() => {
-  //   if (currentChapter === 'BOOK') {
-  //     if (ts < 1500) {
-  //       while (ts < 1500) {}
-  //     }
-  //   }
-  // }, [currentChapter])
+ 
 
   return (
     <div

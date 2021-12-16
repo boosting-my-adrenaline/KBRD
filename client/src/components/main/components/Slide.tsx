@@ -20,6 +20,24 @@ export const Slide: React.FC<IProps> = ({ chapter, title, queue }) => {
   const [posX, posY, width] = params
   const [angle, setAngle] = useState(0)
 
+  const [hover, setHover] = useState(false)
+
+  useDidMountEffect(() => {
+    if (hover) {
+      setParams((prev) => {
+        let arr = prev
+        arr[1] = arr[1] - 10
+        return arr
+      })
+    } else {
+      setParams((prev) => {
+        let arr = prev
+        arr[1] = arr[1] + 10
+        return arr
+      })
+    }
+  }, [hover])
+
   useEffect(() => {
     let id = setTimeout(() => {
       setParams(() => [0, 0, 500, 1])
@@ -77,10 +95,12 @@ export const Slide: React.FC<IProps> = ({ chapter, title, queue }) => {
         transform: `translateX(${posX}px) translateY(${posY}px) rotate(${angle}deg)`,
         transition: '0.5s ease',
       }}
-      onClick={() => {
+      onMouseDown={() => {
         setUnique(true)
         changeChapter(title)
       }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
     >
       <FadeText title={title} delay={[600, 1200]} hide={chapter} />
     </div>

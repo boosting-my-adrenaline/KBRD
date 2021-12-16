@@ -18,9 +18,10 @@ export const BOOKpointer: React.FC<IProps> = ({ overall }) => {
   }, [])
 
   useDidMountEffect(() => {
-    setTimeout(() => {
+    let id = setTimeout(() => {
       setAppear(false)
     }, 0)
+    return () => clearTimeout(id)
   }, [chapter])
 
   const [show, setShow] = useState(true)
@@ -40,10 +41,12 @@ export const BOOKpointer: React.FC<IProps> = ({ overall }) => {
 
   return (
     <div
-      className={' absolute text-2xl space-y-4  select-none border-black boder'}
+      className={
+        ' absolute text-2xl space-y-4  select-none border-black boder '
+      }
       style={{
         opacity: !appear ? '0' : '1',
-        transition: '1s ease-in-out',
+        transition: '0.6s ease-in-out',
         zIndex: 32,
       }}
     >
@@ -52,7 +55,7 @@ export const BOOKpointer: React.FC<IProps> = ({ overall }) => {
       <div>{'\u00A0'}</div>
       <div
         className={`absolute flex flex-row items-start justify-start `}
-        style={{ transform: 'translate(7px, -96px)' }}
+        style={{ transform: 'translate(8px, -96px)' }}
       >
         <div
           className={`absolute ${

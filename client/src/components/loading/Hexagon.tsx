@@ -10,6 +10,7 @@ interface IPropsHex {
   bg2?: string
   empty?: boolean
   fontSize?: number
+  transition?: string
 }
 
 export const Hexagon: React.FC<IPropsHex> = ({
@@ -21,9 +22,10 @@ export const Hexagon: React.FC<IPropsHex> = ({
   // bg = 'rgb(200, 166, 70)',
   empty = false,
   fontSize = 150,
+  transition = '1s ease-in-out',
 }) => {
   // const [bgMain, setBgMain] = useState(bg2)
-  const bgMain = useRef(bg2)
+  const [bgMain, setBGmain] = useState(bg2)
   const [isSymbol, setIsSymbol] = useState(false)
 
   const colors = ['#6ee7b7', '#a5b4fc', '#f9a8d4']
@@ -32,11 +34,11 @@ export const Hexagon: React.FC<IPropsHex> = ({
     if (empty) return
     if (!isSymbol) {
       // setBgMain(bg2)
-      bgMain.current = bg2
+      setBGmain(bg2)
     } else {
       let color = colors[Math.floor(Math.random() * 3)]
       // setBgMain(color)
-      bgMain.current = color
+      setBGmain(color)
     }
   }, [isSymbol])
 
@@ -52,7 +54,7 @@ export const Hexagon: React.FC<IPropsHex> = ({
           borderBottom: `${side / 2}px solid ${bg2}`,
           borderLeft: `${(side / 180) * 156}px solid transparent`,
           borderRight: `${(side / 180) * 156}px solid transparent`,
-          transition: '1.5s ease',
+          transition: `${transition}`,
         }}
       ></div>
       <div
@@ -62,24 +64,25 @@ export const Hexagon: React.FC<IPropsHex> = ({
           height: side,
           backgroundColor: `${bg2}`,
           paddingTop: -side2,
-          transition: '1.5s ease',
+          transition: `${transition}`,
         }}
       >
         {/* ////////// */}
         <div
           className={`absolute flex flex-col items-center justify-center wrap overflow-visible font-courier`}
           style={{
-            transition: '0.5s ease',
+            transition: `${transition}`,
+
             fontSize: fontSize,
           }}
         >
           <div
             style={{
               width: 0,
-              borderBottom: `${side2 / 2}px solid ${bgMain.current}`,
+              borderBottom: `${side2 / 2}px solid ${bgMain}`,
               borderLeft: `${(side2 / 180) * 156}px solid transparent`,
               borderRight: `${(side2 / 180) * 156}px solid transparent`,
-              transition: '1.5s ease',
+              transition: `${transition}`,
             }}
           ></div>
           <div
@@ -89,8 +92,8 @@ export const Hexagon: React.FC<IPropsHex> = ({
             style={{
               width: (side2 / 180) * 312,
               height: side2,
-              backgroundColor: `${bgMain.current}`,
-              transition: '1.5s ease',
+              backgroundColor: `${bgMain}`,
+              transition: `${transition}`,
               fontSize: fontSize,
             }}
           >
@@ -101,10 +104,10 @@ export const Hexagon: React.FC<IPropsHex> = ({
           <div
             style={{
               width: 0,
-              borderTop: `${side2 / 2}px solid ${bgMain.current}`,
+              borderTop: `${side2 / 2}px solid ${bgMain}`,
               borderLeft: `${(side2 / 180) * 156}px solid transparent`,
               borderRight: `${(side2 / 180) * 156}px solid transparent`,
-              transition: '1.5s ease',
+              transition: `${transition}`,
             }}
           ></div>
         </div>
@@ -117,7 +120,7 @@ export const Hexagon: React.FC<IPropsHex> = ({
           borderTop: `${side / 2}px solid ${bg2}`,
           borderLeft: `${(side / 180) * 156}px solid transparent`,
           borderRight: `${(side / 180) * 156}px solid transparent`,
-          transition: '1.5s ease',
+          transition: `${transition}`,
         }}
       ></div>
     </div>

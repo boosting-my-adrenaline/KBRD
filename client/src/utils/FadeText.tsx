@@ -5,7 +5,7 @@ import { useDidMountEffect } from './useDidMountEffect'
 interface IProps {
   title: string
   delay: [number, number]
-  hide: any
+  hide?: any
   multiple?: boolean
   blink?: any
 }
@@ -13,13 +13,14 @@ interface IProps {
 export const FadeText: React.FC<IProps> = ({
   title,
   delay,
-  hide,
+  hide = 0,
   multiple = false,
   blink = 0,
 }) => {
-  const symbols = title.split('').map((el) => (
+  const symbols = title.split('').map((el, i) => (
     <TagSymbol
       // key={el + Math.random()}
+      key={el + i}
       symbol={el}
       delay={delay}
       hide={hide}
@@ -47,7 +48,7 @@ const TagSymbol: React.FC<IProps2> = ({
   blink,
 }) => {
   const [show, setShow] = useState(false)
-  const [currentSymbol, setCurrentSymbol] = useState('\u0A00')
+  const [currentSymbol, setCurrentSymbol] = useState('\u00a0')
 
   const calculateDelay = () => {
     if (multiple) {
@@ -74,7 +75,7 @@ const TagSymbol: React.FC<IProps2> = ({
 
   useDidMountEffect(() => {
     // let id = setTimeout(() => {
-    let id0 = setTimeout(() => setCurrentSymbol('\u0A00'), 1)
+    let id0 = setTimeout(() => setCurrentSymbol('\u00a0'), 1)
     let id1 = setTimeout(() => setShow(false), 2)
     let id2 = setTimeout(() => setCurrentSymbol(symbol), del * 0.2)
     let id3 = setTimeout(() => setShow(true), del * 2)

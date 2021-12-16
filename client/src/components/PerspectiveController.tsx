@@ -30,9 +30,9 @@ export const PerspectiveController: React.FC<IProps> = ({
   )
   const [refresher, setRefresher] = useState(0)
 
-  useEffect(() => {
-    setTimeout(() => setRefresher((prev) => prev + 1), 50)
-  }, [])
+  // useEffect(() => {
+  //   setTimeout(() => setRefresher((prev) => prev + 1), 50)
+  // }, [])
 
   function getWindowDimensions(): { width: number; height: number } {
     const { innerWidth: width, innerHeight: height } = window
@@ -58,38 +58,44 @@ export const PerspectiveController: React.FC<IProps> = ({
       setPerspective(0, 250, true)
       setMainMT(300)
       setNavPerspective(0, 65)
+      setPerspective2(0, 100, -605)
+      if (W >= 3000) {
+        setPerspective2(0, 100, -1105)
+      }
     } else if (W <= 2160 && W > 1920) {
       setPerspective(0, 200, true)
-      setPerspective2(0, 100, -445)
+      setPerspective2(0, 100, -605)
       setMainMT(400)
       setNavPerspective(0, 65)
     } else if (W <= 1920 && W > 1700) {
-      setPerspective(0, 150, true)
-      setPerspective2(-0, 0, 47)
+      setPerspective(0, 140, true)
+      setPerspective2(-0, 0, -102)
       setMainMT(300)
       setNavPerspective(0, 65)
       if (W <= 1800) {
+        setPerspective(0, 130, true)
+
         setMainMT(285)
         setNavPerspective(-100, 55)
       }
     } else if (W <= 1700 && W > 1500) {
-      setPerspective(-130, 70, true)
-      setPerspective2(-50, -25, 47)
+      setPerspective(-130, 85, true)
+      setPerspective2(-50, -25, -102)
       setMainMT(245)
       setNavPerspective(-100, 55)
     } else if (W <= 1500 && W > 1350) {
-      setPerspective(-400, -10, true)
-      setPerspective2(-100, -50, 47)
+      setPerspective(-400, 20, true)
+      setPerspective2(-100, -50, -102)
       setMainMT(205)
       setNavPerspective(-150, 50)
     } else if (W <= 1350 && W > 1200) {
-      setPerspective(-400, -40, true)
-      setPerspective2(-200, -100, 47)
+      setPerspective(-400, 20, true)
+      setPerspective2(-100, -70, -102)
       setMainMT(205)
       setNavPerspective(-350, 45)
     } else if (W <= 1200 && W > 1000) {
-      setPerspective(-690, -70, true)
-      setPerspective2(-350, -200, 47)
+      setPerspective(-690, -20, true)
+      setPerspective2(-350, -200, -102)
       setMainMT(200)
       setNavPerspective(-350, 45)
     } else if (W <= 1000) {

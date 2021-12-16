@@ -15,7 +15,7 @@ export const Below1000: React.FC = ({}) => {
     empty = false
 
   // const [pos, setPos] = useState([0, 0])
-  const pos = useRef([0, 0])
+  const [pos, setPos] = useState([0, 0])
 
   // const [show, setShow] = useState(true)
 
@@ -23,10 +23,7 @@ export const Below1000: React.FC = ({}) => {
     // let id0 = setTimeout(() => setShow(true), 200)
 
     let id1 = setInterval(() => {
-      pos.current = [
-        Math.floor(Math.random() * 100),
-        Math.floor(Math.random() * 100),
-      ]
+      setPos([Math.floor(Math.random() * 100), Math.floor(Math.random() * 100)])
       // setPos([Math.floor(Math.random() * 100), Math.floor(Math.random() * 100)])
     }, Math.floor(Math.random() * 2000) + 1000)
 
@@ -38,10 +35,6 @@ export const Below1000: React.FC = ({}) => {
 
   const [isHorizontal, setIsHorisontal] = useState(false)
   const [params, setParams] = useState([0, 0])
-
-  useEffect(() => {
-    setTimeout(() => {})
-  }, [])
 
   const handleSetParams = (height: number, width: number) => {
     setParams([height, width])
@@ -74,7 +67,7 @@ export const Below1000: React.FC = ({}) => {
             className={` flex flex-wrap items-center justify-center space-y-1 `}
             style={{ fontSize: '1.1rem', marginBottom: 10 }}
           >
-            <FadeText3 str={`Your resolution is not supportable yet`} />
+            <FadeText3 str={`Your resolution is not suppored yet`} />
           </div>
           <div
             className={` flex flex-wrap items-center justify-center space-y-1`}
@@ -100,11 +93,13 @@ export const Below1000: React.FC = ({}) => {
               />
             </div>
           ) : null}
-          <div className={`flex justify-between mx-2 flex-flow flex-wrap`}>
+          <div
+            className={`flex justify-between mx-2 flex-flow flex-wrap select-none `}
+          >
             <div className={'flex justify-center flex-grow '}>
-              <div className={`flex gap-2 mt-4 justify-center items-center`}>
+              <div className={`flex gap-2 mt-8 justify-center items-center`}>
                 <div
-                  className={`border-black border rounded-lg flex flex-col items-end p-2 `}
+                  className={`border-black border rounded-lg flex flex-col items-end p-2 bg-white opacity-80`}
                   style={{ width: 90, height: 65, gap: 9 }}
                 >
                   <img style={{ width: 20, height: 20 }} src={cmd} alt=" " />
@@ -112,7 +107,7 @@ export const Below1000: React.FC = ({}) => {
                 </div>
                 <div className={`text-2xl`}>+</div>
                 <div
-                  className={`border-black border rounded-lg flex flex-col items-center p-1 `}
+                  className={`border-black border rounded-lg flex flex-col items-center p-1 bg-white opacity-80`}
                   style={{ width: 70, height: 65, gap: 10 }}
                 >
                   <div style={{ transform: 'rotate(90deg) translateY(-1px)' }}>
@@ -137,7 +132,7 @@ export const Below1000: React.FC = ({}) => {
             <div className={'flex justify-center flex-grow'}>
               <div className={`flex gap-2 mt-4 justify-center items-center`}>
                 <div
-                  className={`border-black border rounded-lg flex flex-col items-center justify-center p-2 `}
+                  className={`border-black border rounded-lg flex flex-col items-center justify-center p-2 bg-white opacity-80`}
                   style={{ width: 90, height: 65, gap: 9 }}
                 >
                   <div className={`flex w-f justify-center `}>ctrl</div>
@@ -145,10 +140,14 @@ export const Below1000: React.FC = ({}) => {
                 <div className={`text-2xl`}>+</div>
 
                 <div
-                  className={`border-black border rounded-lg flex flex-col items-center p-1 `}
+                  className={`border-black border rounded-lg  flex flex-col items-center p-1 bg-white opacity-80`}
                   style={{ width: 70, height: 65, gap: 10 }}
                 >
-                  <div style={{ transform: 'rotate(90deg) translateY(-1px)' }}>
+                  <div
+                    style={{
+                      transform: 'rotate(90deg) translateY(-1px) ',
+                    }}
+                  >
                     |
                   </div>
                   <div
@@ -171,7 +170,7 @@ export const Below1000: React.FC = ({}) => {
       </div>
 
       <div
-        className={`fixed top-0 bottom-0 left-0 right-0 flex flex-col align-center justify-center gap bg-yellow-200`}
+        className={`fixed top-0 bottom-0 left-0 right-0 flex flex-col align-center justify-center gap bg-yello-200 bg-gray-500`}
         style={{
           transition: '0.5s ease-in-out',
           // backgroundColor: !show ? 'rgb(252, 211, 77)' : 'rgb(253, 230, 138)',
@@ -183,7 +182,7 @@ export const Below1000: React.FC = ({}) => {
           style={{
             transition: '3s ',
             opacity: 0.15,
-            transform: `perspective(1000px) rotateX(45deg) translateX(${pos.current[1]}px) translateY(${pos.current[0]}px)`,
+            transform: `perspective(1000px) rotateX(45deg) translateX(${pos[1]}px) translateY(${pos[0]}px)`,
           }}
         >
           {Array.from({ length: L }, (_, i) => i).map((el) => (

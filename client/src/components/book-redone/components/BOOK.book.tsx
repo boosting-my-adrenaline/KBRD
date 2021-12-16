@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 
 import { Chapters } from '../../../types/nav'
+import { FadeText } from '../../../utils/FadeText'
 
 interface IProps {
   STRING: string
@@ -19,30 +20,51 @@ export const BOOKBook: React.FC<IProps> = ({ STRING, chapter }) => {
   const LEFT3: string = STRING.slice(-245, -175)
 
   const [appear, setAppear] = useState(false)
+  const [highlightHider, setHighlightHider] = useState(true)
 
   useEffect(() => {
     let id = setTimeout(() => {
       setAppear(true)
     }, 300)
-    return () => clearTimeout(id)
+
+    let id2 = setTimeout(() => setHighlightHider(false), 1000)
+    return () => {
+      clearTimeout(id)
+      clearTimeout(id2)
+    }
   }, [])
 
   useDidMountEffect(() => {
-    setTimeout(() => {
+    let id = setTimeout(() => {
       setAppear(false)
-    }, 0)
+    }, 200)
+
+    let id2 = setTimeout(() => setHighlightHider(true), 100)
+    return () => {
+      clearTimeout(id)
+      clearTimeout(id2)
+    }
   }, [chapter])
 
   const formating = (str: string) => {
-    return str
-      .split('')
-      .map((el) =>
-        el !== ' ' ? (
-          <div className={`select-none`}>{el}</div>
-        ) : (
-          <div className={`select-none`}>{'\u00A0'}</div>
-        )
+    return str.split('').map((el) =>
+      el !== ' ' ? (
+        <div
+          className={`select-none ${highlightHider && `bg-red-100`}`}
+          style={{ transition: '0.6s ease' }}
+        >
+          {el}
+        </div>
+      ) : (
+        // <FadeText title={el} delay={[300, 1000]} hide={1} />
+        <div
+          className={`select-none ${highlightHider && `bg-red-100`}`}
+          style={{ transition: '0.6s ease' }}
+        >
+          {'\u00A0'}
+        </div>
       )
+    )
   }
 
   const rowing = (str: string) => {
@@ -51,7 +73,9 @@ export const BOOKBook: React.FC<IProps> = ({ STRING, chapter }) => {
 
   return (
     <div
-      className={`visible w-1000 z-40 font-courier text-2xl flex flex-col space-y-4 `}
+      className={`visible w-1000 z-40 font-courier text-2xl flex flex-col space-y-4 ${
+        highlightHider && `bg-red-10`
+      }`}
       style={{ opacity: !appear ? '0' : '1', transition: '0.7s ease-in-out' }}
     >
       <div className="w-1000 z-40 font-courier text-2xl flex flex-col space-y-4  ">

@@ -126,6 +126,7 @@ export const PROFILEcontainer: React.FC = () => {
                   borderLeftColor: 'black',
                   borderBottomColor: 'black',
                   borderBottomLeftRadius: 10,
+                  borderTopRightRadius: 10,
                 }}
               ></div>
             </div>

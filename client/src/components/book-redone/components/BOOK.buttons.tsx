@@ -1,47 +1,44 @@
 import React, { useState, useEffect } from 'react'
 import { useTypedSelector } from '../../../hooks/useTypedSelector'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
-import { BOOKbuttonVisual } from './BOOK.buttonVisual'
+import { BOOKarrowButton } from './buttons/BOOK.arrowButton'
+import { BOOKbuttonVisual } from './buttons/BOOK.buttonVisual'
+import { BOOKcapsLockButton } from './buttons/BOOK.CapsLockButton'
+import { BOOKfunctionalButtons } from './buttons/BOOK.functionalButtons'
 import { hackString } from './strings/stringFormation'
 
 interface IProps {
   animationBook: boolean
   setAnimationBook(animation: boolean): void
   SUCCESS(): void
-  // lastKey: {
-  //   current: string
-  // }
-  // successTypes: number
-  // failureTypes: {
-  //   current: number
-  // }
-  // successAndFailedTypes: {
-  //   current: number
-  // }
-  // failedTypesIndexes: {
-  //   current: number[]
-  // }
+  punctuation: boolean
+  caseSensitivity: boolean
+  setCaseSensetivity(cs: boolean): void
+  setPunctuation(p: boolean): void
+
   highlighter: boolean
   setHighlighter(turn: boolean): void
   STRING: string
-  // caps: boolean
-  // shift: boolean
+  caps: boolean
+  capsError: number
+  running: boolean
 }
 
 export const BOOKbuttons: React.FC<IProps> = ({
   animationBook,
   setAnimationBook,
   SUCCESS,
-  // lastKey,
-  // successTypes,
-  // failureTypes,
-  // successAndFailedTypes,
-  // failedTypesIndexes,
+
   setHighlighter,
   highlighter,
   STRING,
-  // caps,
-  // shift,
+  punctuation,
+  caseSensitivity,
+  setCaseSensetivity,
+  setPunctuation,
+  caps,
+  capsError,
+  running,
 }) => {
   const [appear, setAppear] = useState(false)
 
@@ -50,90 +47,61 @@ export const BOOKbuttons: React.FC<IProps> = ({
   useEffect(() => {
     let id = setTimeout(() => {
       setAppear(true)
-    }, 700)
+    }, 1000)
     return () => clearTimeout(id)
   }, [])
 
   useDidMountEffect(() => {
-    setTimeout(() => {
+    let id = setTimeout(() => {
       setAppear(false)
     }, 0)
+    return () => clearTimeout(id)
   }, [chapter])
+
+  const [hover, setHover] = useState(false)
 
   return (
     <div
-      className=" mx-60 mt-40 p-2 flex flex-row gap-2 rounded-full bg-red-00"
+      className="mt-10 z-10 flex flex-col justify-center items-center  bg-rd-200 select-none borde border-red-800  "
       style={{
-        transform: 'translateY(-135px)',
         opacity: !appear ? '0' : '1',
+        // maxWidth: '70%',
+        // width: '1200px',
+        width: '1000px',
         transition: '0.5s ease-in-out',
       }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
     >
-      {}
-      <BOOKbuttonVisual
-        tag={'animation'}
-        onClick={setAnimationBook}
-        active={animationBook}
-      />
-      <BOOKbuttonVisual
-        tag={'hightlighter'}
-        onClick={setHighlighter}
-        active={highlighter}
-      />
-      {/* <BOOKbuttonVisual tag={'CAPS'} onClick={setHighlighter} active={caps} /> */}
-      {/* <BOOKbuttonVisual tag={'SHIFT'} onClick={setHighlighter} active={shift} /> */}
-      <button
-        className="bg-blue-300 p-3 rounded-full justify-self-end	outline-none transition"
-        onMouseDown={() => {
-          for (let i = 0; i < 10; i++) {
-            SUCCESS()
-          }
-        }}
+      <div
+        className={`opacity-${
+          running && !hover ? 80 : 100
+        } flex flex-col justify-center items-center  `}
+        style={{ transition: '0.2s ease-in-out' }}
       >
-        x10
-      </button>
-      <button
-        className="bg-blue-300 p-3 rounded-full justify-self-end	outline-none transition"
-        onMouseDown={() => {
-          for (let i = 0; i < 100; i++) {
-            SUCCESS()
-          }
-        }}
-      >
-        x100
-      </button>
-      S:{STRING[0]}
-      <div onMouseDown={() => console.log(hackString())}>XDD</div>
-      {/* <div className=" ml-auto">
-        <button className="bg-green-500 p-3 rounded-full justify-self-end	">
-          FTI:{[...failedTypesIndexes.current].join('-')}
-        </button>
-        <button className="bg-green-500 p-3 rounded-full justify-self-end	">
-          OA:{successAndFailedTypes.current}
-        </button>
-        <button>{'\u00A0'}</button>
-        <button className="bg-green-500 p-3 rounded-full justify-self-end	">
-          S:{successTypes}
-        </button>
-        <button className="bg-red-500 p-3 rounded-full justify-self-end	">
-          F:{failureTypes.current}
-        </button>
-        <button className="bg-purple-500 p-3 rounded-full justify-self-end	">
-          {lastKey.current === ''
-            ? '\u00A0'.repeat(3)
-            : lastKey.current.length === 1
-            ? '\u00A0' + lastKey.current + '\u00A0'
-            : lastKey.current}
-        </button>
-
-        <button className="bg-purple-400 p-3 rounded-full justify-self-end	">
-          {prelastKey.current === ''
-            ? '\u00A0'.repeat(3)
-            : prelastKey.current.length === 1
-            ? '\u00A0' + prelastKey.current + '\u00A0'
-            : prelastKey.current}
-        </button>
-      </div> */}
+        <div className="w-f flex flex-col justify-center  bg-rd-200 ">
+          <BOOKfunctionalButtons
+            setAnimationBook={setAnimationBook}
+            animationBook={animationBook}
+            setHighlighter={setHighlighter}
+            highlighter={highlighter}
+            punctuation={punctuation}
+            setPunctuation={setPunctuation}
+            caseSensitivity={caseSensitivity}
+            setCaseSensetivity={setCaseSensetivity}
+            caps={caps}
+            capsError={capsError}
+          />
+        </div>
+        <div
+          className={`bg-red-200 my-4 `}
+          style={{
+            height: 1,
+            width: '1000px',
+            //  marginLeft: 92
+          }}
+        ></div>
+      </div>
     </div>
   )
 }
