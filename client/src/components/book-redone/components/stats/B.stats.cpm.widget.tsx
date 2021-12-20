@@ -41,8 +41,8 @@ export const BOOKstatsCPMWidget: React.FC<IProps> = ({ CPM, avgCPM }) => {
         ) : (
           <FadeText title={`${CPM}`} delay={[200, 600]} blink={CPM} />
         )}
-        {` `}
-        {showType === `short` ? `` : ` c/min`}
+        {`\u00a0`}
+        {showType === `short` ? `` : `c/min`}
       </div>
       {isHovered || isHovered2 ? (
         <div

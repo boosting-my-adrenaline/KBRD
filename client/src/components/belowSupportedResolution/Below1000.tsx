@@ -189,7 +189,7 @@ export const Below1000: React.FC = ({}) => {
             <div
               className={` flex flex-row align-center justify-center gap-2`}
               style={{
-                margin: `-53.5px ${el % 2 == 0 ? '0' : '216px'} 0 0`,
+                margin: `-53.5px ${el % 2 === 0 ? '0' : '216px'} 0 0`,
               }}
             >
               {Array.from({ length: W }, () => {}).map((el) => (

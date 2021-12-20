@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { BOOKarrowButton } from './BOOK.arrowButton'
-import { BOOKbuttonVisual } from './BOOK.buttonVisual'
+import {
+  BOOKbuttonVisual,
+  BOOKbuttonVisualFunctional,
+} from './BOOK.buttonVisual'
 import { BOOKcapsLockButton } from './BOOK.CapsLockButton'
 
 interface IProps {
@@ -14,6 +17,7 @@ interface IProps {
   setCaseSensetivity(value: boolean): void
   caps: boolean
   capsError: any
+  handleReset(): void
 }
 
 export const BOOKfunctionalButtons: React.FC<IProps> = ({
@@ -27,6 +31,7 @@ export const BOOKfunctionalButtons: React.FC<IProps> = ({
   setCaseSensetivity,
   caps,
   capsError,
+  handleReset,
 }) => {
   const [show, setShow] = useState(false)
 
@@ -95,6 +100,10 @@ export const BOOKfunctionalButtons: React.FC<IProps> = ({
           hoverInfo={`turns on/off case sensetivity`}
         />
         <div className={'flex-grow'}></div>
+
+        <BOOKbuttonVisualFunctional title={`reset`} onClick={handleReset} />
+        <div className={'px-2'}></div>
+
         <BOOKcapsLockButton caps={caps} capsError={capsError} />
       </div>
       {/* <div className={`z-20 flex justify-center items-center `}>

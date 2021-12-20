@@ -36,20 +36,6 @@ export const NAVlinks: React.FC<IProps> = ({
 
   const is3of = useRef(false)
 
-  // useEffect(() => {
-  //   is3of.current = true
-
-  //   if (chapter === 'BOOK') {
-  //     setParams([false, [0, 0], 95])
-  //   } else if (chapter === 'TAP') {
-  //     setParams([false, [119, 0], 81])
-  //   } else if (chapter === 'INFO') {
-  //     setParams([false, [223, 0], 95])
-  //   } else {
-  //     is3of.current = false
-  //   }
-  // }, [])
-
   useDidMountEffect(() => {
     if (!is3of.current && ['BOOK', 'TAP', 'INFO'].includes(chapter)) {
       if (chapter === 'BOOK') {
@@ -115,13 +101,12 @@ export const NAVlinks: React.FC<IProps> = ({
       >
         <div></div>
         <div
-          className={`border opacity-${params[0] ? '100' : '0'}`}
+          className={`border-2 opacity-${params[0] ? '100' : '0'}`}
           style={{
             width: params[2],
             height: 45,
             transition: '0.8s ease-in-out',
-            transform: `translateX(${params[1][0]}px) translateY(${params[1][1]}px)
-             `,
+            transform: `translateX(${params[1][0]}px) translateY(${params[1][1]}px)`,
           }}
         ></div>
       </div>

@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useTypedSelector } from '../../../hooks/useTypedSelector'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
-import { BOOKarrowButton } from './buttons/BOOK.arrowButton'
-import { BOOKbuttonVisual } from './buttons/BOOK.buttonVisual'
-import { BOOKcapsLockButton } from './buttons/BOOK.CapsLockButton'
 import { BOOKfunctionalButtons } from './buttons/BOOK.functionalButtons'
-import { hackString } from './strings/stringFormation'
 
 interface IProps {
   animationBook: boolean
@@ -22,6 +18,7 @@ interface IProps {
   caps: boolean
   capsError: number
   running: boolean
+  handleReset(): void
 }
 
 export const BOOKbuttons: React.FC<IProps> = ({
@@ -39,6 +36,7 @@ export const BOOKbuttons: React.FC<IProps> = ({
   caps,
   capsError,
   running,
+  handleReset,
 }) => {
   const [appear, setAppear] = useState(false)
 
@@ -91,6 +89,7 @@ export const BOOKbuttons: React.FC<IProps> = ({
             setCaseSensetivity={setCaseSensetivity}
             caps={caps}
             capsError={capsError}
+            handleReset={handleReset}
           />
         </div>
         <div

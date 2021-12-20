@@ -94,7 +94,7 @@ export const PerspectiveController: React.FC<IProps> = ({
       setMainMT(205)
       setNavPerspective(-350, 45)
     } else if (W <= 1200 && W > 1000) {
-      setPerspective(-690, -20, true)
+      setPerspective(-790, -63, true)
       setPerspective2(-350, -200, -102)
       setMainMT(200)
       setNavPerspective(-350, 45)

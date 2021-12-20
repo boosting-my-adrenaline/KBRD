@@ -24,7 +24,7 @@ export const BOOKbuttonVisual: React.FC<IProps> = ({
   useDidMountEffect(() => {
     let id = setTimeout(
       () => {
-        isHovered ? setInfo(true) : setInfo(false)
+        isHovered ? setInfo(false) : setInfo(false)
       },
       isHovered ? 700 : 10
     )
@@ -42,7 +42,11 @@ export const BOOKbuttonVisual: React.FC<IProps> = ({
     >
       <button
         tabIndex={-1}
-        className={`z-10  p-3 rounded-full justify-self-end outline-none text-${
+        // className={`z-10  p-3 rounded-full justify-self-end outline-none text-${
+        //   disabled ? 'gray-500' : active ? 'gray-800' : 'gray-600'
+        // } ${disabled ? 'cursor-not-allowed' : ''}`}
+
+        className={`z-10 px-4 py-2 rounded-xl  justify-self-end outline-none text-${
           disabled ? 'gray-500' : active ? 'gray-800' : 'gray-600'
         } ${disabled ? 'cursor-not-allowed' : ''}`}
         style={{
@@ -65,7 +69,7 @@ export const BOOKbuttonVisual: React.FC<IProps> = ({
         {tag}
       </button>
       <button
-        className={`absolute p-2 rounded-full animate-pulse `}
+        className={`absolute  px-3 py-1 rounded-xl  animate-pulse `}
         disabled
         style={{
           boxShadow: active && !disabled ? '0 0 5px 4px lightcoral' : '',
@@ -79,9 +83,11 @@ export const BOOKbuttonVisual: React.FC<IProps> = ({
       <div
         className={`${
           info ? 'visible' : 'invisible'
-        } transition-150 absolute z-20 border border-gray-500 text-center text-sm px-2 py-4 rounded-lg bg-${
-          !disabled ? 'blue-200' : 'yellow-300'
-        } flex justify-center items-end opacity-60`}
+        } transition-150 absolute z-20 border border-gray-500 text-center text-sm 
+        px-2 py-4 rounded-lg
+         bg-${
+           !disabled ? 'blue-200' : 'yellow-300'
+         } flex justify-center items-end opacity-60`}
         style={{
           width: 200,
           transform: 'translateY(-70px)',
@@ -102,6 +108,40 @@ export const BOOKbuttonVisual: React.FC<IProps> = ({
             {disabled ? <WarningRounded /> : <InfoRounded />}
           </div> */}
         </div>
+      </div>
+    </div>
+  )
+}
+
+interface IProps2 {
+  title: string
+  onClick(): void
+}
+
+export const BOOKbuttonVisualFunctional: React.FC<IProps2> = ({
+  title,
+  onClick,
+}) => {
+  const [hover, setHover] = useState(false)
+  return (
+    <div
+      style={{
+        transform: `translateY(${hover ? -3 : 0}px)`,
+        transition: '0.15s ease',
+      }}
+    >
+      <div
+        className={`px-4 py-2 rounded-xl border border-red-400 bg-red-${
+          hover ? 300 : 200
+        } active:bg-red-100 cursor-pointer `}
+        style={{
+          transition: '0.25s ease-in-out',
+        }}
+        onMouseDown={onClick}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+      >
+        {title}
       </div>
     </div>
   )

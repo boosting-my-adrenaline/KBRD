@@ -13,6 +13,12 @@ module.exports = {
       f: '100%',
       px: '1px',
     },
+    transition: {
+      t03: '0.3s ease-in-out',
+      t05: '0.5s ease-in-out',
+      t07: '0.7s ease-in-out',
+      t1: '1s ease-in-out',
+    },
 
     fontFamily: {
       courier: 'courier',

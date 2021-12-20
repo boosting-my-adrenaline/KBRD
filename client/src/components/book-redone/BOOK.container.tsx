@@ -2,12 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { BOOKBook } from './components/BOOK.book'
 import { BOOKLayout } from './components/BOOK.layout'
 
-import {
-  capitals,
-  KEYS,
-  letter1,
-  notCapitals,
-} from './components/strings/strings'
+import { capitals, KEYS, notCapitals } from './components/strings/strings'
 
 // import { Width } from '../../utils/GetWidth'
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
@@ -20,9 +15,12 @@ import { moveString, shuffle } from './components/strings/stringFormation'
 import { useKeyPress } from '../../utils/useKeyPress'
 import { BOOKfailures } from './components/BOOK.failures'
 import { BOOKstats } from './components/BOOK.stats'
+import { thegreatgatsby as startingLetter } from '../../static/letters/thegreatgatsby'
+import { LEVELcontainer } from '../leveling/LEVEL.container'
+// import { gonewiththewind as startingLetter } from '../../static/letters/gonewiththewind'
 
 export const BOOKContainer: React.FC = () => {
-  const [currentString, setCurrentString] = useState(shuffle(letter1))
+  const [currentString, setCurrentString] = useState(startingLetter)
   const [STRING, setSTRING] = useState<string>(currentString)
 
   function handleStringErase(STR: string): void {
@@ -42,14 +40,8 @@ export const BOOKContainer: React.FC = () => {
 
   const [animationBook, setAnimationBook] = useState(true)
 
-  const rendersCount = useRef(0)
-
   const successAndFailedTypes = useRef(0)
   const failureTypes = useRef(0)
-  const successTypes =
-    successAndFailedTypes.current - failureTypes.current < 0
-      ? 0
-      : successAndFailedTypes.current - failureTypes.current
   const failureInARow = useRef(0)
   const streakRow = useRef(0)
 
@@ -76,14 +68,14 @@ export const BOOKContainer: React.FC = () => {
   const shift = useKeyPress('Shift')
 
   const [capsKey, setCapsKey] = useState(false)
-  const shiftKey = useRef(false)
+  const [shiftKey, setShiftKey] = useState(false)
 
   useDidMountEffect(() => {
     setCapsKey(caps)
   }, [caps])
 
   useDidMountEffect(() => {
-    shiftKey.current = shift
+    setShiftKey(shift)
   }, [shift])
 
   useDidMountEffect(() => {
@@ -116,10 +108,6 @@ export const BOOKContainer: React.FC = () => {
   useEffect(() => {
     prelastKey.current = lastKey.current
   }, [keyDown])
-
-  useEffect(() => {
-    rendersCount.current++
-  })
 
   const handleEvent = (event: KeyboardEvent) => {
     const { key } = event
@@ -209,6 +197,22 @@ export const BOOKContainer: React.FC = () => {
       failedTypeStatus.current = true
     }
   }
+  const [reseting, setReseting] = useState(0)
+
+  const handleReset = () => {
+    successAndFailedTypes.current = 0
+    failureTypes.current = 0
+    failureInARow.current = 0
+    streakRow.current = 0
+
+    failedTypeStatus.current = false
+    escapeFailedTypeStatus.current = false
+    failedTypesIndexes.current = []
+
+    historyOfFailed.current = []
+    setSTRING(currentString)
+    setReseting((prev) => prev + 1)
+  }
 
   const [punctuation, setPunctuation] = useState(true)
   const [caseSensitivity, setCaseSensetivity] = useState(true)
@@ -237,6 +241,10 @@ export const BOOKContainer: React.FC = () => {
        }`}
       style={{ transition: '0.5s ease' }}
     >
+      <div
+        className={`absolute`}
+        style={{ transform: `translateY(-360px)` }}
+      ></div>
       <BOOKbuttons
         animationBook={animationBook}
         setAnimationBook={setAnimationBook}
@@ -251,11 +259,13 @@ export const BOOKContainer: React.FC = () => {
         caps={capsKey}
         capsError={capsError.current}
         running={running}
+        handleReset={handleReset}
       />
       <BOOKstats
         overall={successAndFailedTypes.current}
         failedTypesIndexes={failedTypesIndexes.current}
         chapter={chapter}
+        reseting={reseting}
       />
       <div
         className="invisible 1k:visible   flex flex-col justify-center items-center w-f border-black borde"
@@ -294,7 +304,7 @@ export const BOOKContainer: React.FC = () => {
         handleStringErase={handleStringErase}
         handleStringNoErase={handleStringNoErase}
         overall={successAndFailedTypes.current}
-        uppercase={shiftKey.current || capsKey}
+        uppercase={shiftKey || capsKey}
         punctuation={punctuation}
         caseSensitivity={caseSensitivity}
         chapter={chapter}

@@ -18,6 +18,10 @@ import { PerspectiveController } from './components/PerspectiveController'
 import { Below1000 } from './components/belowSupportedResolution/Below1000'
 import { NotFound } from './components/NotFound'
 
+////////////////
+
+// REMOVE SPACEBAR PAGE DOWN
+
 export const App: React.FC = () => {
   const history = useHistory()
   const chapter = useTypedSelector((state) => state.nav.chapter)

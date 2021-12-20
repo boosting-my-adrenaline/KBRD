@@ -3,16 +3,27 @@ import { Chapters } from '../../../../types/nav'
 import { useDidMountEffect } from '../../../../utils/useDidMountEffect'
 import { BOOKbuttonVisual } from '../buttons/BOOK.buttonVisual'
 import {
-  hackString,
+  goToRandom,
   lowerAll,
-  lowerAllWithSkip,
-  moveString,
   removePunctuation,
   shuffle,
   upperAll,
-  upperAllWithSkip,
 } from './stringFormation'
-import { letter1, letter2, letter3, letter4 } from './strings'
+import {
+  BOOKstringButton,
+  BOOKstringButtonFunctional,
+} from './BOOK.string.button'
+
+import { lorem as letter1 } from '../../../../static/letters/lorem'
+import { gonewiththewind as letter2 } from '../../../../static/letters/gonewiththewind'
+import { thelordoftherings as letter3 } from '../../../../static/letters/thelordoftherings'
+import { robinson as letter4 } from '../../../../static/letters/robinson'
+import { the1984 as letter5 } from '../../../../static/letters/the1984'
+import { thegreatgatsby as letter6 } from '../../../../static/letters/thegreatgatsby'
+import { tokillamockinbird as letter7 } from '../../../../static/letters/tokillamockinbird'
+import { lionwitch as letter8 } from '../../../../static/letters/lionwitch'
+
+let test = `Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. `
 
 interface IProps {
   // STRING: string
@@ -41,7 +52,7 @@ export const BOOKstring: React.FC<IProps> = ({
   running,
 }) => {
   const [now, setNow] = useState(currentString)
-  const choosenString = useRef<null | string>(null)
+  const choosenString = useRef<number>(5)
 
   const [appear, setAppear] = useState(false)
 
@@ -91,59 +102,95 @@ export const BOOKstring: React.FC<IProps> = ({
     // handleString('12345', true)
   }
 
-  const handleHackString = () => {
-    handleString(hackString(), true)
-  }
-
-  const examples = [
-    { title: `Example #1`, str: letter1 },
-    { title: `Example #2`, str: letter3 },
-    { title: `Example #3`, str: letter4 },
+  const letters = [
+    letter1,
+    letter2,
+    letter3,
+    letter4,
+    letter5,
+    letter6,
+    letter7,
+    letter8,
   ]
 
-  const handleSetString = (str: string, title: string) => {
+  // const examples = [
+  //   { title: `Example #1`, str: letter1 },
+  //   { title: `Example #2`, str: letter2 },
+  //   { title: `Example #3`, str: letter3 },
+  //   { title: `Example #4`, str: letter4 },
+  //   { title: `Example #5`, str: letter5 },
+  //   { title: `Example #6`, str: letter6 },
+  //   { title: `Example #7`, str: letter7 },
+  //   { title: `Example #8`, str: letter8 },
+  // ]
+
+  const handleSetString = (str: string, num: number) => {
     setNow(str)
-    choosenString.current = title
+    choosenString.current = num
   }
 
   const handleRandom = () => {
-    let n = Math.floor(Math.random() * examples.length)
-    handleSetString(examples[n].str, examples[n].title)
+    let n = Math.floor(Math.random() * letters.length)
+    while (n === choosenString.current) {
+      n = Math.floor(Math.random() * letters.length)
+    }
+
+    handleSetString(letters[n], n)
   }
 
-  const exampleButton = (title: string, str: string) => {
-    return (
-      <div
-        className={`mx-2 bg-red-200 cursor-pointer border-`}
-        onMouseDown={() => handleSetString(str, title)}
-      >
-        {title}
-      </div>
-    )
+  const handleGoToRandomSentence = () => {
+    let a = goToRandom(letters[choosenString.current])
+    handleSetString(a, choosenString.current)
+    console.log(a)
   }
 
-  const exampleButtons = examples.map((el) => exampleButton(el.title, el.str))
+  const handleToBeginning = () => {
+    // handleString(letters[choosenString.current], true)
+    handleString(now, true)
+  }
+
+  const exampleButtons = letters.map((el) => (
+    <BOOKstringButton
+      choosenString={choosenString.current}
+      handleSetString={handleSetString}
+      num={letters.indexOf(el)}
+      str={el}
+    />
+  ))
   const [hover, setHover] = useState(false)
 
+  // return <>do something with STRING length</>
   return (
     <div
-      className={`z-50 text-xl transform  flex items-center border-black borde my-4 text-gray-800 opacity-${
+      className={`select-none z-50 text-xl transform  flex flex-col gap-4 items-center border-black borde mt-4 text-gray-800 opacity-${
         !appear ? 0 : 100
       }`}
       style={{ width: 1000, transition: '0.8s ease-in-out' }}
-     
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
     >
       <div
-        className={`w-f flex gap-8 items-center opacity-${
+        className={`w-f flex flex-wrap items-center justify-evenly opacity-${
           running && !hover ? 80 : 100
         }`}
         style={{ transition: '0.2s ease-in-out' }}
       >
         {exampleButtons}
-        <div onMouseDown={handleHackString}>HS</div>
-        <div onMouseDown={handleShuffle}>shuffle</div>
-        <div onMouseDown={handleRandom}>random</div>
-        now: {choosenString.current}
+      </div>
+      <div className={`flex flex-row justify-around items-center w-f`}>
+        <BOOKstringButtonFunctional title={`shuffle`} onClick={handleShuffle} />
+        <BOOKstringButtonFunctional
+          title={`random book`}
+          onClick={handleRandom}
+        />
+        <BOOKstringButtonFunctional
+          title={`jump over`}
+          onClick={handleGoToRandomSentence}
+        />
+        <BOOKstringButtonFunctional
+          title={`to beginning`}
+          onClick={handleToBeginning}
+        />
       </div>
     </div>
   )
