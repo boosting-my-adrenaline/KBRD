@@ -150,7 +150,7 @@ export const Navbar: React.FC<IProps> = ({ block }) => {
               ShadowColor={ShadowColor}
               onClick={onClick}
             />
-            <div onClick={() => changeChapter(Chapters.NOT_FOUND)}>404</div>
+            {/* <div onClick={() => changeChapter(Chapters.NOT_FOUND)}>404</div> */}
             {/* <ARight
               onClick={changeLink}
               chapter={chapter}

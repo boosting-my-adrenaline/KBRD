@@ -17,6 +17,7 @@ import { useAuthAction, useNavAction } from './hooks/useAction'
 import { PerspectiveController } from './components/PerspectiveController'
 import { Below1000 } from './components/belowSupportedResolution/Below1000'
 import { NotFound } from './components/NotFound'
+import { Footer } from './components/Footer'
 
 ////////////////
 
@@ -111,6 +112,21 @@ export const App: React.FC = () => {
     renders.current++
   })
 
+  useEffect(() => {
+    window.addEventListener('keydown', (e) => {
+      if (e.keyCode === 32) {
+        e.preventDefault()
+      }
+    })
+
+    return () =>
+      window.removeEventListener('keydown', (e) => {
+        if (e.keyCode === 32) {
+          e.preventDefault()
+        }
+      })
+  }, [])
+
   return (
     <div className={''}>
       <BlurScreen show={initialScreen} />
@@ -128,6 +144,7 @@ export const App: React.FC = () => {
           }}
         >
           <Navbar block={block} />
+          <Footer />
           <Background />
 
           <div
@@ -141,14 +158,8 @@ export const App: React.FC = () => {
             onMouseDown={() => setOpenOff()}
           ></div>
 
-          <div
-            style={{
-              marginTop: perspective[1],
-              transform: `perspective(1000px) translateZ(${perspective[0]}px)`,
-              // transition: '0.05s ease-in-out',
-            }}
-          >
-            {/* <div className="z-50 absolute top-2">
+          <div>
+            {/* <div className="z-50 absolute top-16">
               <Width />
             </div> */}
             <Switch>

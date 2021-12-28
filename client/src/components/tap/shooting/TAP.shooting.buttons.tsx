@@ -16,6 +16,12 @@ type IProps = {
   started: boolean
   keyColor: KeyColor
   setKeyColor(color: KeyColor): void
+  typeCells: {
+    numbers: boolean
+    letters: boolean
+    punctuation: boolean
+  }
+  handleSetTypeCells(type: 1 | 2 | 3): void
 }
 
 export const TAPshootingButtons: React.FC<IProps> = ({
@@ -29,13 +35,15 @@ export const TAPshootingButtons: React.FC<IProps> = ({
   started,
   keyColor,
   setKeyColor,
+  typeCells,
+  handleSetTypeCells,
 }) => {
   const [bluring, setBluring] = useState(0)
   const [bluringTag, setBluringTag] = useState('START')
 
   useEffect(() => {
     setBluring(100)
-    setTimeout(() => {
+    let id = setTimeout(() => {
       if (started && !running) {
         setBluringTag('READY')
       } else if (started && running) {
@@ -45,9 +53,14 @@ export const TAPshootingButtons: React.FC<IProps> = ({
       }
       // running ? setBluringTag('PAUSE') : setBluringTag('START')
     }, 50)
-    setTimeout(() => {
+    let id2 = setTimeout(() => {
       setBluring(0)
     }, 100)
+
+    return () => {
+      clearTimeout(id)
+      clearTimeout(id2)
+    }
   }, [running, started])
 
   const handleStartButton = (): void => {
@@ -57,7 +70,7 @@ export const TAPshootingButtons: React.FC<IProps> = ({
   }
 
   return (
-    <div className="flex flex-row justify-center items-center  h-32 mb-10 relative gap-10 font-courier border border-red-800">
+    <div className="flex flex-row justify-center items-center  h-32 mb-10 relative gap-10 font-courier borde border-red-800">
       <TAPshootingKeyStyle keyColor={keyColor} setKeyColor={setKeyColor} />
       <div className="flex flex-col items bg-blue-300 shadow-2xl py-2 px-5 rounded-xl border-2 border-blue-400">
         <h2 className="text-2xl text-right mr-12">{intervalPush} ms</h2>
@@ -106,7 +119,11 @@ export const TAPshootingButtons: React.FC<IProps> = ({
         <h2 className="text-2xl ml-8">Limit: {limit}</h2>
         <TAPshootingLimitSlider limit={limit} setLimit={setLimit} />
       </div>
-      <TAPshootingKeyType keyColor={keyColor} setKeyColor={setKeyColor} />
+      <TAPshootingKeyType
+        keyColor={keyColor}
+        typeCells={typeCells}
+        handleSetTypeCells={handleSetTypeCells}
+      />
     </div>
   )
 }

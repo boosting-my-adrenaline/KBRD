@@ -27,7 +27,8 @@ export const LEVELlevel: React.FC<IProps> = ({ exp, expMSG }) => {
             style={{
               // height: 40,
               width: `${(100 / exp[1]) * exp[0]}%`,
-              transition: `1s ease-out`,
+              // transition: `1s ease-out`,
+              transition: `0.03s ease-out`,
             }}
           >
             <div

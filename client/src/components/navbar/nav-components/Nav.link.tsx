@@ -20,7 +20,16 @@ export const NAVlink: React.FC<IProps> = ({
   const [isClicked, setIsClicked] = useState(false)
 
   return (
-    <>
+    <div
+      className={`flex items-center justify-center py-1  cursor-pointer`}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onClick={() => {
+        setIsClicked(true)
+        onClick(link as Chapters)
+        setTimeout(() => setIsClicked(false), 1500)
+      }}
+    >
       <a
         className={`outline-none text:xl md:text-3xl  select-none lowercase
          flex-row rounded-md transition-all  ${isClicked && 'animate-bounce'}
@@ -30,16 +39,9 @@ export const NAVlink: React.FC<IProps> = ({
         style={{
           transform: `translateY(${hover ? -6 : 0}px)`,
         }}
-        onClick={() => {
-          setIsClicked(true)
-          onClick(link as Chapters)
-          setTimeout(() => setIsClicked(false), 1500)
-        }}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
       >
         <div>{link}</div>
       </a>
-    </>
+    </div>
   )
 }

@@ -15,6 +15,7 @@ export const TAPshootingModal: React.FC<IProps> = ({
   return (
     <>
       <Modal
+        // open={true}
         open={modalOpen}
         onClose={handleCloseModal}
         closeAfterTransition

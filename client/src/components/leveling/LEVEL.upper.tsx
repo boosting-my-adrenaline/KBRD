@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
+import { LEVELmessenger } from './LEVEL.messenger'
 
 interface IProps {
   handleSetExp(value: number): void
@@ -22,6 +23,35 @@ export const LEVELupper: React.FC<IProps> = ({
   const successRow = fti.length > 0 ? fti[fti.length - 1] - 1 : overall
 
   const [messages, setMessages] = useState<string[]>([])
+
+  const [block, setBlock] = useState(false)
+
+  useDidMountEffect(() => {
+    if (block) return
+
+    if (messages.length) {
+      let m = messages[0]
+
+      setExpMSG(m)
+      setMessages((prev) => {
+        prev.shift()
+        return prev
+      })
+      setBlock(true)
+    } else {
+      setExpMSG(null)
+    }
+  }, [block, messages])
+
+  useDidMountEffect(() => {
+    let id = setTimeout(() => {
+      setBlock(false)
+    }, 2000)
+
+    return () => clearTimeout(id)
+  }, [block])
+
+  //////////
 
   const handleMessage = (msg: string) => {
     setMessages((prev) => [...prev, msg])
@@ -48,8 +78,8 @@ export const LEVELupper: React.FC<IProps> = ({
         exp((successRow / 10) * 5)
         m(`per&fast:+${(successRow / 10) * 5}`)
       } else if (avgCPM < 250 && avgCPM >= 215) {
-        exp((successRow / 10) * 2.5)
-        m(`per&fast:+${(successRow / 10) * 2.5}`)
+        exp((successRow / 10) * 3)
+        m(`per&fast:+${(successRow / 10) * 3}`)
       }
     }
   }, [overall])
@@ -90,13 +120,13 @@ export const LEVELupper: React.FC<IProps> = ({
     /////// average accuracy percent
 
     if (overall >= 250 && overall % 125 === 0) {
-      if (aap >= 98.5) {
+      if (aap >= 98.75) {
         exp(40 + (overall / 125) * 10)
         m(`avgAcc:${40 + (overall / 125) * 10}`)
-      } else if (aap < 98.5 && aap >= 97) {
+      } else if (aap < 98.75 && aap >= 97.25) {
         exp(25 + (overall / 125) * 5)
         m(`avgAcc:${25 + (overall / 125) * 5}`)
-      } else if (aap < 97 && aap >= 96) {
+      } else if (aap < 97.25 && aap >= 96.25) {
         exp(15 + (overall / 125) * 5)
         m(`avgAcc:${15 + (overall / 125) * 5}`)
       }
@@ -114,12 +144,18 @@ export const LEVELupper: React.FC<IProps> = ({
   }, [overall])
 
   return (
-    <div className={`flex gap-10`}>
-      {/* <div onMouseDown={() => handleMessage('first')}>+first</div>
+    <div className={`invisible flex gap-10 select-none`}>
+      <div onMouseDown={() => handleMessage('first')}>+first</div>
       <div onMouseDown={() => handleMessage('second')}>+second</div>
-      <div onMouseDown={() => handleMessage('third')}>+third</div> */}
-      m:{messages.join(' - ')}
+      <div onMouseDown={() => handleMessage('third')}>+third</div>
       <div onMouseDown={() => console.log(messages)}>console</div>
+      <br />
+      block: {block ? 1 : 0}
+      {/* <LEVELmessenger
+        messages={messages}
+        setExpMSG={setExpMSG}
+        setMessages={setMessages}
+      /> */}
     </div>
   )
 }

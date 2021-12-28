@@ -6,15 +6,13 @@ import { TAPtap } from './shooting/TAP.tap'
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 
-// type faze = 'on' | 'off'
-
 type CellsAmount = 7 | 19 | 29
 
 export type KeyColor = 'red' | 'green' | 'blue' | 'yellow' | 'purple' | 'pink'
 
-export const TAPshooting: React.FC = () => {
-  const alphabet: string = 'abcdefghijklmnopqrstuvwxyz'
+export type KeyType = 'number' | 'letter' | 'punctuation'
 
+export const TAPshooting: React.FC = () => {
   const [cells, setCells] = useState<Array<string | null>>(
     Array.from({ length: 29 }, (_, i) => null)
   )
@@ -81,6 +79,22 @@ export const TAPshooting: React.FC = () => {
   const [fuse, setFuse] = useState(0)
   const [limit, setLimit] = useState(15)
   const [cellsAmount, setCellsAmount] = useState<CellsAmount>(29)
+  const [typeCells, setTypeCells] = useState({
+    numbers: true,
+    letters: true,
+    punctuation: false,
+  })
+
+  const handleSetTypeCells = (type: 1 | 2 | 3) => {
+    if (type === 1) {
+      setTypeCells((prev) => ({ ...prev, numbers: !prev.numbers }))
+    } else if (type === 2) {
+      setTypeCells((prev) => ({ ...prev, letters: !prev.letters }))
+      // setTypeCells((prev) => ({ ...prev, letters: true }))
+    } else if (type === 3) {
+      setTypeCells((prev) => ({ ...prev, punctuation: !prev.punctuation }))
+    }
+  }
 
   useEffect(() => {
     setFuse(cells.filter((el) => el).length)
@@ -117,6 +131,15 @@ export const TAPshooting: React.FC = () => {
     setTick((prev) => !prev)
   }
 
+  const alphabet1: string = '0123456789'
+  const alphabet2: string = 'abcdefghijklmnopqrstuvwxyz'
+  const alphabet3: string = `!@#$%^&*()-_=+[]{}:;'"/?.,<>`
+
+  let n = typeCells.numbers ? alphabet1 : ''
+  let l = typeCells.letters ? alphabet2 : ''
+  let p = typeCells.punctuation ? alphabet3 : ''
+  let alphabet = n + l + p
+
   const pushCell = (): void => {
     let res = false
     while (!res && fuse < limit) {
@@ -142,7 +165,6 @@ export const TAPshooting: React.FC = () => {
       arr[prev.indexOf(char)] = null
       return arr
     })
-    console.log('tryina')
     setFuse((prev) => prev - 1)
   }
 
@@ -200,8 +222,7 @@ export const TAPshooting: React.FC = () => {
         transform: 'translateY(-30px)',
         transition: '1s ease',
         opacity: !appear ? '0' : '1',
-        marginTop: -50,
-        border: '1px solid black',
+        // marginTop: -50,
       }}
     >
       <>
@@ -228,6 +249,8 @@ export const TAPshooting: React.FC = () => {
         started={started}
         keyColor={keyColor}
         setKeyColor={setKeyColor}
+        typeCells={typeCells}
+        handleSetTypeCells={handleSetTypeCells}
       />
       {/* <div
         style={{

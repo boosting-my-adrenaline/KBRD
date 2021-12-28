@@ -16,14 +16,14 @@
   "author": "Anakin Skywalker <away.float.away.com>",
   "license": "ISC",
   "dependencies": {
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.6",
     "express": "^4.17.1",
     "express-validator": "^6.12.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.10",
-    "@types/jest": "^26.0.15",
-    "@types/node": "^12.0.0"
+    "mongoose": "^6.0.10"
   },
   "devDependencies": {
     "concurrently": "^6.3.0",

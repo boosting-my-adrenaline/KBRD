@@ -26,8 +26,20 @@ export const MAINcontainer: React.FC = () => {
   //   return () => clearTimeout(id)
   // }, [chapter])
 
+  const [perspective, setPerspective] = useState<[number, number]>([0, 100])
+
+  const handleSetPerspective = (perspective: number, margin: number) => {
+    setPerspective([perspective, margin])
+  }
+
   return (
-    <>
+    <div
+      style={{
+        marginTop: perspective[1],
+        transform: `perspective(1000px) translateZ(${perspective[0]}px)`,
+        // transition: '0.05s ease-in-out',
+      }}
+    >
       <div
         className="flex flex-col justify-center items-center "
         style={{
@@ -41,7 +53,10 @@ export const MAINcontainer: React.FC = () => {
       >
         {slides}
       </div>
-      <PerspectiveController setMainMT={setMarginT} />
-    </>
+      <PerspectiveController
+        setMainMT={setMarginT}
+        setBook={handleSetPerspective}
+      />
+    </div>
   )
 }

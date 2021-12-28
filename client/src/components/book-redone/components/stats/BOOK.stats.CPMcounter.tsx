@@ -67,10 +67,10 @@ export const BOOKstatsCPMcounter: React.FC<IProps> = ({
       // console.log(`s: ${s}, t: ${t}`)
       // console.log(`SPM: ${Math.round((60000 / t) * s)}`)
       let spm = Math.round((60000 / t) * s)
-      if (s < 15) {
+      if (s < 10) {
         return
       }
-      if (s <= 25) {
+      if (s <= 17) {
         if (lastCPM.current > 0) {
           spm = (spm + lastCPM.current) * 0.5
         } else {

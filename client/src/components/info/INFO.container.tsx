@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { FadeText } from '../../utils/FadeText'
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
+import { PerspectiveController } from '../PerspectiveController'
 import { INFOslide } from './INFO.slide'
 
 export const INFOcontainer: React.FC = () => {
@@ -37,15 +38,30 @@ export const INFOcontainer: React.FC = () => {
   reiciendis incidunt a sed, error autem, cupiditate necessitatibus quo at
   accusantium neque dolorum.`
 
+  const [perspective, setPerspective] = useState<[number, number]>([0, 100])
+
+  const handleSetPerspective = (perspective: number, margin: number) => {
+    setPerspective([perspective, margin])
+  }
+
   return (
     <div
-      className="flex flex-col justify-center items-center z-20"
       style={{
-        transition: '1s ease',
-        // opacity: !appear ? '0' : '1',
+        marginTop: perspective[1],
+        transform: `perspective(1000px) translateZ(${perspective[0]}px)`,
+        // transition: '0.05s ease-in-out',
       }}
     >
-      <INFOslide chapter={chapter} />
+      <div
+        className="flex flex-col justify-center items-center z-20"
+        style={{
+          transition: '1s ease',
+          // opacity: !appear ? '0' : '1',
+        }}
+      >
+        <INFOslide chapter={chapter} />
+      </div>
+      <PerspectiveController setBook={handleSetPerspective} />
     </div>
   )
 }

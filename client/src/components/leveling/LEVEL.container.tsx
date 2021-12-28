@@ -52,12 +52,12 @@ export const LEVELcontainer: React.FC<IProps> = ({
       for (let i = 0; i < before; i++) {
         setTimeout(() => {
           setExp((prev) => [prev[0] + 1, prev[1]])
-        }, i * 150 + 20)
+        }, i * 50 + 20)
       }
       for (let i = 0; i < after; i++) {
         setTimeout(() => {
           setExp((prev) => [prev[0] + 1, prev[1]])
-        }, i * 150 + 2520)
+        }, i * 50 + 2520)
       }
     }
   }

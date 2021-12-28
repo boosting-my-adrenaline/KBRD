@@ -64,7 +64,13 @@ export const BOOKstats: React.FC<IProps> = ({
 
   return (
     <>
-      <div className={`absolute `} style={{ transform: 'translateY(-355px)' }}>
+      <div
+        className={`absolute `}
+        style={{
+          transform: `translateY(${appear ? -345 : -600}px)`,
+          transition: '0.6s ease-in-out',
+        }}
+      >
         <LEVELcontainer
           overall={overall}
           fti={fti}

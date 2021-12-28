@@ -17,6 +17,7 @@ import { BOOKfailures } from './components/BOOK.failures'
 import { BOOKstats } from './components/BOOK.stats'
 import { thegreatgatsby as startingLetter } from '../../static/letters/thegreatgatsby'
 import { LEVELcontainer } from '../leveling/LEVEL.container'
+import { PerspectiveController } from '../PerspectiveController'
 // import { gonewiththewind as startingLetter } from '../../static/letters/gonewiththewind'
 
 export const BOOKContainer: React.FC = () => {
@@ -232,84 +233,99 @@ export const BOOKContainer: React.FC = () => {
     return () => clearTimeout(id)
   }, [successAndFailedTypes.current])
 
+  const [perspective, setPerspective] = useState<[number, number]>([0, 100])
+
+  const handleSetPerspective = (perspective: number, margin: number) => {
+    setPerspective([perspective, margin])
+  }
+
   return (
     <div
-      className={`borde order-black w-f  flex flex-col
+      style={{
+        marginTop: perspective[1],
+        transform: `perspective(1000px) translateZ(${perspective[0]}px)`,
+        // transition: '0.05s ease-in-out',
+      }}
+    >
+      <div
+        className={`borde order-black w-f  flex flex-col
        justify-center items-center font-courier opacity-${
          appear ? 100 : 0
          //  100
        }`}
-      style={{ transition: '0.5s ease' }}
-    >
-      <div
-        className={`absolute`}
-        style={{ transform: `translateY(-360px)` }}
-      ></div>
-      <BOOKbuttons
-        animationBook={animationBook}
-        setAnimationBook={setAnimationBook}
-        SUCCESS={SUCCESS}
-        highlighter={hightlighter}
-        setHighlighter={setHighlighter}
-        STRING={STRING}
-        punctuation={punctuation}
-        caseSensitivity={caseSensitivity}
-        setCaseSensetivity={setCaseSensetivity}
-        setPunctuation={setPunctuation}
-        caps={capsKey}
-        capsError={capsError.current}
-        running={running}
-        handleReset={handleReset}
-      />
-      <BOOKstats
-        overall={successAndFailedTypes.current}
-        failedTypesIndexes={failedTypesIndexes.current}
-        chapter={chapter}
-        reseting={reseting}
-      />
-      <div
-        className="invisible 1k:visible   flex flex-col justify-center items-center w-f border-black borde"
-        // style={{ transform: 'translateY(-150px)' }}
+        style={{ transition: '0.5s ease' }}
       >
         <div
-          className={`invisible 1k:visible  flex flex-col
-        justify-center items-center bordr border-red-900 my-10`}
+          className={`absolute`}
+          style={{ transform: `translateY(-360px)` }}
+        ></div>
+        <BOOKbuttons
+          animationBook={animationBook}
+          setAnimationBook={setAnimationBook}
+          SUCCESS={SUCCESS}
+          highlighter={hightlighter}
+          setHighlighter={setHighlighter}
+          STRING={STRING}
+          punctuation={punctuation}
+          caseSensitivity={caseSensitivity}
+          setCaseSensetivity={setCaseSensetivity}
+          setPunctuation={setPunctuation}
+          caps={capsKey}
+          capsError={capsError.current}
+          running={running}
+          handleReset={handleReset}
+        />
+        <BOOKstats
+          overall={successAndFailedTypes.current}
+          failedTypesIndexes={failedTypesIndexes.current}
+          chapter={chapter}
+          reseting={reseting}
+        />
+        <div
+          className="invisible 1k:visible   flex flex-col justify-center items-center w-f border-black borde"
+          // style={{ transform: 'translateY(-150px)' }}
         >
-          <BOOKBook
-            STRING={STRING}
-            chapter={chapter}
-            // overall={successAndFailedTypes.current}
-            // animation={animationBook}
-            // currentString={currentString}
-            // chapter={chapter}
-          />
-          <BOOKLayout
-            failedTypesIndexes={failedTypesIndexes.current}
-            overall={successAndFailedTypes.current}
-            currentString={currentString}
-            STRING={STRING}
-            animation={animationBook}
-            chapter={chapter}
-            highlighter={hightlighter}
-          />
-          <BOOKfailures
-            failedTypesIndexes={failedTypesIndexes.current}
-            chapter={chapter}
-          />
-          <BOOKpointer overall={successAndFailedTypes.current} />
+          <div
+            className={`invisible 1k:visible  flex flex-col
+        justify-center items-center bordr border-red-900 my-10`}
+          >
+            <BOOKBook
+              STRING={STRING}
+              chapter={chapter}
+              // overall={successAndFailedTypes.current}
+              // animation={animationBook}
+              // currentString={currentString}
+              // chapter={chapter}
+            />
+            <BOOKLayout
+              failedTypesIndexes={failedTypesIndexes.current}
+              overall={successAndFailedTypes.current}
+              currentString={currentString}
+              STRING={STRING}
+              animation={animationBook}
+              chapter={chapter}
+              highlighter={hightlighter}
+            />
+            <BOOKfailures
+              failedTypesIndexes={failedTypesIndexes.current}
+              chapter={chapter}
+            />
+            <BOOKpointer overall={successAndFailedTypes.current} />
+          </div>
         </div>
+        <BOOKstring
+          currentString={currentString}
+          handleStringErase={handleStringErase}
+          handleStringNoErase={handleStringNoErase}
+          overall={successAndFailedTypes.current}
+          uppercase={shiftKey || capsKey}
+          punctuation={punctuation}
+          caseSensitivity={caseSensitivity}
+          chapter={chapter}
+          running={running}
+        />
       </div>
-      <BOOKstring
-        currentString={currentString}
-        handleStringErase={handleStringErase}
-        handleStringNoErase={handleStringNoErase}
-        overall={successAndFailedTypes.current}
-        uppercase={shiftKey || capsKey}
-        punctuation={punctuation}
-        caseSensitivity={caseSensitivity}
-        chapter={chapter}
-        running={running}
-      />
+      <PerspectiveController setBook={handleSetPerspective} />
     </div>
   )
 }

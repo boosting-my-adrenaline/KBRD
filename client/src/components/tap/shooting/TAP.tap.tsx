@@ -69,7 +69,25 @@ export const TAPtap: React.FC<IProps> = ({
             transition: '0.1s ease',
           }}
         >
-          {cells[cell]}
+          <div
+            style={{
+              marginTop:
+                cells[cell] === ':' ||
+                cells[cell] === ';' ||
+                cells[cell] === '(' ||
+                cells[cell] === ')' ||
+                cells[cell] === '[' ||
+                cells[cell] === '{' ||
+                cells[cell] === '}' ||
+                cells[cell] === ']' ||
+                cells[cell] === '_' ||
+                cells[cell] === '-'
+                  ? '-10px'
+                  : '',
+            }}
+          >
+            {cells[cell]}
+          </div>
           {/* {cell} */}
           <div
             className={`bg-black absolute mt-14 rounded-full ${

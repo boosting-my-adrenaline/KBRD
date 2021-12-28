@@ -173,7 +173,7 @@ export const BOOKstatsCPMWidget: React.FC<IProps> = ({ CPM, avgCPM }) => {
                         style={{ transition: `0.3s ease-in-out` }}
                         onMouseDown={() => setShowType(`short`)}
                       >
-                        {/* .{(currentAccuracy && accuracyValue) || 967} */}167
+                        {CPM || 167}
                       </div>
                       <div
                         className={`cursor-pointer border-red-400 border-r rounded-r-xl border-t border-b py-1 px-6 bg-red-${
@@ -182,7 +182,7 @@ export const BOOKstatsCPMWidget: React.FC<IProps> = ({ CPM, avgCPM }) => {
                         style={{ transition: `0.3s ease-in-out` }}
                         onMouseDown={() => setShowType(`long`)}
                       >
-                        167 c/min
+                        {CPM || 167} {` `} c/min
                       </div>
                     </div>
                   </div>
