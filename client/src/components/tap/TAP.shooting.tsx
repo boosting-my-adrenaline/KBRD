@@ -8,7 +8,7 @@ import { useTypedSelector } from '../../hooks/useTypedSelector'
 
 type CellsAmount = 7 | 19 | 29
 
-export type KeyColor = 'red' | 'green' | 'blue' | 'yellow' | 'purple' | 'pink'
+export type KeyColor = 'red' | 'emerald' | 'cyan' | 'amber' | 'fuchsia' | 'pink'
 
 export type KeyType = 'number' | 'letter' | 'punctuation'
 

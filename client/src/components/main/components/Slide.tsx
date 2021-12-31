@@ -67,26 +67,26 @@ export const Slide: React.FC<IProps> = ({ chapter, title, queue }) => {
     return () => clearTimeout(id)
   }, [unique])
 
-  const getColor = (chapter: Chapters): string => {
-    switch (chapter) {
+  const getColor = (): [string, string, string] => {
+    switch (title) {
       case 'BOOK':
-        return 'red'
+        return ['bg-red-200', 'bg-red-300', 'border-red-400']
       case 'TAP':
-        return 'blue'
+        return ['bg-blue-200', 'bg-blue-300', 'border-blue-400']
       case 'INFO':
-        return 'yellow'
+        return ['bg-yellow-200', 'bg-yellow-300', 'border-yellow-400']
       default:
-        return ''
+        return ['', '', '']
     }
   }
 
-  const definedColor = getColor(title)
+  const definedColor = getColor()
 
   return (
     <div
-      className={`flex items-center justify-center font-courier cursor-pointer uppercase rounded-2xl bg-${definedColor}-${
-        unique ? 300 : 200
-      } border-${unique ? 0 : 2} border-${definedColor}-${unique ? 500 : 400}`}
+      className={`flex items-center justify-center font-courier cursor-pointer uppercase rounded-2xl ${
+        getColor()[0]
+      } ${unique && getColor()[1]}  border-${unique ? 0 : 2} ${getColor()[2]} `}
       style={{
         width: width,
         height: 100,

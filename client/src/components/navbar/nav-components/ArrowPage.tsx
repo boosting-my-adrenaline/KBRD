@@ -8,7 +8,7 @@ interface IProps {
   onClick(dir: Directions): void
   chapter: Chapters
   isOpened: boolean
-  colors: [string, string]
+  colors: [string, string, string]
   direction: 'right' | 'left'
 }
 
@@ -26,7 +26,13 @@ export const NAVarrow: React.FC<IProps> = ({
 
   const [colorsSt, setColorsSt] = useState(colors)
 
-  const [ThemeColor, ShadowColor] = colorsSt
+  const [ThemeColor, BorderColor, ShadowColor] = colorsSt
+  const mutatedThemeColor = () => {
+    let res = ThemeColor.split('')
+    res[res.length - 3] = '3'
+    return res.join('')
+  }
+
   const [show, setShow] = useState(false)
   const [hover, setHover] = useState(false)
 
@@ -83,7 +89,7 @@ export const NAVarrow: React.FC<IProps> = ({
       onMouseLeave={() => setHover(false)}
     >
       <div
-        className={`absolute rounded-lg bg-${ThemeColor}-200 border border-${ThemeColor}-500 p-2 hover:bg-${ThemeColor}-100`}
+        className={`absolute rounded-lg ${mutatedThemeColor} border ${BorderColor} p-2 hover:bg-gray-100 `}
         style={{
           width: 55,
           height: 55,

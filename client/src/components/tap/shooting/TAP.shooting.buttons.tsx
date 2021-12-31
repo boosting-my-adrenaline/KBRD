@@ -4,6 +4,7 @@ import { TAPshootingLimitSlider } from './TAP.shooting.limitSlider'
 import { TAPshootingKeyStyle } from './TAP.shooting.keyStyle'
 import { KeyColor } from '../TAP.shooting'
 import { TAPshootingKeyType } from './TAP.shooting.keyType'
+import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 
 type IProps = {
   limit: number
@@ -41,7 +42,7 @@ export const TAPshootingButtons: React.FC<IProps> = ({
   const [bluring, setBluring] = useState(0)
   const [bluringTag, setBluringTag] = useState('START')
 
-  useEffect(() => {
+  useDidMountEffect(() => {
     setBluring(100)
     let id = setTimeout(() => {
       if (started && !running) {
@@ -69,6 +70,17 @@ export const TAPshootingButtons: React.FC<IProps> = ({
     }
   }
 
+  const startButtonParams = () => {
+    switch (bluringTag) {
+      case 'PAUSE':
+        return ['bg-red-300', `active:bg-red-200`, `border-red-400`]
+      case 'READY':
+        return ['bg-blue-300', `active:bg-blue-200`, `border-blue-400`]
+      default:
+        return ['bg-green-300', `active:bg-green-200`, `border-green-400`]
+    }
+  }
+
   return (
     <div className="flex flex-row justify-center items-center  h-32 mb-10 relative gap-10 font-courier borde border-red-800">
       <TAPshootingKeyStyle keyColor={keyColor} setKeyColor={setKeyColor} />
@@ -80,22 +92,12 @@ export const TAPshootingButtons: React.FC<IProps> = ({
         />
       </div>
       <button
-        className={`flex flex-col items bg-${
-          bluringTag === 'PAUSE'
-            ? 'red'
-            : bluringTag === 'START'
-            ? 'green'
-            : 'blue'
-        }-300 shadow-2xl py-6 px-10  rounded-xl text-2xl outline-none
-    active:bg-${
-      bluringTag === 'PAUSE' ? 'red' : bluringTag === 'START' ? 'green' : 'blue'
-    }-200 border-2 border-${
-          bluringTag === 'PAUSE'
-            ? 'red'
-            : bluringTag === 'START'
-            ? 'green'
-            : 'blue'
-        }-400 transition-hover`}
+        className={`flex flex-col items ${
+          startButtonParams()[0]
+        } shadow-2xl py-6 px-10  rounded-xl text-2xl outline-none
+    ${startButtonParams()[1]} border-2 ${
+          startButtonParams()[2]
+        } transition-hover `}
         style={{
           textShadow: `0px 0px ${bluring}px rgba(0, 0, 0, 1)`,
           color: 'transparent',

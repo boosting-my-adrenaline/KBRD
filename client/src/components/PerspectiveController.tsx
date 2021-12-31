@@ -34,11 +34,6 @@ export const PerspectiveController: React.FC<IProps> = ({
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   )
-  const [refresher, setRefresher] = useState(0)
-
-  // useEffect(() => {
-  //   setTimeout(() => setRefresher((prev) => prev + 1), 50)
-  // }, [])
 
   function getWindowDimensions(): { width: number; height: number } {
     const { innerWidth: width, innerHeight: height } = window
@@ -121,15 +116,15 @@ export const PerspectiveController: React.FC<IProps> = ({
     } else if (W <= 1350 && W > 1200) {
       setPerspective(-400, 20, true)
       setBook(-400, 20)
-      setTap(-400, 20)
+      setTap(-400, -15)
       setPerspective2(-100, -70, -102)
       setMainMT(205)
       setNavPerspective(-350, 45)
       setFooter(10, 200)
     } else if (W <= 1200 && W > 1000) {
       setPerspective(-790, -63, true)
-      setBook(-790, -63)
-      setTap(-790, -63)
+      setBook(-400, 7)
+      setTap(-500, -50)
       setPerspective2(-350, -200, -102)
       setMainMT(200)
       setNavPerspective(-350, 45)

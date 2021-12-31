@@ -28,7 +28,8 @@ export const PingingCircles: React.FC<IProps> = ({}) => {
     <div className={`flex justify-center items-center`}>
       {'\u00a0'}
       <div
-        className={`absolute  bg-black rounded-full bg-red-${refs[num] * 100}`}
+        className={`absolute rounded-full bg-red-${refs[num] * 100}`}
+        // refs[num] * 100
         style={{
           width: 8,
           height: 8,

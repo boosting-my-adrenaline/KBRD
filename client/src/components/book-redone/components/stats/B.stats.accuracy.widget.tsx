@@ -208,7 +208,7 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                   <div className={`  w-f flex justify-center`}>
                     <div className={`flex borde items-center justify-center `}>
                       <div
-                        className={`cursor-pointer border-red-400 border-l border-t border-b  rounded-l-xl py-1  hover:py-2 px-7 bg-red-${
+                        className={`cursor-pointer border-red-400 border-l border-t border-b  rounded-l-xl py-1   px-7 bg-red-${
                           showType === `.` ? `400 text-gray-900` : 200
                         }`}
                         style={{ transition: `0.3s ease-in-out` }}

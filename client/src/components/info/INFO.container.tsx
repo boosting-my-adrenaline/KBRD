@@ -48,7 +48,7 @@ export const INFOcontainer: React.FC = () => {
     <div
       style={{
         marginTop: perspective[1],
-        transform: `perspective(1000px) translateZ(${perspective[0]}px)`,
+        // transform: `perspective(1000px) translateZ(${perspective[0]}px)`,
         // transition: '0.05s ease-in-out',
       }}
     >

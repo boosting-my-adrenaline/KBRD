@@ -22,9 +22,12 @@ export const BOOKstringButton: React.FC<IProps> = ({
       }}
     >
       <div
-        className={`px-3 py-1 rounded-xl border border-red-${
-          num === choosenString ? '400 bg-red-300' : 300
-        } cursor-pointer `}
+        className={`px-3 py-1 rounded-xl border  
+        ${
+          num === choosenString ? `border-red-400 bg-red-300` : `border-red-300`
+        }
+        cursor-pointer `}
+        // className={`px-3 py-1 rounded-xl border border-red-400 cursor-pointer `}
         style={{
           transition: '0.25s ease-in-out',
         }}

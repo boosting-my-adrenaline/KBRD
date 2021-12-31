@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { BOOKContainer } from './components/book-redone/BOOK.container'
 import { TAPContainer } from './components/tap/TAP.container'
 import { Navbar } from './components/navbar/Navbar'
-import { Switch, Route, useHistory, useLocation } from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import { Width } from './utils/GetWidth'
 import { useTypedSelector } from './hooks/useTypedSelector'
 import { Background } from './components/BackgroundPlain'
@@ -24,7 +24,7 @@ import { Footer } from './components/Footer'
 // REMOVE SPACEBAR PAGE DOWN
 
 export const App: React.FC = () => {
-  const history = useHistory()
+  const navigation = useNavigate()
   const chapter = useTypedSelector((state) => state.nav.chapter)
 
   // const [timer, setTimer] = useState(1)
@@ -38,11 +38,11 @@ export const App: React.FC = () => {
   const changeCurrentChapter = (chap: Chapters): void => {
     // chap !== 'MAIN' ? history.push(`/${chap.toLowerCase()}`) : history.push('/')
     if (chap === Chapters.MAIN) {
-      history.push('/')
+      navigation('/')
     } else if (chap === Chapters.NOT_FOUND) {
-      history.push('/not_found')
+      navigation('/not_found')
     } else {
-      history.push(`/${chap.toLowerCase()}`)
+      navigation(`/${chap.toLowerCase()}`)
     }
   }
 
@@ -159,17 +159,17 @@ export const App: React.FC = () => {
           ></div>
 
           <div>
-            {/* <div className="z-50 absolute top-16">
+            <div className=" invisible z-50 absolute top-16">
               <Width />
-            </div> */}
-            <Switch>
-              <Route path="/" exact component={MAINcontainer} />
-              <Route path="/tap" exact component={TAPContainer} />
-              <Route path="/book" exact component={BOOKContainer} />
-              <Route path="/info" exact component={INFOcontainer} />
-              <Route path="/auth" exact component={AUTHcontainer} />
-              <Route component={NotFound} />
-            </Switch>
+            </div>
+            <Routes>
+              <Route path="/" element={<MAINcontainer />} />
+              <Route path="/tap" element={<TAPContainer />} />
+              <Route path="/book" element={<BOOKContainer />} />
+              <Route path="/info" element={<INFOcontainer />} />
+              <Route path="/auth" element={<AUTHcontainer />} />
+              <Route element={<NotFound />} />
+            </Routes>
             {/* <BOOKContainer /> */}
           </div>
         </div>

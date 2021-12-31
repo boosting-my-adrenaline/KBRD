@@ -63,11 +63,12 @@ export const LEVELcontainer: React.FC<IProps> = ({
   }
 
   return (
-    <div>
-      <LEVELlevel exp={exp} expMSG={expMSG} />
+    <div className={`select-none`}>
+      <LEVELlevel exp={exp} level={level} expMSG={expMSG} />
       <div className={`flex flex-row justify-evenly items-center w-f`}>
         <div onMouseDown={() => handleSetExp(10)}>+10</div>
         <div onMouseDown={() => handleSetExp(50)}>+50</div>
+        <div onMouseDown={() => setLevel((prev) => prev + 1)}>lvlup</div>
       </div>
       <LEVELupper
         handleSetExp={handleSetExp}

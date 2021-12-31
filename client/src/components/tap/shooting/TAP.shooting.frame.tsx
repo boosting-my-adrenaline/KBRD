@@ -118,9 +118,7 @@ export const TAPshootingFrame: React.FC<IProps> = ({
             {newGame ? (
               <div
                 onMouseDown={handleStart}
-                className={`flex flex-col items-center justify-center font-courier cursor-pointer text-${
-                  started ? '' : 'blue'
-                }-600`}
+                className={`flex flex-col items-center justify-center font-courier cursor-pointer text-blue-600 `}
                 style={{
                   width: '700px',
                   fontSize: '4em',
@@ -251,7 +249,7 @@ export const TAPshootingFrame: React.FC<IProps> = ({
           }
         </div>
       </div>
-      <div
+      {/* <div
         className={`absolute bg-${frameColor
           .replace('600', '800')
           .replace('400', '600')}`}
@@ -274,7 +272,7 @@ export const TAPshootingFrame: React.FC<IProps> = ({
           height: dimensions.height + 4.5,
           clipPath: dimensions.clipPath1,
         }}
-      ></div>
+      ></div> */}
       <div
         className={`absolute bg-${frameColor}`}
         style={{

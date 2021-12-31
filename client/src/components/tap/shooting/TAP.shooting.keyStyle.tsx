@@ -17,14 +17,31 @@ export const TAPshootingKeyStyle: React.FC<IProps> = ({
     open ? setRotating((prev) => prev + 360) : setRotating((prev) => prev - 360)
   }, [open])
 
-  const colors: KeyColor[] = [
-    'red',
-    'green',
-    'blue',
-    'yellow',
-    'purple',
-    'pink',
+  const colors: [color: KeyColor, colorParam: string][] = [
+    [`red`, 'bg-red-500'],
+    [`emerald`, 'bg-emerald-500'],
+    [`cyan`, 'bg-cyan-500'],
+    [`amber`, 'bg-amber-500'],
+    [`fuchsia`, 'bg-fuchsia-500'],
+    [`pink`, 'bg-pink-500'],
   ]
+
+  const getColor = () => {
+    switch (keyColor) {
+      case `red`:
+        return `bg-red-500`
+      case `emerald`:
+        return `bg-emerald-500`
+      case `cyan`:
+        return `bg-cyan-500`
+      case `amber`:
+        return `bg-amber-500`
+      case `fuchsia`:
+        return `bg-fuchsia-500`
+      case `pink`:
+        return `bg-pink-500`
+    }
+  }
 
   const handleClickColor = (event: React.MouseEvent, color: KeyColor): void => {
     event.preventDefault()
@@ -42,13 +59,13 @@ export const TAPshootingKeyStyle: React.FC<IProps> = ({
   const getElement = (n: number) => {
     return colors.map((el) => (
       <div
-        className={`bg-${el}-500 rounded-full cursor-pointer`}
+        className={`${el[1]} rounded-full cursor-pointer`}
         style={{
           width: 50,
           height: 50,
           border: '1px solid grey',
         }}
-        onMouseDown={(e) => handleClickColor(e, el)}
+        onMouseDown={(e) => handleClickColor(e, el[0])}
       ></div>
     ))[n]
   }
@@ -68,9 +85,9 @@ export const TAPshootingKeyStyle: React.FC<IProps> = ({
         <div className="flex flex-row justify-center align-start gap-2">
           <div
             className={`
-               bg-${
-                 open ? 'bg-gray-400' : keyColor
-               }-500  rounded-full flex flex-col justify-center items-center gap-0 font-courier uppercase cursor-pointer `}
+               ${open && ' bg-gray-200 '} ${
+              !open && getColor()
+            }  rounded-full flex flex-col justify-center items-center gap-0 font-courier uppercase cursor-pointer `}
             style={{
               overflow: 'hidden',
               width: open ? 175 : 50,

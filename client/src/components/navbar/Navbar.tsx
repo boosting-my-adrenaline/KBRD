@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import SAMURAI from './../../static/profiles/samurai.svg'
 import TEST from './../../static/profiles/test.svg'
-import { NavLink, useLocation, useHistory } from 'react-router-dom'
 import { useKeyPress } from '../../utils/useKeyPress'
 import { ALeft } from './nav-components/ALeft'
 import { ARight } from './nav-components/ARight'
@@ -46,19 +45,19 @@ export const Navbar: React.FC<IProps> = ({ block }) => {
 
   const getColors = (): string[] => {
     if (chapter === Chapters.BOOK) {
-      return ['red', 'rgba(128, 0, 0, 1)']
+      return ['bg-red-400', 'border-red-500', 'rgba(128, 0, 0, 1)']
     } else if (chapter === Chapters.TAP) {
-      return ['blue', 'rgba(30, 58, 138, 1)']
+      return ['bg-blue-400', 'border-blue-500', 'rgba(30, 58, 138, 1)']
     } else if (chapter === Chapters.INFO) {
-      return ['yellow', 'rgba(20, 108, 70, 1)']
+      return ['bg-yellow-400', 'border-yellow-500', 'rgba(234, 179, 8, 0.9)']
     } else if (chapter === Chapters.NOT_FOUND) {
-      return ['gray', 'rgba(50, 50, 50, 1)']
+      return ['bg-gray-400', 'border-gray-500', 'rgba(50, 50, 50, 1)']
     } else {
-      return ['green', 'rgba(6, 78, 59, 1)']
+      return ['bg-emerald-400', 'border-emerald-500', 'rgba(6, 78, 59, 1)']
     }
   }
 
-  const [ThemeColor, ShadowColor] = getColors()
+  const [ThemeColor, BorderColor, ShadowColor] = getColors()
 
   function changeLink(dir: Directions) {
     if (block || isOpened) return
@@ -94,12 +93,11 @@ export const Navbar: React.FC<IProps> = ({ block }) => {
   return (
     <>
       <div
-        className={`z-50 w-full fixed top-0 left-0 right-0 flex pr-4 justify-center items-center border 
-         border-${ThemeColor}-500 border-b  transition-all duration-500 
-         bg-${ThemeColor}-400  font-courier flex flex-row select-none`}
+        className={`z-50 w-full fixed top-0 left-0 right-0 pr-4 justify-center items-center border-b border-t
+${BorderColor}   ${ThemeColor}   font-courier flex flex-row select-none `}
         style={{
           transition: '1.25s ease-in-out',
-          // height: 65,
+          // height: 65, bg-${ThemeColor}-400
           zIndex: 2022,
           boxShadow: `0 1px 5px 1px ${ShadowColor}`,
         }}
@@ -123,9 +121,9 @@ export const Navbar: React.FC<IProps> = ({ block }) => {
               // height: 65,
             }}
           >
-            <a className="z-10 flex-grow outline-none flex">
+            <a className="z-10 flex-grow outline-none flex items-center ">
               <div
-                className={`p-1 hover:transform translate-y-2 cursor-pointer`}
+                className={` cursor-pointer flex`}
                 // onClick={() => changeChapter(Chapters.MAIN)}
               >
                 {/* <img
@@ -139,6 +137,7 @@ export const Navbar: React.FC<IProps> = ({ block }) => {
                   className="w-10 h-10 md:w-16 md:h-16 transition duration-900 cursor-pointer hover:scale-110 "
                 /> */}
                 <HexagonRounded onClick={() => changeChapter(Chapters.MAIN)} />
+                {/* 1 */}
               </div>
             </a>
 
@@ -167,14 +166,14 @@ export const Navbar: React.FC<IProps> = ({ block }) => {
         chapter={chapter}
         onClick={changeLink}
         isOpened={isOpened}
-        colors={[ThemeColor, ShadowColor]}
+        colors={[ThemeColor, BorderColor, ShadowColor]}
         direction={`left`}
       />
       <NAVarrow
         chapter={chapter}
         onClick={changeLink}
         isOpened={isOpened}
-        colors={[ThemeColor, ShadowColor]}
+        colors={[ThemeColor, BorderColor, ShadowColor]}
         direction={`right`}
       />
       {/* <NAVarrowRight

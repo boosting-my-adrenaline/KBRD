@@ -69,7 +69,7 @@ export const TAPshootingKeyType: React.FC<IProps> = ({
         <div className="flex flex-row justify-center align-start gap-2">
           <div
             className={`
-               bg-${open ? 'bg-gray-400' : keyColor}-500 opacity-${
+               bg-${open ? ' bg-gray-200 ' : keyColor}-500 opacity-${
               open ? 100 : 100
             }  rounded-full flex flex-col justify-center items-center gap-3 font-courier uppercase cursor-pointer text-4xl`}
             style={{
