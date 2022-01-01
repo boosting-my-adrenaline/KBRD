@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
+import { ExpMessage, ExpMSG } from './LEVEL.container'
 import { LEVELmessenger } from './LEVEL.messenger'
 
 interface IProps {
@@ -9,7 +10,7 @@ interface IProps {
   avgCPM: number
   CPM: number
   accuracy: number
-  setExpMSG(MSG: string | null): void
+  setExpMSG(MSG: ExpMSG): void
 }
 export const LEVELupper: React.FC<IProps> = ({
   handleSetExp,
@@ -46,7 +47,7 @@ export const LEVELupper: React.FC<IProps> = ({
   useDidMountEffect(() => {
     let id = setTimeout(() => {
       setBlock(false)
-    }, 2000)
+    }, 4000)
 
     return () => clearTimeout(id)
   }, [block])
@@ -63,10 +64,17 @@ export const LEVELupper: React.FC<IProps> = ({
 
   useDidMountEffect(() => {
     /////        in a row
+    let sr = successRow
 
-    if (successRow % 40 === 0 && successRow) {
-      exp((successRow / 10) * 1.25)
-      m(`row:+${(successRow / 10) * 1.25}`)
+    if (sr % 40 === 0 && successRow) {
+      exp((sr / 10) * 1.25)
+      if (sr === 40) {
+        m(ExpMessage.Marksman)
+      } else if (sr === 80) {
+        m(ExpMessage.TheBullsEye)
+      } else {
+        m(ExpMessage.AccurateAsStephCurry)
+      }
     }
   }, [overall])
 
@@ -76,10 +84,10 @@ export const LEVELupper: React.FC<IProps> = ({
     if (successRow % 50 === 0 && successRow) {
       if (avgCPM >= 250) {
         exp((successRow / 10) * 5)
-        m(`per&fast:+${(successRow / 10) * 5}`)
+        m(ExpMessage.FastAndPerfectRace)
       } else if (avgCPM < 250 && avgCPM >= 215) {
         exp((successRow / 10) * 3)
-        m(`per&fast:+${(successRow / 10) * 3}`)
+        m(ExpMessage.FastRun)
       }
     }
   }, [overall])
@@ -89,13 +97,16 @@ export const LEVELupper: React.FC<IProps> = ({
 
     if (overall <= 500 && overall % 87 === 0) {
       exp((overall / 87) * 10)
-      m(`ov:${(overall / 87) * 10}`)
+      m(ExpMessage.Practice)
     } else if (overall >= 500 && overall <= 1000 && overall % 100 === 0) {
       exp((overall / 100) * 10)
-      m(`ov:${(overall / 100) * 10}`)
-    } else if (overall > 1000 && overall % 100 === 0) {
+      m(ExpMessage.TaskAheadOfYou)
+    } else if (overall > 1000 && overall <= 2500 && overall % 100 === 0) {
       exp((overall / 100) * 5 + 50)
-      m(`ov:${(overall / 100) * 5 + 50}`)
+      m(ExpMessage.HardWorker)
+    } else if (overall > 2500 && overall % 100 === 0) {
+      exp((overall / 100) * 5 + 50)
+      m(ExpMessage.MaraphonRunner)
     }
   }, [overall])
 
@@ -105,13 +116,13 @@ export const LEVELupper: React.FC<IProps> = ({
     if (overall > 100 && overall % 82 === 0) {
       if (avgCPM >= 300) {
         exp(30 + overall / 8.2)
-        m(`avgCPM:${30 + overall / 8.2}`)
+        m(ExpMessage.WayTooFast)
       } else if (avgCPM < 300 && avgCPM >= 250) {
         exp(30 + overall / 8.2)
-        m(`avgCPM:${20 + overall / 8.2}`)
+        m(ExpMessage.FastAndFurious)
       } else if (avgCPM < 250 && avgCPM >= 225) {
         exp(30 + overall / 8.2)
-        m(`avgCPM:${10 + overall / 8.2}`)
+        m(ExpMessage.FastFingers)
       }
     }
   }, [overall])
@@ -122,13 +133,13 @@ export const LEVELupper: React.FC<IProps> = ({
     if (overall >= 250 && overall % 125 === 0) {
       if (aap >= 98.75) {
         exp(40 + (overall / 125) * 10)
-        m(`avgAcc:${40 + (overall / 125) * 10}`)
+        m(ExpMessage.TopSkills)
       } else if (aap < 98.75 && aap >= 97.25) {
         exp(25 + (overall / 125) * 5)
-        m(`avgAcc:${25 + (overall / 125) * 5}`)
+        m(ExpMessage.Excellence)
       } else if (aap < 97.25 && aap >= 96.25) {
         exp(15 + (overall / 125) * 5)
-        m(`avgAcc:${15 + (overall / 125) * 5}`)
+        m(ExpMessage.NotAverage)
       }
     }
   }, [overall])
@@ -138,7 +149,7 @@ export const LEVELupper: React.FC<IProps> = ({
     if (overall >= 150 && overall % 50 === 0) {
       if (aap > 97.5 && avgCPM >= 250) {
         exp(50)
-        m(`f&&a:${50}`)
+        m(ExpMessage.AbsoluteMaster)
       }
     }
   }, [overall])

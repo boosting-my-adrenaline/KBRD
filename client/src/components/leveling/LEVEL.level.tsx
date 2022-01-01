@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
-import { LEVELnumber } from './LEVEL.number'
+import { ExpMSG } from './LEVEL.container'
+import { LEVELicon } from './LEVEL.icon'
 
 interface IProps {
   exp: [number, number]
   level: number
-  expMSG: null | string
+  expMSG: ExpMSG
 }
 
 export const LEVELlevel: React.FC<IProps> = ({ exp, level, expMSG }) => {
   return (
     <div className={`flex flex-row w-1000 gap-4 mx-auto`}>
-      <LEVELnumber level={level} />
+      <LEVELicon level={level} expMSG={expMSG} />
       <div className={`flex flex-row w-f items-center`}>
         <div
           className={`z-10 w-f border border-gray-900 justify-center rounded-xl flex items-center overflow-hidden bg-yellow-50`}

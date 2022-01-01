@@ -11,6 +11,32 @@ interface IProps {
   accuracy: number
 }
 
+export enum ExpMessage {
+  Practice = `Practice`,
+  HardWorker = `Hard Worker`,
+  TaskAheadOfYou = `Task Ahead Of You`,
+  MaraphonRunner = `Marathon Runner`,
+
+  FastFingers = `Fast Fingers`,
+  WayTooFast = `Way Too Fast`,
+  FastAndFurious = `Fast And Furious`,
+
+  TheBullsEye = `The Bull's Eye`,
+  Marksman = `Marksman`,
+  AccurateAsStephCurry = `Accurate As Steph Curry`,
+
+  FastRun = `Awesome Run`,
+  FastAndPerfectRace = `Fast And Perfect Race`,
+
+  TopSkills = `Top Skills`,
+  Excellence = `Excellence`,
+  NotAverage = `Not Average`,
+
+  AbsoluteMaster = `Absolute Master`,
+}
+
+export type ExpMSG = null | string | ExpMessage
+
 export const LEVELcontainer: React.FC<IProps> = ({
   overall,
   fti,
@@ -18,12 +44,14 @@ export const LEVELcontainer: React.FC<IProps> = ({
   avgCPM,
   accuracy,
 }) => {
-  const levels = [100, 250, 500, 1_000, 2_000, 3_750, 6_000, 10_000, 15_000]
+  // const levels = [250, 500, 1_000, 2_000, 3_750, 6_000, 10_000, 15_000, 25_000]
+  // const levels = [250, 625, 1_175, 2_000, 3_250, 5_125, 7_950, 12_200, 18_600]
+  const levels = [250, 575, 1_000, 1_575, 2_350, 3_375, 4_750, 6_575, 9_000]
 
   const [level, setLevel] = useState(1)
   const [exp, setExp] = useState<[number, number]>([40, 100])
 
-  const [expMSG, setExpMSG] = useState<null | string>(null)
+  const [expMSG, setExpMSG] = useState<ExpMSG>(null)
 
   useEffect(() => {
     setExp(() => {
@@ -65,11 +93,11 @@ export const LEVELcontainer: React.FC<IProps> = ({
   return (
     <div className={`select-none`}>
       <LEVELlevel exp={exp} level={level} expMSG={expMSG} />
-      <div className={`flex flex-row justify-evenly items-center w-f`}>
+      {/* <div className={`flex flex-row justify-evenly items-center w-f`}>
         <div onMouseDown={() => handleSetExp(10)}>+10</div>
         <div onMouseDown={() => handleSetExp(50)}>+50</div>
         <div onMouseDown={() => setLevel((prev) => prev + 1)}>lvlup</div>
-      </div>
+      </div> */}
       <LEVELupper
         handleSetExp={handleSetExp}
         overall={overall}

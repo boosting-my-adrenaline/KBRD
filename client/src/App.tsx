@@ -21,8 +21,6 @@ import { Footer } from './components/Footer'
 
 ////////////////
 
-// REMOVE SPACEBAR PAGE DOWN
-
 export const App: React.FC = () => {
   const navigation = useNavigate()
   const chapter = useTypedSelector((state) => state.nav.chapter)
