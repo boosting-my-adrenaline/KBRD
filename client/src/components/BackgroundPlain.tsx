@@ -9,9 +9,9 @@ export const Background: React.FC = () => {
     if (currentChapter === Chapters.BOOK) {
       return 'bg-red-100'
     } else if (currentChapter === Chapters.TAP) {
-      return 'bg-blue-100'
+      return 'bg-sky-100'
     } else if (currentChapter === Chapters.INFO) {
-      return 'bg-yellow-100'
+      return 'bg-amber-100'
     } else if (currentChapter === Chapters.NOT_FOUND) {
       return 'bg-gray-100'
     } else {

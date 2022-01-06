@@ -25,7 +25,7 @@ export const AUTHcontainer: React.FC = ({}) => {
         className={`z-20 fixed top-0 right-0 left-0 bottom-0 flex justify-center items-center bg-yellow-100 `}
       >
         <div
-          className={`  z-20  items-center justify-center `}
+          className={`z-20  items-center justify-center `}
           style={{
             transition: '1s ease',
           }}

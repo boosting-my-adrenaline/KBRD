@@ -5,24 +5,20 @@ import { ExpMessage, ExpMSG } from './LEVEL.container'
 import FastAndFurious from '../../static/speedometer.png'
 import Lightning from '../../static/lightning.png'
 import Rocket from '../../static/rocket.png'
-
 import Marksman from '../../static/sniper.png'
 import BullsEye from '../../static/target.png'
 import Steph from '../../static/steph.png'
-
 import Run from '../../static/run.png'
 import Run2 from '../../static/run2.png'
-
 import Maraphon from '../../static/finish.png'
 import Award from '../../static/award.png'
-
 import Cup from '../../static/cup.png'
 import Grow from '../../static/grow.png'
 import Mountain from '../../static/mountain.png'
 import Excellence from '../../static/excellence.png'
 import Star from '../../static/star.png'
-
 import Dumbbell from '../../static/dumbbell.png'
+import Piano from '../../static/piano.png'
 
 interface IProps {
   level: number
@@ -34,8 +30,6 @@ export const LEVELicon: React.FC<IProps> = ({ level, expMSG }) => {
 
   const bgColor = (): [string, string] => {
     switch (lvl) {
-      case 1:
-        return ['bg-red-100', 'shadow-red-300']
       case 2:
         return ['bg-red-200', 'shadow-red-400']
       case 3:
@@ -55,17 +49,18 @@ export const LEVELicon: React.FC<IProps> = ({ level, expMSG }) => {
       case 10:
         return ['bg-cyan-300', 'shadow-cyan-500']
       default:
-        return ['', '']
+        return ['bg-red-100', 'shadow-red-300']
     }
   }
 
   useDidMountEffect(() => {
-    setShowLvlForced(true)
-    let id = setTimeout(() => setLvl(level), 250)
-    let id2 = setTimeout(() => setShowLvlForced(false), 2000)
+    let id0 = setTimeout(() => setShowLvlForced(true), 2000)
+    let id1 = setTimeout(() => setLvl(level), 2250)
+    let id2 = setTimeout(() => setShowLvlForced(false), 6000)
 
     return () => {
-      clearTimeout(id)
+      clearTimeout(id0)
+      clearTimeout(id1)
       clearTimeout(id2)
     }
   }, [level])
@@ -126,6 +121,8 @@ export const LEVELicon: React.FC<IProps> = ({ level, expMSG }) => {
         return Maraphon
       case ExpMessage.TopSkills:
         return Award
+      case ExpMessage.Pianist:
+        return Piano
       case ExpMessage.AbsoluteMaster:
         return Cup
       case ExpMessage.Practice:
@@ -140,55 +137,55 @@ export const LEVELicon: React.FC<IProps> = ({ level, expMSG }) => {
         return ``
     }
   }
+
   return (
     <div
-      className={`z-10 rounded-xl border border-gray-800 font-courier text-3xl flex items-center justify-center ${
+      className={`z-20 rounded-xl border border-gray-800 font-courier text-3xl flex items-center justify-center ${
         bgColor()[0]
-      }  shadow-sm ${tick && 'shadow-3xl'} ${bgColor()[1]} 
+      }   ${tick ? 'shadow-3xl' : `shadow-sm`} ${bgColor()[1]} 
       overflow-hidden
         `}
       style={{
         height: 40,
-        width: 40,
+        width: 42,
         transition: '2s ease-in-out',
         // boxShadow: `0px 1px 10px 5px rgba(100, 100, 100, ${tick ? 1 : 0})`,
       }}
     >
-      {!showLvlForced && expMSG ? (
-        <div className={`z-10 flex items-center justify-center flex-col p-1`}>
-          {/* {expMSG === ExpMessage.WayTooFast && <img src={Rocket} />}
-          {expMSG === ExpMessage.FastAndFurious && <img src={FastAndFurious} />}
-          {expMSG === ExpMessage.FastFingers && <img src={Fast} />}
-
-          {expMSG === ExpMessage.Marksman && <img src={Marksman} />}
-          {expMSG === ExpMessage.TheBullsEye && <img src={BullsEye} />}
-          {expMSG === ExpMessage.AccurateAsStephCurry && <img src={Steph} />}
-
-          {expMSG === ExpMessage.HardWorker && <img />} */}
-          <img src={getAch()} />
-        </div>
-      ) : (
+      {!showLvlForced && expMSG && (
         <div
-          className={`z-10 flex items-center justify-start mt-1 flex-col`}
+          className={`z-20 absolute flex items-center justify-center rounded-xl flex-col  borde border-gray-800 `}
           style={{
             height: 40,
             width: 40,
-            transition: '1s ease-in-out',
-            transform: `translateY(-${36 * lvl - 36}px)`,
+            padding: 6,
           }}
         >
-          {elements}
+          <img src={getAch()} />
         </div>
       )}
+
+      <div
+        className={`flex items-center justify-start  flex-col `}
+        style={{
+          height: 40,
+          width: 40,
+          marginTop: 2,
+          transition: '1s ease-in-out', /// !!!!
+          transform: `translateY(-${40 * lvl - 40}px)`,
+        }}
+      >
+        <div className={`flex items-center justify-start flex-col flex-wrap `}>
+          {elements}
+        </div>
+        <div
+          className={`absolute ${bgColor()[0]} z-10 ${
+            // `opacity-100`
+            !showLvlForced && expMSG ? 'opacity-100' : 'opacity-0'
+          } `}
+          style={{ width: 40, height: 400 }}
+        ></div>
+      </div>
     </div>
   )
 }
-
-// {lvl !== 10 ? (
-//   lvl
-// ) : (
-//   <>
-//     <span style={{ marginLeft: 1 }}>1</span>
-//     <span style={{ marginLeft: -4 }}>0</span>
-//   </>
-// )}

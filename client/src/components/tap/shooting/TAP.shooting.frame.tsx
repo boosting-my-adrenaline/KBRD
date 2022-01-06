@@ -118,7 +118,7 @@ export const TAPshootingFrame: React.FC<IProps> = ({
             {newGame ? (
               <div
                 onMouseDown={handleStart}
-                className={`flex flex-col items-center justify-center font-courier cursor-pointer text-blue-600 `}
+                className={`flex flex-col items-center justify-center font-courier cursor-pointer text-sky-600 `}
                 style={{
                   width: '700px',
                   fontSize: '4em',
@@ -135,11 +135,11 @@ export const TAPshootingFrame: React.FC<IProps> = ({
             ) : (
               <>
                 <div
-                  className="rounded-3xl bg-blue-400 border-2 border-blue-600"
+                  className="rounded-3xl bg-sky-400 border-2 border-sky-600"
                   style={{ width: 100, height: 400, transition: '0.25s ease' }}
                 ></div>
                 <div
-                  className="rounded-3xl bg-blue-400 border-2 border-blue-600"
+                  className="rounded-3xl bg-sky-400 border-2 border-sky-600"
                   style={{ width: 100, height: 400, transition: '0.25s ease' }}
                 ></div>
               </>
@@ -170,8 +170,9 @@ export const TAPshootingFrame: React.FC<IProps> = ({
               <path
                 d="M18 2v1.4l-5.2 6.2c3.6.4 6.1 3.7 5.6 7.3-.4 3.6-3.7 6.1-7.3 5.6-2.7-.3-4.8-2.3-5.5-4.9l1.9-.5c.6 2.4 3.1 3.9 5.5 3.3 2-.5 3.4-2.3 3.4-4.4 0-2.5-2-4.5-4.5-4.5-.7 0-1.4.2-2 .5l-.2.1-.7-1.2L14.9 4H6.5V2H18z"
                 style={{
-                  fill: '#60a5fa',
-                  stroke: '#2563eb',
+                  fill: 'rgb(56 189 248)',
+                  stroke: 'rgb(2 132 199)',
+
                   strokeWidth: 0.25,
                   strokeMiterlimit: 10,
                 }}
@@ -202,8 +203,10 @@ export const TAPshootingFrame: React.FC<IProps> = ({
                 <path
                   d="M16 7.5c0-2.2-1.8-4-4-4s-4 1.8-4 4H6c0-3.3 2.7-6 6-6s6 2.7 6 6c0 1.4-.5 2.7-1.3 3.8L9.3 20H18v2H6v-1.1l9.1-10.8c.6-.7.9-1.7.9-2.6z"
                   style={{
-                    fill: '#60a5fa',
-                    stroke: '#2563eb',
+                    fill: 'rgb(56 189 248)',
+
+                    stroke: 'rgb(2 132 199)',
+
                     strokeWidth: 0.25,
                     strokeMiterlimit: 10,
                   }}
@@ -238,8 +241,9 @@ export const TAPshootingFrame: React.FC<IProps> = ({
                 <path
                   d="M14 1.5V22h-2V3.7L7.5 4.9V2.8l5-1.3H14z"
                   style={{
-                    fill: '#60a5fa',
-                    stroke: '#2563eb',
+                    fill: 'rgb(56 189 248)',
+
+                    stroke: 'rgb(2 132 199)',
                     strokeWidth: 0.25,
                     strokeMiterlimit: 10,
                   }}
@@ -249,32 +253,8 @@ export const TAPshootingFrame: React.FC<IProps> = ({
           }
         </div>
       </div>
-      {/* <div
-        className={`absolute bg-${frameColor
-          .replace('600', '800')
-          .replace('400', '600')}`}
-        style={{
-          transition: '0.3s ease-out',
-          width: dimensions.width - 6,
-          height: dimensions.height - 4.5,
-          clipPath: dimensions.clipPath1,
-
-          // clipPath: `polygon(18% 0%, 82% 0%, 100% 50%, 82% 100%, 18% 100%, 0% 50%,${``} 1.27% 50%, 18.7% 98.2%,${``} 81.3% 98.2%, 98.73% 50%, 81.3% 1.8%, 18.7% 1.8%,${``} 1.27% 50%, 0% 50%)`,
-        }}
-      ></div>
       <div
-        className={`absolute bg-${frameColor
-          .replace('600', '800')
-          .replace('400', '600')} overflow-hidden`}
-        style={{
-          transition: '0.3s ease-out',
-          width: dimensions.width + 6,
-          height: dimensions.height + 4.5,
-          clipPath: dimensions.clipPath1,
-        }}
-      ></div> */}
-      <div
-        className={`absolute bg-${frameColor}`}
+        className={`absolute ${frameColor}`}
         style={{
           transition: '0.3s ease-out',
           width: dimensions.width,
@@ -282,13 +262,6 @@ export const TAPshootingFrame: React.FC<IProps> = ({
           clipPath: dimensions.clipPath1,
         }}
       ></div>
-      {/* <div className="flex flex-row gap-36">
-        <button>
-          ST?{started ? 1 : 0} -- starter: {starter} -- stopper: {stopper}
-        </button>
-        <button onClick={() => setTY((prev) => prev - 600)}>-</button>
-        <button onClick={() => setTY((prev) => prev + 600)}>+</button>
-      </div> */}
     </>
   )
 }

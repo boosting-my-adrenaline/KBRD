@@ -36,7 +36,7 @@ export const Footer: React.FC = ({}) => {
   return (
     <>
       <div
-        className={`w-full fixed bottom-0 right-0 left-0 border-t border-gray-500 py-2  flex gap-6 flex-between items-center`}
+        className={`w-full fixed bottom-0 right-0 left-0 border-t border-gray-500 py-2  flex gap-6 flex-between items-center bg-gray-400 opacity-100`}
         style={{
           zIndex: 2022,
           padding: `5px ${params[1]}px`,
@@ -53,7 +53,7 @@ export const Footer: React.FC = ({}) => {
         <a
           href={`https://github.com/boosting-my-adrenaline`}
           target={'_blank'}
-          className={`flex items-center gap-2 cursor-pointer underline decoration-lime-500`}
+          className={`flex items-center gap-2 cursor-pointer underline decoration-sky-500`}
         >
           <GitHub
             className={`cursor-pointer`}

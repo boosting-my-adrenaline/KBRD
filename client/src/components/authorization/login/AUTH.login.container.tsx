@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { AuthContext } from '../../../context/AuthContext'
+import { useHttp } from '../../../hooks/http.hook'
 import { useAuthAction } from '../../../hooks/useAction'
 import { useTypedSelector } from '../../../hooks/useTypedSelector'
 import { AUTHlogin } from './AUTH.login'
@@ -16,24 +18,39 @@ export const AUTHloginContainer: React.FC<IProps> = () => {
   const [rememberMe, setRememberMe] = useState(true)
 
   const users = useTypedSelector((state) => state.auth.users)
-  const { logIn, setOpenOff } = useAuthAction()
+  const { setOpenOff } = useAuthAction()
 
-  const handleSubmit = (): void => {
+  const { loading, request, error, clearError } = useHttp()
+
+  const auth = useContext(AuthContext)
+
+  const handleSubmit = async () => {
     const response = loginAttempt(users, username, password)
     // console.log(users)
     // console.log(username)
     // console.log(password)
     // console.log(response)
-    setTimeout(() => {
-      if (response) {
-        logIn(response, rememberMe)
-        setUsername('')
-        setPassword('')
-        setOpenOff()
-        return
-      }
+    // setTimeout(() => {
+    // if (response) {
+    // logIn(response, rememberMe)
+    try {
+      const data = await request('/api/auth/login/', 'POST', {
+        email: username,
+        password,
+      })
+
+      auth.login(data.token, data.userId)
+    } catch {
       handleIncorrectUsernameOrPassword()
-    }, 700)
+    }
+
+    // setUsername('')
+    // setPassword('')
+    // setOpenOff()
+    // return
+    // }
+    handleIncorrectUsernameOrPassword()
+    // }, 0)
   }
 
   const handleIncorrectUsernameOrPassword = (): void => {

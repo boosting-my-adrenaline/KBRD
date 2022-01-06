@@ -48,7 +48,7 @@ export const BOOKstatsCPMWidget: React.FC<IProps> = ({ CPM, avgCPM }) => {
         <div
           className={`absolute bg-red-200 rounded-xl  flex  p-2 px-6 border border-red-500`}
           style={{
-            width: 350,
+            width: 340,
             height: 260,
             boxShadow: `2px 1px 12px 4px rgba(0, 0, 0, 0.3)`,
             transform: `translateY(-85px)`,

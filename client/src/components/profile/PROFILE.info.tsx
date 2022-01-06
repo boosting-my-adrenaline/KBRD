@@ -1,4 +1,3 @@
-import { Button } from '@mui/material'
 import React from 'react'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { PhotoMiniature } from '../navbar/nav-components/PhotoMiniature'
@@ -8,7 +7,7 @@ interface IProps {
 }
 
 export const PROFILEinfo: React.FC<IProps> = ({ statsSection }) => {
-  const username = useTypedSelector((state) => state.auth.user?.user_name)
+  const username = useTypedSelector((state) => state.auth.user.user_name)
 
   return (
     <div

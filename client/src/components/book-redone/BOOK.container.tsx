@@ -243,6 +243,7 @@ export const BOOKContainer: React.FC = () => {
     <div
       style={{
         marginTop: perspective[1],
+        marginBottom: perspective[1],
         transform: `perspective(1000px) translateZ(${perspective[0]}px)`,
         // transition: '0.05s ease-in-out',
       }}
@@ -275,12 +276,14 @@ export const BOOKContainer: React.FC = () => {
           running={running}
           handleReset={handleReset}
         />
-        <BOOKstats
-          overall={successAndFailedTypes.current}
-          failedTypesIndexes={failedTypesIndexes.current}
-          chapter={chapter}
-          reseting={reseting}
-        />
+        <div style={{ zIndex: 60 }}>
+          <BOOKstats
+            overall={successAndFailedTypes.current}
+            failedTypesIndexes={failedTypesIndexes.current}
+            chapter={chapter}
+            reseting={reseting}
+          />
+        </div>
         <div
           className="invisible 1k:visible   flex flex-col justify-center items-center w-f border-black borde"
           // style={{ transform: 'translateY(-150px)' }}

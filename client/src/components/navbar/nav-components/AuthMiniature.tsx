@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../../../context/AuthContext'
 import { useAuthAction } from '../../../hooks/useAction'
 import { useTypedSelector } from '../../../hooks/useTypedSelector'
 
@@ -11,7 +12,11 @@ import { PhotoMiniature } from './PhotoMiniature'
 export const AuthMiniature: React.FC = ({}) => {
   const user = useTypedSelector((state) => state.auth.user)
   // const users = useTypedSelector((state) => state.auth.users)
-  const isLoggedIn = !!user
+  // const isLoggedIn = !(user.user_name == `guest`)
+
+  const auth = useContext(AuthContext)
+
+  const { isAuthenticated: isLoggedIn } = auth
 
   // const getUserInfo = (array: User[], id: number | null) => {
   //   let result: null | User = null

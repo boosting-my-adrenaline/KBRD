@@ -75,7 +75,7 @@ export const TAPshootingButtons: React.FC<IProps> = ({
       case 'PAUSE':
         return ['bg-red-300', `active:bg-red-200`, `border-red-400`]
       case 'READY':
-        return ['bg-blue-300', `active:bg-blue-200`, `border-blue-400`]
+        return ['bg-sky-300', `active:bg-sky-200`, `border-sky-400`]
       default:
         return ['bg-green-300', `active:bg-green-200`, `border-green-400`]
     }
@@ -84,7 +84,7 @@ export const TAPshootingButtons: React.FC<IProps> = ({
   return (
     <div className="flex flex-row justify-center items-center  h-32 mb-10 relative gap-10 font-courier borde border-red-800">
       <TAPshootingKeyStyle keyColor={keyColor} setKeyColor={setKeyColor} />
-      <div className="flex flex-col items bg-blue-300 shadow-2xl py-2 px-5 rounded-xl border-2 border-blue-400">
+      <div className="flex flex-col items bg-sky-300 shadow-2xl py-2 px-5 rounded-xl border-2 border-sky-400">
         <h2 className="text-2xl text-right mr-12">{intervalPush} ms</h2>
         <TAPshootingIntervalSlider
           intervalPush={intervalPush}
@@ -117,7 +117,7 @@ export const TAPshootingButtons: React.FC<IProps> = ({
           {'\u00A0'}
         </div>
       </button>
-      <div className="flex flex-col items bg-blue-300 shadow-2xl py-2 px-5 rounded-xl border-2 border-blue-400">
+      <div className="flex flex-col items bg-sky-300 shadow-2xl py-2 px-5 rounded-xl border-2 border-sky-400">
         <h2 className="text-2xl ml-8">Limit: {limit}</h2>
         <TAPshootingLimitSlider limit={limit} setLimit={setLimit} />
       </div>

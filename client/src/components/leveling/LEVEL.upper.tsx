@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
 import { ExpMessage, ExpMSG } from './LEVEL.container'
-import { LEVELmessenger } from './LEVEL.messenger'
 
 interface IProps {
   handleSetExp(value: number): void
@@ -11,6 +10,8 @@ interface IProps {
   CPM: number
   accuracy: number
   setExpMSG(MSG: ExpMSG): void
+  errors: number
+  overallLocal: number
 }
 export const LEVELupper: React.FC<IProps> = ({
   handleSetExp,
@@ -20,6 +21,8 @@ export const LEVELupper: React.FC<IProps> = ({
   CPM,
   accuracy,
   setExpMSG,
+  errors,
+  overallLocal,
 }) => {
   const successRow = fti.length > 0 ? fti[fti.length - 1] - 1 : overall
 
@@ -60,19 +63,37 @@ export const LEVELupper: React.FC<IProps> = ({
 
   let exp = handleSetExp
   let m = handleMessage
-  let aap = ((overall - fti.length) / overall) * 100
+  let aap = ((overallLocal - errors) / overallLocal) * 100
+
+  useDidMountEffect(() => {
+    let o = overallLocal
+
+    if (o <= 500 && o % 87 === 0) {
+      exp((o / 87) * 10)
+      m(ExpMessage.Practice)
+    } else if (o >= 500 && o <= 1000 && o % 100 === 0) {
+      exp((o / 100) * 10)
+      m(ExpMessage.TaskAheadOfYou)
+    } else if (o > 1000 && o <= 2500 && o % 100 === 0) {
+      exp((o / 100) * 5 + 50)
+      m(ExpMessage.HardWorker)
+    } else if (o > 2500 && o % 100 === 0) {
+      exp((o / 100) * 5 + 50)
+      m(ExpMessage.MaraphonRunner)
+    }
+  }, [overall])
 
   useDidMountEffect(() => {
     /////        in a row
     let sr = successRow
 
-    if (sr % 40 === 0 && successRow) {
-      exp((sr / 10) * 1.25)
-      if (sr === 40) {
+    if (sr % 55 === 0 && successRow) {
+      exp(((sr / 10) * 50) / 55)
+      if (sr === 55) {
         m(ExpMessage.Marksman)
-      } else if (sr === 80) {
+      } else if (sr === 110) {
         m(ExpMessage.TheBullsEye)
-      } else {
+      } else if (sr >= 165) {
         m(ExpMessage.AccurateAsStephCurry)
       }
     }
@@ -89,24 +110,6 @@ export const LEVELupper: React.FC<IProps> = ({
         exp((successRow / 10) * 3)
         m(ExpMessage.FastRun)
       }
-    }
-  }, [overall])
-
-  useDidMountEffect(() => {
-    ////overall
-
-    if (overall <= 500 && overall % 87 === 0) {
-      exp((overall / 87) * 10)
-      m(ExpMessage.Practice)
-    } else if (overall >= 500 && overall <= 1000 && overall % 100 === 0) {
-      exp((overall / 100) * 10)
-      m(ExpMessage.TaskAheadOfYou)
-    } else if (overall > 1000 && overall <= 2500 && overall % 100 === 0) {
-      exp((overall / 100) * 5 + 50)
-      m(ExpMessage.HardWorker)
-    } else if (overall > 2500 && overall % 100 === 0) {
-      exp((overall / 100) * 5 + 50)
-      m(ExpMessage.MaraphonRunner)
     }
   }, [overall])
 
@@ -129,16 +132,17 @@ export const LEVELupper: React.FC<IProps> = ({
 
   useDidMountEffect(() => {
     /////// average accuracy percent
+    let o = overallLocal
 
-    if (overall >= 250 && overall % 125 === 0) {
+    if (o >= 250 && o % 125 === 0) {
       if (aap >= 98.75) {
-        exp(40 + (overall / 125) * 10)
+        exp(40 + (o / 125) * 10)
         m(ExpMessage.TopSkills)
       } else if (aap < 98.75 && aap >= 97.25) {
-        exp(25 + (overall / 125) * 5)
+        exp(25 + (o / 125) * 5)
         m(ExpMessage.Excellence)
       } else if (aap < 97.25 && aap >= 96.25) {
-        exp(15 + (overall / 125) * 5)
+        exp(15 + (o / 125) * 5)
         m(ExpMessage.NotAverage)
       }
     }
@@ -147,7 +151,10 @@ export const LEVELupper: React.FC<IProps> = ({
   useDidMountEffect(() => {
     /////////////////  accuracy && cpm
     if (overall >= 150 && overall % 50 === 0) {
-      if (aap > 97.5 && avgCPM >= 250) {
+      if (aap > 97.25 && aap < 98.5 && avgCPM >= 250 && avgCPM < 275) {
+        exp(30)
+        m(ExpMessage.Pianist)
+      } else if (aap >= 98.5 && avgCPM >= 275) {
         exp(50)
         m(ExpMessage.AbsoluteMaster)
       }
@@ -156,12 +163,12 @@ export const LEVELupper: React.FC<IProps> = ({
 
   return (
     <div className={`invisible flex gap-10 select-none`}>
-      <div onMouseDown={() => handleMessage('first')}>+first</div>
+      {/* <div onMouseDown={() => handleMessage('first')}>+first</div>
       <div onMouseDown={() => handleMessage('second')}>+second</div>
       <div onMouseDown={() => handleMessage('third')}>+third</div>
       <div onMouseDown={() => console.log(messages)}>console</div>
       <br />
-      block: {block ? 1 : 0}
+      block: {block ? 1 : 0} */}
       {/* <LEVELmessenger
         messages={messages}
         setExpMSG={setExpMSG}

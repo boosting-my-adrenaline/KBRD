@@ -1,12 +1,18 @@
 import { newItemId } from './../../utils/modifier'
-import { InitialState } from './../../types/auth'
+import { State } from './../../types/auth'
 import { AuthActions } from '../../types/auth'
 import { AuthActionTypes } from './auth.types'
 import { addNewItem } from '../../utils/modifier'
 
-const initialState: InitialState = {
+const initialState: State = {
   isOpened: false,
-  user: null,
+  user: {
+    user_name: `guest`,
+    book: {
+      level: 0,
+      exp: 0,
+    },
+  },
   remembered: null,
   users: [
     {
@@ -18,6 +24,10 @@ const initialState: InitialState = {
       second_name: null,
       sex: null,
       birthday: null,
+      book: {
+        level: 5,
+        exp: 500,
+      },
     },
     {
       id: 2,
@@ -28,6 +38,10 @@ const initialState: InitialState = {
       second_name: null,
       sex: null,
       birthday: null,
+      book: {
+        level: 0,
+        exp: 0,
+      },
     },
   ],
 }
@@ -36,7 +50,10 @@ export const enum NavActionTypes {
   CHANGE_CHAPTER = 'CHANGE_CHAPTER',
 }
 
-export const authReducer = (state = initialState, action: AuthActions) => {
+export const authReducer = (
+  state = initialState,
+  action: AuthActions
+): State => {
   switch (action.type) {
     case AuthActionTypes.LOG_IN:
       return {
@@ -45,7 +62,10 @@ export const authReducer = (state = initialState, action: AuthActions) => {
         remembered: action.payload.rememeber ? action.payload.user : null,
       }
     case AuthActionTypes.LOG_OUT:
-      return { ...state, user: null }
+      return {
+        ...state,
+        user: { user_name: `guest`, book: { exp: 0, level: 0 } },
+      }
     case AuthActionTypes.SET_OPEN_ON:
       return { ...state, isOpened: true }
     case AuthActionTypes.SET_OPEN_OFF:
@@ -60,12 +80,40 @@ export const authReducer = (state = initialState, action: AuthActions) => {
         second_name: null,
         sex: null,
         birthday: null,
+        book: {
+          level: 0,
+          exp: 0,
+        },
       }
       return {
         ...state,
         users: addNewItem(state.users, newUser),
         user: newUser,
       }
+    case AuthActionTypes.CHANGE_EXP:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          book: {
+            ...state.user.book,
+            exp: action.payload,
+          },
+        },
+      }
+
+    case AuthActionTypes.CHANGE_LVL:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          book: {
+            ...state.user.book,
+            level: action.payload,
+          },
+        },
+      }
+
     default:
       return state
   }

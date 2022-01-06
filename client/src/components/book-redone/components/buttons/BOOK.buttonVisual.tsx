@@ -34,9 +34,9 @@ export const BOOKbuttonVisual: React.FC<IProps> = ({
 
   return (
     <div
-      className={` flex items-center justify-center`}
+      className={` flex items-center justify-center overflow-hidden rounded-xl`}
       style={{
-        transform: `translateY(${isHovered ? -5 : 0}px)`,
+        transform: `translateY(${isHovered ? -3 : 0}px)`,
         transition: '0.15s ease',
       }}
     >
@@ -46,7 +46,7 @@ export const BOOKbuttonVisual: React.FC<IProps> = ({
         //   disabled ? 'gray-500' : active ? 'gray-800' : 'gray-600'
         // } ${disabled ? 'cursor-not-allowed' : ''}`}
 
-        className={`z-10 px-4 py-2 rounded-xl  justify-self-end outline-none text-${
+        className={`relative overflow-hidden z-10 px-4 py-2 rounded-xl  justify-self-end outline-none text-${
           disabled ? 'gray-500' : active ? 'gray-800' : 'gray-600'
         } ${disabled ? 'cursor-not-allowed' : ''}`}
         style={{
@@ -67,6 +67,18 @@ export const BOOKbuttonVisual: React.FC<IProps> = ({
         onMouseLeave={() => setIsHovered(false)}
       >
         {tag}
+        <div
+          className={`absolute -z-10 `}
+          style={{
+            transform: `translate(${!isHovered ? `-250` : '-20'}px, -100px)`,
+            transition: '0.3s ease-in-out',
+          }}
+        >
+          <div
+            className={`bg-red-200`}
+            style={{ width: 220, height: 150, transform: `rotate(20deg)` }}
+          ></div>
+        </div>
       </button>
       <button
         className={`absolute  px-3 py-1 rounded-xl  animate-pulse `}
@@ -125,15 +137,14 @@ export const BOOKbuttonVisualFunctional: React.FC<IProps2> = ({
   const [hover, setHover] = useState(false)
   return (
     <div
+      className={`overflow-hidden rounded-xl`}
       style={{
         transform: `translateY(${hover ? -3 : 0}px)`,
         transition: '0.15s ease',
       }}
     >
       <div
-        className={`px-4 py-2 rounded-xl border border-red-400 bg-red-${
-          hover ? 300 : 200
-        } active:bg-red-100 cursor-pointer `}
+        className={`relative overflow-hidden rounded-xl px-4 py-2  border border-red-400 active:bg-red-100 cursor-pointer `}
         style={{
           transition: '0.25s ease-in-out',
         }}
@@ -142,6 +153,26 @@ export const BOOKbuttonVisualFunctional: React.FC<IProps2> = ({
         onMouseLeave={() => setHover(false)}
       >
         {title}
+        <div
+          className={`absolute -z-10 `}
+          style={{
+            transform: `translate(${!hover ? `-245` : '-120'}px, -100px)`,
+            transition: '0.3s ease-in-out',
+          }}
+        >
+          <div
+            className={`bg-red-400`}
+            style={{ width: 220, height: 150, transform: `rotate(20deg)` }}
+          ></div>
+        </div>
+        <div
+          className={`-z-20 absolute bg-red-200`}
+          style={{
+            width: 200,
+            height: 100,
+            transform: `translate(-100px, -50px)`,
+          }}
+        ></div>
       </div>
     </div>
   )

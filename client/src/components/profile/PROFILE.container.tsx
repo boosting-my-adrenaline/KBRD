@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Button, Hidden } from '@mui/material'
 import { useAuthAction } from '../../hooks/useAction'
 import { PhotoMiniature } from '../navbar/nav-components/PhotoMiniature'
@@ -6,9 +6,11 @@ import { PROFILEinfo } from './PROFILE.info'
 import { setOpenOff } from '../../redux/auth/auth.actions'
 import { PROFILEprofile } from './PROFILE.profile'
 import { PROFILEstats } from './PROFILE.stats'
+import { AuthContext } from '../../context/AuthContext'
 
 export const PROFILEcontainer: React.FC = () => {
-  const { logOut, setOpenOff } = useAuthAction()
+  const { setOpenOff } = useAuthAction()
+  const auth = useContext(AuthContext)
 
   const [statsSection, setStatsSection] = useState(true)
   const [rotating, setRotating] = useState(0)
@@ -37,7 +39,7 @@ export const PROFILEcontainer: React.FC = () => {
 
   const handleLogout = () => {
     setOpenOff()
-    setTimeout(() => logOut(), 100)
+    setTimeout(() => auth.logout(), 100)
   }
 
   return (

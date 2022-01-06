@@ -136,9 +136,8 @@ export const TAPshooting: React.FC = () => {
   const alphabet3: string = `!@#$%^&*()-_=+[]{}:;'"/?.,<>`
 
   let n = typeCells.numbers ? alphabet1 : ''
-  let l = typeCells.letters ? alphabet2 : ''
   let p = typeCells.punctuation ? alphabet3 : ''
-  let alphabet = n + l + p
+  let alphabet = alphabet2 + n + p
 
   const pushCell = (): void => {
     let res = false

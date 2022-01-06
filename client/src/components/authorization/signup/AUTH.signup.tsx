@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
-// import Box from '@mui/material/Box'
-import { ThemeProvider, createTheme, OutlinedInput } from '@mui/material'
-import { TextField, Button, InputAdornment, IconButton } from '@mui/material'
+import { ThemeProvider, createTheme } from '@mui/material'
+import { TextField, Button, IconButton } from '@mui/material'
 import {
   PasswordState,
   SignupPasswordColor,
   UsernameState,
 } from '../auth.types'
 import { SignupUsernameColor } from '../auth.types'
-import { ErrorOutline, VisibilityOff, Visibility } from '@material-ui/icons'
+import { VisibilityOff, Visibility } from '@material-ui/icons'
 import { useTypedSelector } from '../../../hooks/useTypedSelector'
 
 const theme = createTheme({

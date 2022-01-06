@@ -4,4 +4,6 @@ export const enum AuthActionTypes {
   SET_OPEN_ON = 'SET_OPEN_ON',
   SET_OPEN_OFF = 'SET_OPEN_OFF',
   SIGN_UP = 'SIGN_UP',
+  CHANGE_EXP = 'CHANGE_EXP',
+  CHANGE_LVL = 'CHANGE_LVL',
 }

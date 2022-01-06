@@ -7,13 +7,13 @@ import { PingingCircles } from './BOOK.pingingCircles'
 interface IProps {
   currentAccuracy: number
   overall: number
-  fti: number[]
+  errors: number
 }
 
 export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
   currentAccuracy,
   overall,
-  fti,
+  errors,
 }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [isHovered2, setIsHovered2] = useState(false)
@@ -29,7 +29,7 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
         : `${currentAccuracy}`
       : `000`
 
-  const chapterAccuracy = Math.floor(((overall - fti.length) / overall) * 1000)
+  const chapterAccuracy = Math.floor(((overall - errors) / overall) * 1000)
 
   const accuracyChapterValue =
     chapterAccuracy > 0
@@ -81,7 +81,7 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
         <div
           className={`absolute bg-red-200 rounded-xl  flex  p-2 px-6 border border-red-500`}
           style={{
-            width: 350,
+            width: 340,
             height: 260,
             boxShadow: `2px 1px 12px 4px rgba(0, 0, 0, 0.3)`,
             transform: `translateY(-85px)`,

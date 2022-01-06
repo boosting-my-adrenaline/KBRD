@@ -22,3 +22,13 @@ export const signUp = (user: { username: string; password: string }) => ({
   type: AuthActionTypes.SIGN_UP,
   payload: user,
 })
+
+export const changeExp = (exp: number) => ({
+  type: AuthActionTypes.CHANGE_EXP,
+  payload: exp,
+})
+
+export const changeLvl = (lvl: number) => ({
+  type: AuthActionTypes.CHANGE_LVL,
+  payload: lvl,
+})

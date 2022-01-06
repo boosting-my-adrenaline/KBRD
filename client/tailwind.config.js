@@ -40,6 +40,9 @@ module.exports = {
       },
       boxShadow: {
         '3xl': '0 1px 10px 5px rgba(0, 0, 0, 0.01)',
+        '4th': `1px 1px 4px 1px rgba(0, 0, 0, 0.01)`,
+        '5th': `4px 4px 11px 8px rgba(0, 0, 0, 0.01)`,
+        '6th': `0 1px 5px 1px rgba(0, 0, 0, 0.01)`,
       },
     },
   },

@@ -25,26 +25,26 @@ export const TAPtap: React.FC<IProps> = ({
   keyColor,
   newGame,
 }) => {
-  const [frameColor, setFrameColor] = useState('transparent')
+  const [frameColor, setFrameColor] = useState('bg-sky-200')
 
   useEffect(() => {
     if (running) {
       if (cells.filter((el) => el).length > 0) {
-        setFrameColor('green-400')
-        setTimeout(() => setFrameColor('transparent'), 50)
+        setFrameColor('bg-green-400')
+        setTimeout(() => setFrameColor('bg-transparent'), 50)
       } else {
-        setFrameColor('transparent')
+        setFrameColor('bg-transparent')
       }
     } else {
-      setFrameColor('blue-400')
+      setFrameColor('bg-sky-400')
     }
   }, [running])
 
   useEffect(() => {
     if (missclicks) {
-      setFrameColor('red-600')
+      setFrameColor('bg-red-600')
     }
-    let id1 = setTimeout(() => setFrameColor('transparent'), 100)
+    let id1 = setTimeout(() => setFrameColor('bg-transparent'), 100)
 
     return () => clearTimeout(id1)
   }, [missclicks])

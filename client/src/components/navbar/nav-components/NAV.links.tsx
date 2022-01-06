@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Chapters } from '../../../types/nav'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
-import { NAVlink } from './Nav.link'
+import { NAVlink } from './NAV.link'
 
 interface IProps {
   chapter: Chapters

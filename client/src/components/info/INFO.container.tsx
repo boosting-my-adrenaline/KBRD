@@ -48,8 +48,9 @@ export const INFOcontainer: React.FC = () => {
     <div
       style={{
         marginTop: perspective[1],
-        // transform: `perspective(1000px) translateZ(${perspective[0]}px)`,
-        // transition: '0.05s ease-in-out',
+        marginBottom: perspective[1],
+        transform: `perspective(1000px) translateZ(${perspective[0]}px)`,
+        transition: '0.05s ease-in-out',
       }}
     >
       <div
@@ -61,7 +62,7 @@ export const INFOcontainer: React.FC = () => {
       >
         <INFOslide chapter={chapter} />
       </div>
-      <PerspectiveController setBook={handleSetPerspective} />
+      <PerspectiveController setInfo={handleSetPerspective} />
     </div>
   )
 }

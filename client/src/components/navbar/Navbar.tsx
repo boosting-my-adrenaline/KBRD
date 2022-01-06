@@ -13,6 +13,7 @@ import { NAVarrow } from './nav-components/ArrowPage'
 import { HexagonRounded } from '../loading/HexagonRounded'
 import { PerspectiveController } from '../PerspectiveController'
 import { NAVlinks } from './nav-components/NAV.links'
+import { NAVlogo } from './nav-components/NAV.logo'
 
 interface IProps {
   block: boolean
@@ -45,15 +46,15 @@ export const Navbar: React.FC<IProps> = ({ block }) => {
 
   const getColors = (): string[] => {
     if (chapter === Chapters.BOOK) {
-      return ['bg-red-400', 'border-red-500', 'rgba(128, 0, 0, 1)']
+      return ['bg-red-400', 'border-red-500', 'shadow-red-700']
     } else if (chapter === Chapters.TAP) {
-      return ['bg-blue-400', 'border-blue-500', 'rgba(30, 58, 138, 1)']
+      return ['bg-sky-400', 'border-sky-500', 'shadow-sky-700']
     } else if (chapter === Chapters.INFO) {
-      return ['bg-yellow-400', 'border-yellow-500', 'rgba(234, 179, 8, 0.9)']
+      return ['bg-amber-400', 'border-amber-500', 'shadow-amber-700']
     } else if (chapter === Chapters.NOT_FOUND) {
-      return ['bg-gray-400', 'border-gray-500', 'rgba(50, 50, 50, 1)']
+      return ['bg-gray-400', 'border-gray-500', 'shadow-gray-500']
     } else {
-      return ['bg-emerald-400', 'border-emerald-500', 'rgba(6, 78, 59, 1)']
+      return ['bg-emerald-400', 'border-emerald-500', 'shadow-emerald-500']
     }
   }
 
@@ -94,12 +95,12 @@ export const Navbar: React.FC<IProps> = ({ block }) => {
     <>
       <div
         className={`z-50 w-full fixed top-0 left-0 right-0 pr-4 justify-center items-center border-b border-t
-${BorderColor}   ${ThemeColor}   font-courier flex flex-row select-none `}
+${BorderColor}   ${ThemeColor}  shadow-6th ${ShadowColor} font-courier flex flex-row select-none `}
         style={{
           transition: '1.25s ease-in-out',
           // height: 65, bg-${ThemeColor}-400
           zIndex: 2022,
-          boxShadow: `0 1px 5px 1px ${ShadowColor}`,
+          // boxShadow: `0 1px 5px 1px ${ShadowColor}`,
         }}
       >
         <div
@@ -126,18 +127,9 @@ ${BorderColor}   ${ThemeColor}   font-courier flex flex-row select-none `}
                 className={` cursor-pointer flex`}
                 // onClick={() => changeChapter(Chapters.MAIN)}
               >
-                {/* <img
-                  src={SAMURAI}
-                  alt=""
-                  className="w-10 h-10 md:w-16 md:h-16 transition duration-900 cursor-pointer hover:scale-110 "
-                /> */}
-                {/* <img
-                  src={TEST}
-                  alt=""
-                  className="w-10 h-10 md:w-16 md:h-16 transition duration-900 cursor-pointer hover:scale-110 "
-                /> */}
-                <HexagonRounded onClick={() => changeChapter(Chapters.MAIN)} />
+                {/* <HexagonRounded onClick={() => changeChapter(Chapters.MAIN)} /> */}
                 {/* 1 */}
+                <NAVlogo onClick={() => changeChapter(Chapters.MAIN)} />
               </div>
             </a>
 

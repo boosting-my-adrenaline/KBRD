@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { BOOKContainer } from './components/book-redone/BOOK.container'
 import { TAPContainer } from './components/tap/TAP.container'
 import { Navbar } from './components/navbar/Navbar'
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import { Width } from './utils/GetWidth'
 import { useTypedSelector } from './hooks/useTypedSelector'
 import { Background } from './components/BackgroundPlain'
@@ -12,29 +12,22 @@ import { Chapters } from './types/nav'
 import { INFOcontainer } from './components/info/INFO.container'
 import { BlurScreen } from './components/BlurScreen'
 import { AUTHcontainer } from './components/authorization/AUTH.container'
-import { LoadingScreen } from './components/loading/LoadingScreen'
+// import { LoadingScreen } from './components/loading/LoadingScreen'
 import { useAuthAction, useNavAction } from './hooks/useAction'
 import { PerspectiveController } from './components/PerspectiveController'
 import { Below1000 } from './components/belowSupportedResolution/Below1000'
 import { NotFound } from './components/NotFound'
 import { Footer } from './components/Footer'
-
-////////////////
+import { useAuth } from './hooks/auth.hook'
+import { AuthContext } from './context/AuthContext'
 
 export const App: React.FC = () => {
   const navigation = useNavigate()
   const chapter = useTypedSelector((state) => state.nav.chapter)
 
-  // const [timer, setTimer] = useState(1)
-
-  useEffect(() => {
-    // setInterval(() => setTimer((prev) => prev + 1), 100)
-  }, [])
-
   const [block, setBlock] = useState(false)
 
   const changeCurrentChapter = (chap: Chapters): void => {
-    // chap !== 'MAIN' ? history.push(`/${chap.toLowerCase()}`) : history.push('/')
     if (chap === Chapters.MAIN) {
       navigation('/')
     } else if (chap === Chapters.NOT_FOUND) {
@@ -51,26 +44,6 @@ export const App: React.FC = () => {
     let id = setTimeout(() => changeCurrentChapter(chapter), 1100)
 
     let id2 = setTimeout(() => setBlock(false), 1700)
-    // if (!block) {
-    //   setBlock(true)
-
-    //   setTimeout(() => {
-    //     if (!block) {
-    //       // setTimeout(() => changeCurrentChapter(chapter), 1100)
-    //       // setTimeout(() => setBlock(false), 1500)
-    //       changeCurrentChapter(chapter)
-    //     }
-    //   }, 1100)
-
-    //   setTimeout(() => {
-    //     if (!block) {
-    //       setBlock(false)
-    //       // setTimeout(() => changeCurrentChapter(chapter), 1100)
-    //       // setTimeout(() => setBlock(false), 1500)
-    //       // changeCurrentChapter(chapter)
-    //     }
-    //   }, 1700)
-    // }
 
     return () => {
       clearTimeout(id)
@@ -101,7 +74,7 @@ export const App: React.FC = () => {
     setPerspective([perspective, margin, is1000plus])
   }
 
-  const isOpened = useTypedSelector((state) => state.auth.isOpened)
+  const isOpened: boolean = useTypedSelector((state) => state.auth.isOpened)
   const { setOpenOff } = useAuthAction()
 
   const renders = useRef(0)
@@ -125,53 +98,65 @@ export const App: React.FC = () => {
       })
   }, [])
 
+  const { token, login, logout, userId } = useAuth()
+  const isAuthenticated = !!token
+
+  // useEffect(() => {
+  //   window.M.updateTextFields()
+  // }, [])
+  // const routes = useRoutes(isAuthenticated)
+
   return (
-    <div className={''}>
-      <BlurScreen show={initialScreen} />
-      <PerspectiveController setPerspective={handleSetPerspective} />
-      {/* <div className={`absolute top-8 left-8 `} style={{ zIndex: 999999 }}>
+    <AuthContext.Provider
+      value={{ token, login, logout, userId, isAuthenticated }}
+    >
+      <div className={''}>
+        <BlurScreen show={initialScreen} />
+        <PerspectiveController setPerspective={handleSetPerspective} />
+        {/* <div className={`absolute top-8 left-8 `} style={{ zIndex: 999999 }}>
         renders: {renders.current}
       </div> */}
-      {perspective[2] ? null : <Below1000 />}
+        {perspective[2] ? null : <Below1000 />}
 
-      {perspective[2] ? (
-        <div
-          style={{
-            opacity: initialScreen ? 0 : 1,
-            transition: '1.5s ease',
-          }}
-        >
-          <Navbar block={block} />
-          <Footer />
-          <Background />
-
+        {perspective[2] ? (
           <div
-            className={`fixed right-0 left-0 top-0 bottom-0 bg-gray-400 z-40  opacity-${
-              isOpened ? '50 cursor-pointer' : '0'
-            }`}
             style={{
-              transition: '0.4s ease-in-out',
-              display: isOpened ? 'block' : 'none',
+              opacity: initialScreen ? 0 : 1,
+              transition: '1.5s ease',
             }}
-            onMouseDown={() => setOpenOff()}
-          ></div>
+          >
+            <Navbar block={block} />
+            <Footer />
+            <Background />
 
-          <div>
-            <div className=" invisible z-50 absolute top-16">
-              <Width />
+            <div
+              className={`fixed right-0 left-0 top-0 bottom-0 bg-gray-400 z-40  opacity-${
+                isOpened ? '50 cursor-pointer' : '0'
+              }`}
+              style={{
+                transition: '0.4s ease-in-out',
+                display: isOpened ? 'block' : 'none',
+              }}
+              onMouseDown={() => setOpenOff()}
+            ></div>
+
+            <div>
+              <div className=" invisible z-50 absolute top-16">
+                <Width />
+              </div>
+              <Routes>
+                <Route path="/" element={<MAINcontainer />} />
+                <Route path="/tap" element={<TAPContainer />} />
+                <Route path="/book" element={<BOOKContainer />} />
+                <Route path="/info" element={<INFOcontainer />} />
+                <Route path="/auth" element={<AUTHcontainer />} />
+                <Route element={<NotFound />} />
+              </Routes>
+              {/* <BOOKContainer /> */}
             </div>
-            <Routes>
-              <Route path="/" element={<MAINcontainer />} />
-              <Route path="/tap" element={<TAPContainer />} />
-              <Route path="/book" element={<BOOKContainer />} />
-              <Route path="/info" element={<INFOcontainer />} />
-              <Route path="/auth" element={<AUTHcontainer />} />
-              <Route element={<NotFound />} />
-            </Routes>
-            {/* <BOOKContainer /> */}
           </div>
-        </div>
-      ) : null}
-    </div>
+        ) : null}
+      </div>
+    </AuthContext.Provider>
   )
 }

@@ -3,6 +3,7 @@ import { Chapters, Directions } from '../../../types/nav'
 import { useKeyPress } from '../../../utils/useKeyPress'
 import ArrowLeftLogo from '../../../static/ArrowLeft.svg'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
+import { yellow600 } from 'material-ui/styles/colors'
 
 interface IProps {
   onClick(dir: Directions): void
@@ -49,7 +50,13 @@ export const NAVarrow: React.FC<IProps> = ({
         setShow(true)
       }
     }, 1300)
-    return () => clearTimeout(id)
+
+    let id2 = setTimeout(() => setShow(false), 4000)
+
+    return () => {
+      clearTimeout(id)
+      clearTimeout(id2)
+    }
   }, [])
 
   useDidMountEffect(() => {
@@ -68,8 +75,32 @@ export const NAVarrow: React.FC<IProps> = ({
     ) {
       clearTimeout(id)
     }
-    return () => clearTimeout(id)
+
+    let id2 = setTimeout(() => setShow(false), 4000)
+    return () => {
+      clearTimeout(id)
+      clearTimeout(id2)
+    }
   }, [chapter])
+
+  useDidMountEffect(() => {
+    let id = setTimeout(() => {
+      if (ArrowDown) {
+        setShow(true)
+      }
+    })
+
+    let id2 = setTimeout(() => {
+      if (ArrowDown) {
+        setShow(false)
+      }
+    }, 1000)
+
+    return () => {
+      clearTimeout(id)
+      clearTimeout(id2)
+    }
+  }, [ArrowDown])
 
   return (
     <div
@@ -89,13 +120,15 @@ export const NAVarrow: React.FC<IProps> = ({
       onMouseLeave={() => setHover(false)}
     >
       <div
-        className={`absolute rounded-lg ${mutatedThemeColor} border ${BorderColor} p-2 hover:bg-gray-100 `}
+        className={`absolute rounded-lg ${mutatedThemeColor} border ${BorderColor} ${
+          ArrowDown ? `shadow-4th` : `shadow-5th`
+        } ${ShadowColor} p-2 hover:bg-gray-100 `}
         style={{
           width: 55,
           height: 55,
-          boxShadow: ArrowDown
-            ? `1px 1px 4px 1px ${ShadowColor}`
-            : `4px 4px 11px 8px ${ShadowColor}`,
+          // boxShadow: ArrowDown
+          //   ? `1px 1px 4px 1px ${ShadowColor}`
+          //   : `4px 4px 11px 8px ${ShadowColor}`,
           transition: '0.2s ease-in-out',
           transform: `translateY(${hover ? -7 : 0}px)`,
         }}

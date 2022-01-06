@@ -9,11 +9,23 @@ export interface User {
   second_name: null | string
   sex: null | 'male' | 'female' | `don't identify`
   birthday: null | string
+  book: {
+    level: number
+    exp: number
+  }
 }
 
-export interface InitialState {
+export interface Guest {
+  user_name: `guest`
+  book: {
+    level: number
+    exp: number
+  }
+}
+
+export interface State {
   isOpened: boolean
-  user: null | User
+  user: Guest | User
   remembered: null | User
   users: User[]
 }
@@ -40,4 +52,21 @@ export interface SignUp {
   payload: { username: string; password: string }
 }
 
-export type AuthActions = LogIn | LogOut | SetOpenOn | SetOpenOff | SignUp
+export interface ChangeExp {
+  type: AuthActionTypes.CHANGE_EXP
+  payload: number
+}
+
+export interface ChangeLvl {
+  type: AuthActionTypes.CHANGE_LVL
+  payload: number
+}
+
+export type AuthActions =
+  | LogIn
+  | LogOut
+  | SetOpenOn
+  | SetOpenOff
+  | SignUp
+  | ChangeExp
+  | ChangeLvl

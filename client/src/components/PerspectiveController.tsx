@@ -18,6 +18,7 @@ interface IProps {
   setFooter?(fontSize: number, paddingX: number): void
   setBook?(perspective: number, marginTop: number): void
   setTap?(perspective: number, marginTop: number): void
+  setInfo?(perspective: number, marginTop: number): void
 }
 
 export const PerspectiveController: React.FC<IProps> = ({
@@ -30,6 +31,7 @@ export const PerspectiveController: React.FC<IProps> = ({
   setFooter = () => {},
   setBook = () => {},
   setTap = () => {},
+  setInfo = () => {},
 }) => {
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
@@ -58,6 +60,7 @@ export const PerspectiveController: React.FC<IProps> = ({
     if (W > 2160) {
       setPerspective(0, 250, true)
       setBook(0, 250)
+      setInfo(0, 250)
       setTap(0, 250)
       setMainMT(300)
       setNavPerspective(0, 65)
@@ -71,6 +74,7 @@ export const PerspectiveController: React.FC<IProps> = ({
     } else if (W <= 2160 && W > 1920) {
       setPerspective(0, 200, true)
       setBook(0, 200)
+      setInfo(0, 100)
       setTap(0, 200)
 
       setPerspective2(0, 100, -605)
@@ -80,6 +84,7 @@ export const PerspectiveController: React.FC<IProps> = ({
     } else if (W <= 1920 && W > 1700) {
       setPerspective(0, 140, true)
       setBook(0, 140)
+      setInfo(0, 70)
       setTap(0, 140)
 
       setPerspective2(-0, 0, -102)
@@ -91,6 +96,7 @@ export const PerspectiveController: React.FC<IProps> = ({
         setPerspective(0, 130, true)
         setBook(0, 130)
         setTap(0, 130)
+        setInfo(0, 100)
 
         setMainMT(285)
         setNavPerspective(-100, 55)
@@ -99,15 +105,17 @@ export const PerspectiveController: React.FC<IProps> = ({
       setPerspective(-130, 85, true)
       setBook(-130, 85)
       setTap(-130, 85)
+      setInfo(-130, 60)
 
       setPerspective2(-50, -25, -102)
       setMainMT(245)
-      setNavPerspective(-100, 55)
+      setNavPerspective(0, 55)
       setFooter(14, 200)
     } else if (W <= 1500 && W > 1350) {
       setPerspective(-400, 20, true)
-      setBook(-400, 20)
+      setBook(-350, 20)
       setTap(-400, 20)
+      setInfo(-100, 20)
 
       setPerspective2(-100, -50, -102)
       setMainMT(205)
@@ -116,6 +124,7 @@ export const PerspectiveController: React.FC<IProps> = ({
     } else if (W <= 1350 && W > 1200) {
       setPerspective(-400, 20, true)
       setBook(-400, 20)
+      setInfo(-100, 10)
       setTap(-400, -15)
       setPerspective2(-100, -70, -102)
       setMainMT(205)
@@ -124,6 +133,7 @@ export const PerspectiveController: React.FC<IProps> = ({
     } else if (W <= 1200 && W > 1000) {
       setPerspective(-790, -63, true)
       setBook(-400, 7)
+      setInfo(-100, 7)
       setTap(-500, -50)
       setPerspective2(-350, -200, -102)
       setMainMT(200)
