@@ -1,6 +1,6 @@
 {
   "port": 80,
   "jwtSecret": "kbrd",
-  "mongoUri": "mongodb+srv://anakin:IlRsdRjWZHrOvJX7@cluster0.tmqca.mongodb.net/app?retryWrites=true&w=majority",
+  "mongoUri": "mongodb+srv://Anakin:kbrd1234@kbrd.rllwc.mongodb.net/kbrd",
   "baseUrl": "http://kbrd.site"
 }

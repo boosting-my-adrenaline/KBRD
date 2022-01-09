@@ -15,7 +15,6 @@ router.post(
   //     min: 6,
   //   }),
   // ],
-
   async (req, res) => {
     try {
       console.log('signing up: ', req.body)
@@ -29,9 +28,9 @@ router.post(
         })
       }
 
-      const { username, password } = req.body
+      const { email, password } = req.body
 
-      const candidate = await User.findOne({ username })
+      const candidate = await User.findOne({ email })
 
       if (candidate) {
         return (
@@ -63,9 +62,9 @@ router.post(
   //   check('password', 'Введите пароль').exists(),
   // ],
   async (req, res) => {
-    console.log('loging in: ', req.body)
-
     try {
+      console.log('logining in: ', req.body)
+
       const errors = validationResult(req)
 
       if (!errors.isEmpty()) {

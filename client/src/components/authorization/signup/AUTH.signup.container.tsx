@@ -9,8 +9,8 @@ import { signupPasswordCheck, signUpUsernameCheck } from './signupUtils'
 
 export const AUTHsignupContainer: React.FC = ({}) => {
   const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [password2, setPassword2] = useState('')
+  const [password, setPassword] = useState('12345')
+  const [password2, setPassword2] = useState('12345')
 
   const [usernameMessage, setUsernameMessage] = useState<null | string>(null)
   const [passwordMessage, setPasswordMessage] = useState<null | string>(null)
