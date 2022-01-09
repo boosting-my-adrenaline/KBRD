@@ -15,6 +15,7 @@ router.post(
   //     min: 6,
   //   }),
   // ],
+
   async (req, res) => {
     try {
       console.log('signing up: ', req.body)
@@ -28,9 +29,9 @@ router.post(
         })
       }
 
-      const { email, password } = req.body
+      const { username, password } = req.body
 
-      const candidate = await User.findOne({ email })
+      const candidate = await User.findOne({ username })
 
       if (candidate) {
         return (

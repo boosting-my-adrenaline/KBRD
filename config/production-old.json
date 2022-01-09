@@ -1,6 +1,6 @@
 {
-  "port": 5005,
-  "jwtSecret": "mern",
+  "port": 80,
+  "jwtSecret": "kbrd",
   "mongoUri": "mongodb+srv://anakin:IlRsdRjWZHrOvJX7@cluster0.tmqca.mongodb.net/app?retryWrites=true&w=majority",
-  "baseUrl": "http://localhost:5005"
+  "baseUrl": "http://kbrd.site"
 }
