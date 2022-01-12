@@ -24,7 +24,7 @@ export const BOOKfailures: React.FC<{
   }, [chapter])
 
   const filling = [1, 2, 3, 4, 5, 6, 7].map((el) => (
-    <div key={el} className="flex flex-row ">
+    <div key={el} className={`flex flex-row `}>
       {Array.from({ length: 70 }, (_, i) => i + 1).map((letter) => (
         <div key={letter} className="bg-red-600 rounded-md">
           {'\u00A0'}
@@ -39,12 +39,9 @@ export const BOOKfailures: React.FC<{
       row.push(
         <div
           key={i}
-          className="rounded-sm bg-red-400"
-          style={{
-            backgroundColor: failedTypesIndexes.includes(i)
-              ? ''
-              : 'transparent',
-          }}
+          className={`rounded-sm ${
+            failedTypesIndexes.includes(i) ? `bg-red-400` : `bg-transparent`
+          }`}
         >
           {'\u00A0'}
         </div>
@@ -55,14 +52,9 @@ export const BOOKfailures: React.FC<{
 
   return (
     <div
-      className="w-1000 font-courier text-2xl flex flex-col justify-center align-center space-y-4 "
-      style={{
-        position: 'absolute',
-        alignSelf: 'center',
-        zIndex: 35,
-        opacity: appear ? 1 : 0,
-        transition: '0.4s ease-in-out',
-      }}
+      className={`z-35 w-1000 absolute  font-courier text-2xl flex flex-col justify-center align-center space-y-4 ${
+        !appear && `opacity-0`
+      } transition duration-500 ease-in-out`}
     >
       <div className="flex flex-row-reverse ">{fillWithAreas(176, 245)}</div>
       <div className="flex flex-row-reverse ">{fillWithAreas(106, 175)}</div>

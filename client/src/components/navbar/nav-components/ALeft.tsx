@@ -2,7 +2,6 @@ import React from 'react'
 import { useKeyPress } from '../../../utils/useKeyPress'
 import ArrowLeftLogo from '../../../static/ArrowLeft.svg'
 import { Chapters, Directions } from '../../../types/nav'
-import { ArrowIcon } from './ArrowIcon'
 
 type IProps = {
   onClick(dir: Directions): void

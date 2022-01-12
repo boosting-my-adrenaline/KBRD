@@ -3,7 +3,6 @@ import { Chapters } from '../../../types/nav'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 import { BOOKaccuracyCounter } from './stats/B.stats.accuracyCounter'
 import { BOOKstatsAccuracyWidget } from './stats/B.stats.accuracy.widget'
-import { BOOKstatsRecorder } from './stats/BOOK.stats.recorder'
 import { BOOKstatsCPMcounter } from './stats/BOOK.stats.CPMcounter'
 import { BOOKstatsCPMWidget } from './stats/B.stats.cpm.widget'
 import { LEVELcontainer } from '../../leveling/LEVEL.container'
@@ -77,20 +76,13 @@ export const BOOKstats: React.FC<IProps> = ({
     return () => clearTimeout(id)
   }, [overall])
 
-  // Math.floor((successed / overall) * 1000)
-  /////////////
-
-  ////////////
-
-  ////////////
-  const [hide, setHide] = useState(false) //////!!!
+  const [hide, setHide] = useState(false)
   return (
     <>
       <div
-        className={`absolute `}
+        className={`absolute transition duration-500 ease-in-out`}
         style={{
           transform: `translateY(${appear ? -155 : -400}px)`,
-          transition: '0.6s ease-in-out',
         }}
       >
         <LEVELcontainer
@@ -105,8 +97,9 @@ export const BOOKstats: React.FC<IProps> = ({
         />
       </div>
       <div
-        className={`w-1000  pt-2 pb-6 border-black borde flex items-center justify-center select-none`}
-        style={{ transition: '0.5s ease-in-out', opacity: appear ? 1 : 0 }}
+        className={`w-1000  pt-2 pb-6 border-black borde flex items-center justify-center select-none transition duration-500 ease-in-out ${
+          !appear && `opacity-0`
+        }`}
       >
         <div
           className={`w-f flex flex-row justify-between mx-8 items-center borde-red-800 borde text-xl text-gray-600 ${
@@ -130,8 +123,6 @@ export const BOOKstats: React.FC<IProps> = ({
             </div>
           </div>
 
-          {/* <div></div> */}
-
           <div className={`flex items-center justify-center`}>
             {`\u00a0`}
 
@@ -146,7 +137,6 @@ export const BOOKstats: React.FC<IProps> = ({
       </div>
       <BOOKstatsCPMcounter
         overall={overallLocal}
-        // overall={overall}
         setCPM={setCPM}
         setAvgCPM={setAvgCPM}
         running={running}
@@ -154,16 +144,9 @@ export const BOOKstats: React.FC<IProps> = ({
       <BOOKaccuracyCounter
         overall={overall}
         fti={fti}
-        // overall={overall}
-        // fti={fti}
         setAccuracy={setAccuracy}
         running={running}
       />
-      {/* <BOOKstatsRecorder
-        // overall={overall}
-        
-        CPM={CPM}
-      /> */}
     </>
   )
 }

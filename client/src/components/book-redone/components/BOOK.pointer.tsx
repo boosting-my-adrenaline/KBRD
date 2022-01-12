@@ -41,14 +41,9 @@ export const BOOKpointer: React.FC<IProps> = ({ overall }) => {
 
   return (
     <div
-      className={
-        ' absolute text-2xl space-y-4  select-none border-black boder '
-      }
-      style={{
-        opacity: !appear ? '0' : '1',
-        transition: '0.6s ease-in-out',
-        zIndex: 32,
-      }}
+      className={`py z-32 absolute text-2xl space-y-4  select-none border-black boder transition duration-500 ease-in-out ${
+        !appear && `opacity-0`
+      }`}
     >
       <div>{'\u00A0'}</div>
       <div>{'\u00A0'}</div>
@@ -60,11 +55,7 @@ export const BOOKpointer: React.FC<IProps> = ({ overall }) => {
         <div
           className={`absolute ${
             show ? 'visible' : 'invisible'
-          } border-md  border-black rounded-sm  animate-pulse z-50`}
-          style={{
-            boxShadow: '0 0 2px 2px rgba(0, 0, 0, 0.5)',
-            transition: '0.01s ease-in-out',
-          }}
+          } border-md  border-black rounded-sm  animate-pulse z-50 shadow-7th`}
         >
           {'\u00A0'}
         </div>

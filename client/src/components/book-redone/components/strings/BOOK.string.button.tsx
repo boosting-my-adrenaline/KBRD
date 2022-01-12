@@ -16,38 +16,26 @@ export const BOOKstringButton: React.FC<IProps> = ({
   const [hover, setHover] = useState(false)
   return (
     <div
-      className={`rounded-xl overflow-hidden`}
-      style={{
-        transform: `translateY(${hover ? -3 : 0}px)`,
-        transition: '0.125s ease-in-out',
-      }}
+      className={`rounded-xl  hover:-translate-y-3px transition duration-125 ease-in-out`}
     >
       <div
         className={`relative overflow-hidden px-3 py-1 rounded-xl border  
         ${num === choosenString ? `border-red-400 ` : `border-red-300`}
-        cursor-pointer active:bg-red-400`}
-        // className={`px-3 py-1 rounded-xl border border-red-400 cursor-pointer `}
-        style={{
-          transition: '0.25s ease-in-out',
-        }}
+        cursor-pointer active:bg-red-400 transition duration-250 ease-in-out`}
         onMouseDown={() => handleSetString(str, num)}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
         book #{num + 1}
         <div
-          className={`absolute -z-10 `}
+          className={`absolute -z-10 transition duration-300 ease-in-out`}
           style={{
             transform: `translate(${
               !hover && num !== choosenString ? `-250` : '-20'
             }px, -100px)`,
-            transition: '0.3s ease-in-out',
           }}
         >
-          <div
-            className={`bg-red-300`}
-            style={{ width: 220, height: 150, transform: `rotate(20deg)` }}
-          ></div>
+          <div className={`bg-red-300 w-220px h-150px rotate-20deg`}></div>
         </div>
       </div>
     </div>
@@ -66,37 +54,22 @@ export const BOOKstringButtonFunctional: React.FC<IProps2> = ({
   const [hover, setHover] = useState(false)
   return (
     <div
-      className={`rounded-xl`}
-      style={{
-        overflow: 'hidden',
-        transform: `translateY(${hover ? -3 : 0}px)`,
-        transition: '0.125s ease-in-out',
-      }}
+      className={`rounded-xl hover:-translate-y-3px transition duration-125 ease-in-out`}
     >
       <div
-        className={`px-3 py-1 z-10 overflow-hidden rounded-xl border border-red-400 bg-red- ${
-          hover ? 300 : 200
-        } active:bg-red-400 cursor-pointer `}
-        style={{
-          position: 'relative',
-          transition: '0.25s ease-in-out',
-        }}
+        className={`px-3 py-1 z-10 relative overflow-hidden  rounded-xl border border-red-400 active:bg-red-400 cursor-pointer transition duration-205 ease-in-out`}
         onMouseDown={onClick}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
         {title}
         <div
-          className={`absolute -z-10 `}
+          className={`absolute -z-10 transition duration-300 ease-in-out`}
           style={{
             transform: `translate(${!hover ? `-250` : '-20'}px, -100px)`,
-            transition: '0.3s ease-in-out',
           }}
         >
-          <div
-            className={`bg-red-400`}
-            style={{ width: 220, height: 150, transform: `rotate(20deg)` }}
-          ></div>
+          <div className={`bg-red-400 w-220px h-150px rotate-20deg`}></div>
         </div>
       </div>
     </div>

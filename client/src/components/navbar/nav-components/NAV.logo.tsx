@@ -71,8 +71,9 @@ export const NAVlogo: React.FC<IProps> = ({
     setObserver((prev) => prev + 1)
   }
 
-  const element = (letter: string, size: number) => (
+  const element = (letter: string, size: number, key: any) => (
     <div
+      key={key}
       className={`text-gray-800`}
       style={{ transition: `${tsition}s ease-in-out`, fontSize: size }}
     >
@@ -86,7 +87,7 @@ export const NAVlogo: React.FC<IProps> = ({
     ['D', D],
   ]
 
-  const elements = letters.map((el) => element(el[0], el[1]))
+  const elements = letters.map((el, i) => element(el[0], el[1], i))
 
   return (
     <div

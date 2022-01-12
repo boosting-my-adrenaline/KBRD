@@ -1,24 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Chapters } from '../../../types/nav'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 
 interface IProps {
-  failedTypesIndexes: number[]
   STRING: string
-  overall: number
-  animation: boolean
-  currentString: string
   chapter: Chapters
   highlighter: boolean
 }
 
 export const BOOKLayout: React.FC<IProps> = ({
   STRING,
-  overall,
-  animation,
-  currentString,
   chapter,
-  failedTypesIndexes,
   highlighter,
 }) => {
   const [appear, setAppear] = useState(false)
@@ -37,38 +29,6 @@ export const BOOKLayout: React.FC<IProps> = ({
     return () => clearTimeout(id)
   }, [chapter])
 
-  const [extraAppear, setExtraAppear] = useState([true, true])
-
-  useDidMountEffect(() => {
-    // setExtraAppear([false, true])
-    // let id = setTimeout(() => setExtraAppear([true, false]), 500)
-    // return () => {
-    //   clearTimeout(id)
-    //   setExtraAppear([true, false])
-    // }
-  }, [currentString])
-
-  // const [arr, setArr] = useState<string>(currentString)
-
-  // useDidMountEffect(() => {
-  //   setArr((prev) => {
-  //     let arr = prev.split('')
-  //     failedTypesIndexes.forEach((el) => (arr[el - 1] = '^'))
-  //     return arr.join('')
-  //   })
-  //   console.log(arr.slice(0, 20), failedTypesIndexes)
-  // }, [overall])
-
-  // useEffect(() => {
-  //   setArr(STRING)
-  //   setArr((prev) => {
-  //     let arr = prev.split('')
-  //     failedTypesIndexes.forEach((el) => (arr[el - 1 - overall] = '^'))
-  //     return arr.join('')
-  //   })
-  //   console.log(arr.slice(0, 20), failedTypesIndexes)
-  // }, [STRING])
-
   const rawRIGHT: string = STRING.slice(0, 35)
   const rawRIGHT1: string = STRING.slice(35, 105)
   const rawRIGHT2: string = STRING.slice(105, 175)
@@ -79,10 +39,10 @@ export const BOOKLayout: React.FC<IProps> = ({
   const rawLEFT3: string = STRING.slice(-245, -175)
 
   const formating = (str: string) => {
-    return str.split('').map((el) => {
+    return str.split('').map((el, i) => {
       if (el === ' ') {
         return (
-          <div className="select-none bg-red-00">
+          <div key={el + i} className="select-none bg-red-00">
             {'\u00A0'}
             {/* {el} */}
           </div>
@@ -90,11 +50,10 @@ export const BOOKLayout: React.FC<IProps> = ({
       } else {
         return (
           <div
-            className="select-none bg-ed-200 flex justify-center items-center"
-            style={{
-              // transition: extraAppear[1] ? '0.75s ease' : 'none',
-              opacity: extraAppear[0] && highlighter ? 1 : 0,
-            }}
+            key={el + i}
+            className={`select-none bg-ed-200 flex justify-center items-center ${
+              !highlighter && `opacity-0`
+            }`}
           >
             {'\u00A0'}
             {/* {el} */}
@@ -116,25 +75,17 @@ export const BOOKLayout: React.FC<IProps> = ({
 
   return (
     <div
-      className="absolute visible  border-5 border-grey-900 rounded-xl"
-      style={{
-        zIndex: 31,
-        opacity: !appear ? '0' : '1',
-        transition: '0.7 ease-in-out',
-      }}
+      className={`absolute visible  border-5 border-grey-900 rounded-xl transition duration-700 ease-in-out z-31 ${
+        !appear && `opacity-0`
+      }`}
     >
-      <div
-        className="w-1000 z-10 font-courier text-2xl flex flex-col space-y-4  "
-        style={{}}
-      >
+      <div className="w-1000 z-10 font-courier text-2xl flex flex-col space-y-4  ">
         {rowing(rawLEFT3)}
         {rowing(rawLEFT2)}
         {rowing(rawLEFT1)}
 
         <div className="flex flex-row">
           {rowing(rawLEFT)}
-
-          {/* <div>{rowing(rawFIRST)}</div> */}
 
           {rowing(rawRIGHT)}
         </div>

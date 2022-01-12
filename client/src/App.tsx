@@ -13,7 +13,7 @@ import { INFOcontainer } from './components/info/INFO.container'
 import { BlurScreen } from './components/BlurScreen'
 import { AUTHcontainer } from './components/authorization/AUTH.container'
 // import { LoadingScreen } from './components/loading/LoadingScreen'
-import { useAuthAction, useNavAction } from './hooks/useAction'
+import { useAuthAction } from './hooks/useAction'
 import { PerspectiveController } from './components/PerspectiveController'
 import { Below1000 } from './components/belowSupportedResolution/Below1000'
 import { NotFound } from './components/NotFound'
@@ -59,6 +59,7 @@ export const App: React.FC = () => {
   }, [])
 
   const isLoading = useTypedSelector((state) => state.nav.isLoading)
+
   // const { setLoadingOn, setLoadingOff } = useNavAction()
   const [perspective, setPerspective] = useState<[number, number, boolean]>([
     0,
@@ -76,6 +77,10 @@ export const App: React.FC = () => {
 
   const isOpened: boolean = useTypedSelector((state) => state.auth.isOpened)
   const { setOpenOff } = useAuthAction()
+
+  useEffect(() => {
+    setOpenOff()
+  }, [])
 
   const renders = useRef(0)
 
@@ -98,7 +103,7 @@ export const App: React.FC = () => {
       })
   }, [])
 
-  const { token, login, logout, userId } = useAuth()
+  const { token, login, logout, userId, email } = useAuth()
   const isAuthenticated = !!token
 
   // useEffect(() => {
@@ -108,7 +113,7 @@ export const App: React.FC = () => {
 
   return (
     <AuthContext.Provider
-      value={{ token, login, logout, userId, isAuthenticated }}
+      value={{ token, login, logout, userId, isAuthenticated, email }}
     >
       <div className={''}>
         <BlurScreen show={initialScreen} />
@@ -141,7 +146,7 @@ export const App: React.FC = () => {
             ></div>
 
             <div>
-              <div className=" invisible z-50 absolute top-16">
+              <div className=" visible z-50 absolute top-16">
                 <Width />
               </div>
               <Routes>

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Chapters } from '../../../../types/nav'
 import { useDidMountEffect } from '../../../../utils/useDidMountEffect'
-import { BOOKbuttonVisual } from '../buttons/BOOK.buttonVisual'
 import {
   goToRandom,
   lowerAll,
@@ -23,12 +22,9 @@ import { thegreatgatsby as letter6 } from '../../../../static/letters/thegreatga
 import { tokillamockinbird as letter7 } from '../../../../static/letters/tokillamockinbird'
 import { lionwitch as letter8 } from '../../../../static/letters/lionwitch'
 
-let test = `Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. `
+// let test = `Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. `
 
 interface IProps {
-  // STRING: string
-  // setSTRING(string: string): void
-  // setCurrentString(string: string): void
   overall: number
   currentString: string
   handleStringErase(str: string): void
@@ -149,8 +145,9 @@ export const BOOKstring: React.FC<IProps> = ({
     handleString(now, true)
   }
 
-  const exampleButtons = letters.map((el) => (
+  const exampleButtons = letters.map((el, i) => (
     <BOOKstringButton
+      key={i}
       choosenString={choosenString.current}
       handleSetString={handleSetString}
       num={letters.indexOf(el)}
@@ -162,18 +159,16 @@ export const BOOKstring: React.FC<IProps> = ({
   // return <>do something with STRING length</>
   return (
     <div
-      className={`select-none z-50 text-xl transform  flex flex-col gap-4 items-center border-black borde mt-4 text-gray-800 opacity-${
-        !appear ? 0 : 100
-      }`}
-      style={{ width: 1000, transition: '0.8s ease-in-out' }}
+      className={`select-none z-50 w-1000px text-xl transform  flex flex-col gap-4 items-center border-black borde mt-4 text-gray-800 ${
+        !appear && `opacity-0`
+      } transition duration-700 ease-in-out`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
       <div
-        className={`w-f flex flex-wrap items-center justify-evenly opacity-${
-          running && !hover ? 80 : 100
-        }`}
-        style={{ transition: '0.2s ease-in-out' }}
+        className={`w-f flex flex-wrap items-center justify-evenly ${
+          running && !hover && `opacity-80`
+        } transition duration-200 ease-in-out`}
       >
         {exampleButtons}
       </div>

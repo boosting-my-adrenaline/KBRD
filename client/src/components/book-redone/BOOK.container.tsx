@@ -4,21 +4,17 @@ import { BOOKLayout } from './components/BOOK.layout'
 
 import { capitals, KEYS, notCapitals } from './components/strings/strings'
 
-// import { Width } from '../../utils/GetWidth'
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { BOOKpointer } from './components/BOOK.pointer'
-import { BOOKframe } from './components/BOOK.frame'
 import { BOOKbuttons } from './components/BOOK.buttons'
 import { BOOKstring } from './components/strings/BOOK.string'
-import { moveString, shuffle } from './components/strings/stringFormation'
+import { moveString } from './components/strings/stringFormation'
 import { useKeyPress } from '../../utils/useKeyPress'
 import { BOOKfailures } from './components/BOOK.failures'
 import { BOOKstats } from './components/BOOK.stats'
 import { thegreatgatsby as startingLetter } from '../../static/letters/thegreatgatsby'
-import { LEVELcontainer } from '../leveling/LEVEL.container'
 import { PerspectiveController } from '../PerspectiveController'
-// import { gonewiththewind as startingLetter } from '../../static/letters/gonewiththewind'
 
 export const BOOKContainer: React.FC = () => {
   const [currentString, setCurrentString] = useState(startingLetter)
@@ -245,7 +241,6 @@ export const BOOKContainer: React.FC = () => {
         marginTop: perspective[1],
         marginBottom: perspective[1],
         transform: `perspective(1000px) translateZ(${perspective[0]}px)`,
-        // transition: '0.05s ease-in-out',
       }}
     >
       <div
@@ -253,8 +248,7 @@ export const BOOKContainer: React.FC = () => {
        justify-center items-center font-courier opacity-${
          appear ? 100 : 0
          //  100
-       }`}
-        style={{ transition: '0.5s ease' }}
+       } transition duration-500 ease-in-out`}
       >
         <div
           className={`absolute`}
@@ -263,10 +257,8 @@ export const BOOKContainer: React.FC = () => {
         <BOOKbuttons
           animationBook={animationBook}
           setAnimationBook={setAnimationBook}
-          SUCCESS={SUCCESS}
           highlighter={hightlighter}
           setHighlighter={setHighlighter}
-          STRING={STRING}
           punctuation={punctuation}
           caseSensitivity={caseSensitivity}
           setCaseSensetivity={setCaseSensetivity}
@@ -276,7 +268,7 @@ export const BOOKContainer: React.FC = () => {
           running={running}
           handleReset={handleReset}
         />
-        <div style={{ zIndex: 60 }}>
+        <div className={`z-60`}>
           <BOOKstats
             overall={successAndFailedTypes.current}
             failedTypesIndexes={failedTypesIndexes.current}
@@ -284,28 +276,14 @@ export const BOOKContainer: React.FC = () => {
             reseting={reseting}
           />
         </div>
-        <div
-          className="invisible 1k:visible   flex flex-col justify-center items-center w-f border-black borde"
-          // style={{ transform: 'translateY(-150px)' }}
-        >
+        <div className="invisible 1k:visible   flex flex-col justify-center items-center w-f border-black borde">
           <div
             className={`invisible 1k:visible  flex flex-col
         justify-center items-center bordr border-red-900 my-10`}
           >
-            <BOOKBook
-              STRING={STRING}
-              chapter={chapter}
-              // overall={successAndFailedTypes.current}
-              // animation={animationBook}
-              // currentString={currentString}
-              // chapter={chapter}
-            />
+            <BOOKBook STRING={STRING} chapter={chapter} />
             <BOOKLayout
-              failedTypesIndexes={failedTypesIndexes.current}
-              overall={successAndFailedTypes.current}
-              currentString={currentString}
               STRING={STRING}
-              animation={animationBook}
               chapter={chapter}
               highlighter={hightlighter}
             />

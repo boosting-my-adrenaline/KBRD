@@ -1,10 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
-
-// function valuetext(value: number) {
-//   return `${value}°C`
-// }
 
 type IProps = {
   limit: number
@@ -22,7 +18,6 @@ export const TAPshootingLimitSlider: React.FC<IProps> = ({
   return (
     <Box sx={{ width: 200 }} className="flex flex-row transform-translateX-">
       <Slider
-        // valueLabelDisplay="auto"
         value={limit}
         onChange={handleChange}
         step={1}

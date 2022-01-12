@@ -30,8 +30,9 @@ export const PhotoMiniature: React.FC = () => {
     <img
       alt="logo"
       src={AS}
-      className={` flex bg-white justify-center items-center`}
-      style={{ opacity: appear ? 1 : 0, transition: '0.1s' }}
+      className={` flex bg-white justify-center items-center ${
+        !appear && `opacity-0`
+      } transition duration-100 ease-linear`}
     />
   )
 }

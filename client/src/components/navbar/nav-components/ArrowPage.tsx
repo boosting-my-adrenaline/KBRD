@@ -3,7 +3,6 @@ import { Chapters, Directions } from '../../../types/nav'
 import { useKeyPress } from '../../../utils/useKeyPress'
 import ArrowLeftLogo from '../../../static/ArrowLeft.svg'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
-import { yellow600 } from 'material-ui/styles/colors'
 
 interface IProps {
   onClick(dir: Directions): void

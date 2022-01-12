@@ -1,5 +1,4 @@
-import { fontWeight } from '@mui/system'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 
 interface IProps {
@@ -89,69 +88,52 @@ export const TAPshootingFrame: React.FC<IProps> = ({
     <>
       {' '}
       <div
-        className="visible absolute flex justify-center items-center overflow-y-hidden"
+        className={`visible absolute flex justify-center items-center overflow-y-hidden transition duration-250 ease-linear`}
         style={{
           backdropFilter: bluring && isThereCells ? 'blur(15px)' : '',
           width: dimensions.width,
           height: dimensions.height,
           clipPath: dimensions.clipPath2,
-          transition: '0.25s ease',
         }}
       >
         <div
           //inside
           className={`flex flex-row justify-center items-center  ${
             !bluring && `hidden`
-          }`}
-          style={{
-            transition: '0.3s ease',
-            transform: 'rotateZ(0deg) translateX(0px)',
-          }}
+          } transition duration-300 ease-linear`}
         >
           <div
-            className="absolute flex flex-row justify-center items-center gap-24"
+            className={`absolute flex flex-row justify-center items-center gap-24 transition duration-300 ease-linear`}
             style={{
-              transition: '0.3s ease',
               transform: `rotateZ(0deg) translateY(${TY}px)`,
             }}
           >
             {newGame ? (
               <div
                 onMouseDown={handleStart}
-                className={`flex flex-col items-center justify-center font-courier cursor-pointer text-sky-600 `}
-                style={{
-                  width: '700px',
-                  fontSize: '4em',
-                  fontWeight: 700,
-                  transition: '0.1s ease-in',
-                }}
+                className={`w-700px flex flex-col items-center justify-center font-courier cursor-pointer text-sky-600 font-bold text-4em transition duration-100 ease-in`}
               >
-                <div className=""> PRESS SPACE BAR</div>
+                <div> PRESS SPACE BAR</div>
 
-                <div className=""> OR</div>
+                <div> OR</div>
 
-                <div className=""> TAP TO START</div>
+                <div> TAP TO START</div>
               </div>
             ) : (
               <>
                 <div
-                  className="rounded-3xl bg-sky-400 border-2 border-sky-600"
-                  style={{ width: 100, height: 400, transition: '0.25s ease' }}
-                ></div>
+                  className={`w-100px h-400px rounded-3xl bg-sky-400 border-2 border-sky-600 transition duration-250 ease-linear`}
+                />
                 <div
-                  className="rounded-3xl bg-sky-400 border-2 border-sky-600"
-                  style={{ width: 100, height: 400, transition: '0.25s ease' }}
-                ></div>
+                  className={`w-100px h-400px rounded-3xl bg-sky-400 border-2 border-sky-600 transition duration-250 ease-linear`}
+                />
               </>
             )}
           </div>
 
           <div
-            className="absolute flex flex-row justify-center items-center overflow-visible"
+            className={`absolute w-500px h-500px flex flex-row justify-center items-center overflow-visible transition duration-300 ease-linear`}
             style={{
-              transition: '0.3s ease',
-              width: 500,
-              height: 500,
               transform: `translateY(${TY + 1200}px)`,
             }}
             //33333333
@@ -181,11 +163,8 @@ export const TAPshootingFrame: React.FC<IProps> = ({
           </div>
           {
             <div
-              className="absolute flex flex-row justify-center items-center overflow-visible"
+              className={`absolute w-500px h-500px flex flex-row justify-center items-center overflow-visible transition duration-300 ease-linear`}
               style={{
-                transition: '0.3s ease',
-                width: 500,
-                height: 500,
                 transform: `translateY(${TY + 1800}px)`,
               }}
               ////2222
@@ -217,11 +196,8 @@ export const TAPshootingFrame: React.FC<IProps> = ({
           }
           {
             <div
-              className="absolute flex flex-row justify-center items-center overflow-visible"
+              className={`absolute w-500px h-500px flex flex-row justify-center items-center overflow-visible transition duration-300 ease-linear`}
               style={{
-                transition: '0.3s ease',
-                width: 500,
-                height: 500,
                 transform: `translateY(${TY + 2400}px)`,
               }}
 
@@ -254,9 +230,8 @@ export const TAPshootingFrame: React.FC<IProps> = ({
         </div>
       </div>
       <div
-        className={`absolute ${frameColor}`}
+        className={`absolute ${frameColor} transition duration-300 ease-linear`}
         style={{
-          transition: '0.3s ease-out',
           width: dimensions.width,
           height: dimensions.height,
           clipPath: dimensions.clipPath1,

@@ -6,7 +6,6 @@ import { BOOKfunctionalButtons } from './buttons/BOOK.functionalButtons'
 interface IProps {
   animationBook: boolean
   setAnimationBook(animation: boolean): void
-  SUCCESS(): void
   punctuation: boolean
   caseSensitivity: boolean
   setCaseSensetivity(cs: boolean): void
@@ -14,7 +13,6 @@ interface IProps {
 
   highlighter: boolean
   setHighlighter(turn: boolean): void
-  STRING: string
   caps: boolean
   capsError: number
   running: boolean
@@ -24,11 +22,8 @@ interface IProps {
 export const BOOKbuttons: React.FC<IProps> = ({
   animationBook,
   setAnimationBook,
-  SUCCESS,
-
   setHighlighter,
   highlighter,
-  STRING,
   punctuation,
   caseSensitivity,
   setCaseSensetivity,
@@ -60,27 +55,19 @@ export const BOOKbuttons: React.FC<IProps> = ({
 
   return (
     <div
-      className="mt-10 z-10 flex flex-col justify-center items-center  bg-rd-200 select-none borde border-red-800  "
-      style={{
-        opacity: !appear ? '0' : '1',
-        // maxWidth: '70%',
-        // width: '1200px',
-        width: '1000px',
-        transition: '0.5s ease-in-out',
-      }}
+      className={`mt-10 z-10 flex flex-col justify-center items-center  bg-rd-200 select-none borde border-red-800  w-1000px ${
+        !appear && `opacity-0`
+      } transition duration-500 ease-in-out`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
       <div
-        className={`opacity-${
-          running && !hover ? 80 : 100
-        } flex flex-col justify-center items-center  `}
-        style={{ transition: '0.2s ease-in-out' }}
+        className={`${
+          running && !hover && `opacity-80`
+        }  flex flex-col justify-center items-center  transition duration-200 ease-in-out`}
       >
-        <div className="w-f flex flex-col justify-center  bg-rd-200 ">
+        <div className={`w-f flex flex-col justify-center  bg-rd-200 `}>
           <BOOKfunctionalButtons
-            setAnimationBook={setAnimationBook}
-            animationBook={animationBook}
             setHighlighter={setHighlighter}
             highlighter={highlighter}
             punctuation={punctuation}
@@ -92,14 +79,7 @@ export const BOOKbuttons: React.FC<IProps> = ({
             handleReset={handleReset}
           />
         </div>
-        <div
-          className={`bg-red-200 my-4 `}
-          style={{
-            height: 1,
-            width: '1000px',
-            //  marginLeft: 92
-          }}
-        ></div>
+        <div className={`bg-red-200 my-4 py w-1000px h-1px`}></div>
       </div>
     </div>
   )

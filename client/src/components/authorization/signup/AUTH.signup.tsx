@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, KeyboardEvent } from 'react'
 import { ThemeProvider, createTheme } from '@mui/material'
 import { TextField, Button, IconButton } from '@mui/material'
 import {
@@ -9,6 +9,9 @@ import {
 import { SignupUsernameColor } from '../auth.types'
 import { VisibilityOff, Visibility } from '@material-ui/icons'
 import { useTypedSelector } from '../../../hooks/useTypedSelector'
+import { NBAbutton } from '../../profile/NBA.button'
+import { NBAinput } from '../../profile/NBA.input'
+import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 
 const theme = createTheme({
   typography: {
@@ -80,115 +83,155 @@ export const AUTHlsignup: React.FC<IProps> = ({
     else if (password2State === 'error') setPassword2Color('error')
   }, [password2State])
 
-  const [showPassword, setShowPassword] = useState(false)
-  const [showPassword2, setShowPassword2] = useState(false)
-
-  const handleShowPassword = () => {
-    setShowPassword((prev) => !prev)
-  }
-
-  const handleShowPassword2 = () => {
-    setShowPassword2((prev) => !prev)
-  }
-
-  useEffect(() => {
-    let id = setTimeout(() => setShowPassword(false), 5000)
-    return () => clearTimeout(id)
-  }, [showPassword])
-
-  useEffect(() => {
-    let id = setTimeout(() => setShowPassword2(false), 5000)
-    return () => clearTimeout(id)
-  }, [showPassword2])
-
   ////////
-  const users = useTypedSelector((state) => state.auth.users)
 
+  const [userEnter, setUserEnter] = useState(0)
+  const [passEnter, setPassEnter] = useState(0)
+  const [pass2Enter, setPass2Enter] = useState(0)
+
+  const [userFocus, setUserFocus] = useState(0)
+  const [passFocus, setPassFocus] = useState(0)
+  const [pass2Focus, setPass2Focus] = useState(0)
+
+  const handleEnterUser = () => {
+    setUserEnter((prev) => prev + 1)
+  }
+
+  const handleEnterPass = () => {
+    setPassEnter((prev) => prev + 1)
+  }
+
+  const handleEnterPass2 = () => {
+    setPassEnter((prev) => prev + 1)
+  }
+
+  useDidMountEffect(() => {
+    if (!username || usernameState === `error`) {
+      return
+    } else if (!password || passwordState === `error`) {
+      setPassFocus((prev) => prev + 1)
+    } else if (!password2 || password2State === `error`) {
+      setPass2Focus((prev) => prev + 1)
+    } else {
+      handleSubmit()
+    }
+  }, [userEnter])
+
+  useDidMountEffect(() => {
+    if (!password || passwordState === `error`) {
+      return
+    } else if (!username || usernameState === `error`) {
+      setUserFocus((prev) => prev + 1)
+    } else if (!password2 || password2State === `error`) {
+      setPass2Focus((prev) => prev + 1)
+    } else {
+      handleSubmit()
+    }
+  }, [passEnter])
+
+  useDidMountEffect(() => {
+    if (!password2 || password2State === `error`) {
+      return
+    } else if (!username || usernameState === `error`) {
+      setUserFocus((prev) => prev + 1)
+    } else if (!password || passwordState === `error`) {
+      setPassFocus((prev) => prev + 1)
+    } else {
+      handleSubmit()
+    }
+  }, [pass2Enter])
   return (
     <div
       className={`flex flex-col justify-evenly items-center gap-2 font-courier no-select box-border`}
       style={{ width: '400px', height: '400px' }}
     >
-      {/* {noErrors ? 'no errors' : 'error'} */}
       <ThemeProvider theme={theme}>
         <div style={{ width: '100%', marginBottom: '' }}>
-          <TextField
-            className={``}
-            style={{ width: '100%', fontFamily: 'courier' }}
-            id="outlined-basic"
-            label="USERNAME"
-            type="namef"
-            variant="outlined"
-            helperText={usernameMessage || ' '}
-            error={usernameState === 'error'}
+          <NBAinput
             value={username}
-            focused={!!username}
-            onChange={(e) => setUsername(e.target.value.replaceAll(' ', ''))}
-            color={usernameColor}
+            onChange={setUsername}
+            id={`login`}
+            placeholder={`USERNAME`}
+            helper={usernameMessage || ` `}
+            error={usernameState === 'error'}
+            success={usernameState === `success`}
+            onEnter={handleEnterUser}
+            focus={userFocus}
           />
         </div>
         <div className={``} style={{ width: '100%' }}>
-          <TextField
-            style={{ width: '100%' }}
-            // id="outlined-basic"
-            label="PASSWORD"
-            type={showPassword ? 'text' : 'password'}
-            variant="outlined"
-            helperText={passwordMessage || ' '}
-            error={passwordState === 'error'}
+          <NBAinput
             value={password}
-            onChange={(e) => setPassword(e.target.value.replaceAll(' ', ''))}
-            focused={!!password}
-            color={passwordColor}
-            // endAdornment={
+            onChange={setPassword}
+            id={`password`}
+            type={`password`}
+            placeholder={`PASSWORD`}
+            helper={passwordMessage || ` `}
+            error={passwordState === 'error'}
+            success={passwordState === `success`}
+            warning={passwordState === `warning`}
+            onEnter={handleEnterPass}
+            focus={passFocus}
           />
-          <IconButton
-            style={{ position: 'absolute', transform: `translate(-50px, 8px)` }}
-            onMouseDown={handleShowPassword}
-            edge="end"
-          >
-            {showPassword ? <Visibility /> : <VisibilityOff />}
-          </IconButton>
         </div>
         <div style={{ width: '100%' }}>
-          <TextField
-            style={{ width: '100%' }}
-            id="outlined-basic"
-            label="REPEAT PASSWORD"
-            type={showPassword2 ? 'text' : 'password'}
-            variant="outlined"
-            helperText={password2Message || ' '}
-            error={password2State === 'error'}
+          <NBAinput
             value={password2}
-            onChange={(e) => setPassword2(e.target.value.replaceAll(' ', ''))}
-            focused={!!password2}
-            color={password2Color}
+            onChange={setPassword2}
+            id={`password`}
+            type={`password`}
+            placeholder={`PASSWORD`}
+            helper={password2Message || ` `}
+            error={password2State === 'error'}
+            success={password2State === `success`}
+            warning={password2State === `warning`}
+            onEnter={handleEnterPass2}
+            focus={pass2Focus}
+            the34
           />
-          <IconButton
-            style={{ position: 'absolute', transform: `translate(-50px, 8px)` }}
-            onMouseDown={handleShowPassword2}
-            edge="end"
-          >
-            {showPassword2 ? <Visibility /> : <VisibilityOff />}
-          </IconButton>
         </div>
         <div className={`flex flex-col gap-2`}>
           <div className={`w-full flex justify-center`}>
-            <Button
-              style={{
-                fontSize: '1.3em',
-                borderRadius: 10,
-                padding: '7px 30px',
-              }}
-              variant={`contained`}
-              size={`large`}
-              color={noErrors ? 'info' : 'error'}
-              onMouseDown={handleSubmit}
-              disabled={isLoading}
-            >
-              SUBMIT
-            </Button>
-            {/* <Button onMouseDown={() => console.log(users)}>USERS</Button> */}
+            <NBAbutton
+              onClick={handleSubmit}
+              tag={`SUBMIT`}
+              border={
+                passwordState === `error` ||
+                password2State === `error` ||
+                usernameState === `error` ||
+                !username ||
+                !password
+                  ? `border-red-500`
+                  : `border-sky-500`
+              }
+              hov={
+                passwordState === `error` ||
+                password2State === `error` ||
+                usernameState === `error` ||
+                !username ||
+                !password
+                  ? `bg-red-500`
+                  : `bg-sky-500`
+              }
+              bg={
+                passwordState === `error` ||
+                password2State === `error` ||
+                usernameState === `error` ||
+                !username ||
+                !password
+                  ? `bg-red-300`
+                  : `bg-sky-300`
+              }
+              px={`px-16`}
+              disableCursor={
+                passwordState === `error` ||
+                password2State === `error` ||
+                usernameState === `error` ||
+                !username ||
+                !password ||
+                !password2
+              }
+            />
           </div>
         </div>
       </ThemeProvider>

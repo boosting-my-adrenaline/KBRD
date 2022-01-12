@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 
 import { Chapters } from '../../../types/nav'
-import { FadeText } from '../../../utils/FadeText'
 
 interface IProps {
   STRING: string
@@ -47,19 +46,23 @@ export const BOOKBook: React.FC<IProps> = ({ STRING, chapter }) => {
   }, [chapter])
 
   const formating = (str: string) => {
-    return str.split('').map((el) =>
+    return str.split('').map((el, i) =>
       el !== ' ' ? (
         <div
-          className={`select-none ${highlightHider && `bg-red-100`}`}
-          style={{ transition: '0.6s ease' }}
+          key={i + el}
+          className={`select-none ${
+            highlightHider && `bg-red-100`
+          } transition duration-600 ease-in-out`}
         >
           {el}
         </div>
       ) : (
         // <FadeText title={el} delay={[300, 1000]} hide={1} />
         <div
-          className={`select-none ${highlightHider && `bg-red-100`}`}
-          style={{ transition: '0.6s ease' }}
+          key={i + el}
+          className={`select-none ${
+            highlightHider && `bg-red-100`
+          } transition duration-600 ease-in-out`}
         >
           {'\u00A0'}
         </div>
@@ -74,9 +77,8 @@ export const BOOKBook: React.FC<IProps> = ({ STRING, chapter }) => {
   return (
     <div
       className={`visible w-1000 z-40 font-courier text-2xl flex flex-col space-y-4 ${
-        highlightHider && `bg-red-10`
-      }`}
-      style={{ opacity: !appear ? '0' : '1', transition: '0.7s ease-in-out' }}
+        !appear && `opacity-0`
+      } transition duration-700 ease-in-out`}
     >
       <div className="w-1000 z-40 font-courier text-2xl flex flex-col space-y-4  ">
         {rowing(LEFT3)}
@@ -85,8 +87,6 @@ export const BOOKBook: React.FC<IProps> = ({ STRING, chapter }) => {
 
         <div className="flex flex-row">
           {rowing(LEFT)}
-
-          {/* <div>{rowing(FIRST)}</div> */}
 
           {rowing(RIGHT)}
         </div>

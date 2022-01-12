@@ -24,6 +24,6 @@ export function useKeyPress(targetKey: string): boolean {
       window.removeEventListener('keydown', downHandler)
       window.removeEventListener('keyup', upHandler)
     }
-  }, [])
+  }, [downHandler, upHandler])
   return keyPressed
 }

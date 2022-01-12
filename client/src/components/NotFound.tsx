@@ -80,12 +80,8 @@ export const NotFound: React.FC = ({}) => {
         }}
       >
         <div
-          className={` flex flex-col align-center justify-center gap  `}
+          className={` flex flex-col align-center justify-center gap  opacity-15 will-change-transform transition duration-3000 ease-linear`}
           style={{
-            transition: '3s ease',
-            opacity: 0.15,
-            willChange: 'transform',
-
             transform: `perspective(2000px) rotateX(55deg) translateX(${pos[1]}px) translateY(${pos[0]}px)`,
           }}
         >
@@ -96,8 +92,9 @@ export const NotFound: React.FC = ({}) => {
                 margin: `-53.5px ${el % 2 == 0 ? '0' : '216px'} 0 0`,
               }}
             >
-              {Array.from({ length: W }, () => {}).map((el) => (
+              {Array.from({ length: W }, () => {}).map((_, i) => (
                 <Hexagon
+                  key={i}
                   side={side}
                   side2={
                     // show ? side2[0] :

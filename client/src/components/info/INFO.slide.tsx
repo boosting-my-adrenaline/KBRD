@@ -1,6 +1,5 @@
 import React from 'react'
 import { Chapters } from '../../types/nav'
-import { FadeText } from '../../utils/FadeText'
 import { FadeText2 } from '../../utils/FadeText2'
 
 interface IProps {

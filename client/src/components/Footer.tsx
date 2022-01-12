@@ -33,22 +33,45 @@ export const Footer: React.FC = ({}) => {
     }
   }, [chapter])
 
+  const [emailCopy, setEmailCopy] = useState(false)
+
+  const handleCopyEmail = async () => {
+    // document.execCommand('copy', true, `away.float.away@gmail.com`)
+    let text = `away.float.away@gmail.com`
+    setEmailCopy(true)
+    setTimeout(() => setEmailCopy(false), 750)
+    if ('clipboard' in navigator) {
+      return await navigator.clipboard.writeText(text)
+    } else {
+      return document.execCommand('copy', true, text)
+    }
+  }
+
   return (
     <>
       <div
-        className={`w-full fixed bottom-0 right-0 left-0 border-t border-gray-500 py-2  flex gap-6 flex-between items-center bg-gray-400 opacity-100`}
+        className={`z-2022 w-full fixed bottom-0 right-0 left-0 border-t border-gray-500 py-2  flex gap-6 flex-between items-center bg-gray-400/30 opacity-100 transition duration-500 ease-in-out `}
         style={{
-          zIndex: 2022,
           padding: `5px ${params[1]}px`,
-          transform: `translateY(${appear ? 0 : 50}px) `,
-          transition: '0.5s ease-in-out',
-          backgroundColor: 'rgba(100, 100, 100, 0.15)',
           fontSize: params[0] + 'px',
         }}
       >
         <a>&copy; 2022 KBRD. All rights reserved </a>
         <a className={`flex-grow`}></a>
-        <a>away.float.away@gmail.com</a>
+        <div
+          className={`flex items-center justify-center hover:bg-emerald-100 relative overflow-hidden px-2 rounded-xl transition-colors duration-150`}
+        >
+          <a onMouseDown={handleCopyEmail}>away.float.away@gmail.com</a>
+          {emailCopy && (
+            <div
+              className={`absolute ${
+                !emailCopy && `opacity-0`
+              }  bg-emerald-300 w-f h-f flex justify-center items-center  font-courier transition duration-300 ease-in-out`}
+            >
+              Copied!
+            </div>
+          )}
+        </div>
 
         <a
           href={`https://github.com/boosting-my-adrenaline`}

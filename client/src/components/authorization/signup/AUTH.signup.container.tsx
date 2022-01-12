@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import { useHttp } from '../../../hooks/http.hook'
 import { useAuthAction, useNavAction } from '../../../hooks/useAction'
@@ -9,8 +9,8 @@ import { signupPasswordCheck, signUpUsernameCheck } from './signupUtils'
 
 export const AUTHsignupContainer: React.FC = ({}) => {
   const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('12345')
-  const [password2, setPassword2] = useState('12345')
+  const [password, setPassword] = useState('')
+  const [password2, setPassword2] = useState('')
 
   const [usernameMessage, setUsernameMessage] = useState<null | string>(null)
   const [passwordMessage, setPasswordMessage] = useState<null | string>(null)
@@ -20,17 +20,23 @@ export const AUTHsignupContainer: React.FC = ({}) => {
   const [passwordState, setPasswordState] = useState<PasswordState>('default')
   const [password2State, setPassword2State] = useState<UsernameState>('default')
 
-  const { loading, request, error, clearError } = useHttp()
+  const [loading, setLoading] = useState(false)
+
+  const { loading: loadingAuth, request, error, clearError } = useHttp()
+
+  useEffect(() => {
+    setLoading(loadingAuth)
+  }, [loadingAuth])
 
   const { setLoadingOn, setLoadingOff } = useNavAction()
 
-  useDidMountEffect(() => {
-    if (loading) {
-      setLoadingOn()
-    } else {
-      setLoadingOff()
-    }
-  }, [loading])
+  // useDidMountEffect(() => {
+  //   if (loading) {
+  //     setLoadingOn()
+  //   } else {
+  //     setLoadingOff()
+  //   }
+  // }, [loading])
 
   useDidMountEffect(() => {
     if (error === 'TAKEN') {
@@ -116,29 +122,22 @@ export const AUTHsignupContainer: React.FC = ({}) => {
   const auth = useContext(AuthContext)
 
   const handleSumbit = async () => {
-    console.log('start')
-
     if (!username) {
       setUsernameState(signUpUsernameCheck(username)[0])
       setUsernameMessage(signUpUsernameCheck(username)[1])
     }
-    console.log('1')
 
     if (!password) {
       setPasswordState(signupPasswordCheck(password)[0])
       setPasswordMessage(signupPasswordCheck(password)[1])
     }
-    console.log('2')
 
     if (!password2 || password2 !== password) {
       setPassword2State('error')
       setPassword2Message('passwords do not match')
     }
 
-    console.log('3')
-
-    if (!noErrors || !username || !password || !password2)
-      return console.log('something is wrong')
+    if (!noErrors || !username || !password || !password2) return
     // setTimeout(() => setOpenOff(), 100)
 
     // setTimeout(() => signUp({ username, password }), 200)
@@ -148,35 +147,50 @@ export const AUTHsignupContainer: React.FC = ({}) => {
         email: username,
         password,
       })
-    } catch {}
+      setTimeout(async () => {
+        try {
+          const data = await request('/api/auth/login/', 'POST', {
+            email: username,
+            password,
+          })
 
-    setTimeout(async () => {
-      try {
-        const data = await request('/api/auth/login/', 'POST', {
-          email: username,
-          password,
-        })
+          auth.login(data.token, data.userId, username)
 
-        auth.login(data.token, data.userId)
-      } catch {}
-    }, 500)
+          setTimeout(() => {
+            setUsername('')
+            setPassword('')
+            setPassword2('')
+            setUsernameState('default')
+            setPasswordState('default')
+            setPassword2State('default')
+            setUsernameMessage('')
+            setPasswordMessage('')
+            setPassword2Message('')
+          }, 50)
+        } catch {
+          setTimeout(() => setOpenOff(), 25)
+        }
+      }, 500)
 
-    setTimeout(() => setOpenOff(), 525)
+      setTimeout(() => setOpenOff(), 25)
+    } catch {
+      setUsernameState(`error`)
+      setPasswordState(`error`)
+      setPassword2State(`error`)
 
-    // // console.log(username, password)
+      setUsernameMessage(`try again please`)
+      setPasswordMessage(`try again please`)
+      setPassword2Message(`try again please`)
 
-    setTimeout(() => {
-      setUsername('')
-      setPassword('')
-      setPassword2('')
-      setUsernameState('default')
-      setPasswordState('default')
-      setPassword2State('default')
-      setUsernameMessage('')
-      setPasswordMessage('')
-      setPassword2Message('')
-    }, 550)
-    console.log('end')
+      setTimeout(() => {
+        setUsernameState('default')
+        setPasswordState('default')
+        setPassword2State('default')
+        setUsernameMessage('')
+        setPasswordMessage('')
+        setPassword2Message('')
+      }, 1550)
+    }
   }
 
   return (

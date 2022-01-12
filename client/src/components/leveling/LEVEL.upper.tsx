@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
 import { ExpMessage, ExpMSG } from './LEVEL.container'
 
@@ -7,8 +7,6 @@ interface IProps {
   overall: number
   fti: number[]
   avgCPM: number
-  CPM: number
-  accuracy: number
   setExpMSG(MSG: ExpMSG): void
   errors: number
   overallLocal: number
@@ -18,8 +16,6 @@ export const LEVELupper: React.FC<IProps> = ({
   overall,
   fti,
   avgCPM,
-  CPM,
-  accuracy,
   setExpMSG,
   errors,
   overallLocal,

@@ -1,26 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { FadeText } from '../../utils/FadeText'
-import { useDidMountEffect } from '../../utils/useDidMountEffect'
 import { PerspectiveController } from '../PerspectiveController'
 import { INFOslide } from './INFO.slide'
 
 export const INFOcontainer: React.FC = () => {
-  const [appear, setAppear] = useState(true)
   const chapter = useTypedSelector((state) => state.nav.chapter)
-
-  // useEffect(() => {
-  //   let id = setTimeout(() => {
-  //     setAppear(true)
-  //   }, 250)
-  //   return () => clearTimeout(id)
-  // }, [])
-
-  // useDidMountEffect(() => {
-  //   setTimeout(() => {
-  //     setAppear(false)
-  //   }, 50)
-  // }, [chapter])
 
   const lorem = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur sed
   ratione voluptates repudiandae reprehenderit adipisci impedit qui nihil,
@@ -54,11 +38,7 @@ export const INFOcontainer: React.FC = () => {
       }}
     >
       <div
-        className="flex flex-col justify-center items-center z-20"
-        style={{
-          transition: '1s ease',
-          // opacity: !appear ? '0' : '1',
-        }}
+        className={`flex flex-col justify-center items-center z-20 transition duration-1000 ease-linear`}
       >
         <INFOslide chapter={chapter} />
       </div>

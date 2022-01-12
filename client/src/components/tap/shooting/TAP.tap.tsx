@@ -27,6 +27,23 @@ export const TAPtap: React.FC<IProps> = ({
 }) => {
   const [frameColor, setFrameColor] = useState('bg-sky-200')
 
+  const getColor = () => {
+    switch (keyColor) {
+      case `red`:
+        return `bg-red-500`
+      case `emerald`:
+        return `bg-emerald-500`
+      case `cyan`:
+        return `bg-cyan-500`
+      case `amber`:
+        return `bg-amber-500`
+      case `fuchsia`:
+        return `bg-fuchsia-500`
+      case `pink`:
+        return `bg-pink-500`
+    }
+  }
+
   useEffect(() => {
     if (running) {
       if (cells.filter((el) => el).length > 0) {
@@ -51,23 +68,16 @@ export const TAPtap: React.FC<IProps> = ({
 
   const cellElements = (cell: number) => {
     if (cells.length <= cell) {
-      return <div style={{ width: 82, height: 63 }}></div>
+      return <div className={`w-82px h-63px`} />
     }
 
     return (
       <div
-        className={` flex justify-center items-center rounded-full`}
-        style={{ width: 82, height: 63 }}
+        className={`w-82px h-63px flex justify-center items-center rounded-full`}
       >
         <div
-          className={` ${!cells[cell] && `hidden`}
-               bg-${keyColor}-500  rounded-full flex justify-center items-center font-courier uppercase`}
-          style={{
-            width: 80,
-            height: 80,
-            fontSize: '3.5em',
-            transition: '0.1s ease',
-          }}
+          className={`w-80px h-80px ${!cells[cell] && `hidden`}
+               ${getColor()} text-3.5em rounded-full flex justify-center items-center font-courier uppercase transition duration-100 ease-linear`}
         >
           <div
             style={{
@@ -90,10 +100,9 @@ export const TAPtap: React.FC<IProps> = ({
           </div>
           {/* {cell} */}
           <div
-            className={`bg-black absolute mt-14 rounded-full ${
+            className={`h-2px w-18px bg-black absolute mt-14 rounded-full ${
               !(cells[cell] === 'j' || cells[cell] === 'f') && 'hidden'
-            } ${bluring && 'hidden'}`}
-            style={{ height: 2, width: 18, transition: '0.5s ease' }}
+            } ${bluring && 'hidden'} transition duration-500 ease-linear`}
           ></div>
         </div>
       </div>
@@ -103,11 +112,7 @@ export const TAPtap: React.FC<IProps> = ({
   return (
     <div className="invisible 1k:visible relative flex justify-center  items-start ">
       <div
-        className="flex flex-col justify-center items-center gap-16 "
-        style={{
-          width: 1110,
-          height: 620,
-        }}
+        className={`w-1100px h-620px flex flex-col justify-center items-center gap-16 `}
       >
         <TAPshootingFrame
           // bluring={bluring}

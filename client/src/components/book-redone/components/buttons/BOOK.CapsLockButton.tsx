@@ -21,9 +21,11 @@ export const BOOKcapsLockButton: React.FC<IProps> = ({ caps, capsError }) => {
 
   return (
     <div
-      className={` rounded-md p-3 border-2 bg-${
-        blinking ? 'red-300 animate-ping' : ''
-      } border-${caps ? 'red-500 text-red-500' : 'gray-300 text-gray-300'} `}
+      className={` rounded-md p-3 border-2 ${
+        blinking ? 'bg-red-300 animate-ping' : ''
+      } ${
+        caps ? 'border-red-500 text-red-500' : 'border-gray-300 text-gray-300'
+      } `}
     >
       CAPS LOCK
     </div>

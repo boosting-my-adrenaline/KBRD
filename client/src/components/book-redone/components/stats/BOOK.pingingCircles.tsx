@@ -24,24 +24,20 @@ export const PingingCircles: React.FC<IProps> = ({}) => {
     return () => clearInterval(id)
   }, [])
 
-  const circle = (num: number) => (
-    <div className={`flex justify-center items-center`}>
+  const circle = (num: number, key: any) => (
+    <div key={key} className={`flex justify-center items-center`}>
       {'\u00a0'}
       <div
-        className={`absolute rounded-full bg-red-${refs[num] * 100}`}
-        // refs[num] * 100
-        style={{
-          width: 8,
-          height: 8,
-          transition: '0.5s ease-in-out',
-        }}
+        className={`absolute rounded-full bg-red-${
+          refs[num] * 100
+        } w-8px h-8px transition duration-500 ease-in-out`}
       ></div>
     </div>
   )
 
   const circles = Array.from({ length: amount }, (_, i) => i)
     .reverse()
-    .map((el) => <>{circle(el)}</>)
+    .map((el, i) => <>{circle(el, el)}</>)
 
   return <div className={`flex flex-row`}>{circles}</div>
 }

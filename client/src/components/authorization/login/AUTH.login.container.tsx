@@ -3,24 +3,30 @@ import { AuthContext } from '../../../context/AuthContext'
 import { useHttp } from '../../../hooks/http.hook'
 import { useAuthAction } from '../../../hooks/useAction'
 import { useTypedSelector } from '../../../hooks/useTypedSelector'
+import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 import { AUTHlogin } from './AUTH.login'
 import { loginAttempt } from './loginUtils'
 
 interface IProps {}
 
 export const AUTHloginContainer: React.FC<IProps> = () => {
-  const [username, setUsername] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
-  const [usernameError, setUsernameError] = useState<boolean>(false)
-  const [passwordError, setPasswordError] = useState<boolean>(false)
+  const [error, setError] = useState(false)
+
+  const [success, setSuccess] = useState(false)
 
   const [rememberMe, setRememberMe] = useState(true)
 
   const users = useTypedSelector((state) => state.auth.users)
   const { setOpenOff } = useAuthAction()
 
-  const { loading, request, error, clearError } = useHttp()
+  const { loading, request, error: hookError, clearError } = useHttp()
+
+  useDidMountEffect(() => {
+    handleIncorrectUsernameOrPassword()
+  }, [hookError])
 
   const auth = useContext(AuthContext)
 
@@ -39,7 +45,15 @@ export const AUTHloginContainer: React.FC<IProps> = () => {
         password,
       })
 
-      auth.login(data.token, data.userId)
+      setSuccess(true)
+
+      setTimeout(() => {
+        auth.login(data.token, data.userId, username)
+        setUsername('')
+        setPassword('')
+        setOpenOff()
+        setSuccess(false)
+      }, 500)
     } catch {
       handleIncorrectUsernameOrPassword()
     }
@@ -49,19 +63,17 @@ export const AUTHloginContainer: React.FC<IProps> = () => {
     // setOpenOff()
     // return
     // }
-    handleIncorrectUsernameOrPassword()
+    // handleIncorrectUsernameOrPassword()
     // }, 0)
   }
 
   const handleIncorrectUsernameOrPassword = (): void => {
     setTimeout(() => {
-      setUsernameError(true)
-      setPasswordError(true)
+      setError(true)
     }, 300)
 
     setTimeout(() => {
-      setUsernameError(false)
-      setPasswordError(false)
+      setError(false)
     }, 1500)
   }
 
@@ -72,8 +84,8 @@ export const AUTHloginContainer: React.FC<IProps> = () => {
         setUsername={setUsername}
         setPassword={setPassword}
         password={password}
-        usernameError={usernameError}
-        passwordError={passwordError}
+        error={error}
+        success={success}
         rememberMe={rememberMe}
         setRememberMe={setRememberMe}
         handleSubmit={handleSubmit}

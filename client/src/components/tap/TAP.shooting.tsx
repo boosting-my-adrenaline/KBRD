@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { TAPshootingButtons } from './shooting/TAP.shooting.buttons'
 import { TAPshootingModal } from './shooting/TAP.shooting.modal'
 import { TAPshootingTimers } from './shooting/TAP.timers'
@@ -216,13 +216,9 @@ export const TAPshooting: React.FC = () => {
 
   return (
     <div
-      className="flex flex-col "
-      style={{
-        transform: 'translateY(-30px)',
-        transition: '1s ease',
-        opacity: !appear ? '0' : '1',
-        // marginTop: -50,
-      }}
+      className={`flex flex-col -translate-y-30px transition duration-1000 ${
+        !appear && `opacity-0`
+      }`}
     >
       <>
         <TAPshootingModal

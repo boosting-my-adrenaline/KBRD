@@ -73,8 +73,9 @@ export const LEVELicon: React.FC<IProps> = ({ level, expMSG }) => {
     return () => clearInterval(id)
   }, [])
 
-  const levelNumber = (num: number) => (
+  const levelNumber = (num: number, key: any) => (
     <div
+      key={key}
       className={`z-10 flex items-center justify-center`}
       style={{
         height: 40,
@@ -86,14 +87,16 @@ export const LEVELicon: React.FC<IProps> = ({ level, expMSG }) => {
         num
       ) : (
         <>
-          <span style={{ marginLeft: 0 }}>1</span>
+          <span>1</span>
           <span style={{ marginLeft: -4 }}>0</span>
         </>
       )}
     </div>
   )
 
-  const elements = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((el) => levelNumber(el))
+  const elements = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((el) =>
+    levelNumber(el, el)
+  )
 
   const [showLvlForced, setShowLvlForced] = useState(false)
 
@@ -143,35 +146,21 @@ export const LEVELicon: React.FC<IProps> = ({ level, expMSG }) => {
       className={`z-20 rounded-xl border border-gray-800 font-courier text-3xl flex items-center justify-center ${
         bgColor()[0]
       }   ${tick ? 'shadow-3xl' : `shadow-sm`} ${bgColor()[1]} 
-      overflow-hidden
-        `}
-      style={{
-        height: 40,
-        width: 42,
-        transition: '2s ease-in-out',
-        // boxShadow: `0px 1px 10px 5px rgba(100, 100, 100, ${tick ? 1 : 0})`,
-      }}
+      overflow-hidden h-40px w-42px 
+       transition duration-2000 ease-in-out`}
+      // style={{ transition: '0.2s ease-in-out' }}
     >
       {!showLvlForced && expMSG && (
         <div
-          className={`z-20 absolute flex items-center justify-center rounded-xl flex-col  borde border-gray-800 `}
-          style={{
-            height: 40,
-            width: 40,
-            padding: 6,
-          }}
+          className={`z-20 h-40px w-40px p-6px absolute flex items-center justify-center rounded-xl flex-col  borde border-gray-800 `}
         >
-          <img src={getAch()} />
+          <img src={getAch()} alt="" />
         </div>
       )}
-
       <div
-        className={`flex items-center justify-start  flex-col `}
+        className={`flex items-center justify-start  flex-col w-40px h-40px mt-2px transition duration-1000 ease-in-out`}
         style={{
-          height: 40,
-          width: 40,
-          marginTop: 2,
-          transition: '1s ease-in-out', /// !!!!
+          // transition: '1s ease-in-out', /// !!!!
           transform: `translateY(-${40 * lvl - 40}px)`,
         }}
       >
@@ -179,11 +168,10 @@ export const LEVELicon: React.FC<IProps> = ({ level, expMSG }) => {
           {elements}
         </div>
         <div
-          className={`absolute ${bgColor()[0]} z-10 ${
+          className={`absolute ${bgColor()[0]} z-10 w-40px h-400px  ${
             // `opacity-100`
             !showLvlForced && expMSG ? 'opacity-100' : 'opacity-0'
           } `}
-          style={{ width: 40, height: 400 }}
         ></div>
       </div>
     </div>

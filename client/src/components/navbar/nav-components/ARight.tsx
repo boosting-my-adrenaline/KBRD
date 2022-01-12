@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import { useKeyPress } from '../../../utils/useKeyPress'
 import ArrowLeftLogo from '../../../static/ArrowLeft.svg'
 import { Directions, Chapters } from '../../../types/nav'

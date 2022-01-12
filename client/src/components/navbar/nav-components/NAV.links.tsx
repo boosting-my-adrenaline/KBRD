@@ -20,6 +20,7 @@ export const NAVlinks: React.FC<IProps> = ({
 }) => {
   const links = chapters.map((link) => (
     <NAVlink
+      key={link}
       link={link}
       chapter={chapter}
       onClick={onClick}
@@ -101,7 +102,7 @@ export const NAVlinks: React.FC<IProps> = ({
       >
         <div></div>
         <div
-          className={`border-2 opacity-${params[0] ? '100' : '0'}`}
+          className={`invisible border-2 opacity-${params[0] ? '100' : '0'}`}
           style={{
             width: params[2],
             height: 45,

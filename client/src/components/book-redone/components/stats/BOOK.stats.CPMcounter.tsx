@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import { useDidMountEffect } from '../../../../utils/useDidMountEffect'
 
 interface IProps {
@@ -64,8 +64,6 @@ export const BOOKstatsCPMcounter: React.FC<IProps> = ({
       let iLast = intervals[intervals.length - 1]
       let s = iLast.i[1] - iLast.i[0]
       let t = iLast.date[1] - iLast.date[0]
-      // console.log(`s: ${s}, t: ${t}`)
-      // console.log(`SPM: ${Math.round((60000 / t) * s)}`)
       let spm = Math.round((60000 / t) * s)
       if (s < 10) {
         return

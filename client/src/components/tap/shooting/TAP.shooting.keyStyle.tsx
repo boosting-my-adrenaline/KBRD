@@ -59,12 +59,7 @@ export const TAPshootingKeyStyle: React.FC<IProps> = ({
   const getElement = (n: number) => {
     return colors.map((el) => (
       <div
-        className={`${el[1]} rounded-full cursor-pointer`}
-        style={{
-          width: 50,
-          height: 50,
-          border: '1px solid grey',
-        }}
+        className={`w-50px h-50px ${el[1]} rounded-full cursor-pointer border border-gray-600`}
         onMouseDown={(e) => handleClickColor(e, el[0])}
       ></div>
     ))[n]
@@ -72,31 +67,27 @@ export const TAPshootingKeyStyle: React.FC<IProps> = ({
 
   return (
     <div
-      className={'flex justify-center items-center'}
+      className={
+        'h-20px flex justify-center items-center transition duration-300 ease-linear'
+      }
       style={{
-        height: 20,
         transform: `translateY(${open ? 30 : 0}px) translateX(${
           open ? -10 : 0
         }px)`,
-        transition: '0.3s ease',
       }}
     >
       <div className="flex flex-col justify-center align-center  border-black">
         <div className="flex flex-row justify-center align-start gap-2">
           <div
             className={`
-               ${open && ' bg-gray-200 '} ${
+               ${open && `bg-gray-200`} ${
               !open && getColor()
-            }  rounded-full flex flex-col justify-center items-center gap-0 font-courier uppercase cursor-pointer `}
+            } overflow-hidden border border-gray-600 rounded-full flex flex-col justify-center items-center gap-0 font-courier uppercase cursor-pointer transition duration-300 ease-in-out`}
             style={{
-              overflow: 'hidden',
               width: open ? 175 : 50,
               height: open ? 175 : 50,
-              border: '1px solid #505050',
-              // opacity: open ? 0 : ,
-              // fontSize: '2.1em',
-              transition: '0.3s ease',
               transform: `rotate(${-rotating}deg) `,
+              transition: `0.3s ease-in-out`,
             }}
             onMouseDown={handleOpen}
           >
@@ -107,8 +98,7 @@ export const TAPshootingKeyStyle: React.FC<IProps> = ({
               <div>{getElement(1)}</div>
             </div>
             <div
-              className={`flex flex-row justify-center items-center  `}
-              style={{ gap: 60 }}
+              className={`flex flex-row justify-center items-center  gap-60px`}
             >
               <div>{getElement(2)}</div>
               <div>{getElement(3)}</div>

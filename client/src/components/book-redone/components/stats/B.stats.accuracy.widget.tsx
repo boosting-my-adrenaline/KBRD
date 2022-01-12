@@ -1,5 +1,5 @@
 import { InfoRounded } from '@material-ui/icons'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { FadeText } from '../../../../utils/FadeText'
 import { useDidMountEffect } from '../../../../utils/useDidMountEffect'
 import { PingingCircles } from './BOOK.pingingCircles'
@@ -79,15 +79,7 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
       </div>
       {isHovered || isHovered2 ? (
         <div
-          className={`absolute bg-red-200 rounded-xl  flex  p-2 px-6 border border-red-500`}
-          style={{
-            width: 340,
-            height: 260,
-            boxShadow: `2px 1px 12px 4px rgba(0, 0, 0, 0.3)`,
-            transform: `translateY(-85px)`,
-            // fontSize: '17px',
-            opacity: 10,
-          }}
+          className={`absolute w-340px h-260px shadow-10th -translate-y-85px bg-red-200 rounded-xl  flex  p-2 px-6 border border-red-500 `}
           onMouseEnter={() => setIsHovered2(true)}
           onMouseLeave={() => setIsHovered2(false)}
         >
@@ -108,20 +100,14 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                     <div className={`flex justify-center items-center w-f `}>
                       {`\u00a0`}
                       <div
-                        className={`absolute`}
+                        className={`absolute w-270px h-0px translate-x-10px translate-y-5px`}
                         style={{
-                          width: 270,
-                          height: 0,
                           borderBottom: '30px solid #fca5a5',
                           borderLeft: '30px solid transparent',
-                          transform: 'translateX(10px) translateY(5px)',
                         }}
                       >
                         <div
-                          className={`flex flex-nowrap items-center flex-row whitespace-nowrap`}
-                          style={{
-                            transform: 'translateX(-6px)',
-                          }}
+                          className={`flex flex-nowrap items-center flex-row `}
                         >
                           {overall >= 245 ? (
                             ` `
@@ -138,14 +124,14 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                     <div className={` `}>
                       <span className={`text-gray-800 `}>
                         <InfoRounded
-                          className={`text-blue-500 mr-2`}
+                          className={`text-blue-500 mr-2 h-12px w-12px`}
                           style={{ width: 16, height: 16 }}
                           onMouseEnter={() => setIsHoveredCurrent(true)}
                           onMouseLeave={() => setIsHoveredCurrent(false)}
                         />
                         current: {cond1 && showType === `.` ? `.` : ``}
                       </span>
-                      <span className={`text-gray-800`}>
+                      <span className={`text-gray-800 whitespace-nowrap`}>
                         {!currentAccuracy
                           ? `to be defined`
                           : showType === `.`
@@ -162,16 +148,13 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                     <div className={`flex justify-center items-center w-f `}>
                       {`\u00a0`}
                       <div
-                        className={`absolute`}
+                        className={`absolute w-270px h-0px translate-x-10px -translate-y-5px `}
                         style={{
-                          width: 270,
-                          height: 0,
                           borderTop: '30px solid #fca5a5',
                           borderLeft: '30px solid transparent',
-                          transform: 'translateX(10px) translateY(-5px)',
                         }}
                       >
-                        <div style={{ transform: 'translateY(-30px)' }}>
+                        <div className={`-translate-y-30px`}>
                           last 245 characters
                         </div>
                       </div>
@@ -182,7 +165,7 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                         <InfoRounded
                           className={`text-blue-500 mr-2 opacity-${
                             overall >= 245 && 0
-                          }`}
+                          } w-12px h-12px`}
                           style={{ width: 16, height: 16 }}
                           onMouseEnter={() => {
                             if (overall >= 245) return
@@ -208,18 +191,21 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                   <div className={`  w-f flex justify-center`}>
                     <div className={`flex borde items-center justify-center `}>
                       <div
-                        className={`cursor-pointer border-red-400 border-l border-t border-b  rounded-l-xl py-1   px-7 bg-red-${
-                          showType === `.` ? `400 text-gray-900` : 200
-                        }`}
-                        style={{ transition: `0.3s ease-in-out` }}
+                        className={`cursor-pointer border-red-400 border-l border-t border-b  rounded-l-xl py-1   px-7 ${
+                          showType === `.`
+                            ? `bg-red-400 text-gray-900`
+                            : `bg-red-200`
+                        } transition duration-300 ease-in-out`}
                         onMouseDown={() => setShowType(`.`)}
                       >
                         .{(currentAccuracy && accuracyValue) || 967}
                       </div>
                       <div
-                        className={`cursor-pointer border-red-400 border-r rounded-r-xl border-t border-b py-1 px-6 bg-red-${
-                          showType === `%` ? `400 text-gray-900` : 200
-                        }`}
+                        className={`cursor-pointer border-red-400 border-r rounded-r-xl border-t border-b py-1 px-6 ${
+                          showType === `%`
+                            ? `bg-red-400 text-gray-900`
+                            : `bg-red-200`
+                        } transition duration-300 ease-in-out`}
                         style={{ transition: `0.3s ease-in-out` }}
                         onMouseDown={() => setShowType(`%`)}
                       >

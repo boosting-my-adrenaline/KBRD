@@ -64,34 +64,24 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
     achievements
       .splice(from, to)
       .map((el, i) => (
-        <LEVELelement title={el[0]} image={el[1]} award={el[2]} width={width} />
+        <LEVELelement
+          key={i}
+          title={el[0]}
+          image={el[1]}
+          award={el[2]}
+          width={width}
+        />
       ))
 
-  let hr = (
-    <div
-      className={`w-f bg-gray-800 mx-4 rounded-full`}
-      style={{ height: 1 }}
-    />
-  )
+  let hr = <div className={`w-f bg-gray-800 mx-4 rounded-full h-1px`} />
   let title = (title: string) => (
-    <div
-      className={`text-center text-lg bg-red-300 px-2`}
-
-      //bg-gradient-to-r from-red-200 via-red-300 to-red-200
-    >
-      {title}
-    </div>
+    <div className={`text-center text-lg bg-red-300 px-2`}>{title}</div>
   )
 
   return (
     <>
       <div
-        className={`z-20 rounded-xl border border-gray-800 font-courier text-3xl flex items-center justify-center hover:bg-red-200 shadow-3xl shadow-red-300/75 hover:shadow-red-500/75`}
-        style={{
-          height: 40,
-          width: 42,
-          transition: '0.15s ease-in-out',
-        }}
+        className={`z-20 rounded-xl h-40px w-42px border border-gray-800 font-courier text-3xl flex items-center justify-center hover:bg-red-200 shadow-3xl shadow-red-300/75 hover:shadow-red-500/75 transition duration-150 ease-in-out`}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
@@ -99,14 +89,7 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
       </div>
       {hover && (
         <div
-          className={`absolute bg-red-200 w-f border border-gray-800 rounded-xl flex flex-wrap items-start justify-between  text-sm overflow-hidden`}
-          style={{
-            transform: `translate(-6px, 55px)`,
-            opacity: 0.985,
-            width: 1040,
-            // width: 287,
-            // height: 700,
-          }}
+          className={`absolute bg-red-200 w-1040px opacity-985 -translate-x-6px translate-y-55px border border-gray-800 rounded-xl flex flex-wrap items-start justify-between  text-sm overflow-hidden `}
         >
           <div className={`flex flex-col w-f py-2`}>
             {title(`Volume Of Work`)}

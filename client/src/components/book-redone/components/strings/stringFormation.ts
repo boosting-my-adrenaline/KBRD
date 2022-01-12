@@ -1,4 +1,3 @@
-import { getRandom } from './../../../../utils/getRandom'
 import { shuffleArray } from '../../../../utils/shuffleArray'
 
 export const shuffle = (STR: string): string => {

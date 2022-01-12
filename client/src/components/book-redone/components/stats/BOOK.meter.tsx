@@ -16,33 +16,22 @@ export const BOOKmeter2: React.FC<IProps2> = ({ changer, multiple, red }) => {
 
   return (
     <div
-      className={`z-50  flex items-center justify-center overflow-hidden`}
-      style={{
-        width: 20,
-        height: 25,
-      }}
+      className={`z-50  flex items-center justify-center overflow-hidden w-20px h-25px`}
     >
       <div
-        className={`z-50 bg-red-300 flex items-center justify-center`}
+        className={`z-50 bg-red-300 flex items-center justify-center w-10px h-10px transition duration-300 ease-in-out prese`}
         style={{
-          width: 10,
-          height: 10,
-          // transform: `rotateX(90deg) rotateY(90deg) rotateZ(${
-          //   (360 / 100) * percent
-          // }deg)`,
           transform: `rotateX(90deg) rotateY(90deg) rotateZ(${
             rotating * multiple
           }deg)`,
-          transition: `0.3s ease-in-out`,
           transformStyle: `preserve-3d`,
         }}
       >
         {[9, 8, 7, 6, 5, 4, 3, 2, 1, 0].map((el) => (
           <div
-            className={` absolute`}
+            key={el}
+            className={` absolute w-20px h-20px`}
             style={{
-              width: 20,
-              height: 20,
               transform: `rotate(${36 * -el - 180}deg) `,
               transformStyle: `preserve-3d`,
             }}
@@ -52,14 +41,10 @@ export const BOOKmeter2: React.FC<IProps2> = ({ changer, multiple, red }) => {
                 red
                   ? `bg-red-100 border-red-500 text-red-800`
                   : `bg-emerald-100 border-emerald-500 text-emerald-800 `
-              }`}
+              } w-20px h-20px transition duration-1000 ease-linear`}
               style={{
-                width: 20,
-                height: 20,
                 transform: `translate(-0px, -30px) rotateX(90deg) rotateZ(90deg) `,
                 transformStyle: `preserve-3d`,
-
-                transition: '1s ease',
               }}
             >
               {el}

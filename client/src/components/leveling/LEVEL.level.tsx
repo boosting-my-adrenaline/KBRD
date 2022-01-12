@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { ExpMSG } from './LEVEL.container'
 import { LEVELicon } from './LEVEL.icon'
 import { LEVELinfo } from './LEVEL.info'
@@ -44,17 +44,13 @@ export const LEVELlevel: React.FC<IProps> = ({
   }
 
   return (
-    <div
-      className={`flex flex-row w-1000 gap-4 mx-auto`}
-      style={{ width: '1028px', transform: `translateX(-10px)` }}
-    >
+    <div className={`flex flex-row gap-4 mx-auto w-1028px -translate-y-10px`}>
       <LEVELicon level={level} expMSG={expMSG} />
       <div className={`flex flex-row w-f items-center`}>
         <div
-          className={` w-f border border-gray-900 justify-center rounded-xl flex items-center overflow-hidden 
+          className={` w-f h-40px border border-gray-900 justify-center rounded-xl flex items-center overflow-hidden 
             ${bgColor()[1]} 
           `}
-          style={{ height: 40 }}
         >
           <div className={`absolute`}>
             {expMSG ? (
@@ -66,20 +62,14 @@ export const LEVELlevel: React.FC<IProps> = ({
           <div
             className={` h-f flex items-center `}
             style={{
-              // height: 40,
               width: `${(100 / exp[1]) * exp[0]}%`,
-              // transition: `1s ease-out`,
               transition: `0.03s ease-out`,
             }}
           >
             <div
-              className={`w-f h-f
-               ${bgColor()[0]} `}
-              style={{
-                height: 45,
-                transition: '0.1s ease-in-out',
-              }}
-            ></div>
+              className={`w-f h-45px
+               ${bgColor()[0]} transition duration-100 ease-in-out`}
+            />
           </div>
           <div className={`flex-grow`}></div>
         </div>

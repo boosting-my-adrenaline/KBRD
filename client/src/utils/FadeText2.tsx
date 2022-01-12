@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { getRandom } from './getRandom'
 import { useDidMountEffect } from './useDidMountEffect'
 
 interface IProps {
@@ -17,16 +16,18 @@ export const FadeText2: React.FC<IProps> = ({
   component,
   highlighter = false,
 }) => {
-  const symbols = title.split('').map((el, i) => (
-    <TagSymbol
-      // key={el + Math.random()}
-      symbol={el}
-      hide={hide}
-      i={i}
-      delay={delay}
-      highlighter={highlighter}
-    />
-  ))
+  const symbols = title
+    .split('')
+    .map((el, i) => (
+      <TagSymbol
+        key={`${el} + ${i}`}
+        symbol={el}
+        hide={hide}
+        i={i}
+        delay={delay}
+        highlighter={highlighter}
+      />
+    ))
 
   if (component === 'h1') return <h1 className={`text-3xl pb-4`}>{symbols}</h1>
 

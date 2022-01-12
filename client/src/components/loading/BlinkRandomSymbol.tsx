@@ -4,13 +4,11 @@ import { useDidMountEffect } from '../../utils/useDidMountEffect'
 import { getRandomLetter } from './getRandomLetter'
 
 interface IProps {
-  delay?: number
   interval?: [number, number]
   setIsSymbol(isS: boolean): void
 }
 
 export const BlinkRandomSymbol: React.FC<IProps> = ({
-  delay = 0,
   interval = [1000, 3000],
   setIsSymbol,
 }) => {
@@ -57,13 +55,9 @@ export const BlinkRandomSymbol: React.FC<IProps> = ({
 
   return (
     <div
-      className={'select-none'}
-      style={{
-        opacity: show ? 1 : 0,
-        transition: '0.4s ease-in-out',
-        textTransform: 'uppercase',
-        transform: `rotate(${''}deg)`,
-      }}
+      className={`select-none uppercase ${
+        !show && `opacity-0`
+      } transition duration-400 ease-in-out`}
     >
       {symbol.current}
     </div>

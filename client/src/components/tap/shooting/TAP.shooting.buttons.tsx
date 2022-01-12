@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { TAPshootingIntervalSlider } from './TAP.shooting.intervalSlider'
 import { TAPshootingLimitSlider } from './TAP.shooting.limitSlider'
 import { TAPshootingKeyStyle } from './TAP.shooting.keyStyle'
@@ -97,22 +97,14 @@ export const TAPshootingButtons: React.FC<IProps> = ({
         } shadow-2xl py-6 px-10  rounded-xl text-2xl outline-none
     ${startButtonParams()[1]} border-2 ${
           startButtonParams()[2]
-        } transition-hover `}
+        } transition-hover text-transparent transition duration-250 ease-linear`}
         style={{
           textShadow: `0px 0px ${bluring}px rgba(0, 0, 0, 1)`,
-          color: 'transparent',
-          transition: '0.25s ease',
         }}
         onMouseDown={handleStartButton}
       >
         {bluringTag}
-        <div
-          className="bg-black absolute mt-10 rounded-full"
-          style={{
-            height: 2,
-            width: 70,
-          }}
-        >
+        <div className={`h-2px w-70px bg-black absolute mt-10 rounded-full`}>
           {' '}
           {'\u00A0'}
         </div>

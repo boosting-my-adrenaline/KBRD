@@ -20,15 +20,13 @@ export const BOOKelectronicmeter: React.FC<IProps> = ({
 
   let element = (num: number | string) => (
     <div
-      className={`borde border-emerald-400 text-emerald-600 ${
-        red && `border-red-400 text-red-600`
-      }  flex items-center justify-center`}
+      className={` w-20px h-25px ${
+        red ? ` text-red-600 ` : ` text-emerald-600 `
+      }  flex items-center justify-center  `}
       style={{
         textShadow: !red
           ? '0 0 1.5px  rgba(16, 185, 129, 0.85)'
           : '0 0 1.5px  rgba(244, 63 ,94, 0.85)',
-        width: 20,
-        height: 25,
       }}
     >
       {num}

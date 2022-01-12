@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { KeyColor, KeyType } from '../TAP.shooting'
+import { KeyColor } from '../TAP.shooting'
 
 interface IProps {
   keyColor: KeyColor
@@ -23,6 +23,25 @@ export const TAPshootingKeyType: React.FC<IProps> = ({
     open ? setRotating((prev) => prev + 360) : setRotating((prev) => prev - 360)
   }, [open])
 
+  const getColor = (color: KeyColor) => {
+    switch (color) {
+      case `red`:
+        return `bg-red-500`
+      case `emerald`:
+        return `bg-emerald-500`
+      case `cyan`:
+        return `bg-cyan-500`
+      case `amber`:
+        return `bg-amber-500`
+      case `fuchsia`:
+        return `bg-fuchsia-500`
+      case `red`:
+        return `bg-red-500`
+      case `pink`:
+        return `bg-pink-500`
+    }
+  }
+
   const handleClickColor = (event: React.MouseEvent, type: 1 | 2 | 3): void => {
     event.preventDefault()
     event.stopPropagation()
@@ -40,47 +59,27 @@ export const TAPshootingKeyType: React.FC<IProps> = ({
     setOpen((prev) => !prev)
   }
 
-  // const getElement = (n: number) => {
-  //   return .map((el) => (
-  //     <div
-  //       className={`bg-${el}-500 rounded-full cursor-pointer`}
-  //       style={{
-  //         width: 50,
-  //         height: 50,
-  //         border: '1px solid grey',
-  //       }}
-  //       onMouseDown={(e) => handleClickColor(e, el)}
-  //     ></div>
-  //   ))[n]
-  // }
-
   return (
     <div
-      className={'flex justify-center items-center'}
+      className={`h-20px flex justify-center items-center transition duration-300 ease-in-out`}
       style={{
-        height: 20,
         transform: `translateY(${open ? 30 : 0}px) translateX(${
           open ? 10 : 0
         }px)`,
-        transition: '0.3s ease',
       }}
     >
       <div className="flex flex-col justify-center align-center  border-black">
         <div className="flex flex-row justify-center align-start gap-2">
           <div
             className={`
-               bg-${open ? ' bg-gray-200 ' : keyColor}-500 opacity-${
-              open ? 100 : 100
-            }  rounded-full flex flex-col justify-center items-center gap-3 font-courier uppercase cursor-pointer text-4xl`}
+               ${
+                 open ? `bg-gray-200` : getColor(keyColor)
+               }   rounded-full overflow-hidden flex flex-col justify-center  items-center gap-3 border border-gray-600 font-courier uppercase cursor-pointer text-4xl transition duration-300 ease-in-out`}
             style={{
-              overflow: 'hidden',
+              transition: `0.3s ease-in-out`,
               width: open ? 175 : 50,
               height: open ? 175 : 50,
 
-              border: '1px solid #505050',
-              // opacity: open ? 0 : ,
-              // fontSize: '2.1em',
-              transition: '0.3s ease',
               transform: `rotate(${-rotating}deg) `,
             }}
             onMouseDown={handleOpen}
@@ -89,10 +88,7 @@ export const TAPshootingKeyType: React.FC<IProps> = ({
               'N'
             ) : (
               <div
-                className={`flex flex-col justify-center items-center gap-4 p-10`}
-                style={{
-                  marginTop: 10,
-                }}
+                className={`flex flex-col justify-center items-center gap-4 p-10 mt-10px`}
                 onMouseDown={() => setOpen((prev) => !prev)}
               >
                 <div
@@ -101,27 +97,17 @@ export const TAPshootingKeyType: React.FC<IProps> = ({
                 ></div>
                 <div className={`z-10 flex items-center gap-6`}>
                   <div
-                    className={`bg-${keyColor}-${
+                    className={`w-50px h-50px bg-${keyColor}-${
                       typeCells.numbers ? 500 : 100
-                    } rounded-full cursor-pointer flex items-center justify-center text-3xl`}
-                    style={{
-                      width: 50,
-                      height: 50,
-                      border: '1px solid grey',
-                    }}
+                    } rounded-full border border-gray-600 cursor-pointer flex items-center justify-center text-3xl`}
                     onMouseDown={(e) => handleClickColor(e, 1)}
                   >
                     N
                   </div>
                   <div
-                    className={`bg-${keyColor}-${
-                      typeCells.letters ? 500 : 100
+                    className={`w-50px h-50px border border-gray-600 ${
+                      typeCells.letters ? getColor(keyColor) : `bg-gray-300`
                     } rounded-full cursor-pointer flex items-center justify-center text-3xl`}
-                    style={{
-                      width: 50,
-                      height: 50,
-                      border: '1px solid grey',
-                    }}
                     onMouseDown={(e) => handleClickColor(e, 2)}
                   >
                     1
@@ -132,14 +118,9 @@ export const TAPshootingKeyType: React.FC<IProps> = ({
                   className={`z-10 flex flex-row justify-center items-center  `}
                 >
                   <div
-                    className={`bg-${keyColor}-${
-                      typeCells.punctuation ? 500 : 100
+                    className={`w-50px h-50px border border-gray-600 ${
+                      typeCells.punctuation ? getColor(keyColor) : `bg-gray-300`
                     } rounded-full cursor-pointer flex items-center justify-center text-3xl`}
-                    style={{
-                      width: 50,
-                      height: 50,
-                      border: '1px solid grey',
-                    }}
                     onMouseDown={(e) => handleClickColor(e, 3)}
                   >
                     $

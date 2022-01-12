@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FadeText3 } from '../../utils/FadeText3'
 import { Hexagon } from '../loading/Hexagon'
 import cmd from '../../static/cmd.svg'
@@ -170,18 +170,15 @@ export const Below1000: React.FC = ({}) => {
       </div>
 
       <div
-        className={`fixed top-0 bottom-0 left-0 right-0 flex flex-col align-center justify-center gap bg-yello-200 bg-gray-500`}
+        className={`fixed top-0 bottom-0 left-0 right-0 flex flex-col align-center justify-center gap bg-yello-200 bg-gray-500 transition duration-500 ease-in-out`}
         style={{
-          transition: '0.5s ease-in-out',
-          // backgroundColor: !show ? 'rgb(252, 211, 77)' : 'rgb(253, 230, 138)',
           willChange: 'transform',
         }}
       >
         <div
-          className={` flex flex-col align-center justify-center gap  `}
+          className={` flex flex-col align-center justify-center gap py opacity-20 `}
           style={{
             transition: '3s ',
-            opacity: 0.15,
             transform: `perspective(1000px) rotateX(45deg) translateX(${pos[1]}px) translateY(${pos[0]}px)`,
           }}
         >

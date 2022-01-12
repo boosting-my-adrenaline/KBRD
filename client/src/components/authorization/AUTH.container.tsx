@@ -7,8 +7,10 @@ import { AUTHsignupContainer } from './signup/AUTH.signup.container'
 export const AUTHcontainer: React.FC = ({}) => {
   const chapter = useTypedSelector((state) => state.nav.chapter)
 
-  const [isSigningUp, setISU] = useState(true)
+  const [isSigningUp, setISU] = useState(false)
   const [rotating, setRotating] = useState(0)
+
+  useEffect(() => setISU(true), [])
 
   useEffect(() => {
     if (!isSigningUp) {
@@ -25,10 +27,7 @@ export const AUTHcontainer: React.FC = ({}) => {
         className={`z-20 fixed top-0 right-0 left-0 bottom-0 flex justify-center items-center bg-yellow-100 `}
       >
         <div
-          className={`z-20  items-center justify-center `}
-          style={{
-            transition: '1s ease',
-          }}
+          className={`z-20  items-center justify-center transition duration-1000 ease-in-out`}
         >
           <div
             className={` absolute top-0 left-0 z-20 flex flex-row `}
@@ -58,11 +57,10 @@ export const AUTHcontainer: React.FC = ({}) => {
             </div>
           </div>
           <div
-            className={` fixed top-0 right-0 left-0  flex flex-row justify-center `}
+            className={` fixed top-0 right-0 left-0  flex flex-row justify-center transition duration-1000 ease`}
             style={{
               transform: `rotateY(${rotating}deg)`,
               height: 65,
-              transition: '1s ease-out',
             }}
           >
             <div
@@ -88,7 +86,7 @@ export const AUTHcontainer: React.FC = ({}) => {
             ></div>
           </div>
           <div
-            className={`flex flex-row overflow-y-hidden`}
+            className={`flex flex-row overflow-y-hidden transition duration-500 ease-in-out`}
             style={{
               width: WIDTH * 2,
               height: 620,
@@ -97,7 +95,6 @@ export const AUTHcontainer: React.FC = ({}) => {
               transform: isSigningUp
                 ? `translateX(${WIDTH / 2}px)`
                 : `translateX(${-WIDTH / 2}px)`,
-              transition: '0.75s ease-in-out',
 
               // backgroundColor: 'lightcoral',
             }}

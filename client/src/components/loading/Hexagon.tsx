@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
 import { BlinkRandomSymbol } from './BlinkRandomSymbol'
 
@@ -44,7 +44,7 @@ export const Hexagon: React.FC<IPropsHex> = ({
 
   return (
     <div
-      className={`${
+      className={` ${
         isAbsolute ? 'absolute' : ' '
       } flex flex-col items-center justify-center overflow-visible`}
     >
@@ -97,9 +97,7 @@ export const Hexagon: React.FC<IPropsHex> = ({
               fontSize: fontSize,
             }}
           >
-            {empty ? null : (
-              <BlinkRandomSymbol delay={0} setIsSymbol={setIsSymbol} />
-            )}
+            {empty ? null : <BlinkRandomSymbol setIsSymbol={setIsSymbol} />}
           </div>
           <div
             style={{

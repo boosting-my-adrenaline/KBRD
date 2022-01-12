@@ -109,8 +109,8 @@ const TagSymbol: React.FC<IProps2> = ({
 
   return (
     <span
-      className="select-none"
-      style={{ opacity: show ? 1 : 0, transition: `${delay[0] / 500}s ease` }}
+      className={`${!show && `opacity-0`} select-none`}
+      style={{ transition: `${delay[0] / 500}s ease` }}
     >
       {currentSymbol}
     </span>

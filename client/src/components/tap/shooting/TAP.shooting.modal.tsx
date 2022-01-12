@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { Modal, Backdrop, Slide } from '@material-ui/core'
-// import { Modal, Backdrop, Slide } from '@mui/material'
 
 interface IProps {
   modalOpen: boolean
@@ -24,8 +23,7 @@ export const TAPshootingModal: React.FC<IProps> = ({
       >
         <Slide in={modalOpen}>
           <p
-            className="cursor-pointer bg-red-200 border-red-500 border-2 mx-auto mt-56 rounded-2xl outline-none flex  items-center justify-center font-courier "
-            style={{ width: 450, height: 100, fontSize: '4em' }}
+            className={`w-450px h-100px text-4em cursor-pointer bg-red-200 border-red-500 border-2 mx-auto mt-56 rounded-2xl outline-none flex  items-center justify-center font-courier `}
             onClick={handleCloseModal}
           >
             YOU LOST : <p className="transform -translate-x-5">(</p>

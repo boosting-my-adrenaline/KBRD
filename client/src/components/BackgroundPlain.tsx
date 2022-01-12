@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useTypedSelector } from '../hooks/useTypedSelector'
 import { Chapters } from '../types/nav'
 
@@ -21,12 +21,7 @@ export const Background: React.FC = () => {
 
   return (
     <div
-      // className={`fixed top-0 bottom-0 right-0 bg-blue-100`}
-      className={`fixed top-0 bottom-0 right-0 ${bgColor()}`}
-      style={{
-        width: '100%',
-        transition: '1.25s ease-in-out',
-      }}
+      className={`fixed w-f top-0 bottom-0 right-0 ${bgColor()} transition duration-1250 ease-in-out`}
     ></div>
   )
 }

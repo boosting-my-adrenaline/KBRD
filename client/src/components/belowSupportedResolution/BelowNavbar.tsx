@@ -17,23 +17,16 @@ export const BelowNavbar: React.FC<{ isHorizontal: boolean }> = ({
 
   return (
     <div
-      className={`bg-gray-200  fixed top-0 right-0 left-0  z-50 max-h-16 opacity-90 flex justify-center items-center px-4 select-none`}
-      style={{
-        height: !isHorizontal ? 43 : 65,
-        boxShadow: '2px 0 4px 4px rgba(50, 50, 50, 0.3)',
-        zIndex: 51,
-      }}
+      className={`bg-gray-200 z-51 fixed top-0 right-0 left-0   ${
+        isHorizontal ? `h-43px` : `h-65px`
+      } opacity-90 flex justify-center items-center px-4 select-none shadow-11th`}
     >
-      <div className={`flew-grow flex justify-end `} style={{ width: '70%' }}>
+      <div className={`flew-grow flex justify-end w-70%`}>
         <a href={`https://github.com/boosting-my-adrenaline`} target={'_blank'}>
           <GitHub
-            className={`cursor-pointer `}
-            style={{
-              width: isHorizontal ? 40 : 30,
-              height: isHorizontal ? 40 : 30,
-              transform: `translateX(${appear ? 0 : 1000}px)`,
-              transition: '0.9s ease',
-            }}
+            className={`cursor-pointer ${
+              isHorizontal ? `w-40px h-40px` : `w-30px h-30px`
+            } transition duration-1000 ease-in-out`}
           />
         </a>
       </div>
