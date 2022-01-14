@@ -78,20 +78,6 @@ export const LEVELcontainer: React.FC<IProps> = ({
 
   const [expMSG, setExpMSG] = useState<ExpMSG>(null)
 
-  // useEffect(() => {
-  //   setExp(() => {
-  //     return [0, levels[level - 1]]
-  //   })
-  // }, [level])
-
-  // useDidMountEffect(() => {
-  //   if (exp[0] >= exp[1] && exp[0] > 0) {
-  //     let difference = exp[0] - exp[1]
-  //     setLevel((prev) => prev + 1)
-  //     setExp((prev) => [difference, prev[1]])
-  //   }
-  // }, [exp])
-
   const handleSetExp = (value: number) => {
     for (let i = 0; i < value; i++) {
       setTimeout(() => {
@@ -108,50 +94,27 @@ export const LEVELcontainer: React.FC<IProps> = ({
     }
   }
 
-  // const handleSetExp = (value: number) => {
-  //   value = Math.round(value / 5) * 5
-
-  //   if (value <= exp[1] - exp[0]) {
-  //     for (let i = 0; i < value; i++) {
-  //       setTimeout(() => {
-  //         setExp((prev) => [prev[0] + 1, prev[1]])
-  //       }, i * 150 + 20)
-  //     }
-  //   } else {
-  //     let before = exp[1] - exp[0]
-  //     let after = value - before
-  //     for (let i = 0; i < before; i++) {
-  //       setTimeout(() => {
-  //         setExp((prev) => [prev[0] + 1, prev[1]])
-  //       }, i * 50 + 20)
-  //     }
-  //     for (let i = 0; i < after; i++) {
-  //       setTimeout(() => {
-  //         setExp((prev) => [prev[0] + 1, prev[1]])
-  //       }, i * 50 + 2520)
-  //     }
-  //   }
-  // }
-
-  // const handleSetExpLogin = (value: number) => {
-  //   setExp((prev) => [value, prev[1]])
-  // }
+  let levelExp = (): number => {
+    let res = 0
+    levels.forEach((el, i) => (i < level ? (res += el) : el))
+    return res
+  }
 
   return (
     <div className={` select-none `}>
       <LEVELlevel
-        exp={[exp - levels[level - 1], levels[level]]}
+        exp={[exp - levels[level - 1], levels[level] - levelExp()]}
         level={level}
         expMSG={expMSG}
         setHide={setHide}
       />
-      <div className={`flex flex-row justify-evenly items-center w-f`}>
-        {/* <div onMouseDown={() => handleSetExp(10)}>+10</div> */}
-        {/* <div onMouseDown={() => handleSetExp(50)}>+50</div> */}
-        {/* <div onMouseDown={() => setLevel((prev) => prev + 1)}>lvlup</div>
+      {/* <div className={`flex flex-row justify-evenly items-center w-f`}> */}
+      {/* <div onMouseDown={() => handleSetExp(10)}>+10</div> */}
+      {/* <div onMouseDown={() => handleSetExp(50)}>+50</div> */}
+      {/* <div onMouseDown={() => setLevel((prev) => prev + 1)}>lvlup</div>
         <div onMouseDown={() => setLevel(5)}>5</div>
         <div onMouseDown={() => setLevel(10)}>10</div> */}
-      </div>
+      {/* </div> */}
       <LEVELupper
         handleSetExp={handleSetExp}
         overall={overall}

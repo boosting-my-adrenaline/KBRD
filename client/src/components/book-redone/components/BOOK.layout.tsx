@@ -69,19 +69,25 @@ export const BOOKLayout: React.FC<IProps> = ({
     })
   }
 
-  const rowing = (str: string) => {
-    return <div className="w-full flex flex-row ">{formating(str)}</div>
+  const rowing = (str: string, bl?: 1 | 2) => {
+    let bluring = bl === 1 ? `opacity-80` : bl === 2 ? `opacity-70` : ` `
+
+    return (
+      <div className={`w-full flex flex-row ${bluring}`}>{formating(str)}</div>
+    )
   }
 
   return (
     <div
-      className={`absolute visible  border-5 border-grey-900 rounded-xl transition duration-700 ease-in-out z-31 ${
+      className={`absolute visible  border-5  rounded-xl transition duration-700 ease-in-out z-31 ${
         !appear && `opacity-0`
       }`}
     >
       <div className="w-1000 z-10 font-courier text-2xl flex flex-col space-y-4  ">
-        {rowing(rawLEFT3)}
-        {rowing(rawLEFT2)}
+        {/* <div className="flex flex-row ">{'\u00A0'}</div> */}
+
+        {rowing(rawLEFT3, 2)}
+        {rowing(rawLEFT2, 1)}
         {rowing(rawLEFT1)}
 
         <div className="flex flex-row">
@@ -91,8 +97,9 @@ export const BOOKLayout: React.FC<IProps> = ({
         </div>
 
         {rowing(rawRIGHT1)}
-        {rowing(rawRIGHT2)}
-        {rowing(rawRIGHT3)}
+        {rowing(rawRIGHT2, 1)}
+        {rowing(rawRIGHT3, 2)}
+        {/* <div className="flex flex-row ">{'\u00A0'}</div> */}
       </div>
     </div>
   )

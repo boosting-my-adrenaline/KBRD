@@ -1,38 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { FadeText3 } from '../../utils/FadeText3'
-import { Hexagon } from '../loading/Hexagon'
 import cmd from '../../static/cmd.svg'
 import { BelowNavbar } from './BelowNavbar'
 import { PerspectiveController } from '../PerspectiveController'
+import svg1 from '../../static/svg1.svg'
+import { Footer } from '../Footer'
 
 export const Below1000: React.FC = ({}) => {
-  let L = 10,
-    W = 7,
-    // let L = 1,
-    //   W = 1,
-    side = 120,
-    side2 = [118, 118],
-    empty = false
-
-  // const [pos, setPos] = useState([0, 0])
-  const [pos, setPos] = useState([0, 0])
-
-  // const [show, setShow] = useState(true)
-
-  useEffect(() => {
-    // let id0 = setTimeout(() => setShow(true), 200)
-
-    let id1 = setInterval(() => {
-      setPos([Math.floor(Math.random() * 100), Math.floor(Math.random() * 100)])
-      // setPos([Math.floor(Math.random() * 100), Math.floor(Math.random() * 100)])
-    }, Math.floor(Math.random() * 2000) + 1000)
-
-    return () => {
-      // clearTimeout(id0)
-      clearInterval(id1)
-    }
-  }, [])
-
   const [isHorizontal, setIsHorisontal] = useState(false)
   const [params, setParams] = useState([0, 0])
 
@@ -48,21 +22,20 @@ export const Below1000: React.FC = ({}) => {
       />
       <BelowNavbar isHorizontal={isHorizontal} />
       <div
-        className={`absolute z-50 opacity-80 w-f flex justify-center`}
-        style={{ margin: `${!isHorizontal ? 90 : 110}px auto` }}
+        className={`fixed top-0 left-0 bottom-0 right-0`}
+        style={{ backgroundImage: `url(${svg1})` }}
+      ></div>
+      <div
+        className={` z-50 opacity-80 w-f flex justify-center items-center`}
+        style={{
+          margin: `${!isHorizontal ? 90 : 110}px auto`,
+        }}
         // style={{ left: '50%', transform: 'translate(-50%, -50%)', top: '40%' }}
       >
         <div
           className={`font-courier text-center pb-6 `}
           style={{ maxWidth: '70%' }}
         >
-          {/* JUST TESTING IF IT REALLY GONNA WORK */}
-          {/* <FadeText2
-            title={`Your resolution is not supportable yet`}
-            hide={0}
-            delay={400}
-            component="h1"
-          /> */}
           <div
             className={` flex flex-wrap items-center justify-center space-y-1 `}
             style={{ fontSize: '1.1rem', marginBottom: 10 }}
@@ -99,15 +72,15 @@ export const Below1000: React.FC = ({}) => {
             <div className={'flex justify-center flex-grow '}>
               <div className={`flex gap-2 mt-8 justify-center items-center`}>
                 <div
-                  className={`border-black border rounded-lg flex flex-col items-end p-2 bg-white opacity-80`}
+                  className={`border-black border rounded-lg flex flex-col items-end p-2 bg-white opacity-95`}
                   style={{ width: 90, height: 65, gap: 9 }}
                 >
                   <img style={{ width: 20, height: 20 }} src={cmd} alt=" " />
                   <div className={`flex w-f justify-center `}>command</div>
                 </div>
-                <div className={`text-2xl`}>+</div>
+                <div className={`text-2xl text-white`}>+</div>
                 <div
-                  className={`border-black border rounded-lg flex flex-col items-center p-1 bg-white opacity-80`}
+                  className={`border-black border rounded-lg flex flex-col items-center p-1 bg-white opacity-95`}
                   style={{ width: 70, height: 65, gap: 10 }}
                 >
                   <div style={{ transform: 'rotate(90deg) translateY(-1px)' }}>
@@ -132,15 +105,15 @@ export const Below1000: React.FC = ({}) => {
             <div className={'flex justify-center flex-grow'}>
               <div className={`flex gap-2 mt-4 justify-center items-center`}>
                 <div
-                  className={`border-black border rounded-lg flex flex-col items-center justify-center p-2 bg-white opacity-80`}
+                  className={`border-black border rounded-lg flex flex-col items-center justify-center p-2 bg-white opacity-95`}
                   style={{ width: 90, height: 65, gap: 9 }}
                 >
                   <div className={`flex w-f justify-center `}>ctrl</div>
                 </div>
-                <div className={`text-2xl`}>+</div>
+                <div className={`text-2xl text-white`}>+</div>
 
                 <div
-                  className={`border-black border rounded-lg  flex flex-col items-center p-1 bg-white opacity-80`}
+                  className={`border-black border rounded-lg  flex flex-col items-center p-1 bg-white opacity-95`}
                   style={{ width: 70, height: 65, gap: 10 }}
                 >
                   <div
@@ -167,9 +140,10 @@ export const Below1000: React.FC = ({}) => {
             </div>
           </div>
         </div>
+        <Footer below />
       </div>
 
-      <div
+      {/* <div
         className={`fixed top-0 bottom-0 left-0 right-0 flex flex-col align-center justify-center gap bg-yello-200 bg-gray-500 transition duration-500 ease-in-out`}
         style={{
           willChange: 'transform',
@@ -203,7 +177,7 @@ export const Below1000: React.FC = ({}) => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </>
   )
 }

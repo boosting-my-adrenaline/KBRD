@@ -4,7 +4,11 @@ import { useTypedSelector } from '../hooks/useTypedSelector'
 import { useDidMountEffect } from '../utils/useDidMountEffect'
 import { PerspectiveController } from './PerspectiveController'
 
-export const Footer: React.FC = ({}) => {
+interface IProps {
+  below?: boolean
+}
+
+export const Footer: React.FC<IProps> = ({ below = false }) => {
   const chapter = useTypedSelector((state) => state.nav.chapter)
   const [appear, setAppear] = useState(false)
 
@@ -50,23 +54,29 @@ export const Footer: React.FC = ({}) => {
   return (
     <>
       <div
-        className={`z-2022 w-full fixed bottom-0 right-0 left-0 border-t border-gray-500 py-2  flex gap-6 flex-between items-center bg-gray-400/30 opacity-100 transition duration-500 ease-in-out `}
+        className={`z-2022 w-full fixed bottom-0 right-0 left-0  border-t border-gray-500 py-2  flex  flex-between ${
+          below ? `justify-around text-white ` : `gap-6 `
+        } items-center bg-gray-400/30 opacity-100 transition duration-500 ease-in-out `}
         style={{
-          padding: `5px ${params[1]}px`,
+          padding: !below ? `5px ${params[1]}px` : `6px 2px`,
           fontSize: params[0] + 'px',
         }}
       >
-        <a>&copy; 2022 KBRD. All rights reserved </a>
-        <a className={`flex-grow`}></a>
+        {below || (
+          <a className={`whitespace-nowrap`}>
+            &copy; 2022 KBRD. All rights reserved{' '}
+          </a>
+        )}
+        {below || <a className={`flex-grow`}></a>}
         <div
-          className={`flex items-center justify-center hover:bg-emerald-100 relative overflow-hidden px-2 rounded-xl transition-colors duration-150`}
+          className={`flex items-center justify-center hover:bg-emerald-100 hover:text-gray-800 relative text-md px-2 rounded-xl transition-colors duration-150`}
         >
           <a onMouseDown={handleCopyEmail}>away.float.away@gmail.com</a>
           {emailCopy && (
             <div
               className={`absolute ${
                 !emailCopy && `opacity-0`
-              }  bg-emerald-300 w-f h-f flex justify-center items-center  font-courier transition duration-300 ease-in-out`}
+              }  bg-emerald-300 w-f h-f flex justify-center items-center rounded-xl  font-courier transition duration-300 ease-in-out`}
             >
               Copied!
             </div>

@@ -18,7 +18,7 @@ export const BelowNavbar: React.FC<{ isHorizontal: boolean }> = ({
   return (
     <div
       className={`bg-gray-200 z-51 fixed top-0 right-0 left-0   ${
-        isHorizontal ? `h-43px` : `h-65px`
+        isHorizontal ? `h-43px` : `h-43px`
       } opacity-90 flex justify-center items-center px-4 select-none shadow-11th`}
     >
       <div className={`flew-grow flex justify-end w-70%`}>

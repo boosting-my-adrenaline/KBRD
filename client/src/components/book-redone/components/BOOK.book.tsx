@@ -45,33 +45,40 @@ export const BOOKBook: React.FC<IProps> = ({ STRING, chapter }) => {
     }
   }, [chapter])
 
+  // const formating2 = (str: string) => {
+  //   return str.split('').map((el, i) =>
+  //     el !== ' ' ? (
+  //       <div
+  //         key={i + el}
+  //         className={`select-non ${
+  //           highlightHider && `bg-red-100`
+  //         } transition duration-600 ease-in-out`}
+  //       >
+  //         {el}
+  //       </div>
+  //     ) : (
+  //       // <FadeText title={el} delay={[300, 1000]} hide={1} />
+  //       <div
+  //         key={i + el}
+  //         className={`select-non ${
+  //           highlightHider && `bg-red-100`
+  //         } transition duration-600 ease-in-out`}
+  //       >
+  //         {'\u00A0'}
+  //       </div>
+  //     )
+  //   )
+  // }
   const formating = (str: string) => {
-    return str.split('').map((el, i) =>
-      el !== ' ' ? (
-        <div
-          key={i + el}
-          className={`select-none ${
-            highlightHider && `bg-red-100`
-          } transition duration-600 ease-in-out`}
-        >
-          {el}
-        </div>
-      ) : (
-        // <FadeText title={el} delay={[300, 1000]} hide={1} />
-        <div
-          key={i + el}
-          className={`select-none ${
-            highlightHider && `bg-red-100`
-          } transition duration-600 ease-in-out`}
-        >
-          {'\u00A0'}
-        </div>
-      )
-    )
+    return str.replace(/ /g, '\u00a0')
   }
 
   const rowing = (str: string) => {
-    return <div className="w-full flex flex-row">{formating(str)}</div>
+    return (
+      <div className={`w-full flex flex-row whitespace-nowrap`}>
+        {formating(str)}
+      </div>
+    )
   }
 
   return (
@@ -80,20 +87,31 @@ export const BOOKBook: React.FC<IProps> = ({ STRING, chapter }) => {
         !appear && `opacity-0`
       } transition duration-700 ease-in-out`}
     >
-      <div className="w-1000 z-40 font-courier text-2xl flex flex-col space-y-4  ">
-        {rowing(LEFT3)}
-        {rowing(LEFT2)}
-        {rowing(LEFT1)}
+      <div
+        className={`w-1000 z-40 font-courier text-2xl flex flex-col space-y-4 text-gray-800 `}
+      >
+        {/* <div>{`\u00a0`}</div> */}
+        {/* <div>{`\u00a0`}</div> */}
 
-        <div className="flex flex-row">
-          {rowing(LEFT)}
+        {/* {rowing(LEFT3)} */}
+        <div className={`text-gray-700`}>{rowing(LEFT3)}</div>
 
-          {rowing(RIGHT)}
+        <div className={`text-gray-800`}>{rowing(LEFT2)}</div>
+        <div className={`text-gray-900`}>{rowing(LEFT1)}</div>
+
+        <div className={`flex flex-row text-black`}>
+          <div>{rowing(LEFT)}</div>
+
+          <div>{rowing(RIGHT)}</div>
         </div>
 
-        {rowing(RIGHT1)}
-        {rowing(RIGHT2)}
-        {rowing(RIGHT3)}
+        <div className={`text-gray-900`}>{rowing(RIGHT1)}</div>
+
+        <div className={`text-gray-800`}>{rowing(RIGHT2)}</div>
+        <div className={`text-gray-700`}>{rowing(RIGHT3)}</div>
+
+        {/* <div>{`\u00a0`}</div> */}
+        {/* <div>{`\u00a0`}</div> */}
       </div>
     </div>
   )

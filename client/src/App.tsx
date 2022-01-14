@@ -20,6 +20,8 @@ import { NotFound } from './components/NotFound'
 import { Footer } from './components/Footer'
 import { useAuth } from './hooks/auth.hook'
 import { AuthContext } from './context/AuthContext'
+import { TAPREDONEcontainer } from './components/tap-redone/TAP.REDONE.container'
+import { MAINREDONEcontainer } from './components/main-redone/MAIN.REDONE.container'
 
 export const App: React.FC = () => {
   const navigation = useNavigate()
@@ -52,11 +54,11 @@ export const App: React.FC = () => {
     }
   }, [chapter])
 
-  const [initialScreen, setInitialScreen] = useState(true)
+  const [initialScreen, setInitialScreen] = useState(false)
 
-  useEffect(() => {
-    setTimeout(() => setInitialScreen(false), 1000)
-  }, [])
+  // useEffect(() => {
+  //   setTimeout(() => setInitialScreen(false), 1000)
+  // }, [])
 
   const isLoading = useTypedSelector((state) => state.nav.isLoading)
 
@@ -76,7 +78,7 @@ export const App: React.FC = () => {
   }
 
   const isOpened: boolean = useTypedSelector((state) => state.auth.isOpened)
-  const { setOpenOff } = useAuthAction()
+  const { setOpenOff, setOpenOn } = useAuthAction()
 
   useEffect(() => {
     setOpenOff()
@@ -90,14 +92,14 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     window.addEventListener('keydown', (e) => {
-      if (e.keyCode === 32) {
+      if (e.key === ' ') {
         e.preventDefault()
       }
     })
 
     return () =>
       window.removeEventListener('keydown', (e) => {
-        if (e.keyCode === 32) {
+        if (e.key === ' ') {
           e.preventDefault()
         }
       })
@@ -115,7 +117,7 @@ export const App: React.FC = () => {
     <AuthContext.Provider
       value={{ token, login, logout, userId, isAuthenticated, email }}
     >
-      <div className={''}>
+      <div className={`  flex justify-center items-center`}>
         <BlurScreen show={initialScreen} />
         <PerspectiveController setPerspective={handleSetPerspective} />
         {/* <div className={`absolute top-8 left-8 `} style={{ zIndex: 999999 }}>
@@ -145,16 +147,17 @@ export const App: React.FC = () => {
               onMouseDown={() => setOpenOff()}
             ></div>
 
-            <div>
-              <div className=" visible z-50 absolute top-16">
+            <div className={`flex justify-center items-center`}>
+              {/* <div className={` 2visible z-50 absolute top-16`}>
                 <Width />
-              </div>
+              </div> */}
               <Routes>
-                <Route path="/" element={<MAINcontainer />} />
-                <Route path="/tap" element={<TAPContainer />} />
+                {/* <Route path="/" element={<MAINcontainer />} /> */}
+                <Route path="/" element={<MAINREDONEcontainer />} />
+                {/* <Route path="/tap" element={<TAPContainer />} /> */}
+                <Route path="/tap" element={<TAPREDONEcontainer />} />
                 <Route path="/book" element={<BOOKContainer />} />
                 <Route path="/info" element={<INFOcontainer />} />
-                <Route path="/auth" element={<AUTHcontainer />} />
                 <Route element={<NotFound />} />
               </Routes>
               {/* <BOOKContainer /> */}

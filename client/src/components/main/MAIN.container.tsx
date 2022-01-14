@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { chapters } from '../../redux/nav/nav.types'
 import { Chapters } from '../../types/nav'
-import { useDidMountEffect } from '../../utils/useDidMountEffect'
 import { PerspectiveController } from '../PerspectiveController'
 import { Slide } from './components/Slide'
 

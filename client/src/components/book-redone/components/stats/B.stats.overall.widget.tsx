@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { BOOKelectronicmeter } from './B.electronic.meter'
 import { BOOKphysicalmeter } from './BOOK.physical.meter'
+import { motion } from 'framer-motion'
 
 interface IProps {
   overall: number
@@ -48,7 +49,10 @@ export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
                   className={`w-f mx-2 h-px my-2 bg-red-400 rounded-full`}
                 ></div>
                 <div className={`w-f flex flex-col gap-4 items-start`}>
-                  <div className={`w-f flex justify-center items-center `}>
+                  <motion.div
+                    whileHover={{ scale: 1.2 }}
+                    className={`w-f flex justify-center items-center `}
+                  >
                     <div
                       className={`p-1 px-8 cursor-pointer ${
                         showType === 'physical' && `bg-red-400`
@@ -61,9 +65,12 @@ export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
                         starting={overall || 1043}
                       />
                     </div>
-                  </div>
+                  </motion.div>
 
-                  <div className={`w-f flex justify-center items-center `}>
+                  <motion.div
+                    whileHover={{ scale: 1.2 }}
+                    className={`w-f flex justify-center items-center `}
+                  >
                     <div
                       className={`p-1 px-8 cursor-pointer ${
                         showType === 'electronic' && `bg-red-400`
@@ -72,8 +79,12 @@ export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
                     >
                       <BOOKelectronicmeter mileage={overall || 1043} />
                     </div>
-                  </div>
-                  <div className={`w-f flex justify-center items-center `}>
+                  </motion.div>
+
+                  <motion.div
+                    whileHover={{ scale: 1.2 }}
+                    className={`w-f flex justify-center items-center `}
+                  >
                     <div
                       className={`p-1 px-8 cursor-pointer ${
                         showType === 'simple' && `bg-red-400`
@@ -82,7 +93,7 @@ export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
                     >
                       <BOOKelectronicmeter mileage={overall || 1043} hidden />
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             }

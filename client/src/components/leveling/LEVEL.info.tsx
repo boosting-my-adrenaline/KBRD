@@ -81,7 +81,7 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
   return (
     <>
       <div
-        className={`z-20 rounded-xl h-40px w-42px border border-gray-800 font-courier text-3xl flex items-center justify-center hover:bg-red-200 shadow-3xl shadow-red-300/75 hover:shadow-red-500/75 transition duration-150 ease-in-out`}
+        className={`z-20 rounded-xl h-40px w-42px cursor-help border border-gray-800 font-courier text-3xl flex items-center justify-center hover:bg-red-200 shadow-3xl shadow-red-300/75 hover:shadow-red-500/75 transition duration-150 ease-in-out`}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >

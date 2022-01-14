@@ -150,7 +150,7 @@ export const AUTHlsignup: React.FC<IProps> = ({
           <NBAinput
             value={username}
             onChange={setUsername}
-            id={`login`}
+            id={`usernameSignUp`}
             placeholder={`USERNAME`}
             helper={usernameMessage || ` `}
             error={usernameState === 'error'}
@@ -163,7 +163,7 @@ export const AUTHlsignup: React.FC<IProps> = ({
           <NBAinput
             value={password}
             onChange={setPassword}
-            id={`password`}
+            id={`passwordSignUp`}
             type={`password`}
             placeholder={`PASSWORD`}
             helper={passwordMessage || ` `}
@@ -172,13 +172,14 @@ export const AUTHlsignup: React.FC<IProps> = ({
             warning={passwordState === `warning`}
             onEnter={handleEnterPass}
             focus={passFocus}
+            password
           />
         </div>
         <div style={{ width: '100%' }}>
           <NBAinput
             value={password2}
             onChange={setPassword2}
-            id={`password`}
+            id={`password2SignUp`}
             type={`password`}
             placeholder={`PASSWORD`}
             helper={password2Message || ` `}
@@ -187,6 +188,7 @@ export const AUTHlsignup: React.FC<IProps> = ({
             warning={password2State === `warning`}
             onEnter={handleEnterPass2}
             focus={pass2Focus}
+            password
             the34
           />
         </div>

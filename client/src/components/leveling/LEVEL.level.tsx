@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import React from 'react'
 import { ExpMSG } from './LEVEL.container'
 import { LEVELicon } from './LEVEL.icon'
@@ -59,18 +60,21 @@ export const LEVELlevel: React.FC<IProps> = ({
               <>{level === 10 ? <> </> : `${exp[0]} / ${exp[1]}`}</>
             )}
           </div>
-          <div
-            className={` h-f flex items-center `}
-            style={{
+          <motion.div
+            animate={{
               width: `${(100 / exp[1]) * exp[0]}%`,
-              transition: `0.03s ease-out`,
             }}
+            transition={{ ease: 'linear', duration: 0.07 }}
+            className={` h-f flex items-center `}
+            // style={{
+            //   transition: `0.03s ease-out`,
+            // }}
           >
             <div
               className={`w-f h-45px
                ${bgColor()[0]} transition duration-100 ease-in-out`}
             />
-          </div>
+          </motion.div>
           <div className={`flex-grow`}></div>
         </div>
       </div>{' '}

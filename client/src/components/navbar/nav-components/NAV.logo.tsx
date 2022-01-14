@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import React, { useState } from 'react'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 
@@ -72,13 +73,17 @@ export const NAVlogo: React.FC<IProps> = ({
   }
 
   const element = (letter: string, size: number, key: any) => (
-    <div
+    <motion.div
+      animate={{
+        scale: size / 20,
+        x: -size * 2.5,
+      }}
       key={key}
-      className={`text-gray-800`}
-      style={{ transition: `${tsition}s ease-in-out`, fontSize: size }}
+      className={`text-gray-800 mx-1`}
+      // style={{ transition: `${tsition}s ease-in-out`, fontSize: size }}
     >
       {letter}
-    </div>
+    </motion.div>
   )
   const letters: [letter: string, size: number][] = [
     ['K', K],
@@ -90,12 +95,17 @@ export const NAVlogo: React.FC<IProps> = ({
   const elements = letters.map((el, i) => element(el[0], el[1], i))
 
   return (
-    <div
-      className={`select-none flex items-center `}
+    <motion.div
+      whileHover={{
+        rotate: [1, -2, 4, -6, 4, -2, 1, 0],
+        repeatCount: Infinity,
+        scale: 1.1,
+      }}
+      className={`select-none flex items-center justify-center`}
       style={{ width: 500 }}
       onMouseDown={handleClick}
     >
       {elements}
-    </div>
+    </motion.div>
   )
 }

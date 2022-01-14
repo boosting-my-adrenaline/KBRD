@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { useDidMountEffect } from '../../utils/useDidMountEffect'
 import { AUTHloginContainer } from './login/AUTH.login.container'
 import { AUTHsignupContainer } from './signup/AUTH.signup.container'
+import { motion } from 'framer-motion'
 
 export const AUTHcontainer: React.FC = ({}) => {
   const chapter = useTypedSelector((state) => state.nav.chapter)
@@ -85,7 +85,12 @@ export const AUTHcontainer: React.FC = ({}) => {
               }}
             ></div>
           </div>
-          <div
+          <motion.div
+            animate={
+              {
+                // x: isSigningUp ? WIDTH / 2 : -WIDTH / 2,
+              }
+            }
             className={`flex flex-row overflow-y-hidden transition duration-500 ease-in-out`}
             style={{
               width: WIDTH * 2,
@@ -111,7 +116,7 @@ export const AUTHcontainer: React.FC = ({}) => {
             >
               <AUTHsignupContainer />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </>

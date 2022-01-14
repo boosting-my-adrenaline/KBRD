@@ -14,7 +14,7 @@ interface IProps {
   helper: string
   focus?: any
   onEnter?: () => void
-
+  password?: boolean
   id?: string
   type?: string
   error?: boolean
@@ -34,7 +34,7 @@ export const NBAinput: React.FC<IProps> = ({
   onChange,
   focus,
   onEnter = () => {},
-
+  password = false,
   placeholder,
   helper,
   type,
@@ -183,7 +183,7 @@ export const NBAinput: React.FC<IProps> = ({
             ref={inputRef}
             onKeyDown={onKeyHandler}
           />
-          {id === `password` && (
+          {password && (
             <div
               className={`absolute flex justify-center items-center rounded-lg cursor-pointer border hover:-translate-y-0.5 ${borderActiveColor()} ${hoverColor()} transition duration-250 ease-in-out`}
               style={{

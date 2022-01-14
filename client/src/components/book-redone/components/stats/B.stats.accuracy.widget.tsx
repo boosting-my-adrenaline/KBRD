@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { FadeText } from '../../../../utils/FadeText'
 import { useDidMountEffect } from '../../../../utils/useDidMountEffect'
 import { PingingCircles } from './BOOK.pingingCircles'
+import { motion } from 'framer-motion'
 
 interface IProps {
   currentAccuracy: number

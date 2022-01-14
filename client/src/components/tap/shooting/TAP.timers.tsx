@@ -15,7 +15,7 @@ export const TAPshootingTimers: React.FC<IProps> = ({
     return () => {
       clearInterval(id)
     }
-  }, [interval])
+  }, [interval, handleTick])
 
   return <h1></h1>
 }

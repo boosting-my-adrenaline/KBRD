@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import React, { useContext, useState } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import { useAuthAction } from '../../../hooks/useAction'
@@ -62,22 +63,6 @@ export const AuthMiniature: React.FC = ({}) => {
 
   const [hover, setHover] = useState(false)
 
-  // useDidMountEffect(() => {
-  //   if (hover) {
-  //     setParams((prev) => {
-  //       let arr = prev
-  //       arr[1] = arr[1] - 10
-  //       return arr
-  //     })
-  //   } else {
-  //     setParams((prev) => {
-  //       let arr = prev
-  //       arr[1] = arr[1] + 10
-  //       return arr
-  //     })
-  //   }
-  // }, [hover])
-
   return (
     <div
       className={`flex justify-center items-center `}
@@ -89,45 +74,29 @@ export const AuthMiniature: React.FC = ({}) => {
       }}
     >
       <PerspectiveController setPerspective2={handleSetPerspective} />
-      {/* {
-        // isOpen ? (
-        1 ? (
-          <div
-            style={{
-              position: 'fixed',
-              // backgroundColor: 'rgba(50, 50, 50, 0.2)',
-              backgroundColor: 'red',
-              top: 65,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              cursor: 'pointer',
-              zIndex: 49,
-            }}
-            onClick={() => setOpenOff()}
-          ></div>
-        ) : null
-      } */}
       {
-        <div
-          className={`absolute z-50  border border-black overflow-hidden  ${
-            isOpen ? '' : 'cursor-pointer'
-          }`}
-          style={{
+        <motion.div
+          animate={{
             borderRadius: !isOpen ? 1000 : 10,
             // opacity: 0.2,
             marginLeft: isOpen ? perspective[2] : 0,
             marginTop: isOpen ? perspective[1] : 0,
             width: !isOpen ? 80 : 1150,
             height: !isOpen ? 50 : 700,
-            transition: '0.4s ease',
-            transform: `translateX(${!isOpen ? 0 : -490}px) translateY(${
-              !isOpen ? (hover ? -3 : 0) : 410
-            }px) 
-            perspective(1000px) 
-            translateZ(${perspective[0]}px)`,
-            boxShadow: isOpen ? '2px 5px 20px 10px rgba(0,0,0,0.1)' : '',
+            x: !isOpen ? 0 : -490,
+            y: !isOpen ? 0 : 410,
           }}
+          transition={{
+            default: { duration: 0.15, type: `spring` },
+            width: { duration: 0.25, delay: 0.15 },
+            height: { duration: 0.25, delay: 0.15, ease: `linear` },
+            x: { duration: 0.4, type: `tween` },
+            y: { duration: 0.4, type: `tween` },
+          }}
+          whileHover={{ scale: !isOpen ? 1.1 : 1 }}
+          className={`absolute z-50  border border-black overflow-hidden  ${
+            isOpen ? 'shadow-12th' : 'cursor-pointer'
+          }`}
           onMouseDown={() => {
             if (!isOpen) setOpenOn()
           }}
@@ -168,7 +137,7 @@ export const AuthMiniature: React.FC = ({}) => {
           ) : (
             <>{isLoggedIn ? <PROFILEcontainer /> : <AUTHcontainer />}</>
           )}
-        </div>
+        </motion.div>
       }
     </div>
   )

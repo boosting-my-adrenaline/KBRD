@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import React, { useState } from 'react'
 import { useDidMountEffect } from '../../../../utils/useDidMountEffect'
 
@@ -30,8 +31,9 @@ export const BOOKbuttonVisual: React.FC<IProps> = ({
   }, [isHovered])
 
   return (
-    <div
-      className={` flex items-center justify-center overflow-hidden rounded-xl hover:-translate-y-3px transition duration-150 ease`}
+    <motion.div
+      whileHover={{ scale: 1.1, y: -2 }}
+      className={` flex items-center justify-center overflow-hidden rounded-xl `}
     >
       <button
         className={`relative overflow-hidden z-10 px-4 py-2 rounded-xl  justify-self-end outline-none ${
@@ -63,7 +65,7 @@ export const BOOKbuttonVisual: React.FC<IProps> = ({
       >
         {tag}
       </button>
-    </div>
+    </motion.div>
   )
 }
 
@@ -78,8 +80,9 @@ export const BOOKbuttonVisualFunctional: React.FC<IProps2> = ({
 }) => {
   const [hover, setHover] = useState(false)
   return (
-    <div
-      className={`overflow-hidden rounded-xl hover:-translate-y-3px transition duration-150 ease`}
+    <motion.div
+      whileHover={{ scale: 1.1, y: -2 }}
+      className={`overflow-hidden rounded-xl `}
     >
       <div
         className={`relative overflow-hidden rounded-xl px-4 py-2  border border-red-400 active:bg-red-100 cursor-pointer transition duration-250 ease-in-out`}
@@ -87,7 +90,7 @@ export const BOOKbuttonVisualFunctional: React.FC<IProps2> = ({
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        {title}
+        {title}1
         <div
           className={`absolute -z-10 transition duration-300 ease-in-out`}
           style={{
@@ -103,6 +106,6 @@ export const BOOKbuttonVisualFunctional: React.FC<IProps2> = ({
           }}
         />
       </div>
-    </div>
+    </motion.div>
   )
 }

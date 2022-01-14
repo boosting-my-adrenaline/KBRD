@@ -255,8 +255,6 @@ export const BOOKContainer: React.FC = () => {
           style={{ transform: `translateY(-360px)` }}
         ></div>
         <BOOKbuttons
-          animationBook={animationBook}
-          setAnimationBook={setAnimationBook}
           highlighter={hightlighter}
           setHighlighter={setHighlighter}
           punctuation={punctuation}

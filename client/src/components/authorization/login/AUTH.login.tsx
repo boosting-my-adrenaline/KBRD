@@ -1,11 +1,10 @@
 import React, { useState, useEffect, KeyboardEvent, useRef } from 'react'
 // import Box from '@mui/material/Box'
 import { ThemeProvider, createTheme } from '@mui/material'
-import { TextField, Button, Checkbox, IconButton } from '@mui/material'
-import { VisibilityOff, Visibility } from '@material-ui/icons'
 import { NBAbutton } from '../../profile/NBA.button'
 import { NBAinput } from '../../profile/NBA.input'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
+import { NBAcheckbox } from '../../profile/NBA.checkbox'
 
 const theme = createTheme({
   typography: {
@@ -43,17 +42,6 @@ export const AUTHlogin: React.FC<IProps> = ({
     } else {
       setRememberMe(true)
     }
-  }
-
-  const [showPassword, setShowPassword] = useState(false)
-
-  useEffect(() => {
-    let id = setTimeout(() => setShowPassword(false), 5000)
-    return () => clearTimeout(id)
-  }, [showPassword])
-
-  const handleShowPassword = () => {
-    setShowPassword((prev) => !prev)
   }
 
   const [userEnter, setUserEnter] = useState(0)
@@ -122,6 +110,7 @@ export const AUTHlogin: React.FC<IProps> = ({
             success={success}
             onEnter={handleEnterPass}
             focus={passFocus}
+            password
           />
         </div>
         <div className={`flex flex-col gap-2`}>
@@ -129,21 +118,17 @@ export const AUTHlogin: React.FC<IProps> = ({
             className={`flex  flex-row justify-start  mr-2 box-border`}
             style={{ width: '400px' }}
           >
-            <div
-              className={`flex-grow flex  justify-start items-center hover:text-blue-400 focus:text-red-800 outline-none`}
-              onMouseDown={handleRememberMeChange}
-            >
-              <div className={`flex  items-center cursor-pointer`}>
-                <Checkbox
-                  checked={rememberMe}
-                  inputProps={{ 'aria-label': 'controlled' }}
-                  color={`info`}
-                />
-                remember me
-              </div>
+            <div className={`flex-grow flex pl-4 justify-start items-center `}>
+              <span
+                className={`flex hover:text-blue-400 focus:text-red-800 outline-none transition duration-150 ease-in-out`}
+                onMouseDown={handleRememberMeChange}
+              >
+                <NBAcheckbox active={rememberMe} />
+                <span className={`ml-3 cursor-pointer `}>remember me</span>
+              </span>
             </div>
             <div
-              className={`mr-2 hover:text-blue-400 focus:text-red-800 outline-none cursor-pointer flex justify-center items-center`}
+              className={`mr-2 hover:text-blue-400 focus:text-red-800 outline-none cursor-pointer flex justify-center items-center transition duration-150 ease-in-out`}
               onMouseDown={() => {}}
             >
               forgot password?

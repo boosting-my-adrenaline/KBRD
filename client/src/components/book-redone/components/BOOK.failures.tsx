@@ -23,15 +23,15 @@ export const BOOKfailures: React.FC<{
     return () => clearTimeout(id)
   }, [chapter])
 
-  const filling = [1, 2, 3, 4, 5, 6, 7].map((el) => (
-    <div key={el} className={`flex flex-row `}>
-      {Array.from({ length: 70 }, (_, i) => i + 1).map((letter) => (
-        <div key={letter} className="bg-red-600 rounded-md">
-          {'\u00A0'}
-        </div>
-      ))}
-    </div>
-  ))
+  // const filling = [1, 2, 3, 4, 5, 6, 7].map((el) => (
+  //   <div key={el} className={`flex flex-row `}>
+  //     {Array.from({ length: 70 }, (_, i) => i + 1).map((letter) => (
+  //       <div key={letter} className="bg-red-600 rounded-md">
+  //         {'\u00A0'}
+  //       </div>
+  //     ))}
+  //   </div>
+  // ))
 
   function fillWithAreas(from: number, to: number) {
     let row = []
@@ -56,11 +56,16 @@ export const BOOKfailures: React.FC<{
         !appear && `opacity-0`
       } transition duration-500 ease-in-out`}
     >
-      <div className="flex flex-row-reverse ">{fillWithAreas(176, 245)}</div>
-      <div className="flex flex-row-reverse ">{fillWithAreas(106, 175)}</div>
+      <div className={`flex flex-row-reverse opacity-60`}>
+        {fillWithAreas(176, 245)}
+      </div>
+      <div className={`flex flex-row-reverse opacity-70`}>
+        {fillWithAreas(106, 175)}
+      </div>
+
       <div className="flex flex-row-reverse ">{fillWithAreas(36, 105)}</div>
       <div className="flex flex-row">
-        <div className="flex flex-row-reverse ">{fillWithAreas(1, 35)}</div>
+        <div className={`flex flex-row-reverse`}>{fillWithAreas(1, 35)}</div>
         <div>{'\u00A0'}</div>
       </div>
       <div className="flex flex-row ">{'\u00A0'}</div>

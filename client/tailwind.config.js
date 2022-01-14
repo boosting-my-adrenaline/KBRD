@@ -18,6 +18,8 @@ module.exports = {
         '50%': '50%',
         '70%': '70%',
         '8px': '8px',
+        '9px': '9px',
+        '11px': '11px',
         '12px': '12px',
         '16px': '16px',
         '18px': '18px',
@@ -29,6 +31,7 @@ module.exports = {
         '82px': '82px',
         '120px': '120px',
         '140px': '140px',
+        '150px': '150px',
         '180px': '180px',
         '200px': '200px',
         '220px': '220px',
@@ -60,6 +63,7 @@ module.exports = {
         '8px': '8px',
         '12px': '12px',
         '16px': '16px',
+        '18px': '18px',
         '20px': '20px',
         '25px': '25px',
         '35px': '35px',
@@ -103,6 +107,7 @@ module.exports = {
         '5px': '5px',
         '6px': '6px',
         '10px': '10px',
+        '18px': '18px',
         '30px': '30px',
         '55px': '55px',
         '100px': '100px',
@@ -127,6 +132,11 @@ module.exports = {
 
       borderRadius: {
         '40px': '40px',
+      },
+
+      borderWidth: {
+        3: `3px`,
+        5: `5px`,
       },
 
       gap: {
@@ -188,6 +198,7 @@ module.exports = {
         '9th': '0 0 1.5px  rgba(0, 0, 0, 0.01)',
         '10th': '2px 1px 12px 4px rgba(0, 0, 0, 0.3)',
         '11th': '2px 0 4px 4px rgba(50, 50, 50, 0.3)',
+        '12th': '2px 5px 20px 10px rgba(0,0,0,0.1)',
       },
     },
   },

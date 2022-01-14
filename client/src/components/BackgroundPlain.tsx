@@ -21,7 +21,8 @@ export const Background: React.FC = () => {
 
   return (
     <div
-      className={`fixed w-f top-0 bottom-0 right-0 ${bgColor()} transition duration-1250 ease-in-out`}
+      className={`fixed w-f top-0 bottom-0 right-0 ${bgColor()} transition-colors duration-2000 ease-in-out`}
+      style={{ backgroundImage: `url()` }}
     ></div>
   )
 }

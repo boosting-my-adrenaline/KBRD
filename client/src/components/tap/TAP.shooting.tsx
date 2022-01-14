@@ -5,6 +5,9 @@ import { TAPshootingTimers } from './shooting/TAP.timers'
 import { TAPtap } from './shooting/TAP.tap'
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { NBAbutton } from '../profile/NBA.button'
+import { PROFILEcontainer } from '../profile/PROFILE.container'
+import { AUTHcontainer } from '../authorization/AUTH.container'
 
 type CellsAmount = 7 | 19 | 29
 
@@ -220,6 +223,7 @@ export const TAPshooting: React.FC = () => {
         !appear && `opacity-0`
       }`}
     >
+      <NBAbutton tag={`test`} onClick={() => {}} />
       <>
         <TAPshootingModal
           modalOpen={modalOpen}

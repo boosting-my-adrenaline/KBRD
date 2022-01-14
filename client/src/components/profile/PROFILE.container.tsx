@@ -43,7 +43,11 @@ export const PROFILEcontainer: React.FC = () => {
       <>
         <div
           className={`flex justify-center items-center absolute z-50 transition duration-700 ease-linear`}
-          style={{ top: 95, left: 900 + floating }}
+          style={{
+            top: 95,
+            left: 900 + floating,
+            transition: `0.7s ease-in-out`,
+          }}
           // onMouseDown={handleLogout}
         >
           <NBAbutton tag={`Log Out`} onClick={handleLogout} />

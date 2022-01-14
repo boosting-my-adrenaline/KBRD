@@ -1,6 +1,6 @@
 {
   "port": 5005,
-  "jwtSecret": "mern",
+  "jwtSecret": "kbrd",
   "mongoUri": "mongodb+srv://Anakin:kbrd1234@kbrd.rllwc.mongodb.net/kbrd",
   "baseUrl": "http://localhost:5005"
 }

@@ -4,8 +4,6 @@ import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 import { BOOKfunctionalButtons } from './buttons/BOOK.functionalButtons'
 
 interface IProps {
-  animationBook: boolean
-  setAnimationBook(animation: boolean): void
   punctuation: boolean
   caseSensitivity: boolean
   setCaseSensetivity(cs: boolean): void
@@ -20,8 +18,6 @@ interface IProps {
 }
 
 export const BOOKbuttons: React.FC<IProps> = ({
-  animationBook,
-  setAnimationBook,
   setHighlighter,
   highlighter,
   punctuation,
