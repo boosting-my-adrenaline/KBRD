@@ -10,7 +10,7 @@ import { Background } from './components/BackgroundPlain'
 import { MAINcontainer } from './components/main/MAIN.container'
 import { Chapters } from './types/nav'
 import { INFOcontainer } from './components/info/INFO.container'
-import { BlurScreen } from './components/BlurScreen'
+import { InitialScreen } from './components/InitialScreen'
 import { AUTHcontainer } from './components/authorization/AUTH.container'
 // import { LoadingScreen } from './components/loading/LoadingScreen'
 import { useAuthAction } from './hooks/useAction'
@@ -34,6 +34,8 @@ export const App: React.FC = () => {
       navigation('/')
     } else if (chap === Chapters.NOT_FOUND) {
       navigation('/not_found')
+    } else if (chap === Chapters.B) {
+      return
     } else {
       navigation(`/${chap.toLowerCase()}`)
     }
@@ -45,7 +47,7 @@ export const App: React.FC = () => {
     setBlock(true)
     let id = setTimeout(() => changeCurrentChapter(chapter), 1100)
 
-    let id2 = setTimeout(() => setBlock(false), 1700)
+    let id2 = setTimeout(() => setBlock(false), 1200)
 
     return () => {
       clearTimeout(id)
@@ -56,9 +58,9 @@ export const App: React.FC = () => {
 
   const [initialScreen, setInitialScreen] = useState(false)
 
-  // useEffect(() => {
-  //   setTimeout(() => setInitialScreen(false), 1000)
-  // }, [])
+  useEffect(() => {
+    // setTimeout(() => setInitialScreen(false), 1200)
+  }, [])
 
   const isLoading = useTypedSelector((state) => state.nav.isLoading)
 
@@ -118,7 +120,7 @@ export const App: React.FC = () => {
       value={{ token, login, logout, userId, isAuthenticated, email }}
     >
       <div className={`  flex justify-center items-center`}>
-        <BlurScreen show={initialScreen} />
+        <InitialScreen show={initialScreen} />
         <PerspectiveController setPerspective={handleSetPerspective} />
         {/* <div className={`absolute top-8 left-8 `} style={{ zIndex: 999999 }}>
         renders: {renders.current}
@@ -158,7 +160,7 @@ export const App: React.FC = () => {
                 <Route path="/tap" element={<TAPREDONEcontainer />} />
                 <Route path="/book" element={<BOOKContainer />} />
                 <Route path="/info" element={<INFOcontainer />} />
-                <Route element={<NotFound />} />
+                <Route path="*" element={<NotFound />} />
               </Routes>
               {/* <BOOKContainer /> */}
             </div>

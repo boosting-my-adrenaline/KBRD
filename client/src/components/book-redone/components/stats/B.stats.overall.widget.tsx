@@ -51,6 +51,7 @@ export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
                 <div className={`w-f flex flex-col gap-4 items-start`}>
                   <motion.div
                     whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
                     className={`w-f flex justify-center items-center `}
                   >
                     <div
@@ -68,6 +69,7 @@ export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
                   </motion.div>
 
                   <motion.div
+                    whileTap={{ scale: 0.9 }}
                     whileHover={{ scale: 1.2 }}
                     className={`w-f flex justify-center items-center `}
                   >
@@ -83,6 +85,7 @@ export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
 
                   <motion.div
                     whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
                     className={`w-f flex justify-center items-center `}
                   >
                     <div

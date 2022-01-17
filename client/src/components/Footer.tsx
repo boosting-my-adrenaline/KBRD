@@ -55,7 +55,7 @@ export const Footer: React.FC<IProps> = ({ below = false }) => {
     <>
       <div
         className={`z-2022 w-full fixed bottom-0 right-0 left-0  border-t border-gray-500 py-2  flex  flex-between ${
-          below ? `justify-around text-white ` : `gap-6 `
+          below ? `justify-around text-white bg-gray-800 ` : `gap-6 `
         } items-center bg-gray-400/30 opacity-100 transition duration-500 ease-in-out `}
         style={{
           padding: !below ? `5px ${params[1]}px` : `6px 2px`,

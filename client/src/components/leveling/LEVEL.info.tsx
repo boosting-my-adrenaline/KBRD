@@ -19,6 +19,7 @@ import Piano from '../../static/piano.png'
 
 import { ExpMessage } from './LEVEL.container'
 import { LEVELelement } from './LEVEL.element'
+import { motion } from 'framer-motion'
 
 interface IProps {
   setHide(hide: boolean): void
@@ -73,7 +74,8 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
         />
       ))
 
-  let hr = <div className={`w-f bg-gray-800 mx-4 rounded-full h-1px`} />
+  let hr = <></>
+  // let hr = <div className={`w-f bg-gray-800 mx-4 rounded-full h-1px`} />
   let title = (title: string) => (
     <div className={`text-center text-lg bg-red-300 px-2`}>{title}</div>
   )
@@ -81,24 +83,29 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
   return (
     <>
       <div
-        className={`z-20 rounded-xl h-40px w-42px cursor-help border border-gray-800 font-courier text-3xl flex items-center justify-center hover:bg-red-200 shadow-3xl shadow-red-300/75 hover:shadow-red-500/75 transition duration-150 ease-in-out`}
+        className={`z-20 rounded-xl h-40px w-42px cursor-sw-resize border border-gray-800 font-courier text-3xl flex items-center justify-center hover:bg-red-200 shadow-3xl shadow-red-300/75 hover:shadow-red-500/75 transition duration-150 ease-in-out`}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        ?
+        <motion.div
+          whileHover={{ rotate: [0, 20, -20, 0], scale: 1.1 }}
+          transition={{ duration: 0.3 }}
+        >
+          ?
+        </motion.div>
       </div>
       {hover && (
         <div
-          className={`absolute bg-red-200 w-1040px opacity-985 -translate-x-6px translate-y-55px border border-gray-800 rounded-xl flex flex-wrap items-start justify-between  text-sm overflow-hidden `}
+          className={`absolute bg-red-200 w-1040px opacity-985 -translate-x-6px translate-y-55px border border-gray-800 rounded-xl flex flex-wrap items-start justify-between  text-sm overflow-hidden shadow-12th shadow-gray-400`}
         >
-          <div className={`flex flex-col w-f py-2`}>
+          <div className={`flex flex-col w-f pb-1 pt-1`}>
             {title(`Volume Of Work`)}
             <div className={`flex flex-wrap pt-1 px-1`}>
               {elements(0, 4, `50%`)}
             </div>
           </div>
           {hr}
-          <div className={`flex flex-col w-f py-2`}>
+          <div className={`flex flex-col w-f pb-1`}>
             {title(`Speed`)}
 
             <div className={`flex flex-wrap pt-1 px-1`}>
@@ -107,7 +114,7 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
             </div>
           </div>
           {hr}{' '}
-          <div className={`flex flex-col w-f py-2`}>
+          <div className={`flex flex-col w-f pb-1`}>
             {title(`Row With No Errors`)}
 
             <div className={`flex flex-wrap pt-1 px-1`}>
@@ -115,7 +122,7 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
             </div>
           </div>
           {hr}{' '}
-          <div className={`flex flex-col w-f py-2`}>
+          <div className={`flex flex-col w-f pb-1`}>
             {title(`Speed Row With No Errors`)}
 
             <div className={`flex flex-wrap pt-1 px-1`}>
@@ -123,7 +130,7 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
             </div>
           </div>
           {hr}{' '}
-          <div className={`flex flex-col w-f py-2`}>
+          <div className={`flex flex-col w-f pb-1`}>
             {title(`Average Accuracy`)}
 
             <div className={`flex flex-wrap pt-1 px-1`}>
@@ -131,7 +138,7 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
             </div>
           </div>
           {hr}{' '}
-          <div className={`flex flex-col w-f py-2`}>
+          <div className={`flex flex-col w-f pb-1`}>
             {title(`Average Speed And Accuracy`)}
 
             <div className={`flex flex-wrap pt-1 px-1`}>

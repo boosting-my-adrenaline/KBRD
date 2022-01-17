@@ -12,11 +12,14 @@ export enum Chapters {
   TAP = 'TAP',
   INFO = 'INFO',
   NOT_FOUND = 'NOTFOUND',
+  B = 'B',
+  T = 'T',
 }
 
 export interface NavState {
   chapter: Chapters
   isLoading: boolean
+  isInstant: boolean
 }
 
 export interface ChangeChapter {
@@ -32,4 +35,17 @@ export interface SetLoadingOff {
   type: NavActionTypes.SET_LOADING_OFF
 }
 
-export type NavAction = ChangeChapter | SetLoadingOn | SetLoadingOff
+export interface SetInstantOn {
+  type: NavActionTypes.SET_INSTANT_ON
+}
+
+export interface SetInstantOff {
+  type: NavActionTypes.SET_INSTANT_OFF
+}
+
+export type NavAction =
+  | ChangeChapter
+  | SetLoadingOn
+  | SetLoadingOff
+  | SetInstantOn
+  | SetInstantOff

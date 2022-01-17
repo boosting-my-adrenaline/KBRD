@@ -22,11 +22,11 @@ export const Below1000: React.FC = ({}) => {
       />
       <BelowNavbar isHorizontal={isHorizontal} />
       <div
-        className={`fixed top-0 left-0 bottom-0 right-0`}
+        className={`fixed top-0 left-0 bottom-0 right-0 opacity-90`}
         style={{ backgroundImage: `url(${svg1})` }}
       ></div>
       <div
-        className={` z-50 opacity-80 w-f flex justify-center items-center`}
+        className={` z-50 opacity-80  w-f flex justify-center items-center`}
         style={{
           margin: `${!isHorizontal ? 90 : 110}px auto`,
         }}

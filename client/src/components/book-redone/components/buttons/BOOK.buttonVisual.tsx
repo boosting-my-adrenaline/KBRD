@@ -33,6 +33,7 @@ export const BOOKbuttonVisual: React.FC<IProps> = ({
   return (
     <motion.div
       whileHover={{ scale: 1.1, y: -2 }}
+      whileTap={{ scale: 0.9 }}
       className={` flex items-center justify-center overflow-hidden rounded-xl `}
     >
       <button
@@ -82,6 +83,7 @@ export const BOOKbuttonVisualFunctional: React.FC<IProps2> = ({
   return (
     <motion.div
       whileHover={{ scale: 1.1, y: -2 }}
+      whileTap={{ scale: 0.9 }}
       className={`overflow-hidden rounded-xl `}
     >
       <div

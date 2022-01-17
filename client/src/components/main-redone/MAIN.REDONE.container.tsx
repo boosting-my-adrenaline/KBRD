@@ -1,8 +1,10 @@
+import { motion } from 'framer-motion'
 import React, { useState } from 'react'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { chapters } from '../../redux/nav/nav.types'
 import { Chapters } from '../../types/nav'
 import { PerspectiveController } from '../PerspectiveController'
+import { MAINREDONEbook } from './MAIN.REDONE.BOOK'
 // import { Slide } from './components/Slide'
 
 export const MAINREDONEcontainer: React.FC = () => {
@@ -34,22 +36,23 @@ export const MAINREDONEcontainer: React.FC = () => {
   return (
     <div
       style={{
-        marginTop: perspective[1],
-        transform: `perspective(1000px) translateZ(${perspective[0]}px)`,
-        // transition: '0.05s ease-in-out',
+        // marginTop: perspective[1],
+        // transform: `perspective(1000px) translateZ(${perspective[0]}px)`,
+        transition: '0.05s ease-in-out',
       }}
     >
       <div
-        className={` flex flex-col justify-center items-center transition duration-200 ease-int-out`}
-        style={{
-          marginTop: marginT,
-          paddingBottom: 50,
-          gap: 50,
-          transition: '0.2s ease',
-          // opacity: `${load ? 1 : 0}`,
-          opacity: 1,
-        }}
-      ></div>
+        className={`z-50  w-f h-f fixed top-0 bottom-0 right-0 left-0  flex justify-center items-center transition duration-200 ease-in-out
+        gap-12`}
+        style={
+          {
+            // marginTop: marginT,
+          }
+        }
+      >
+        <MAINREDONEbook />
+        {/* <MAINREDONEbook /> */}
+      </div>
       <PerspectiveController
         setMainMT={setMarginT}
         setBook={handleSetPerspective}

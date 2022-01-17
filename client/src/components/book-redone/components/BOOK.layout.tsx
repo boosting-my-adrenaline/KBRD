@@ -79,7 +79,7 @@ export const BOOKLayout: React.FC<IProps> = ({
 
   return (
     <div
-      className={`absolute visible  border-5  rounded-xl transition duration-700 ease-in-out z-31 ${
+      className={`absolute visible rounded-xl transition duration-700 ease-in-out z-31 ${
         !appear && `opacity-0`
       }`}
     >

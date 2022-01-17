@@ -4,6 +4,7 @@ import { Chapters, NavState, NavAction } from '../../types/nav'
 const initialState: NavState = {
   chapter: Chapters.BOOK,
   isLoading: false,
+  isInstant: false,
 }
 
 export const navReducer = (
@@ -23,7 +24,10 @@ export const navReducer = (
       }
     case NavActionTypes.SET_LOADING_OFF:
       return { ...state, isLoading: false }
-
+    case NavActionTypes.SET_INSTANT_ON:
+      return { ...state, isInstant: true }
+    case NavActionTypes.SET_INSTANT_OFF:
+      return { ...state, isInstant: false }
     default:
       return state
   }

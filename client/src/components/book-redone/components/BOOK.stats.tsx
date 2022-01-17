@@ -10,6 +10,7 @@ import { BOOKstatsOverallWidget } from './stats/B.stats.overall.widget'
 import { BOOKstatsErrorsWidget } from './stats/B.stats.error.widget'
 
 interface IProps {
+  show: boolean
   overall: number
   failedTypesIndexes: number[]
   chapter: Chapters
@@ -17,6 +18,7 @@ interface IProps {
 }
 
 export const BOOKstats: React.FC<IProps> = ({
+  show,
   overall,
   failedTypesIndexes: fti,
   chapter,
@@ -82,7 +84,7 @@ export const BOOKstats: React.FC<IProps> = ({
       <div
         className={`absolute transition duration-500 ease-in-out`}
         style={{
-          transform: `translateY(${appear ? -155 : -400}px)`,
+          transform: `translateY(${appear && show ? -155 : -400}px)`,
         }}
       >
         <LEVELcontainer
@@ -98,7 +100,7 @@ export const BOOKstats: React.FC<IProps> = ({
       </div>
       <div
         className={`w-1000  pt-2 pb-6 border-black borde flex items-center justify-center select-none transition duration-500 ease-in-out ${
-          !appear && `opacity-0`
+          (appear && show) || `opacity-0`
         }`}
       >
         <div

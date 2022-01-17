@@ -40,7 +40,7 @@ export const Navbar: React.FC<IProps> = ({ block }) => {
   }, [rightArrowClick])
 
   const getColors = (): string[] => {
-    if (chapter === Chapters.BOOK) {
+    if ([Chapters.BOOK, Chapters.B].includes(chapter)) {
       return ['bg-red-400', 'border-red-500', 'shadow-red-700']
     } else if (chapter === Chapters.TAP) {
       return ['bg-sky-400', 'border-sky-500', 'shadow-sky-700']
@@ -136,7 +136,7 @@ ${BorderColor}   ${ThemeColor}  shadow-6th ${ShadowColor} font-courier flex flex
               ShadowColor={ShadowColor}
               onClick={onClick}
             />
-            {/* <div onClick={() => changeChapter(Chapters.NOT_FOUND)}>404</div> */}
+            <div onClick={() => changeChapter(Chapters.NOT_FOUND)}>404</div>
             {/* <ARight
               onClick={changeLink}
               chapter={chapter}

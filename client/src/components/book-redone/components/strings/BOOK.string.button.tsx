@@ -18,6 +18,7 @@ export const BOOKstringButton: React.FC<IProps> = ({
   return (
     <motion.div
       whileHover={{ scale: 1.1, y: -3 }}
+      whileTap={{ scale: 0.9 }}
       className={`rounded-xl overflow-hidden relative`}
     >
       <div
@@ -57,6 +58,7 @@ export const BOOKstringButtonFunctional: React.FC<IProps2> = ({
   return (
     <motion.div
       whileHover={{ scale: 1.1, y: -3 }}
+      whileTap={{ scale: 0.9 }}
       className={`rounded-xl overflow-hidden relative`}
     >
       <div

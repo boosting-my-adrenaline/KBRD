@@ -25,6 +25,7 @@ import { lionwitch as letter8 } from '../../../../static/letters/lionwitch'
 // let test = `Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. `
 
 interface IProps {
+  show: boolean
   overall: number
   currentString: string
   handleStringErase(str: string): void
@@ -37,6 +38,7 @@ interface IProps {
 }
 
 export const BOOKstring: React.FC<IProps> = ({
+  show,
   currentString,
   handleStringErase,
   handleStringNoErase,
@@ -160,7 +162,7 @@ export const BOOKstring: React.FC<IProps> = ({
   return (
     <div
       className={`select-none z-50 w-1000px text-xl transform  flex flex-col gap-4 items-center border-black borde mt-4 text-gray-800 ${
-        !appear && `opacity-0`
+        (appear && show) || `opacity-0`
       } transition duration-700 ease-in-out`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}

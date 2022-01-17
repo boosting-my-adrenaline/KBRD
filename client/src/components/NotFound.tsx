@@ -1,37 +1,11 @@
+import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
+import { isTemplateSpan } from 'typescript'
 import { useTypedSelector } from '../hooks/useTypedSelector'
 import { useDidMountEffect } from '../utils/useDidMountEffect'
-import { Hexagon } from './loading/Hexagon'
 
 export const NotFound: React.FC = ({}) => {
-  let L = 17,
-    W = 23,
-    // let L = 1,
-    //   W = 1,
-    side = 120,
-    side2 = [118, 118],
-    empty = false
-
-  const [pos, setPos] = useState([0, 0])
-
-  useEffect(() => {
-    // let id0 = setTimeout(() => setShow(true), 200)
-
-    setPos([Math.floor(Math.random() * 100), Math.floor(Math.random() * 100)])
-
-    let id1 = setInterval(() => {
-      setPos([Math.floor(Math.random() * 100), Math.floor(Math.random() * 100)])
-      // setPos([Math.floor(Math.random() * 100), Math.floor(Math.random() * 100)])
-    }, Math.floor(Math.random() * 2000) + 1000)
-
-    return () => {
-      // clearTimeout(id0)
-      clearInterval(id1)
-    }
-  }, [])
-
   const [appear, setAppear] = useState(false)
-  const [appear2, setAppear2] = useState(false)
   const chapter = useTypedSelector((state) => state.nav.chapter)
 
   useEffect(() => {
@@ -39,12 +13,8 @@ export const NotFound: React.FC = ({}) => {
       setAppear(true)
     }, 300)
 
-    let id2 = setTimeout(() => {
-      setAppear2(true)
-    }, 800)
     return () => {
       clearTimeout(id)
-      clearTimeout(id2)
     }
   }, [])
 
@@ -53,61 +23,42 @@ export const NotFound: React.FC = ({}) => {
       setAppear(false)
     }, 250)
 
-    let id2 = setTimeout(() => {
-      setAppear2(false)
-    }, 0)
-
     return () => {
       clearTimeout(id)
-      clearTimeout(id2)
     }
   }, [chapter])
 
-  return (
-    <div style={{ opacity: appear ? 1 : 0, transition: `0.3s ease-in-out` }}>
-      <div
-        className={`absolute z-50 w-f flex justify-center mt-48 font-courier text-4xl`}
-      >{`{/* TO BE SVG HERE */}`}</div>
-      <div
-        className={` fixed top-0 bottom-0 left-0 right-0 flex flex-col align-center justify-center gap bg-yello-200 bg-gray-500 opacity-${
-          appear2 ? 100 : 0
-        }`}
-        style={{
-          transition: '0.2s ease-in-out',
+  const items = `404 NOT FOUND`
+    .split(``)
+    .map((el) => (el === ` ` ? `\u00a0` : el))
 
-          // backgroundColor: !show ? 'rgb(252, 211, 77)' : 'rgb(253, 230, 138)',
-          willChange: 'transform',
-        }}
-      >
-        <div
-          className={` flex flex-col align-center justify-center gap  opacity-15 will-change-transform transition duration-3000 ease-linear`}
-          style={{
-            transform: `perspective(2000px) rotateX(55deg) translateX(${pos[1]}px) translateY(${pos[0]}px)`,
-          }}
-        >
-          {Array.from({ length: L }, (_, i) => i).map((el) => (
-            <div
-              className={` flex flex-row align-center justify-center gap-2`}
-              style={{
-                margin: `-53.5px ${el % 2 == 0 ? '0' : '216px'} 0 0`,
-              }}
-            >
-              {Array.from({ length: W }, () => {}).map((_, i) => (
-                <Hexagon
-                  key={i}
-                  side={side}
-                  side2={
-                    // show ? side2[0] :
-                    side2[1]
-                  }
-                  empty={empty}
-                  fontSize={110}
-                />
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
+  const [turn, setTurn] = useState(0)
+
+  useEffect(() => {
+    let id = setTimeout(() => setTurn(1), 1500)
+  }, [])
+
+  return (
+    <div
+      className={`mt-24 z-20 translate-y-0 ${
+        appear || `opacity-0`
+      } transition duration-300 ease-in-out`}
+    >
+      <motion.div className={`flex `}>
+        {items.map((el, i) => (
+          <motion.div
+            initial={{ y: -500 }}
+            animate={{ y: turn ? 250 : 0 }}
+            transition={{ delay: 0.3 + i * 0.05 }}
+            // whileHover={{ scale: 2 }}
+            key={i}
+            className={`font-courier text-gray-800`}
+            style={{ fontSize: `7rem` }}
+          >
+            {el}
+          </motion.div>
+        ))}
+      </motion.div>
     </div>
   )
 }

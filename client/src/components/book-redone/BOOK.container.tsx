@@ -16,7 +16,11 @@ import { BOOKstats } from './components/BOOK.stats'
 import { thegreatgatsby as startingLetter } from '../../static/letters/thegreatgatsby'
 import { PerspectiveController } from '../PerspectiveController'
 
-export const BOOKContainer: React.FC = () => {
+interface IProps {
+  demo?: boolean
+}
+
+export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
   const [currentString, setCurrentString] = useState(startingLetter)
   const [STRING, setSTRING] = useState<string>(currentString)
 
@@ -34,8 +38,6 @@ export const BOOKContainer: React.FC = () => {
   }
 
   const [keyDown, setKeyDown] = useState('')
-
-  const [animationBook, setAnimationBook] = useState(true)
 
   const successAndFailedTypes = useRef(0)
   const failureTypes = useRef(0)
@@ -97,7 +99,9 @@ export const BOOKContainer: React.FC = () => {
 
   useDidMountEffect(() => {
     let id = setTimeout(() => {
-      setAppear(false)
+      if (!demo) {
+        setAppear(false)
+      }
     }, 250)
     return () => clearTimeout(id)
   }, [chapter])
@@ -246,15 +250,12 @@ export const BOOKContainer: React.FC = () => {
       <div
         className={`borde order-black w-f  flex flex-col
        justify-center items-center font-courier opacity-${
-         appear ? 100 : 0
+         appear || demo || 0
          //  100
-       } transition duration-500 ease-in-out`}
+       } transition duration-00 ease-in-out`}
       >
-        <div
-          className={`absolute`}
-          style={{ transform: `translateY(-360px)` }}
-        ></div>
         <BOOKbuttons
+          show={!demo}
           highlighter={hightlighter}
           setHighlighter={setHighlighter}
           punctuation={punctuation}
@@ -268,6 +269,7 @@ export const BOOKContainer: React.FC = () => {
         />
         <div className={`z-60`}>
           <BOOKstats
+            show={!demo}
             overall={successAndFailedTypes.current}
             failedTypesIndexes={failedTypesIndexes.current}
             chapter={chapter}
@@ -293,6 +295,7 @@ export const BOOKContainer: React.FC = () => {
           </div>
         </div>
         <BOOKstring
+          show={!demo}
           currentString={currentString}
           handleStringErase={handleStringErase}
           handleStringNoErase={handleStringNoErase}

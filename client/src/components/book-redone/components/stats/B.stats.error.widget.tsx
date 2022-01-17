@@ -55,6 +55,7 @@ export const BOOKstatsErrorsWidget: React.FC<IProps> = ({ errors }) => {
                 <div className={`w-f flex flex-col gap-4 items-start`}>
                   <motion.div
                     whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
                     className={`w-f flex justify-center items-center `}
                   >
                     <div
@@ -74,6 +75,7 @@ export const BOOKstatsErrorsWidget: React.FC<IProps> = ({ errors }) => {
 
                   <motion.div
                     whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
                     className={`w-f flex justify-center items-center `}
                   >
                     <div
@@ -88,6 +90,7 @@ export const BOOKstatsErrorsWidget: React.FC<IProps> = ({ errors }) => {
 
                   <motion.div
                     whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
                     className={`w-f flex justify-center items-center `}
                   >
                     <div
