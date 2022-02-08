@@ -4,6 +4,7 @@ import animationGif from '../../static/animation.gif'
 import animationGif2 from '../../static/animation2.gif'
 import animationGif3 from '../../static/animation3.gif'
 import animationGif4 from '../../static/animation4.gif'
+import useLanguage from '../../hooks/useLanguage'
 
 // onChange={(e) => setUsername(e.target.value.replaceAll(' ', ''))}
 
@@ -147,12 +148,18 @@ export const NBAinput: React.FC<IProps> = ({
     setTimeout(() => setShow((prev) => !prev), 175)
   }
 
+  const { isEng } = useLanguage()
+
   return (
-    <div className={`flex flex-col items-stretch`}>
+    <div
+      className={`flex flex-col items-stretch ${
+        isEng ? `font-courier` : `font-CourierC`
+      }`}
+    >
       <div
         className={` text-sm ${
           placeholderState ? placeholderColor() : `text-transparent`
-        } pl-4 transition duration-275 ease-in-out font-thin`}
+        } duration-275 pl-4 font-thin transition ease-in-out`}
         style={{
           transform: `translateX(${placeholderState ? 0 : 300}px)`,
         }}
@@ -161,18 +168,18 @@ export const NBAinput: React.FC<IProps> = ({
       </div>
 
       <div
-        className={`flex items-center overflow-hidden relative justify-center rounded-lg`}
+        className={`relative flex items-center justify-center overflow-hidden rounded-lg`}
         style={{ height: height }}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        <div className={`flex items-center justify-center w-f h-f`}>
+        <div className={`w-f h-f flex items-center justify-center`}>
           <input
             className={`w-f h-f border pl-4 ${
               active || hover ? borderActiveColor() : borderColor()
             } 
           ${active ? `text-gray-800` : `text-gray-700`}
-          rounded-lg bg-transparent active:bg-transparent hover:bg-transparent focus:bg-transparent outline-none ${text}`}
+          rounded-lg bg-transparent outline-none hover:bg-transparent focus:bg-transparent active:bg-transparent ${text}`}
             id={id}
             type={!show ? type : ``}
             onFocus={() => setActive(true)}
@@ -185,7 +192,7 @@ export const NBAinput: React.FC<IProps> = ({
           />
           {password && (
             <div
-              className={`absolute flex justify-center items-center rounded-lg cursor-pointer border hover:-translate-y-0.5 ${borderActiveColor()} ${hoverColor()} transition duration-250 ease-in-out`}
+              className={`absolute flex cursor-pointer items-center justify-center rounded-lg border hover:-translate-y-0.5 ${borderActiveColor()} ${hoverColor()} duration-250 transition ease-in-out`}
               style={{
                 height: 20,
                 width: 48,
@@ -216,7 +223,7 @@ export const NBAinput: React.FC<IProps> = ({
           )}
         </div>
         <div
-          className={`absolute -z-10 transition duration-275 ease-in-out`}
+          className={`duration-275 absolute -z-10 transition ease-in-out`}
           style={{
             transform: `translate(${
               !hover && !active ? `-550` : '10'
@@ -224,12 +231,12 @@ export const NBAinput: React.FC<IProps> = ({
           }}
         >
           <div
-            className={`${hoverColor()} border ${borderActiveColor()}  flex items-center flex-row-reverse rotate-20deg`}
+            className={`${hoverColor()} border ${borderActiveColor()}  rotate-20deg flex flex-row-reverse items-center`}
             style={{ width: 550, height: 255 }}
           ></div>
         </div>
         <div
-          className={`-z-20 absolute 
+          className={`absolute -z-20 
           ${bgColor()}
           `}
           style={{
@@ -238,7 +245,7 @@ export const NBAinput: React.FC<IProps> = ({
           }}
         />
         <div
-          className={`-z-10 absolute bg-transparent flex items-center pl-4 w-f h-f ${text} ${placeholderColor()}   font-thin transition duration-275 ease-in-out`}
+          className={`w-f h-f absolute -z-10 flex items-center bg-transparent pl-4 ${text} ${placeholderColor()}   duration-275 font-thin transition ease-in-out`}
           style={{
             transform: `translateX(${active || hover || value ? 550 : 0}px)`,
           }}
@@ -247,7 +254,7 @@ export const NBAinput: React.FC<IProps> = ({
         </div>
       </div>
 
-      <div className={`text-sm pl-4  ${placeholderColor()}`}>
+      <div className={`pl-4 text-sm  ${placeholderColor()}`}>
         {helper.trim() ? helper : `\u00a0`}
       </div>
     </div>

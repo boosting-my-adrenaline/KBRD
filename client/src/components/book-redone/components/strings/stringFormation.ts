@@ -1,7 +1,9 @@
 import { shuffleArray } from '../../../../utils/shuffleArray'
 
 export const shuffle = (STR: string): string => {
-  let res: string = STR.replaceAll('Mr. ', 'Mr.^').replaceAll('Dr. ', 'Dr.^')
+  let res: string = STR.replaceAll('Mr. ', 'Mr.^')
+    .replaceAll('Dr. ', 'Dr.^')
+    .replaceAll(`…`, `.`)
 
   let fuse = 0
   while (res.slice(0, 20) === STR.slice(0, 20) && fuse < 20) {
@@ -46,7 +48,8 @@ export const goToRandom = (STR: string): string => {
   )
 }
 
-const arr = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 '
+const arr =
+  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'
 
 export const removePunctuation = (STR: string, skip: number): string => {
   if (skip < 245) {

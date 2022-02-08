@@ -1,70 +1,36 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 
-import { BOOKContainer } from './components/book-redone/BOOK.container'
-import { TAPContainer } from './components/tap/TAP.container'
 import { Navbar } from './components/navbar/Navbar'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import { Width } from './utils/GetWidth'
-import { useTypedSelector } from './hooks/useTypedSelector'
-import { Background } from './components/BackgroundPlain'
-import { MAINcontainer } from './components/main/MAIN.container'
-import { Chapters } from './types/nav'
-import { INFOcontainer } from './components/info/INFO.container'
+import { Background } from './components/Background'
 import { InitialScreen } from './components/InitialScreen'
-import { AUTHcontainer } from './components/authorization/AUTH.container'
 // import { LoadingScreen } from './components/loading/LoadingScreen'
-import { useAuthAction } from './hooks/useAction'
 import { PerspectiveController } from './components/PerspectiveController'
 import { Below1000 } from './components/belowSupportedResolution/Below1000'
-import { NotFound } from './components/NotFound'
+// import { NotFound } from './components/NotFound'
 import { Footer } from './components/Footer'
 import { useAuth } from './hooks/auth.hook'
 import { AuthContext } from './context/AuthContext'
-import { TAPREDONEcontainer } from './components/tap-redone/TAP.REDONE.container'
 import { MAINREDONEcontainer } from './components/main-redone/MAIN.REDONE.container'
+import { useDidMountEffect } from './utils/useDidMountEffect'
+import { Test } from './components/Test'
+import useLocalStorage from './hooks/useLocalStorage'
+
+export enum MainState {
+  MAIN = 'MAIN',
+  BOOK = 'BOOK',
+  TAP = 'TAP',
+  INFO = 'INFO',
+}
 
 export const App: React.FC = () => {
-  const navigation = useNavigate()
-  const chapter = useTypedSelector((state) => state.nav.chapter)
-
-  const [block, setBlock] = useState(false)
-
-  const changeCurrentChapter = (chap: Chapters): void => {
-    if (chap === Chapters.MAIN) {
-      navigation('/')
-    } else if (chap === Chapters.NOT_FOUND) {
-      navigation('/not_found')
-    } else if (chap === Chapters.B) {
-      return
-    } else {
-      navigation(`/${chap.toLowerCase()}`)
-    }
-  }
-
-  useEffect(() => {
-    if (block) return
-
-    setBlock(true)
-    let id = setTimeout(() => changeCurrentChapter(chapter), 1100)
-
-    let id2 = setTimeout(() => setBlock(false), 1200)
-
-    return () => {
-      clearTimeout(id)
-      clearTimeout(id2)
-      setBlock(false)
-    }
-  }, [chapter])
-
   const [initialScreen, setInitialScreen] = useState(false)
 
   useEffect(() => {
-    // setTimeout(() => setInitialScreen(false), 1200)
+    setTimeout(() => setInitialScreen(false), 1200)
   }, [])
 
-  const isLoading = useTypedSelector((state) => state.nav.isLoading)
-
-  // const { setLoadingOn, setLoadingOff } = useNavAction()
   const [perspective, setPerspective] = useState<[number, number, boolean]>([
     0,
     100,
@@ -79,18 +45,11 @@ export const App: React.FC = () => {
     setPerspective([perspective, margin, is1000plus])
   }
 
-  const isOpened: boolean = useTypedSelector((state) => state.auth.isOpened)
-  const { setOpenOff, setOpenOn } = useAuthAction()
+  useDidMountEffect(() => {
+    let before = mainState
 
-  useEffect(() => {
-    setOpenOff()
-  }, [])
-
-  const renders = useRef(0)
-
-  useEffect(() => {
-    renders.current++
-  })
+    return () => setMainState(before)
+  }, [perspective[2]])
 
   useEffect(() => {
     window.addEventListener('keydown', (e) => {
@@ -110,21 +69,36 @@ export const App: React.FC = () => {
   const { token, login, logout, userId, email } = useAuth()
   const isAuthenticated = !!token
 
-  // useEffect(() => {
-  //   window.M.updateTextFields()
-  // }, [])
-  // const routes = useRoutes(isAuthenticated)
+  const [mainState, setMainState] = useState(MainState.MAIN)
+  const navigate = useNavigate()
+
+  useDidMountEffect(() => {
+    if (mainState === MainState.MAIN) {
+      navigate(`/`)
+    } else {
+      navigate(`/${mainState.toLowerCase()}`)
+    }
+  }, [mainState])
+
+  const [authOpen, setAuthOpen] = useState(false)
+
+  const [trainingLanguage, setTrainingLanguage] = useLocalStorage(
+    `training-lang`,
+    true
+  )
+
+  const toggleTrainingLanguage = () => {
+    setTrainingLanguage((prev) => !prev)
+  }
 
   return (
     <AuthContext.Provider
       value={{ token, login, logout, userId, isAuthenticated, email }}
     >
-      <div className={`  flex justify-center items-center`}>
+      <div className={`  flex items-center justify-center`}>
         <InitialScreen show={initialScreen} />
         <PerspectiveController setPerspective={handleSetPerspective} />
-        {/* <div className={`absolute top-8 left-8 `} style={{ zIndex: 999999 }}>
-        renders: {renders.current}
-      </div> */}
+
         {perspective[2] ? null : <Below1000 />}
 
         {perspective[2] ? (
@@ -134,35 +108,41 @@ export const App: React.FC = () => {
               transition: '1.5s ease',
             }}
           >
-            <Navbar block={block} />
-            <Footer />
-            <Background />
+            <Navbar
+              mainState={mainState}
+              setMainState={setMainState}
+              authOpen={authOpen}
+              setAuthOpen={setAuthOpen}
+              trainingLanguage={trainingLanguage}
+              toggleTrainingLanguage={toggleTrainingLanguage}
+            />
+            <Footer mainState={mainState} />
 
             <div
-              className={`fixed right-0 left-0 top-0 bottom-0 bg-gray-400 z-40  opacity-${
-                isOpened ? '50 cursor-pointer' : '0'
-              }`}
+              className={`fixed inset-0 z-[2023]  bg-gray-400 blur-[5px] ${
+                authOpen
+                  ? 'block cursor-pointer opacity-50'
+                  : 'hidden opacity-0'
+              } duration-400 transition ease-in-out `}
               style={{
-                transition: '0.4s ease-in-out',
-                display: isOpened ? 'block' : 'none',
+                display: authOpen ? 'block' : 'none',
               }}
-              onMouseDown={() => setOpenOff()}
+              onMouseDown={() => setAuthOpen(false)}
             ></div>
 
-            <div className={`flex justify-center items-center`}>
-              {/* <div className={` 2visible z-50 absolute top-16`}>
-                <Width />
-              </div> */}
+            <div className={` flex items-center justify-center`}>
               <Routes>
-                {/* <Route path="/" element={<MAINcontainer />} /> */}
-                <Route path="/" element={<MAINREDONEcontainer />} />
-                {/* <Route path="/tap" element={<TAPContainer />} /> */}
-                <Route path="/tap" element={<TAPREDONEcontainer />} />
-                <Route path="/book" element={<BOOKContainer />} />
-                <Route path="/info" element={<INFOcontainer />} />
-                <Route path="*" element={<NotFound />} />
+                <Route
+                  path="*"
+                  element={
+                    <MAINREDONEcontainer
+                      mainState={mainState}
+                      setMainState={setMainState}
+                      trainingLanguage={trainingLanguage}
+                    />
+                  }
+                />
               </Routes>
-              {/* <BOOKContainer /> */}
             </div>
           </div>
         ) : null}

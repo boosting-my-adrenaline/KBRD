@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import useLanguage from '../../../../hooks/useLanguage'
 import {
   BOOKbuttonVisual,
   BOOKbuttonVisualFunctional,
@@ -37,12 +38,16 @@ export const BOOKfunctionalButtons: React.FC<IProps> = ({
     return () => clearTimeout(id)
   }, [])
 
+  const { isEng } = useLanguage()
+
   return (
     <div
-      className={`z-10 flex-grow flex flex-row justify-start  items-center borde border-red-900 transition duration-500 ease`}
+      className={`borde ease z-10 flex flex-grow  flex-row items-center justify-start border-red-900 transition duration-500 ${
+        isEng || `font-CourierC`
+      }`}
     >
       <div
-        className={`-z-1 flex-grow flex flex-row justify-start items-center gap-4  borde border-red-500  transition  duration-700 delay-100 ease-in-out `}
+        className={`-z-1 borde flex flex-grow flex-row items-center justify-start  gap-4 border-red-500  transition  delay-100 duration-700 ease-in-out `}
         style={{
           transform: `rotateY(${show ? 0 : -90}deg) translateX(${
             show ? 0 : -500
@@ -50,27 +55,27 @@ export const BOOKfunctionalButtons: React.FC<IProps> = ({
         }}
       >
         <BOOKbuttonVisual
-          tag={'hightlighter'}
+          tag={isEng ? 'hightlighter' : `выделитель`}
           onClick={setHighlighter}
           active={highlighter}
-          hoverInfo={`turns on/off hightlighter`}
         />
 
         <BOOKbuttonVisual
-          tag={`punctuation`}
+          tag={isEng ? `punctuation` : `пунктуация`}
           active={punctuation}
           onClick={setPunctuation}
-          hoverInfo={`removes punctuation`}
         />
         <BOOKbuttonVisual
-          tag={`case`}
+          tag={isEng ? `case` : `регистр`}
           active={caseSensitivity}
           onClick={setCaseSensetivity}
-          hoverInfo={`turns on/off case sensetivity`}
         />
         <div className={'flex-grow'}></div>
 
-        <BOOKbuttonVisualFunctional title={`reset`} onClick={handleReset} />
+        <BOOKbuttonVisualFunctional
+          title={isEng ? `reset` : `сброс`}
+          onClick={handleReset}
+        />
         <div className={'px-2'}></div>
 
         <BOOKcapsLockButton caps={caps} capsError={capsError} />

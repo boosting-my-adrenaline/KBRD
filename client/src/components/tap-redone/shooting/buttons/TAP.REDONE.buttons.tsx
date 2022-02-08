@@ -1,12 +1,14 @@
 import React from 'react'
+import useLanguage from '../../../../hooks/useLanguage'
 import { NBAbutton } from '../../../profile/NBA.button'
 import { NBAslider } from '../../../profile/NBA.slider'
-import { KeyColor } from '../../../tap/TAP.shooting'
-import { State } from '../TAP.REDONE.main'
+import { AppearType, KeyColor, State } from '../TAP.REDONE.main'
+import { TAPREDONEappear } from './TAP.REDONE.appear'
 import { TAPREDONEkeyColor } from './TAP.REDONE.key.color'
 import { TAPREDONEkeyType } from './TAP.REDONE.key.type'
 
 interface IProps {
+  demo: boolean
   state: State
   handleStart: () => void
   interval: number
@@ -20,9 +22,14 @@ interface IProps {
   spaceDown: boolean
   started: boolean
   maxLimit: number
+  appearType: AppearType
+  setAppearType: (type: AppearType) => void
+  targets: number
+  setTargets: (targets: number) => void
 }
 
 export const TAPREDONEbuttons: React.FC<IProps> = ({
+  demo,
   state,
   handleStart,
   interval,
@@ -36,30 +43,66 @@ export const TAPREDONEbuttons: React.FC<IProps> = ({
   spaceDown,
   started,
   maxLimit,
+  appearType,
+  setAppearType,
+  targets,
+  setTargets,
 }) => {
+  const getColor = () => {
+    switch (keyColor) {
+      case `emerald`:
+        return [`bg-emerald-500 `, `bg-emerald-200`, `border-emerald-300`]
+      case `cyan`:
+        return [`bg-cyan-500 `, `bg-cyan-200`, `border-cyan-300`]
+      case `amber`:
+        return [`bg-amber-500 `, `bg-amber-200`, `border-amber-300`]
+      case `fuchsia`:
+        return [`bg-fuchsia-500 `, `bg-fuchsia-200`, `border-fuchsia-300`]
+      case `pink`:
+        return [`bg-pink-500 `, `bg-pink-200`, `border-pink-300`]
+      default:
+        return [`bg-red-500 `, `bg-red-200`, `border-red-300`]
+    }
+  }
+
+  const { isEng } = useLanguage()
+
   return (
     <div
-      className={`flex justify-center items-center gap-10 w-1000px borde border-sky-800 select-none`}
+      className={`w-1000px borde ${
+        isEng ? `font-courier` : `font-CourierC`
+      } flex select-none items-center justify-center gap-10 border-sky-800 ${
+        demo && `opacity-0`
+      } grid-cols-custom1 grid transition duration-500 ease-in-out`}
     >
-      <TAPREDONEkeyColor setKeyColor={setKeyColor} keyColor={keyColor} />
-
-      <NBAslider
-        tag={`interval`}
-        min={200}
-        max={1600}
-        step={100}
-        value={interval}
-        setValue={setInterval}
-        postTag={`ms`}
-      />
-      <div className={`flex justify-center items-center -translate-y-5px`}>
+      <div className={`flex items-center justify-end`}>
+        <TAPREDONEappear
+          interval={interval}
+          setInterval={setInterval}
+          limit={limit}
+          setLimit={setLimit}
+          maxLimit={maxLimit}
+          appearType={appearType}
+          setAppearType={setAppearType}
+          targets={targets}
+          setTargets={setTargets}
+          keyColor={keyColor}
+        />
+      </div>
+      <div className={` flex items-center justify-center`}>
         <NBAbutton
           tag={
             started && state !== State.RUN
-              ? `READY`
+              ? isEng
+                ? `READY`
+                : `ПАУЗА`
               : state === State.RUN
-              ? `PAUSE`
-              : `START`
+              ? isEng
+                ? `PAUSE`
+                : `ПАУЗА`
+              : isEng
+              ? `START`
+              : `СТАРТ`
           }
           onClick={handleStart}
           bg={
@@ -87,19 +130,18 @@ export const TAPREDONEbuttons: React.FC<IProps> = ({
           extraActive={spaceDown}
         />
       </div>
-      <NBAslider
-        tag={`limit`}
-        min={5}
-        max={maxLimit}
-        step={1}
-        value={limit}
-        setValue={setLimit}
-      />
-      <TAPREDONEkeyType
-        keyType={keyType}
-        handleKeyType={handleKeyType}
-        keyColor={keyColor}
-      />
+      <div
+        className={`flex h-[70px] w-[400px] items-center justify-evenly gap-8 rounded-md border ${
+          getColor()[2]
+        }`}
+      >
+        <TAPREDONEkeyColor setKeyColor={setKeyColor} keyColor={keyColor} />
+        <TAPREDONEkeyType
+          keyType={keyType}
+          handleKeyType={handleKeyType}
+          keyColor={keyColor}
+        />
+      </div>
     </div>
   )
 }

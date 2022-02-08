@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import AS from '../../../static/profiles/AS.jpeg'
+import AS from '../../../static/profiles/anakin3.jpeg'
 
 export const PhotoMiniature: React.FC = () => {
   // const user = useTypedSelector((state) => state.auth.user)
@@ -30,7 +30,7 @@ export const PhotoMiniature: React.FC = () => {
     <img
       alt="logo"
       src={AS}
-      className={` flex bg-white justify-center items-center ${
+      className={` flex items-center justify-center bg-white object-cover ${
         !appear && `opacity-0`
       } transition duration-100 ease-linear`}
     />

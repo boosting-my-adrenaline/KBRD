@@ -4,9 +4,15 @@ module.exports = {
 
   theme: {
     extend: {
+      gridTemplateColumns: {
+        custom1: `1fr min-content 1fr`,
+      },
+
       screens: {
         '1k': '1000px',
         '135k': '1350px',
+        1200: '1200px',
+        1400: '1400px',
         '160k': '1600px',
         '3xl': '1600px',
         '2k': '2000px',
@@ -129,6 +135,7 @@ module.exports = {
         '3.5em': '3.5em',
         '4em': '4em',
         '5em': '5em',
+        custom1: 'calc(10px + 2vmin)',
       },
 
       borderRadius: {
@@ -183,6 +190,15 @@ module.exports = {
       fontFamily: {
         courier: 'courier',
         roboto: `Roboto Condensed', sans-serif`,
+        BebasNeue: ['Bebas Neue'],
+        Bebas: ['Bebas'],
+        ArchitectsDaughter: ['Architects Daughter'],
+        Staatliches: ['Staatliches'],
+        Merriweather: ['Merriweather'],
+        Cooper: ['Cooper'],
+        Nuvo: ['Nuvo'],
+        Pitch: ['Pitch'],
+        CourierC: [`CourierC`],
       },
 
       transform: {

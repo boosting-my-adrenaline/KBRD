@@ -5,7 +5,6 @@ import { BOOKLayout } from './components/BOOK.layout'
 import { capitals, KEYS, notCapitals } from './components/strings/strings'
 
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
-import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { BOOKpointer } from './components/BOOK.pointer'
 import { BOOKbuttons } from './components/BOOK.buttons'
 import { BOOKstring } from './components/strings/BOOK.string'
@@ -13,16 +12,42 @@ import { moveString } from './components/strings/stringFormation'
 import { useKeyPress } from '../../utils/useKeyPress'
 import { BOOKfailures } from './components/BOOK.failures'
 import { BOOKstats } from './components/BOOK.stats'
-import { thegreatgatsby as startingLetter } from '../../static/letters/thegreatgatsby'
+import { lorem as letter1, lorem } from './../../static/letters/lorem'
+import { gonewiththewind as letter2 } from './../../static/letters/gonewiththewind'
+import { thelordoftherings as letter3 } from './../../static/letters/thelordoftherings'
+import { robinson as letter4 } from './../../static/letters/robinson'
+import { the1984 as letter5 } from './../../static/letters/the1984'
+import { thegreatgatsby as letter6 } from './../../static/letters/thegreatgatsby'
+import { tokillamockinbird as letter7 } from './../../static/letters/tokillamockinbird'
+import { lionwitch as letter8 } from './../../static/letters/lionwitch'
 import { PerspectiveController } from '../PerspectiveController'
+import useLocalStorage from '../../hooks/useLocalStorage'
+import useLanguage from '../../hooks/useLanguage'
 
 interface IProps {
   demo?: boolean
 }
 
 export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
-  const [currentString, setCurrentString] = useState(startingLetter)
-  const [STRING, setSTRING] = useState<string>(currentString)
+  // const startingLetter = Array.from({ length: 500 }, () => 'A').join('') /////////////////////////////////
+
+  // const [currentString, setCurrentString] = useLocalStorage(
+  //   'BK-current string',
+  //   [letter1, letter2, letter3, letter4, letter5, letter6, letter7, letter8][
+  //     Math.floor(Math.random() * 8)
+  //   ]
+  // )
+  const [currentString, setCurrentString] = useState(
+    [letter1, letter2, letter3, letter4, letter5, letter6, letter7, letter8][
+      Math.floor(Math.random() * 8)
+    ]
+  )
+
+  const [STRING, setSTRING] = useLocalStorage('BK-STRING', currentString)
+
+  useEffect(() => {
+    setSTRING(currentString)
+  }, [])
 
   function handleStringErase(STR: string): void {
     setCurrentString(STR)
@@ -59,9 +84,7 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
   const lastKey = useRef('')
   const prelastKey = useRef('')
 
-  const [hightlighter, setHighlighter] = useState(true)
-
-  const chapter = useTypedSelector((state) => state.nav.chapter)
+  const [hightlighter, setHighlighter] = useLocalStorage('highlight', true)
 
   const caps = useKeyPress('CapsLock')
   const shift = useKeyPress('Shift')
@@ -88,31 +111,17 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
 
   const capsError = useRef(0)
 
-  const [appear, setAppear] = useState(false)
-
-  useEffect(() => {
-    let id = setTimeout(() => {
-      setAppear(true)
-    }, 100)
-    return () => clearTimeout(id)
-  }, [])
-
-  useDidMountEffect(() => {
-    let id = setTimeout(() => {
-      if (!demo) {
-        setAppear(false)
-      }
-    }, 250)
-    return () => clearTimeout(id)
-  }, [chapter])
-
   useEffect(() => {
     prelastKey.current = lastKey.current
   }, [keyDown])
 
   const handleEvent = (event: KeyboardEvent) => {
     const { key } = event
-    // console.log(key)
+    console.log(
+      `key: ${key} , STRING[0]: ${STRING[0]}, is===? ${
+        key === STRING[0] ? `yes` : `no`
+      }`
+    )
 
     if (KEYS.includes(key)) {
       setKeyDown(key)
@@ -121,17 +130,19 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
   }
 
   useEffect(() => {
-    window.addEventListener('keydown', (e) => {
-      handleEvent(e)
-    })
+    window.addEventListener('keydown', handleEvent)
     return () => {
-      window.removeEventListener('keydown', (e) => {
-        handleEvent(e)
-      })
+      window.removeEventListener('keydown', handleEvent)
     }
   }, [])
 
   useEffect(() => {
+    if (demo) return
+    //   return console.log(`demo true`)
+    // } else {
+    //   return console.log(`demo false`)
+    // }
+
     if (keyDown === STRING[0]) {
       SUCCESS()
     } else if (keyDown !== STRING[0] && KEYS.includes(keyDown)) {
@@ -215,8 +226,11 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
     setReseting((prev) => prev + 1)
   }
 
-  const [punctuation, setPunctuation] = useState(true)
-  const [caseSensitivity, setCaseSensetivity] = useState(true)
+  const [punctuation, setPunctuation] = useLocalStorage(`BK-punctuation`, true)
+  const [caseSensitivity, setCaseSensetivity] = useLocalStorage(
+    `BK-punctuation`,
+    true
+  )
 
   const renders = useRef<number>(0)
 
@@ -225,6 +239,7 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
   })
 
   const [running, setRunning] = useState(false)
+
   useDidMountEffect(() => {
     setRunning(true)
 
@@ -238,6 +253,12 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
   const handleSetPerspective = (perspective: number, margin: number) => {
     setPerspective([perspective, margin])
   }
+  // const { isEng } = useLanguage()
+
+  const handleTest = () => {
+    // setSTRING((str) => str.substring(1) + str[0])
+    // SUCCESS()
+  }
 
   return (
     <div
@@ -248,11 +269,11 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
       }}
     >
       <div
-        className={`borde order-black w-f  flex flex-col
-       justify-center items-center font-courier opacity-${
-         appear || demo || 0
-         //  100
-       } transition duration-00 ease-in-out`}
+        className={`borde order-black w-f  font-courier flex ${`font-CourierC`}
+       flex-col items-center justify-center opacity-${
+         //  appear || demo || 0
+         100
+       } duration-00 transition ease-in-out`}
       >
         <BOOKbuttons
           show={!demo}
@@ -266,31 +287,24 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
           capsError={capsError.current}
           running={running}
           handleReset={handleReset}
+          handleTest={handleTest}
         />
         <div className={`z-60`}>
           <BOOKstats
             show={!demo}
             overall={successAndFailedTypes.current}
             failedTypesIndexes={failedTypesIndexes.current}
-            chapter={chapter}
             reseting={reseting}
           />
         </div>
-        <div className="invisible 1k:visible   flex flex-col justify-center items-center w-f border-black borde">
+        <div className="1k:visible w-f  borde invisible flex flex-col items-center justify-center border-black">
           <div
-            className={`invisible 1k:visible  flex flex-col
-        justify-center items-center bordr border-red-900 my-10`}
+            className={`1k:visible bordr  invisible my-10
+        flex flex-col items-center justify-center border-red-900`}
           >
-            <BOOKBook STRING={STRING} chapter={chapter} />
-            <BOOKLayout
-              STRING={STRING}
-              chapter={chapter}
-              highlighter={hightlighter}
-            />
-            <BOOKfailures
-              failedTypesIndexes={failedTypesIndexes.current}
-              chapter={chapter}
-            />
+            <BOOKBook STRING={STRING} />
+            <BOOKLayout STRING={STRING} highlighter={hightlighter} />
+            <BOOKfailures failedTypesIndexes={failedTypesIndexes.current} />
             <BOOKpointer overall={successAndFailedTypes.current} />
           </div>
         </div>
@@ -303,11 +317,16 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
           uppercase={shiftKey || capsKey}
           punctuation={punctuation}
           caseSensitivity={caseSensitivity}
-          chapter={chapter}
           running={running}
         />
       </div>
       <PerspectiveController setBook={handleSetPerspective} />
+      {/* <BOOKautopilot
+        mode={1}
+        SUCCESS={SUCCESS}
+        FAILURE={FAILURE}
+        handleTest={handleTest}
+      /> */}
     </div>
   )
 }

@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { useTypedSelector } from '../../hooks/useTypedSelector'
+import { MainState } from '../../App'
 import { PerspectiveController } from '../PerspectiveController'
 import { INFOslide } from './INFO.slide'
 
-export const INFOcontainer: React.FC = () => {
-  const chapter = useTypedSelector((state) => state.nav.chapter)
+interface IProps {
+  mainState: MainState
+}
 
+export const INFOcontainer: React.FC<IProps> = ({ mainState }) => {
   const lorem = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur sed
   ratione voluptates repudiandae reprehenderit adipisci impedit qui nihil,
   eum ea aperiam, fugit delectus voluptatum accusantium facere porro beatae,
@@ -40,7 +42,7 @@ export const INFOcontainer: React.FC = () => {
       <div
         className={`flex flex-col justify-center items-center z-20 transition duration-1000 ease-linear`}
       >
-        <INFOslide chapter={chapter} />
+        <INFOslide mainState={mainState} />
       </div>
       <PerspectiveController setInfo={handleSetPerspective} />
     </div>

@@ -1,15 +1,15 @@
 import { GitHub } from '@material-ui/icons'
 import React, { useState, useEffect } from 'react'
-import { useTypedSelector } from '../hooks/useTypedSelector'
+import { MainState } from '../App'
 import { useDidMountEffect } from '../utils/useDidMountEffect'
 import { PerspectiveController } from './PerspectiveController'
 
 interface IProps {
   below?: boolean
+  mainState?: MainState
 }
 
-export const Footer: React.FC<IProps> = ({ below = false }) => {
-  const chapter = useTypedSelector((state) => state.nav.chapter)
+export const Footer: React.FC<IProps> = ({ below = false, mainState = 1 }) => {
   const [appear, setAppear] = useState(false)
 
   const [params, setParams] = useState([0, 0])
@@ -35,7 +35,7 @@ export const Footer: React.FC<IProps> = ({ below = false }) => {
     return () => {
       clearTimeout(id)
     }
-  }, [chapter])
+  }, [mainState])
 
   const [emailCopy, setEmailCopy] = useState(false)
 
@@ -54,7 +54,9 @@ export const Footer: React.FC<IProps> = ({ below = false }) => {
   return (
     <>
       <div
-        className={`z-2022 w-full fixed bottom-0 right-0 left-0  border-t border-gray-500 py-2  flex  flex-between ${
+        className={`z-2022 w-full fixed bottom-0 right-0 left-0  border-t border-gray-500 py-2  flex ${
+          appear || `translate-y-20`
+        }  flex-between ${
           below ? `justify-around text-white bg-gray-800 ` : `gap-6 `
         } items-center bg-gray-400/30 opacity-100 transition duration-500 ease-in-out `}
         style={{

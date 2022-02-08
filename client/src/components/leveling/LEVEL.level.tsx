@@ -45,11 +45,11 @@ export const LEVELlevel: React.FC<IProps> = ({
   }
 
   return (
-    <div className={`flex flex-row gap-4 mx-auto w-1028px -translate-y-10px`}>
+    <div className={`w-1028px -translate-y-10px mx-auto flex flex-row gap-4`}>
       <LEVELicon level={level} expMSG={expMSG} />
-      <div className={`flex flex-row w-f items-center`}>
+      <div className={`w-f flex flex-row items-center`}>
         <div
-          className={` w-f h-40px border border-gray-900 justify-center rounded-xl flex items-center overflow-hidden 
+          className={` w-f h-40px flex items-center justify-center overflow-hidden rounded-xl border border-gray-900 
             ${bgColor()[1]} 
           `}
         >

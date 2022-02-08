@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import React from 'react'
+import useLanguage from '../../../../hooks/useLanguage'
 import { KeyColor } from '../TAP.REDONE.main'
 
 interface IProps {
@@ -30,6 +31,8 @@ export const TAPREDONEkeyType: React.FC<IProps> = ({
     }
   }
 
+  const { isEng } = useLanguage()
+
   const element = (tag: string, num: 1 | 2 | 3, extra: string) => (
     <motion.div
       initial={{ padding: `2px 7px` }}
@@ -49,7 +52,7 @@ export const TAPREDONEkeyType: React.FC<IProps> = ({
   )
 
   const elements: [string, 1 | 2 | 3, string][] = [
-    [`ABC`, 1, ``],
+    [isEng ? `ABC` : `АБВ`, 1, ``],
     [`123`, 2, ``],
     [`#$%`, 3, ``],
   ]
@@ -58,7 +61,7 @@ export const TAPREDONEkeyType: React.FC<IProps> = ({
 
   return (
     <div
-      className={`w-150px flex items-center justify-center  rounded-m font-courier gap-1 text-xl `}
+      className={`w-150px rounded-m  flex  items-center justify-center gap-1 text-xl `}
     >
       {buttons}
     </div>

@@ -12,19 +12,21 @@ export const TAPREDONEelement: React.FC<IProps> = ({ char, color }) => {
   const [tag, setTag] = useState(``)
 
   useDidMountEffect(() => {
+    let id = setTimeout(() => {})
     if (char) {
       setTag(char)
       setShow(true)
     } else {
       setTag(``)
-      setTimeout(() => setShow(false), 100)
+      id = setTimeout(() => setShow(false), 100)
     }
+    return () => clearTimeout(id)
   }, [char])
 
   // char = `A`
   return (
     <div
-      className={`flex justify-center items-center font-courier w-100px h-100px text-gray-900 `}
+      className={`font-courier w-100px h-100px flex items-center justify-center text-gray-900 `}
     >
       {show ? (
         <motion.div
@@ -36,7 +38,7 @@ export const TAPREDONEelement: React.FC<IProps> = ({ char, color }) => {
             border: tag ? `` : `1px solid grey`,
           }}
           transition={{ duration: 0.2 }}
-          className={`${color}  flex justify-center items-center rounded-full uppercase`}
+          className={`${color}  flex items-center justify-center rounded-full uppercase`}
         >
           <div
             className={` flex items-center justify-center`}
@@ -49,7 +51,7 @@ export const TAPREDONEelement: React.FC<IProps> = ({ char, color }) => {
             {tag}
             {[`f`, 'j'].includes(tag) && (
               <div
-                className={` w-10px h-2px absolute bg-gray-800 rounded-full translate-y-18px`}
+                className={` w-10px h-2px translate-y-18px absolute rounded-full bg-gray-800`}
               />
             )}
           </div>
@@ -58,5 +60,6 @@ export const TAPREDONEelement: React.FC<IProps> = ({ char, color }) => {
         <div className={`w-50px h-50px`} />
       )}
     </div>
+    // <div>{char}</div>
   )
 }

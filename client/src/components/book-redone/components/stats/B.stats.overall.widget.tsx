@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { BOOKelectronicmeter } from './B.electronic.meter'
 import { BOOKphysicalmeter } from './BOOK.physical.meter'
 import { motion } from 'framer-motion'
+import useLocalStorage from '../../../../hooks/useLocalStorage'
+import useLanguage from '../../../../hooks/useLanguage'
 
 interface IProps {
   overall: number
@@ -10,14 +12,18 @@ interface IProps {
 export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [isHovered2, setIsHovered2] = useState(false)
-  const [showType, setShowType] = useState<
+  const [showType, setShowType] = useLocalStorage<
     `electronic` | `physical` | 'simple'
-  >('electronic')
+  >(`overall-widget`, 'electronic')
+
+  const { isEng } = useLanguage()
 
   return (
-    <div className={`flex justify-center items-center`}>
+    <div
+      className={`flex items-center justify-center ${isEng || `font-CourierC`}`}
+    >
       <div
-        className={`z-10 w-140px flex flex-row justify-center borde border-black px-2 rounded-xl ${
+        className={`w-140px borde z-10 flex flex-row justify-center rounded-xl border-black px-2 ${
           (isHovered || isHovered2) && `bg-red-100`
         }`}
         onMouseEnter={() => setIsHovered(true)}
@@ -33,31 +39,31 @@ export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
       </div>
       {isHovered || isHovered2 ? (
         <div
-          className={`absolute bg-red-200 rounded-xl  flex  p-2 px-6 border border-red-500 w-250px h-260px shadow-10th -translate-y-85px`}
+          className={`w-250px h-260px shadow-10th  -translate-y-85px  absolute flex rounded-xl border border-red-500 bg-red-200 p-2 px-6`}
           onMouseEnter={() => setIsHovered2(true)}
           onMouseLeave={() => setIsHovered2(false)}
         >
-          <div className={`flex justify-center  w-f`}>
+          <div className={`w-f flex  justify-center`}>
             {
-              <div className={`flex flex-col  items-center w-f`}>
+              <div className={`w-f flex  flex-col items-center`}>
                 <div
-                  className={`flex justify-center w-f text-gray-900 text-xl`}
+                  className={`w-f flex justify-center text-xl text-gray-900`}
                 >
-                  overall
+                  {isEng ? `overall` : ` всего`}
                 </div>
                 <div
-                  className={`w-f mx-2 h-px my-2 bg-red-400 rounded-full`}
+                  className={`w-f mx-2 my-2 h-px rounded-full bg-red-400`}
                 ></div>
-                <div className={`w-f flex flex-col gap-4 items-start`}>
+                <div className={`w-f flex flex-col items-start gap-4`}>
                   <motion.div
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 0.9 }}
-                    className={`w-f flex justify-center items-center `}
+                    className={`w-f flex items-center justify-center `}
                   >
                     <div
-                      className={`p-1 px-8 cursor-pointer ${
+                      className={`cursor-pointer p-1 px-8 ${
                         showType === 'physical' && `bg-red-400`
-                      } border border-red-400 rounded-xl flex items-center justify-center w-180px h-35px`}
+                      } w-180px h-35px flex items-center justify-center rounded-xl border border-red-400`}
                       onMouseDown={() => setShowType(`physical`)}
                     >
                       <BOOKphysicalmeter
@@ -71,12 +77,12 @@ export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
                   <motion.div
                     whileTap={{ scale: 0.9 }}
                     whileHover={{ scale: 1.2 }}
-                    className={`w-f flex justify-center items-center `}
+                    className={`w-f flex items-center justify-center `}
                   >
                     <div
-                      className={`p-1 px-8 cursor-pointer ${
+                      className={`cursor-pointer p-1 px-8 ${
                         showType === 'electronic' && `bg-red-400`
-                      } border border-red-400 rounded-xl flex items-center justify-center w-180px h-35px`}
+                      } w-180px h-35px flex items-center justify-center rounded-xl border border-red-400`}
                       onMouseDown={() => setShowType(`electronic`)}
                     >
                       <BOOKelectronicmeter mileage={overall || 1043} />
@@ -86,12 +92,12 @@ export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
                   <motion.div
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 0.9 }}
-                    className={`w-f flex justify-center items-center `}
+                    className={`w-f flex items-center justify-center `}
                   >
                     <div
-                      className={`p-1 px-8 cursor-pointer ${
+                      className={`cursor-pointer p-1 px-8 ${
                         showType === 'simple' && `bg-red-400`
-                      } border border-red-400 rounded-xl flex items-center justify-center text-emerald-500 w-180px h-35px`}
+                      } w-180px h-35px flex items-center justify-center rounded-xl border border-red-400 text-emerald-500`}
                       onMouseDown={() => setShowType(`simple`)}
                     >
                       <BOOKelectronicmeter mileage={overall || 1043} hidden />

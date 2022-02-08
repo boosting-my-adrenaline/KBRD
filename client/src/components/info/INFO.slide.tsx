@@ -1,12 +1,12 @@
 import React from 'react'
-import { Chapters } from '../../types/nav'
+import { MainState } from '../../App'
 import { FadeText2 } from '../../utils/FadeText2'
 
 interface IProps {
-  chapter: Chapters
+  mainState: MainState
 }
 
-export const INFOslide: React.FC<IProps> = ({ chapter }) => {
+export const INFOslide: React.FC<IProps> = ({ mainState }) => {
   const loremus = `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident,
   earum. Hic at quo eveniet soluta fugiat explicabo, inventore quia, vel
   ipsum dolorem eaque omnis itaque pariatur nostrum cumque, qui commodi.
@@ -30,7 +30,7 @@ export const INFOslide: React.FC<IProps> = ({ chapter }) => {
     >
       <FadeText2
         title={`Lorem ipsum dolor sit amet.`}
-        hide={chapter}
+        hide={mainState}
         delay={200}
         component="h1"
       />
@@ -38,7 +38,7 @@ export const INFOslide: React.FC<IProps> = ({ chapter }) => {
       <FadeText2
         title={loremus}
         // delay={[300, 500]}
-        hide={chapter}
+        hide={mainState}
         delay={225}
         component="h3"
         // multiple={true}

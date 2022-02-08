@@ -1,6 +1,4 @@
 // import React, { useEffect } from 'react'
-import { useAuthAction } from '../../hooks/useAction'
-import { useTypedSelector } from '../../hooks/useTypedSelector'
 // import { useDidMountEffect } from '../../utils/useDidMountEffect'
 
 interface IProps {
@@ -10,10 +8,6 @@ interface IProps {
 }
 
 export const LEVELrecorder: React.FC<IProps> = ({ level, exp, handleExp }) => {
-  const loggedInUser = useTypedSelector((state) => state.auth.user)
-
-  const { changeExp, changeLvl } = useAuthAction()
-
   // useEffect(() => {
   //   if (loggedInUser) {
   //     setLevel(loggedInUser.book.level)

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import React, { FormEvent, useEffect, useRef, useState } from 'react'
 import Slider, { Range } from 'rc-slider'
 import 'rc-slider/assets/index.css'
+import useLanguage from '../../hooks/useLanguage'
 
 interface IProps {
   tag: string
@@ -49,11 +50,15 @@ export const NBAslider: React.FC<IProps> = ({
     }
   }
 
+  const { isEng } = useLanguage()
+
   return (
     <div
-      className={`w-150px flex flex-col items-center justify-center text-gray-800 font-courier w`}
+      className={`w-150px flex flex-col items-center justify-center text-gray-800 ${
+        isEng ? `font-courier` : `font-CourierC`
+      } w`}
     >
-      <span className={`whitespace-nowrap flex justify-center items-center`}>
+      <span className={`flex items-center justify-center whitespace-nowrap`}>
         {tag}: {value}
         {` `}
         {postTag}

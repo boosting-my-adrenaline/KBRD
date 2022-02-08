@@ -158,7 +158,7 @@ export const LEVELupper: React.FC<IProps> = ({
   }, [overall])
 
   return (
-    <div className={`invisible flex gap-10 select-none`}>
+    <div className={`invisible flex select-none gap-10`}>
       {/* <div onMouseDown={() => handleMessage('first')}>+first</div>
       <div onMouseDown={() => handleMessage('second')}>+second</div>
       <div onMouseDown={() => handleMessage('third')}>+third</div>

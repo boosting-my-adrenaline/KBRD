@@ -59,23 +59,24 @@ export const PerspectiveController: React.FC<IProps> = ({
 
     if (W > 2160) {
       setPerspective(0, 250, true)
-      setBook(0, 250)
+      setBook(0, 150)
       setInfo(0, 250)
-      setTap(0, 250)
+      setTap(0, 150)
       setMainMT(300)
       setNavPerspective(0, 65)
       setPerspective2(0, 100, -605)
       setFooter(30, 400)
       if (W >= 3000) {
         setPerspective2(0, 100, -1105)
+        setTap(0, 150)
       } else {
         setFooter(25, 300)
       }
     } else if (W <= 2160 && W > 1920) {
       setPerspective(0, 200, true)
-      setBook(0, 200)
+      setBook(0, 140)
       setInfo(0, 100)
-      setTap(0, 200)
+      setTap(0, 120)
 
       setPerspective2(0, 100, -605)
       setMainMT(400)
@@ -85,7 +86,7 @@ export const PerspectiveController: React.FC<IProps> = ({
       setPerspective(0, 140, true)
       setBook(0, 140)
       setInfo(0, 70)
-      setTap(0, 140)
+      setTap(0, 90)
 
       setPerspective2(-0, 0, -102)
       setMainMT(300)
@@ -94,8 +95,8 @@ export const PerspectiveController: React.FC<IProps> = ({
 
       if (W <= 1800) {
         setPerspective(0, 130, true)
-        setBook(0, 130)
-        setTap(0, 130)
+        setBook(-50, 130)
+        setTap(-100, 50)
         setInfo(0, 100)
 
         setMainMT(285)
@@ -103,8 +104,8 @@ export const PerspectiveController: React.FC<IProps> = ({
       }
     } else if (W <= 1700 && W > 1500) {
       setPerspective(-130, 85, true)
-      setBook(-130, 85)
-      setTap(-130, 85)
+      setBook(-200, 85)
+      setTap(-230, 25)
       setInfo(-130, 60)
 
       setPerspective2(-50, -25, -102)
@@ -123,18 +124,18 @@ export const PerspectiveController: React.FC<IProps> = ({
       setFooter(12, 200)
     } else if (W <= 1350 && W > 1200) {
       setPerspective(-400, 20, true)
-      setBook(-400, 20)
+      setBook(-440, 20)
       setInfo(-100, 10)
-      setTap(-400, -15)
+      setTap(-500, -55)
       setPerspective2(-100, -40, -102)
       setMainMT(205)
       setNavPerspective(-350, 45)
       setFooter(10, 200)
     } else if (W <= 1200 && W > 1000) {
       setPerspective(-790, -63, true)
-      setBook(-400, 7)
+      setBook(-800, 7)
       setInfo(-100, 7)
-      setTap(-500, -50)
+      setTap(-800, -100)
       setPerspective2(-350, -40, -102)
       setMainMT(200)
       setNavPerspective(-350, 45)

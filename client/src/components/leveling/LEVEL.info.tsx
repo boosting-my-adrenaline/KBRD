@@ -77,13 +77,13 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
   let hr = <></>
   // let hr = <div className={`w-f bg-gray-800 mx-4 rounded-full h-1px`} />
   let title = (title: string) => (
-    <div className={`text-center text-lg bg-red-300 px-2`}>{title}</div>
+    <div className={`bg-red-300 px-2 text-center text-lg`}>{title}</div>
   )
 
   return (
     <>
       <div
-        className={`z-20 rounded-xl h-40px w-42px cursor-sw-resize border border-gray-800 font-courier text-3xl flex items-center justify-center hover:bg-red-200 shadow-3xl shadow-red-300/75 hover:shadow-red-500/75 transition duration-150 ease-in-out`}
+        className={`h-40px w-42px font-courier shadow-3xl  z-20 flex cursor-help items-center justify-center rounded-xl border border-gray-800 text-3xl shadow-red-300/75 transition duration-150 ease-in-out hover:bg-red-200 hover:shadow-red-500/75`}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
@@ -96,52 +96,52 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
       </div>
       {hover && (
         <div
-          className={`absolute bg-red-200 w-1040px opacity-985 -translate-x-6px translate-y-55px border border-gray-800 rounded-xl flex flex-wrap items-start justify-between  text-sm overflow-hidden shadow-12th shadow-gray-400`}
+          className={`w-1040px opacity-985 -translate-x-6px translate-y-55px shadow-12th absolute flex flex-wrap items-start justify-between overflow-hidden rounded-xl border  border-gray-800 bg-red-200 text-sm shadow-gray-400`}
         >
-          <div className={`flex flex-col w-f pb-1 pt-1`}>
+          <div className={`w-f flex flex-col pb-1 pt-1`}>
             {title(`Volume Of Work`)}
-            <div className={`flex flex-wrap pt-1 px-1`}>
+            <div className={`flex flex-wrap px-1 pt-1`}>
               {elements(0, 4, `50%`)}
             </div>
           </div>
           {hr}
-          <div className={`flex flex-col w-f pb-1`}>
+          <div className={`w-f flex flex-col pb-1`}>
             {title(`Speed`)}
 
-            <div className={`flex flex-wrap pt-1 px-1`}>
+            <div className={`flex flex-wrap px-1 pt-1`}>
               {' '}
               {elements(0, 3, `50%`)}
             </div>
           </div>
           {hr}{' '}
-          <div className={`flex flex-col w-f pb-1`}>
+          <div className={`w-f flex flex-col pb-1`}>
             {title(`Row With No Errors`)}
 
-            <div className={`flex flex-wrap pt-1 px-1`}>
+            <div className={`flex flex-wrap px-1 pt-1`}>
               {elements(0, 3, `50%`)}{' '}
             </div>
           </div>
           {hr}{' '}
-          <div className={`flex flex-col w-f pb-1`}>
+          <div className={`w-f flex flex-col pb-1`}>
             {title(`Speed Row With No Errors`)}
 
-            <div className={`flex flex-wrap pt-1 px-1`}>
+            <div className={`flex flex-wrap px-1 pt-1`}>
               {elements(0, 2, `50%`)}{' '}
             </div>
           </div>
           {hr}{' '}
-          <div className={`flex flex-col w-f pb-1`}>
+          <div className={`w-f flex flex-col pb-1`}>
             {title(`Average Accuracy`)}
 
-            <div className={`flex flex-wrap pt-1 px-1`}>
+            <div className={`flex flex-wrap px-1 pt-1`}>
               {elements(0, 3, `50%`)}{' '}
             </div>
           </div>
           {hr}{' '}
-          <div className={`flex flex-col w-f pb-1`}>
+          <div className={`w-f flex flex-col pb-1`}>
             {title(`Average Speed And Accuracy`)}
 
-            <div className={`flex flex-wrap pt-1 px-1`}>
+            <div className={`flex flex-wrap px-1 pt-1`}>
               {elements(0, 2, `50%`)}{' '}
             </div>
           </div>

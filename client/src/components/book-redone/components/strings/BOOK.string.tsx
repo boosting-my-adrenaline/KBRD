@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Chapters } from '../../../../types/nav'
 import { useDidMountEffect } from '../../../../utils/useDidMountEffect'
 import {
   goToRandom,
@@ -22,6 +21,9 @@ import { thegreatgatsby as letter6 } from '../../../../static/letters/thegreatga
 import { tokillamockinbird as letter7 } from '../../../../static/letters/tokillamockinbird'
 import { lionwitch as letter8 } from '../../../../static/letters/lionwitch'
 
+import useLocalStorage from '../../../../hooks/useLocalStorage'
+import useLanguage from '../../../../hooks/useLanguage'
+
 // let test = `Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. Sent number1. `
 
 interface IProps {
@@ -33,7 +35,6 @@ interface IProps {
   uppercase: boolean
   punctuation: boolean
   caseSensitivity: boolean
-  chapter: Chapters
   running: boolean
 }
 
@@ -46,27 +47,12 @@ export const BOOKstring: React.FC<IProps> = ({
   uppercase,
   punctuation,
   caseSensitivity,
-  chapter,
   running,
 }) => {
-  const [now, setNow] = useState(currentString)
+  // const { isEng } = useLanguage()
+
+  const [now, setNow] = useLocalStorage('BS-currentString', currentString)
   const choosenString = useRef<number>(5)
-
-  const [appear, setAppear] = useState(false)
-
-  useEffect(() => {
-    let id = setTimeout(() => {
-      setAppear(true)
-    }, 2500)
-    return () => clearTimeout(id)
-  }, [])
-
-  useDidMountEffect(() => {
-    let id = setTimeout(() => {
-      setAppear(false)
-    }, 10)
-    return () => clearTimeout(id)
-  }, [chapter])
 
   useDidMountEffect(() => {
     handleString(now, true)
@@ -111,6 +97,7 @@ export const BOOKstring: React.FC<IProps> = ({
     letter8,
   ]
 
+  const { isEng } = useLanguage()
   // const examples = [
   //   { title: `Example #1`, str: letter1 },
   //   { title: `Example #2`, str: letter2 },
@@ -150,6 +137,7 @@ export const BOOKstring: React.FC<IProps> = ({
   const exampleButtons = letters.map((el, i) => (
     <BOOKstringButton
       key={i}
+      // localEng={localEng}
       choosenString={choosenString.current}
       handleSetString={handleSetString}
       num={letters.indexOf(el)}
@@ -161,8 +149,8 @@ export const BOOKstring: React.FC<IProps> = ({
   // return <>do something with STRING length</>
   return (
     <div
-      className={`select-none z-50 w-1000px text-xl transform  flex flex-col gap-4 items-center border-black borde mt-4 text-gray-800 ${
-        (appear && show) || `opacity-0`
+      className={`${'font-CourierC'} w-1000px borde z-50 mt-4 flex  transform select-none flex-col items-center gap-4 border-black text-xl text-gray-800 ${
+        show || `opacity-0`
       } transition duration-700 ease-in-out`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
@@ -174,18 +162,21 @@ export const BOOKstring: React.FC<IProps> = ({
       >
         {exampleButtons}
       </div>
-      <div className={`flex flex-row justify-around items-center w-f`}>
-        <BOOKstringButtonFunctional title={`shuffle`} onClick={handleShuffle} />
+      <div className={`w-f flex flex-row items-center justify-around`}>
         <BOOKstringButtonFunctional
-          title={`random book`}
+          title={isEng ? `shuffle` : `перемешать`}
+          onClick={handleShuffle}
+        />
+        <BOOKstringButtonFunctional
+          title={isEng ? `random book` : `случайная книга`}
           onClick={handleRandom}
         />
         <BOOKstringButtonFunctional
-          title={`jump over`}
+          title={isEng ? `jump over` : `случайное место`}
           onClick={handleGoToRandomSentence}
         />
         <BOOKstringButtonFunctional
-          title={`to beginning`}
+          title={isEng ? `to beginning` : `в начало`}
           onClick={handleToBeginning}
         />
       </div>

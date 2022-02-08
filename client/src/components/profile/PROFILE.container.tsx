@@ -4,8 +4,17 @@ import { PROFILEprofile } from './PROFILE.profile'
 import { PROFILEstats } from './PROFILE.stats'
 import { AuthContext } from '../../context/AuthContext'
 import { NBAbutton } from './NBA.button'
+import useLanguage from '../../hooks/useLanguage'
 
-export const PROFILEcontainer: React.FC = () => {
+interface IProps {
+  authOpen: boolean
+  setAuthOpen: (auth: boolean) => void
+}
+
+export const PROFILEcontainer: React.FC<IProps> = ({
+  authOpen,
+  setAuthOpen,
+}) => {
   const auth = useContext(AuthContext)
 
   const [statsSection, setStatsSection] = useState(true)
@@ -38,11 +47,17 @@ export const PROFILEcontainer: React.FC = () => {
     setTimeout(() => auth.logout(), 0)
   }
 
+  const { isEng } = useLanguage()
+
   return (
-    <div className={`fixed top-0 bottom-0 right-0 left-0 bg-purple-200`}>
+    <div
+      className={`fixed top-0 bottom-0 right-0 left-0 bg-purple-200 ${
+        isEng ? `font-courier` : `font-CourierC`
+      }`}
+    >
       <>
         <div
-          className={`flex justify-center items-center absolute z-50 transition duration-700 ease-linear`}
+          className={`absolute z-50 flex items-center justify-center transition duration-700 ease-linear`}
           style={{
             top: 95,
             left: 900 + floating,
@@ -50,11 +65,11 @@ export const PROFILEcontainer: React.FC = () => {
           }}
           // onMouseDown={handleLogout}
         >
-          <NBAbutton tag={`Log Out`} onClick={handleLogout} />
+          <NBAbutton tag={isEng ? `Log Out` : 'Выйти'} onClick={handleLogout} />
         </div>
 
         <div
-          className={`z-20 fixed top-0 right-0 left-0 bottom-0 flex justify-center items-center bg-purple-200`}
+          className={`fixed top-0 right-0 left-0 bottom-0 z-20 flex items-center justify-center bg-purple-200`}
         >
           <div
             className={`z-20  items-center justify-center transition duration-1000 ease-linear`}
@@ -64,30 +79,30 @@ export const PROFILEcontainer: React.FC = () => {
               style={{ width: WIDTH }}
             >
               <div
-                className={`w-50% h-65px  text-2em flex justify-center items-center no-select ${
+                className={`w-50% h-65px  text-2em no-select flex items-center justify-center ${
                   !statsSection && `cursor-pointer`
                 } `}
                 onMouseDown={() => setStatsSection(true)}
               >
-                STATS
+                {isEng ? `STATS` : `СТАТИСТИКА`}
               </div>
               <div
-                className={`w-50% h-65px  text-2em  flex justify-center items-center no-select ${
+                className={`w-50% h-65px  text-2em  no-select flex items-center justify-center ${
                   statsSection && `cursor-pointer`
                 }`}
                 onMouseDown={() => setStatsSection(false)}
               >
-                PROFILE
+                {isEng ? `PROFILE` : `ПРОФИЛЬ`}
               </div>
             </div>
             <div
-              className={`fixed top-0 right-0 left-0 h-65px flex flex-row justify-center transition duration-1000 ease-out`}
+              className={`h-65px fixed top-0 right-0 left-0 flex flex-row justify-center transition duration-1000 ease-out`}
               style={{
                 transform: `rotateY(${rotating}deg)`,
               }}
             >
               <div
-                className={`w-50% flex items-center justify-center -translate-y-2px -translate-x-2px`}
+                className={`w-50% -translate-y-2px -translate-x-2px flex items-center justify-center`}
                 style={{
                   border: '2px solid transparent',
                   borderBottomRightRadius: 10,
@@ -105,7 +120,7 @@ export const PROFILEcontainer: React.FC = () => {
               ></div>
             </div>
             <div
-              className={`flex flex-row overflow-y-hidden transition duration-750 ease-in-out`}
+              className={`duration-750 flex flex-row overflow-y-hidden transition ease-in-out`}
               style={{
                 width: WIDTH * 2,
                 height: 620,
@@ -118,13 +133,13 @@ export const PROFILEcontainer: React.FC = () => {
             >
               <PROFILEinfo statsSection={statsSection} />
               <div
-                className={`flex justify-center items mt-32`}
+                className={`items mt-32 flex justify-center`}
                 style={{ width: WIDTH }}
               >
                 <PROFILEstats />
               </div>
               <div
-                className={`flex justify-center items-center`}
+                className={`flex items-center justify-center`}
                 style={{ width: WIDTH }}
               >
                 <PROFILEprofile />

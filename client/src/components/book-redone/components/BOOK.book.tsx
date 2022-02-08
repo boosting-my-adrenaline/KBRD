@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { useDidMountEffect } from '../../../utils/useDidMountEffect'
-
-import { Chapters } from '../../../types/nav'
+import React from 'react'
+import useLanguage from '../../../hooks/useLanguage'
 
 interface IProps {
   STRING: string
-  chapter: Chapters
 }
 
-export const BOOKBook: React.FC<IProps> = ({ STRING, chapter }) => {
+export const BOOKBook: React.FC<IProps> = ({ STRING }) => {
   const RIGHT: string = STRING.slice(0, 35)
   const RIGHT1: string = STRING.slice(35, 105)
   const RIGHT2: string = STRING.slice(105, 175)
@@ -18,77 +15,25 @@ export const BOOKBook: React.FC<IProps> = ({ STRING, chapter }) => {
   const LEFT2: string = STRING.slice(-175, -105)
   const LEFT3: string = STRING.slice(-245, -175)
 
-  const [appear, setAppear] = useState(false)
-  const [highlightHider, setHighlightHider] = useState(true)
-
-  useEffect(() => {
-    let id = setTimeout(() => {
-      setAppear(true)
-    }, 300)
-
-    let id2 = setTimeout(() => setHighlightHider(false), 1000)
-    return () => {
-      clearTimeout(id)
-      clearTimeout(id2)
-    }
-  }, [])
-
-  useDidMountEffect(() => {
-    let id = setTimeout(() => {
-      setAppear(false)
-    }, 200)
-
-    let id2 = setTimeout(() => setHighlightHider(true), 100)
-    return () => {
-      clearTimeout(id)
-      clearTimeout(id2)
-    }
-  }, [chapter])
-
-  // const formating2 = (str: string) => {
-  //   return str.split('').map((el, i) =>
-  //     el !== ' ' ? (
-  //       <div
-  //         key={i + el}
-  //         className={`select-non ${
-  //           highlightHider && `bg-red-100`
-  //         } transition duration-600 ease-in-out`}
-  //       >
-  //         {el}
-  //       </div>
-  //     ) : (
-  //       // <FadeText title={el} delay={[300, 1000]} hide={1} />
-  //       <div
-  //         key={i + el}
-  //         className={`select-non ${
-  //           highlightHider && `bg-red-100`
-  //         } transition duration-600 ease-in-out`}
-  //       >
-  //         {'\u00A0'}
-  //       </div>
-  //     )
-  //   )
-  // }
   const formating = (str: string) => {
     return str.replace(/ /g, '\u00a0')
   }
 
   const rowing = (str: string) => {
     return (
-      <div className={`w-full flex flex-row whitespace-nowrap`}>
+      <div className={`flex w-full flex-row whitespace-nowrap`}>
         {formating(str)}
       </div>
     )
   }
+  const { isEng } = useLanguage()
 
   return (
     <div
-      className={`visible w-1000 z-40 font-courier text-2xl flex flex-col space-y-4 ${
-        !appear && `opacity-0`
-      } transition duration-700 ease-in-out`}
+      className={`w-1000 ${`font-courier`} visible z-40 flex flex-col space-y-4 text-2xl  transition duration-700 ease-in-out`}
     >
       <div
-        className={`w-1000 z-40 font-courier text-2xl flex flex-col space-y-4 text-gray-800 `}
+        className={`w-1000  z-40 flex flex-col space-y-4 text-2xl text-gray-800 `}
       >
         {/* <div>{`\u00a0`}</div> */}
         {/* <div>{`\u00a0`}</div> */}

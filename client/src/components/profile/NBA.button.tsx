@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
+import useLanguage from '../../hooks/useLanguage'
 import { useDidMountEffect } from '../../utils/useDidMountEffect'
 import { useKeyPress } from '../../utils/useKeyPress'
 
@@ -58,13 +59,14 @@ export const NBAbutton: React.FC<IProps> = ({
       }
     }
   }
+  const { isEng } = useLanguage()
 
   return (
     <motion.div
       animate={getParams()}
-      className={`flex bg-transparent items-center select-none overflow-hidden relative justify-center  border ${border}  ${
+      className={`relative flex select-none items-center justify-center overflow-hidden border  bg-transparent ${border}  ${
         disableCursor ? `cursor-not-allowed` : `cursor-pointer`
-      }  rounded-lg font-courier`}
+      }  rounded-lg ${isEng ? `font-courier` : `font-CourierC`}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => {
         setHover(false)
@@ -74,30 +76,30 @@ export const NBAbutton: React.FC<IProps> = ({
       onMouseUp={() => setActive(false)}
     >
       <div
-        className={`flex z-60 relative overflow-hidden rounded justify-center items-center   ${py} ${px} `}
+        className={`z-60 relative flex items-center justify-center overflow-hidden rounded   ${py} ${px} `}
       >
         <div
-          className={`${text}  z-50 whitespace-nowrap w-f h-f relative overflow-hidde rounded-xl flex justify-center items-center`}
+          className={`${text}  w-f h-f overflow-hidde relative z-50 flex items-center justify-center whitespace-nowrap rounded-xl`}
         >
           {tag}
           {space && (
             <div
-              className={` absolute h-2px w-50px bg-gray-800 rounded-sm`}
+              className={` h-2px w-50px absolute rounded-sm bg-gray-800`}
               style={{ transform: `translateY(17px)` }}
             />
           )}
         </div>
         <div
-          className={`absolute -z-10 transition duration-275 ease-in-out`}
+          className={`duration-275 absolute -z-10 transition ease-in-out`}
           style={{
             transform: `translate(${
-              !hover && !active && !extraActive ? `-260` : '10'
+              !hover && !active && !extraActive ? `-300` : '10'
             }px, -10px)`,
           }}
         >
-          <div className={`${hov}  w-275px h-175px rotate-20deg`}></div>
+          <div className={`${hov}  h-175px rotate-20deg w-[300px]`}></div>
         </div>
-        <div className={`-z-20 absolute ${bg} h-100px w-350px`}></div>
+        <div className={`absolute -z-20 ${bg} h-100px w-350px`}></div>
       </div>
     </motion.div>
   )

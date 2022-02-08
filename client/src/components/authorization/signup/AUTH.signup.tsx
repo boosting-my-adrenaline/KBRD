@@ -1,17 +1,15 @@
 import React, { useEffect, useState, KeyboardEvent } from 'react'
 import { ThemeProvider, createTheme } from '@mui/material'
-import { TextField, Button, IconButton } from '@mui/material'
 import {
   PasswordState,
   SignupPasswordColor,
   UsernameState,
 } from '../auth.types'
 import { SignupUsernameColor } from '../auth.types'
-import { VisibilityOff, Visibility } from '@material-ui/icons'
-import { useTypedSelector } from '../../../hooks/useTypedSelector'
 import { NBAbutton } from '../../profile/NBA.button'
 import { NBAinput } from '../../profile/NBA.input'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
+import useLanguage from '../../../hooks/useLanguage'
 
 const theme = createTheme({
   typography: {
@@ -140,9 +138,11 @@ export const AUTHlsignup: React.FC<IProps> = ({
       handleSubmit()
     }
   }, [pass2Enter])
+
+  const { isEng } = useLanguage()
   return (
     <div
-      className={`flex flex-col justify-evenly items-center gap-2 font-courier no-select box-border`}
+      className={`font-courier no-select box-border flex flex-col items-center justify-evenly gap-2`}
       style={{ width: '400px', height: '400px' }}
     >
       <ThemeProvider theme={theme}>
@@ -151,7 +151,7 @@ export const AUTHlsignup: React.FC<IProps> = ({
             value={username}
             onChange={setUsername}
             id={`usernameSignUp`}
-            placeholder={`USERNAME`}
+            placeholder={isEng ? `USERNAME` : ` ЛОГИН`}
             helper={usernameMessage || ` `}
             error={usernameState === 'error'}
             success={usernameState === `success`}
@@ -165,7 +165,7 @@ export const AUTHlsignup: React.FC<IProps> = ({
             onChange={setPassword}
             id={`passwordSignUp`}
             type={`password`}
-            placeholder={`PASSWORD`}
+            placeholder={isEng ? `PASSWORD` : `ПАРОЛЬ`}
             helper={passwordMessage || ` `}
             error={passwordState === 'error'}
             success={passwordState === `success`}
@@ -181,7 +181,7 @@ export const AUTHlsignup: React.FC<IProps> = ({
             onChange={setPassword2}
             id={`password2SignUp`}
             type={`password`}
-            placeholder={`PASSWORD`}
+            placeholder={isEng ? `PASSWORD` : `ПАРОЛЬ`}
             helper={password2Message || ` `}
             error={password2State === 'error'}
             success={password2State === `success`}
@@ -193,10 +193,10 @@ export const AUTHlsignup: React.FC<IProps> = ({
           />
         </div>
         <div className={`flex flex-col gap-2`}>
-          <div className={`w-full flex justify-center`}>
+          <div className={`flex w-full justify-center`}>
             <NBAbutton
               onClick={handleSubmit}
-              tag={`SUBMIT`}
+              tag={isEng ? `SUBMIT` : `ОТПРАВИТЬ `}
               border={
                 passwordState === `error` ||
                 password2State === `error` ||

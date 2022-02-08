@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import React, { useState } from 'react'
+import useLanguage from '../../../../hooks/useLanguage'
 
 interface IProps {
   choosenString: number
@@ -15,31 +16,34 @@ export const BOOKstringButton: React.FC<IProps> = ({
   handleSetString,
 }) => {
   const [hover, setHover] = useState(false)
+
+  const { isEng } = useLanguage()
+
   return (
     <motion.div
       whileHover={{ scale: 1.1, y: -3 }}
       whileTap={{ scale: 0.9 }}
-      className={`rounded-xl overflow-hidden relative`}
+      className={`relative overflow-hidden rounded-xl`}
     >
       <div
-        className={`relative overflow-hidden px-3 py-1 rounded-xl border  
+        className={`relative overflow-hidden rounded-xl border px-3 py-1  
         ${num === choosenString ? `border-red-400 ` : `border-red-300`}
-        cursor-pointer active:bg-red-400 transition duration-250 ease-in-out`}
+        duration-250 flex cursor-pointer items-center justify-center transition ease-in-out active:bg-red-400`}
         onMouseDown={() => handleSetString(str, num)}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        book #{num + 1}
-        <div
-          className={`absolute -z-10 transition duration-300 ease-in-out`}
-          style={{
-            transform: `translate(${
-              !hover && num !== choosenString ? `-250` : '-20'
-            }px, -100px)`,
+        {isEng ? `book\u00a0` : `книга`}#{num + 1}
+        <div className={`absolute -z-20 h-[70px] w-[250px] bg-red-100`} />
+        <motion.div
+          animate={{
+            x: hover || num === choosenString ? 0 : -210,
           }}
+          transition={{ ease: `linear` }}
+          className={`absolute -z-10 `}
         >
-          <div className={`bg-red-300 w-220px h-150px rotate-20deg`}></div>
-        </div>
+          <div className={`w-220px h-150px rotate-20deg bg-red-300`}></div>
+        </motion.div>
       </div>
     </motion.div>
   )
@@ -59,17 +63,19 @@ export const BOOKstringButtonFunctional: React.FC<IProps2> = ({
     <motion.div
       whileHover={{ scale: 1.1, y: -3 }}
       whileTap={{ scale: 0.9 }}
-      className={`rounded-xl overflow-hidden relative`}
+      className={`relative overflow-hidden rounded-xl`}
     >
       <div
-        className={`px-3 py-1 z-10 relative overflow-hidden  rounded-xl border border-red-400 active:bg-red-400 cursor-pointer transition duration-250 ease-in-out`}
+        className={`duration-250 relative z-10 flex cursor-pointer  items-center justify-center overflow-hidden rounded-xl border border-red-400 px-3 py-1 transition ease-in-out active:bg-red-400`}
         onMouseDown={onClick}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
         {title}
+        <div className={`absolute -z-20 h-[70px] w-[250px] bg-red-100`} />
         <motion.div
-          animate={{ x: !hover ? -250 : -20, y: -100 }}
+          // initial={{y: -100}}
+          animate={{ x: !hover ? -250 : 0 }}
           transition={{ ease: `linear` }}
           className={`absolute -z-10 `}
           style={
@@ -78,7 +84,7 @@ export const BOOKstringButtonFunctional: React.FC<IProps2> = ({
             }
           }
         >
-          <div className={`bg-red-400 w-220px h-150px rotate-20deg`}></div>
+          <div className={`w-220px h-150px rotate-20deg bg-red-400`}></div>
         </motion.div>
       </div>
     </motion.div>

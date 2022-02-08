@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useTypedSelector } from '../../../hooks/useTypedSelector'
-import { useDidMountEffect } from '../../../utils/useDidMountEffect'
+import { handleBreakpoints } from '@mui/system'
+import React, { useEffect, useState } from 'react'
 import { BOOKfunctionalButtons } from './buttons/BOOK.functionalButtons'
 
 interface IProps {
@@ -16,6 +15,7 @@ interface IProps {
   capsError: number
   running: boolean
   handleReset(): void
+  handleTest(): void
 }
 
 export const BOOKbuttons: React.FC<IProps> = ({
@@ -30,32 +30,23 @@ export const BOOKbuttons: React.FC<IProps> = ({
   capsError,
   running,
   handleReset,
+  handleTest,
 }) => {
-  const [appear, setAppear] = useState(false)
-
-  const chapter = useTypedSelector((state) => state.nav.chapter)
-
-  useEffect(() => {
-    let id = setTimeout(() => {
-      setAppear(true)
-    }, 1000)
-    return () => clearTimeout(id)
-  }, [])
-
-  useDidMountEffect(() => {
-    let id = setTimeout(() => {
-      setAppear(false)
-    }, 0)
-    return () => clearTimeout(id)
-  }, [chapter])
-
   const [hover, setHover] = useState(false)
+
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     handleTest()
+  //     setHover(true)
+  //     setHover(false)
+  //   }, 1000)
+  // }, [])
 
   return (
     <>
       <div
-        className={`mt-10 z-10 flex flex-col justify-center items-center  bg-rd-200 select-none borde border-red-800  w-1000px ${
-          (appear && show) || `opacity-0`
+        className={`bg-rd-200 borde w-1000px z-10 mt-10 flex  select-none flex-col items-center justify-center  border-red-800 ${
+          show || `opacity-0`
         } transition duration-500 ease-in-out`}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -63,9 +54,11 @@ export const BOOKbuttons: React.FC<IProps> = ({
         <div
           className={`${
             running && !hover && `opacity-80`
-          }  flex flex-col justify-center items-center  transition duration-200 ease-in-out`}
+          }  flex flex-col items-center justify-center  transition duration-200 ease-in-out`}
         >
-          <div className={`w-f flex flex-col justify-center  bg-rd-200 `}>
+          <div className={`w-f flex flex-col  justify-center `}>
+            {/* <div onMouseDown={handleTest}>TEST</div> */}
+
             <BOOKfunctionalButtons
               setHighlighter={setHighlighter}
               highlighter={highlighter}
@@ -78,7 +71,7 @@ export const BOOKbuttons: React.FC<IProps> = ({
               handleReset={handleReset}
             />
           </div>
-          <div className={`bg-red-200 my-4 py w-1000px h-1px`}></div>
+          <div className={`py w-1000px px my-4 h-[1px] bg-red-200`}></div>
         </div>
       </div>
     </>

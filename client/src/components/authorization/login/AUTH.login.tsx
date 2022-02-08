@@ -5,6 +5,7 @@ import { NBAbutton } from '../../profile/NBA.button'
 import { NBAinput } from '../../profile/NBA.input'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 import { NBAcheckbox } from '../../profile/NBA.checkbox'
+import useLanguage from '../../../hooks/useLanguage'
 
 const theme = createTheme({
   typography: {
@@ -78,9 +79,11 @@ export const AUTHlogin: React.FC<IProps> = ({
     }
   }, [passEnter])
 
+  const { isEng } = useLanguage()
+
   return (
     <div
-      className={`flex flex-col justify-evenly items-center gap-1 font-courier no-select box-border`}
+      className={` no-select box-border flex flex-col items-center justify-evenly gap-1`}
       style={{ width: '400px', height: '400px' }}
     >
       <ThemeProvider theme={theme}>
@@ -90,8 +93,14 @@ export const AUTHlogin: React.FC<IProps> = ({
             onChange={setUsername}
             id={`login`}
             type={`username`}
-            placeholder={`USERNAME`}
-            helper={error ? 'incorrect username or password' : ' '}
+            placeholder={isEng ? `USERNAME` : `ЛОГИН`}
+            helper={
+              error
+                ? isEng
+                  ? 'incorrect username or password'
+                  : `неверный логин или пароль`
+                : ' '
+            }
             error={error}
             success={success}
             onEnter={handleEnterUser}
@@ -104,8 +113,14 @@ export const AUTHlogin: React.FC<IProps> = ({
             onChange={setPassword}
             id={`password`}
             type={`password`}
-            placeholder={`PASSWORD`}
-            helper={error ? 'incorrect username or password' : ' '}
+            placeholder={isEng ? `PASSWORD` : `ПАРОЛЬ`}
+            helper={
+              error
+                ? isEng
+                  ? 'incorrect username or password'
+                  : `неверный логин или пароль`
+                : ' '
+            }
             error={error}
             success={success}
             onEnter={handleEnterPass}
@@ -115,29 +130,31 @@ export const AUTHlogin: React.FC<IProps> = ({
         </div>
         <div className={`flex flex-col gap-2`}>
           <div
-            className={`flex  flex-row justify-start  mr-2 box-border`}
+            className={`mr-2  box-border flex  flex-row justify-start`}
             style={{ width: '400px' }}
           >
-            <div className={`flex-grow flex pl-4 justify-start items-center `}>
+            <div className={`flex flex-grow items-center justify-start pl-4 `}>
               <span
-                className={`flex hover:text-blue-400 focus:text-red-800 outline-none transition duration-150 ease-in-out`}
+                className={`flex outline-none transition duration-150 ease-in-out hover:text-blue-400 focus:text-red-800`}
                 onMouseDown={handleRememberMeChange}
               >
                 <NBAcheckbox active={rememberMe} />
-                <span className={`ml-3 cursor-pointer `}>remember me</span>
+                <span className={`ml-3 cursor-pointer `}>
+                  {isEng ? `remember me` : 'запомнить меня'}
+                </span>
               </span>
             </div>
             <div
-              className={`mr-2 hover:text-blue-400 focus:text-red-800 outline-none cursor-pointer flex justify-center items-center transition duration-150 ease-in-out`}
+              className={`mr-2 flex cursor-pointer items-center justify-center outline-none transition duration-150 ease-in-out hover:text-blue-400 focus:text-red-800`}
               onMouseDown={() => {}}
             >
-              forgot password?
+              {isEng ? `forgot password?` : 'забыли пароль?'}
             </div>
           </div>
-          <div className={`w-full flex justify-center mt-4`}>
+          <div className={`mt-4 flex w-full justify-center`}>
             <NBAbutton
               onClick={handleSubmit}
-              tag={`LOGIN`}
+              tag={isEng ? `LOGIN` : `ВОЙТИ`}
               border={
                 !username || !password ? `border-red-500` : `border-sky-500`
               }

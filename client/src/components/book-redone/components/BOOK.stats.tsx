@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Chapters } from '../../../types/nav'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 import { BOOKaccuracyCounter } from './stats/B.stats.accuracyCounter'
 import { BOOKstatsAccuracyWidget } from './stats/B.stats.accuracy.widget'
@@ -8,12 +7,12 @@ import { BOOKstatsCPMWidget } from './stats/B.stats.cpm.widget'
 import { LEVELcontainer } from '../../leveling/LEVEL.container'
 import { BOOKstatsOverallWidget } from './stats/B.stats.overall.widget'
 import { BOOKstatsErrorsWidget } from './stats/B.stats.error.widget'
+import useLanguage from '../../../hooks/useLanguage'
 
 interface IProps {
   show: boolean
   overall: number
   failedTypesIndexes: number[]
-  chapter: Chapters
   reseting: any
 }
 
@@ -21,7 +20,6 @@ export const BOOKstats: React.FC<IProps> = ({
   show,
   overall,
   failedTypesIndexes: fti,
-  chapter,
   reseting,
 }) => {
   // const successfulRow = fti.length > 0 ? fti[fti.length - 1] - 1 : overall
@@ -45,7 +43,7 @@ export const BOOKstats: React.FC<IProps> = ({
   }, [fti.length])
 
   const [running, setRunning] = useState(false)
-  const [appear, setAppear] = useState(false)
+  const [appear, setAppear] = useState(true)
 
   useDidMountEffect(() => {
     setAccuracy(0)
@@ -54,21 +52,6 @@ export const BOOKstats: React.FC<IProps> = ({
     setErrorsLocal(0)
     setOverallLocal(0)
   }, [reseting])
-
-  useEffect(() => {
-    let id = setTimeout(() => {
-      setAppear(true)
-    }, 1900)
-    return () => clearTimeout(id)
-  }, [])
-
-  useDidMountEffect(() => {
-    let id = setTimeout(() => {
-      setAppear(false)
-    }, 10)
-
-    return () => clearTimeout(id)
-  }, [chapter])
 
   useDidMountEffect(() => {
     setRunning(true)
@@ -79,10 +62,14 @@ export const BOOKstats: React.FC<IProps> = ({
   }, [overall])
 
   const [hide, setHide] = useState(false)
+
+  const { isEng } = useLanguage()
   return (
     <>
       <div
-        className={`absolute transition duration-500 ease-in-out`}
+        className={`absolute ${
+          show || `opacity-0`
+        } transition duration-500 ease-in-out ${isEng || `font-CourierC`}`}
         style={{
           transform: `translateY(${appear && show ? -155 : -400}px)`,
         }}
@@ -99,12 +86,12 @@ export const BOOKstats: React.FC<IProps> = ({
         />
       </div>
       <div
-        className={`w-1000  pt-2 pb-6 border-black borde flex items-center justify-center select-none transition duration-500 ease-in-out ${
+        className={`w-1000  borde flex select-none items-center justify-center border-black pt-2 pb-6 transition duration-500 ease-in-out ${
           (appear && show) || `opacity-0`
         }`}
       >
         <div
-          className={`w-f flex flex-row justify-between mx-8 items-center borde-red-800 borde text-xl text-gray-600 ${
+          className={`w-f borde-red-800 borde mx-8 flex flex-row items-center justify-between text-xl text-gray-600 ${
             hide && `-z-10`
           }`}
         >
@@ -112,7 +99,7 @@ export const BOOKstats: React.FC<IProps> = ({
             <BOOKstatsOverallWidget overall={overallLocal} />
           </div>
 
-          <div className={`flex items-center justify-center mr-24`}>
+          <div className={`mr-24 flex items-center justify-center`}>
             {`\u00a0`}
             <div className={`absolute `}>
               <BOOKstatsAccuracyWidget

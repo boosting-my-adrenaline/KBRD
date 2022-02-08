@@ -1,3 +1,4 @@
+import useLanguage from '../../../hooks/useLanguage'
 import { PasswordState } from '../auth.types'
 import { UsernameState } from '../auth.types'
 

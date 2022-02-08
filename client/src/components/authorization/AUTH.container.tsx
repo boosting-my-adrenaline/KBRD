@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { AUTHloginContainer } from './login/AUTH.login.container'
 import { AUTHsignupContainer } from './signup/AUTH.signup.container'
 import { motion } from 'framer-motion'
+import useLanguage from '../../hooks/useLanguage'
 
-export const AUTHcontainer: React.FC = ({}) => {
-  const chapter = useTypedSelector((state) => state.nav.chapter)
+interface IProps {
+  authOpen: boolean
+  setAuthOpen: (auth: boolean) => void
+}
 
+export const AUTHcontainer: React.FC<IProps> = ({ authOpen, setAuthOpen }) => {
   const [isSigningUp, setISU] = useState(false)
   const [rotating, setRotating] = useState(0)
 
@@ -21,10 +24,14 @@ export const AUTHcontainer: React.FC = ({}) => {
   }, [isSigningUp])
 
   const WIDTH = 1150
+
+  const { isEng } = useLanguage()
   return (
     <>
       <div
-        className={`z-20 fixed top-0 right-0 left-0 bottom-0 flex justify-center items-center bg-yellow-100 `}
+        className={`fixed top-0 right-0 left-0 bottom-0 z-20 flex items-center justify-center bg-yellow-100 ${
+          isEng ? `font-courier` : `font-CourierC`
+        }`}
       >
         <div
           className={`z-20  items-center justify-center transition duration-1000 ease-in-out`}
@@ -34,16 +41,16 @@ export const AUTHcontainer: React.FC = ({}) => {
             style={{ width: WIDTH }}
           >
             <div
-              className={`flex justify-center items-center no-select ${
+              className={`no-select flex items-center justify-center ${
                 !isSigningUp ? `cursor-pointer` : ``
               }`}
               style={{ fontSize: '2em', width: '50%', height: 65 }}
               onMouseDown={() => setISU(true)}
             >
-              LOG IN
+              {isEng ? `LOG IN` : `ВОЙТИ `}
             </div>
             <div
-              className={`flex justify-center items-center no-select ${
+              className={`no-select flex items-center justify-center ${
                 isSigningUp ? `cursor-pointer` : ``
               }`}
               style={{
@@ -53,11 +60,11 @@ export const AUTHcontainer: React.FC = ({}) => {
               }}
               onMouseDown={() => setISU(false)}
             >
-              SIGN UP
+              {isEng ? `SIGN UP` : `РЕГИСТРАЦИЯ`}
             </div>
           </div>
           <div
-            className={` fixed top-0 right-0 left-0  flex flex-row justify-center transition duration-1000 ease`}
+            className={` ease fixed top-0 right-0  left-0 flex flex-row justify-center transition duration-1000`}
             style={{
               transform: `rotateY(${rotating}deg)`,
               height: 65,
@@ -105,16 +112,16 @@ export const AUTHcontainer: React.FC = ({}) => {
             }}
           >
             <div
-              className={`flex justify-center items-center`}
+              className={`flex items-center justify-center`}
               style={{ width: WIDTH }}
             >
-              <AUTHloginContainer />
+              <AUTHloginContainer setAuthOpen={setAuthOpen} />
             </div>
             <div
-              className={`flex justify-center items-center`}
+              className={`flex items-center justify-center`}
               style={{ width: WIDTH }}
             >
-              <AUTHsignupContainer />
+              <AUTHsignupContainer setAuthOpen={setAuthOpen} />
             </div>
           </motion.div>
         </div>

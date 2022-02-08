@@ -1,15 +1,14 @@
 import React, { useContext, useState } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import { useHttp } from '../../../hooks/http.hook'
-import { useAuthAction } from '../../../hooks/useAction'
-import { useTypedSelector } from '../../../hooks/useTypedSelector'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 import { AUTHlogin } from './AUTH.login'
-import { loginAttempt } from './loginUtils'
 
-interface IProps {}
+interface IProps {
+  setAuthOpen: (auth: boolean) => void
+}
 
-export const AUTHloginContainer: React.FC<IProps> = () => {
+export const AUTHloginContainer: React.FC<IProps> = ({ setAuthOpen }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -18,9 +17,6 @@ export const AUTHloginContainer: React.FC<IProps> = () => {
   const [success, setSuccess] = useState(false)
 
   const [rememberMe, setRememberMe] = useState(true)
-
-  const users = useTypedSelector((state) => state.auth.users)
-  const { setOpenOff } = useAuthAction()
 
   const { loading, request, error: hookError, clearError } = useHttp()
 
@@ -31,7 +27,6 @@ export const AUTHloginContainer: React.FC<IProps> = () => {
   const auth = useContext(AuthContext)
 
   const handleSubmit = async () => {
-    const response = loginAttempt(users, username, password)
     // console.log(users)
     // console.log(username)
     // console.log(password)
@@ -51,7 +46,7 @@ export const AUTHloginContainer: React.FC<IProps> = () => {
         auth.login(data.token, data.userId, username)
         setUsername('')
         setPassword('')
-        setOpenOff()
+        setAuthOpen(false)
         setSuccess(false)
       }, 500)
     } catch {

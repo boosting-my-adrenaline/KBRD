@@ -22,7 +22,7 @@ export const PROFILEinfo: React.FC<IProps> = ({ statsSection }) => {
       }}
     >
       <div
-        className={`overflow-hidden w-100px h-60px rounded-40px `}
+        className={`w-100px h-60px rounded-40px overflow-hidden `}
         style={{
           border: '1px solid black',
         }}

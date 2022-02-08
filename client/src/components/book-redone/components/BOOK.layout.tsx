@@ -1,34 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { Chapters } from '../../../types/nav'
-import { useDidMountEffect } from '../../../utils/useDidMountEffect'
+import React from 'react'
 
 interface IProps {
   STRING: string
-  chapter: Chapters
   highlighter: boolean
 }
 
-export const BOOKLayout: React.FC<IProps> = ({
-  STRING,
-  chapter,
-  highlighter,
-}) => {
-  const [appear, setAppear] = useState(false)
-
-  useEffect(() => {
-    let id = setTimeout(() => {
-      setAppear(true)
-    }, 900)
-    return () => clearTimeout(id)
-  }, [])
-
-  useDidMountEffect(() => {
-    let id = setTimeout(() => {
-      setAppear(false)
-    }, 300)
-    return () => clearTimeout(id)
-  }, [chapter])
-
+export const BOOKLayout: React.FC<IProps> = ({ STRING, highlighter }) => {
   const rawRIGHT: string = STRING.slice(0, 35)
   const rawRIGHT1: string = STRING.slice(35, 105)
   const rawRIGHT2: string = STRING.slice(105, 175)
@@ -42,7 +19,7 @@ export const BOOKLayout: React.FC<IProps> = ({
     return str.split('').map((el, i) => {
       if (el === ' ') {
         return (
-          <div key={el + i} className="select-none bg-red-00">
+          <div key={el + i} className="bg-red-00 select-none">
             {'\u00A0'}
             {/* {el} */}
           </div>
@@ -51,14 +28,14 @@ export const BOOKLayout: React.FC<IProps> = ({
         return (
           <div
             key={el + i}
-            className={`select-none bg-ed-200 flex justify-center items-center ${
+            className={`bg-ed-200 flex select-none items-center justify-center ${
               !highlighter && `opacity-0`
             }`}
           >
             {'\u00A0'}
             {/* {el} */}
             <div
-              className={`absolute bg-red-200 rounded-sm`}
+              className={`absolute rounded-sm bg-red-200`}
               style={{ padding: '0 2px' }}
             >
               {'\u00A0'}
@@ -73,17 +50,15 @@ export const BOOKLayout: React.FC<IProps> = ({
     let bluring = bl === 1 ? `opacity-80` : bl === 2 ? `opacity-70` : ` `
 
     return (
-      <div className={`w-full flex flex-row ${bluring}`}>{formating(str)}</div>
+      <div className={`flex w-full flex-row ${bluring}`}>{formating(str)}</div>
     )
   }
 
   return (
     <div
-      className={`absolute visible rounded-xl transition duration-700 ease-in-out z-31 ${
-        !appear && `opacity-0`
-      }`}
+      className={`z-31 visible absolute rounded-xl transition duration-700 ease-in-out `}
     >
-      <div className="w-1000 z-10 font-courier text-2xl flex flex-col space-y-4  ">
+      <div className="w-1000 font-courier z-10 flex flex-col space-y-4 text-2xl  ">
         {/* <div className="flex flex-row ">{'\u00A0'}</div> */}
 
         {rowing(rawLEFT3, 2)}

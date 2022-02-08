@@ -52,7 +52,7 @@ export const TAPREDONEtap: React.FC<IProps> = ({
 
   useEffect(() => {
     if (state === State.STOP) {
-      setFrameColor(`bg-emerald-300`)
+      setFrameColor(`bg-sky-500`)
     } else if (state === State.PAUSE) {
       setFrameColor(`bg-sky-400`)
     } else {

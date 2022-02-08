@@ -1,6 +1,10 @@
+import { SettingsEthernet } from '@material-ui/icons'
 import React, { useEffect, useState, useRef } from 'react'
+import useLanguage from '../../../hooks/useLanguage'
+import useLocalStorage from '../../../hooks/useLocalStorage'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 import { TAPREDONEbuttons } from './buttons/TAP.REDONE.buttons'
+import { TAPREDONEstats } from './TAP.REDONE.stats'
 import { TAPREDONEtap } from './TAP.REDONE.tap'
 import { TAPtimer } from './TAP.timer'
 
@@ -12,12 +16,22 @@ export enum State {
   PAUSE = `PAUSE`,
 }
 
-export const TAPREDONEshooting: React.FC = () => {
+export enum AppearType {
+  INTERVAL = `INTERVAL`,
+  PREPARED = `PREPARED`,
+}
+
+interface IProps {
+  demo: boolean
+}
+
+export const TAPREDONEshooting: React.FC<IProps> = ({ demo }) => {
   const success = useRef(0)
   const errors = useRef(0)
 
   const [missclicks, setMissclicks] = useState(0)
 
+  // const [state, setState] = useLocalStorage(`TC-state`, State.STOP)
   const [state, setState] = useState(State.STOP)
   const [started, setStarted] = useState(false)
   const [block, setBlock] = useState(false)
@@ -32,10 +46,14 @@ export const TAPREDONEshooting: React.FC = () => {
     Array.from({ length: 19 }, () => null)
   )
 
-  const [cells, setCells] = useState<(null | string)[]>(startingArray)
+  const [cells, setCells] = useLocalStorage<(null | string)[]>(
+    `TC-cells`,
+    startingArray
+  )
   const [keyDown, setKeyDown] = useState('')
   const [lastKey, setLastKey] = useState(``)
-  const [limit, setLimit] = useState(18)
+  const [limit, setLimit] = useLocalStorage(`TC-limit`, 18)
+  const [limitMemory, setLimitMemory] = useLocalStorage(`TC-limit-memory`, 18)
 
   useEffect(() => {
     if (limit > 19 && cells.length <= 19) {
@@ -59,12 +77,14 @@ export const TAPREDONEshooting: React.FC = () => {
     }
   }, [limit])
 
-  const [keyColor, setKeyColor] = useState<KeyColor>('red')
-  const [keyType, setKeyType] = useState<[boolean, boolean, boolean]>([
-    true,
-    false,
-    false,
-  ])
+  const [keyColor, setKeyColor] = useLocalStorage<KeyColor>(
+    `TC-keyColor`,
+    'red'
+  )
+  const [keyType, setKeyType] = useLocalStorage<[boolean, boolean, boolean]>(
+    `TC-keyType`,
+    [true, false, false]
+  )
 
   const part1: string = 'abcdefghijklmnopqrstuvwxyz'
   const part2: string = '0123456789'
@@ -76,6 +96,7 @@ export const TAPREDONEshooting: React.FC = () => {
   let alphabet = l + n + p
 
   const [maxLimit, setMaxLimit] = useState(25)
+  const [lastRemoved, setLastRemoved] = useState(0)
 
   useEffect(() => {
     if (alphabet.length >= 29) {
@@ -101,6 +122,7 @@ export const TAPREDONEshooting: React.FC = () => {
     let allowedIndexes: number[] = []
 
     cells.forEach((el, i) => !el && allowedIndexes.push(i))
+    allowedIndexes = allowedIndexes.filter((el) => el !== lastRemoved)
     const allowedIndex =
       allowedIndexes[Math.floor(Math.random() * allowedIndexes.length)]
 
@@ -111,7 +133,8 @@ export const TAPREDONEshooting: React.FC = () => {
     )
   }
 
-  const removeCells = (char: string) => {
+  const removeCell = (char: string) => {
+    setLastRemoved(cells.indexOf(char))
     setCells((prev) => prev.map((el) => (el === char ? null : el)))
   }
 
@@ -126,6 +149,8 @@ export const TAPREDONEshooting: React.FC = () => {
   }
 
   useDidMountEffect(() => {
+    if (appearType === AppearType.PREPARED) return
+
     if (
       cells.filter((el) => el).length >= limit ||
       cells.filter((el) => !el).length < 1
@@ -150,21 +175,37 @@ export const TAPREDONEshooting: React.FC = () => {
   const KEYS = (part1 + part2 + part3).split('')
 
   useDidMountEffect(() => {
+    if (demo) return
+
     if (keyDown === ' ') handleStart()
 
-    if (!KEYS.includes(keyDown) || state !== State.RUN) return ////////////
-    // if (!KEYS.includes(keyDown)) return ////////////
+    if (!KEYS.includes(keyDown) || state !== State.RUN) return
 
     if (cells.includes(keyDown)) {
       success.current++
-      removeCells(keyDown)
+
+      if (appearType === AppearType.PREPARED) {
+        setIncreaser((prev) => prev + 1)
+      }
+
+      removeCell(keyDown)
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      ///////////////////////////////////////////////////////////////////////////////////////////////////
     } else {
       errors.current++
       setMissclicks((prev) => prev + 1)
     }
   }, [keyDown])
 
+  useDidMountEffect(() => {
+    if (demo) {
+      gameOver()
+    }
+  }, [demo])
+
   const handleEvent = (event: KeyboardEvent): void => {
+    // event.preventDefault()
     if (event.key === ' ') {
       setSpaceDown(true)
     }
@@ -181,34 +222,107 @@ export const TAPREDONEshooting: React.FC = () => {
   }
 
   useEffect(() => {
-    window.addEventListener('keydown', (e) => {
-      handleEvent(e)
-    })
+    window.addEventListener('keydown', handleEvent)
     window.addEventListener('keyup', upHandler)
     return () => {
-      window.removeEventListener('keydown', (e) => {
-        handleEvent(e)
-      })
+      window.removeEventListener('keydown', handleEvent)
       window.removeEventListener('keyup', upHandler)
     }
   }, [])
 
-  const [interval, setInterval] = useState(700)
+  const [appearType, setAppearType] = useLocalStorage<AppearType>(
+    `TC-appear type`,
+    AppearType.PREPARED
+  )
+
+  const [targets, setTargets] = useLocalStorage(`TC-targets`, 5)
+  let Ptargets = targets - 1
+
+  const [interval, setInterval] = useLocalStorage(`TC-interval`, 700)
   const [tick, setTick] = useState(true)
 
   const handleTick = () => {
     setTick((prev) => !prev)
   }
+  const [increaser, setIncreaser] = useState(0)
+  const [decreaser, setDecreaser] = useState(0)
+
+  useDidMountEffect(() => {
+    pushCell()
+  }, [increaser])
+
+  useDidMountEffect(() => {
+    let randomChar = cells.filter((el) => el)[
+      Math.floor(Math.random() * cells.filter((el) => el).length)
+    ]
+    removeCell(randomChar as string)
+  }, [decreaser])
 
   useEffect(() => {
+    clearCells()
+
+    if (appearType === AppearType.INTERVAL) {
+      setLimit(limitMemory)
+      return
+    } else {
+      setLimitMemory(limit)
+      setLimit(9)
+    }
+    if (state === State.RUN) {
+      // setTest((prev) => prev + 10)
+      for (let i = 0; i < targets; i++) {
+        setIncreaser((prev) => prev + 1)
+      }
+    }
+  }, [appearType])
+
+  useEffect(() => {
+    clearCells()
+
+    if (appearType === AppearType.INTERVAL || state !== State.RUN) return
+    for (let i = 0; i < targets; i++) {
+      setIncreaser((prev) => prev + 1)
+    }
+  }, [state])
+
+  useEffect(() => {
+    if (appearType !== AppearType.PREPARED || state !== State.RUN) {
+      return
+    }
+    if (cells.filter((el) => el).length < Ptargets) {
+      setIncreaser((prev) => prev + 1)
+    } else if (cells.filter((el) => el).length > targets) {
+      setDecreaser((prev) => prev + 1)
+    }
+  }, [cells, targets])
+
+  useDidMountEffect(() => {
+    if (state !== State.RUN) return
+    if (cells.filter((el) => el).length < targets) {
+      setIncreaser((prev) => prev + 1)
+    } else if (cells.filter((el) => el).length > targets) {
+      // setDecreaser((prev) => prev + 1)
+    }
+  }, [targets])
+
+  useEffect(() => {
+    if (appearType === AppearType.PREPARED) return
+
     if (state === State.RUN && interval > 50) {
       pushCell()
     }
   }, [tick])
 
+  const { isEng } = useLanguage()
+
   return (
-    <div className={`flex flex-col items-center justify-center gap-10`}>
+    <div
+      className={`flex flex-col items-center justify-center gap-8 ${
+        isEng || `font-CourierC`
+      }`}
+    >
       <TAPREDONEbuttons
+        demo={demo}
         state={state}
         handleStart={handleStart}
         interval={interval}
@@ -222,6 +336,15 @@ export const TAPREDONEshooting: React.FC = () => {
         spaceDown={spaceDown}
         started={started}
         maxLimit={maxLimit}
+        appearType={appearType}
+        setAppearType={setAppearType}
+        targets={targets}
+        setTargets={setTargets}
+      />
+      <TAPREDONEstats
+        succesed={success.current}
+        errors={errors.current}
+        show={!demo}
       />
       <TAPREDONEtap
         cells={cells}

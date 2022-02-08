@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
 import { useHttp } from '../../../hooks/http.hook'
-import { useAuthAction, useNavAction } from '../../../hooks/useAction'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 import { PasswordState, UsernameState } from '../auth.types'
 import { AUTHlsignup } from './AUTH.signup'
 import { signupPasswordCheck, signUpUsernameCheck } from './signupUtils'
 
-export const AUTHsignupContainer: React.FC = ({}) => {
+interface IProps {
+  setAuthOpen: (auth: boolean) => void
+}
+
+export const AUTHsignupContainer: React.FC<IProps> = ({ setAuthOpen }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
@@ -24,11 +27,9 @@ export const AUTHsignupContainer: React.FC = ({}) => {
 
   const { loading: loadingAuth, request, error, clearError } = useHttp()
 
-  useEffect(() => {
-    setLoading(loadingAuth)
-  }, [loadingAuth])
-
-  const { setLoadingOn, setLoadingOff } = useNavAction()
+  // useEffect(() => {
+  //   setLoading(loadingAuth)
+  // }, [loadingAuth])
 
   // useDidMountEffect(() => {
   //   if (loading) {
@@ -118,7 +119,6 @@ export const AUTHsignupContainer: React.FC = ({}) => {
     }
   }, [usernameState, passwordState, password2State])
 
-  const { signUp, setOpenOff } = useAuthAction()
   const auth = useContext(AuthContext)
 
   const handleSumbit = async () => {
@@ -168,11 +168,11 @@ export const AUTHsignupContainer: React.FC = ({}) => {
             setPassword2Message('')
           }, 50)
         } catch {
-          setTimeout(() => setOpenOff(), 25)
+          setTimeout(() => setAuthOpen(false), 25)
         }
       }, 500)
 
-      setTimeout(() => setOpenOff(), 25)
+      setTimeout(() => setAuthOpen(false), 25)
     } catch {
       setUsernameState(`error`)
       setPasswordState(`error`)

@@ -143,32 +143,32 @@ export const LEVELicon: React.FC<IProps> = ({ level, expMSG }) => {
 
   return (
     <div
-      className={`z-20 rounded-xl border border-gray-800 font-courier text-3xl flex items-center justify-center ${
+      className={`font-courier z-20 flex items-center justify-center rounded-xl border border-gray-800 text-3xl ${
         bgColor()[0]
       }   ${tick ? 'shadow-3xl' : `shadow-sm`} ${bgColor()[1]} 
-      overflow-hidden h-40px w-42px 
-       transition duration-2000 ease-in-out`}
+      h-40px w-42px duration-2000 
+       overflow-hidden transition ease-in-out`}
       // style={{ transition: '0.2s ease-in-out' }}
     >
       {!showLvlForced && expMSG && (
         <div
-          className={`z-20 h-40px w-40px p-6px absolute flex items-center justify-center rounded-xl flex-col  borde border-gray-800 `}
+          className={`h-40px w-40px p-6px borde absolute z-20 flex flex-col items-center justify-center  rounded-xl border-gray-800 `}
         >
           <img src={getAch()} alt="" />
         </div>
       )}
       <div
-        className={`flex items-center justify-start  flex-col w-40px h-40px mt-2px transition duration-1000 ease-in-out`}
+        className={`w-40px h-40px mt-2px  flex flex-col items-center justify-start transition duration-1000 ease-in-out`}
         style={{
           // transition: '1s ease-in-out', /// !!!!
           transform: `translateY(-${40 * lvl - 40}px)`,
         }}
       >
-        <div className={`flex items-center justify-start flex-col flex-wrap `}>
+        <div className={`flex flex-col flex-wrap items-center justify-start `}>
           {elements}
         </div>
         <div
-          className={`absolute ${bgColor()[0]} z-10 w-40px h-400px  ${
+          className={`absolute ${bgColor()[0]} w-40px h-400px z-10  ${
             // `opacity-100`
             !showLvlForced && expMSG ? 'opacity-100' : 'opacity-0'
           } `}

@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDidMountEffect } from '../../hooks/useDidMountEffect'
+import useLocalStorage from '../../hooks/useLocalStorage'
 import { LEVELlevel } from './LEVEL.level'
 import { LEVELrecorder } from './LEVEL.recorder'
 import { LEVELupper } from './LEVEL.upper'
@@ -61,7 +63,19 @@ export const LEVELcontainer: React.FC<IProps> = ({
     // [250, 575, 1_000, 1_575, 2_350, 3_375, 4_750, 6_575, 9_000]
     [0, 250, 825, 1825, 3400, 5750, 9125, 13875, 20450, 29450]
 
-  const [exp, setExp] = useState(0)
+  const [exp, setExp] = useState<number>(0)
+
+  const [localExp, setLocalExp] = useLocalStorage<number>('exp', 0)
+
+  useEffect(() => {
+    setExp(localExp)
+  }, [])
+
+  useDidMountEffect(() => {
+    if (exp % 5 === 0) {
+      setLocalExp(exp)
+    }
+  }, [exp])
 
   const getLevel = (expirience: number) => {
     let lvl = 0
