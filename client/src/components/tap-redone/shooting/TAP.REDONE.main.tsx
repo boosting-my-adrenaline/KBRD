@@ -23,9 +23,13 @@ export enum AppearType {
 
 interface IProps {
   demo: boolean
+  trainingLanguage: boolean
 }
 
-export const TAPREDONEshooting: React.FC<IProps> = ({ demo }) => {
+export const TAPREDONEshooting: React.FC<IProps> = ({
+  demo,
+  trainingLanguage,
+}) => {
   const success = useRef(0)
   const errors = useRef(0)
 
@@ -86,7 +90,9 @@ export const TAPREDONEshooting: React.FC<IProps> = ({ demo }) => {
     [true, false, false]
   )
 
-  const part1: string = 'abcdefghijklmnopqrstuvwxyz'
+  const part1: string = trainingLanguage
+    ? 'abcdefghijklmnopqrstuvwxyz'
+    : 'абвгдежзийклмнопрстуфхцчшщъыьэюя'
   const part2: string = '0123456789'
   const part3: string = `!@#$%^&*()-_=+[]{}:;'"/?.,<>`
 
@@ -189,9 +195,6 @@ export const TAPREDONEshooting: React.FC<IProps> = ({ demo }) => {
       }
 
       removeCell(keyDown)
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-      ///////////////////////////////////////////////////////////////////////////////////////////////////
     } else {
       errors.current++
       setMissclicks((prev) => prev + 1)
@@ -315,6 +318,29 @@ export const TAPREDONEshooting: React.FC<IProps> = ({ demo }) => {
 
   const { isEng } = useLanguage()
 
+  const swap = () => {
+    let arr1 = 'abcdefghijklmnopqrstuvwxyz'
+    let arr2 = 'абвгдежзийклмнопрстуфхчэшя'
+    if (trainingLanguage) {
+      setCells((prev) =>
+        prev.map((el) => {
+          if (arr1.includes(el as string)) {
+            return arr2[arr1.indexOf(el as string)]
+          } else {
+            return null
+          }
+        })
+      )
+    } else {
+      clearCells()
+      // setStarted(false)
+    }
+  }
+
+  useDidMountEffect(() => {
+    swap()
+  }, [trainingLanguage])
+
   return (
     <div
       className={`flex flex-col items-center justify-center gap-8 ${
@@ -357,6 +383,7 @@ export const TAPREDONEshooting: React.FC<IProps> = ({ demo }) => {
         setState={setState}
         block={block}
         setBlock={setBlock}
+        trainingLanguage={trainingLanguage}
       />
       <TAPtimer handleTick={handleTick} interval={interval} />
     </div>

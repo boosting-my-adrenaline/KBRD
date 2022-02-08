@@ -34,7 +34,9 @@ export const BOOKbuttonVisual: React.FC<IProps> = ({
     <motion.div
       whileHover={{ scale: 1.1, y: -2 }}
       whileTap={{ scale: 0.9 }}
-      className={` flex items-center justify-center overflow-hidden rounded-xl `}
+      className={`${
+        tag === `A` && `font-courier font-extrabold`
+      } flex items-center justify-center overflow-hidden rounded-xl `}
     >
       <button
         className={`relative z-10 justify-self-end overflow-hidden rounded-xl px-4  py-2 outline-none ${

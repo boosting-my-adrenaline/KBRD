@@ -17,6 +17,7 @@ interface IProps {
   setState: (state: State) => void
   block: boolean
   setBlock: (block: boolean) => void
+  trainingLanguage: boolean
 }
 
 export const TAPREDONEtap: React.FC<IProps> = ({
@@ -30,6 +31,7 @@ export const TAPREDONEtap: React.FC<IProps> = ({
   setState,
   block,
   setBlock,
+  trainingLanguage,
 }) => {
   const [frameColor, setFrameColor] = useState(`bg-sky-400`)
 
@@ -74,11 +76,17 @@ export const TAPREDONEtap: React.FC<IProps> = ({
   }, [missclicks])
 
   let element = (cell: number) => {
-    return <TAPREDONEelement char={cells[cell]} color={getColor()} />
+    return (
+      <TAPREDONEelement
+        char={cells[cell]}
+        color={getColor()}
+        trainingLanguage={trainingLanguage}
+      />
+    )
   }
 
   return (
-    <div className={`w-1100px  flex justify-center items-center `}>
+    <div className={`w-1100px  flex items-center justify-center `}>
       <TAPREDONEframe
         state={state}
         color={frameColor}
@@ -89,7 +97,7 @@ export const TAPREDONEtap: React.FC<IProps> = ({
         block={block}
         setBlock={setBlock}
       />
-      <div className={`flex flex-col justify-center items-center gap-6`}>
+      <div className={`flex flex-col items-center justify-center gap-6`}>
         <div className={`flex flex-row justify-center gap-14`}>
           {element(25)}
           {element(13)}

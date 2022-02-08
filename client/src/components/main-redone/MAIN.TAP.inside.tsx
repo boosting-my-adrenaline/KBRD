@@ -8,9 +8,10 @@ import svg5 from '../../static/svg5.svg'
 
 interface IProps {
   show: boolean
+  trainingLanguage: boolean
 }
 
-export const MAINTAPinside: React.FC<IProps> = ({ show }) => {
+export const MAINTAPinside: React.FC<IProps> = ({ show, trainingLanguage }) => {
   const [demo, setDemo] = useState(true)
   const [bg, setBg] = useState(false)
   const [bg2, setBg2] = useState(false)
@@ -58,9 +59,9 @@ export const MAINTAPinside: React.FC<IProps> = ({ show }) => {
     <motion.div
       initial={{ scale: 0.5 }}
       animate={!show ? { scale: 0.75 } : { scale: 1 }}
-      className={`flex justify-center items-center w-f h-f  ${
+      className={`w-f h-f flex items-center justify-center  ${
         bg && `bg-sky-100`
-      } transition-colors duration-0 ease-in-out`}
+      } duration-0 transition-colors ease-in-out`}
       style={{
         backgroundImage: !bg2 ? `none` : `url(${svg5})`,
         backgroundSize: `100% auto`,
@@ -69,13 +70,13 @@ export const MAINTAPinside: React.FC<IProps> = ({ show }) => {
       }}
     >
       <div
-        className={`flex flex-col items-center justify-center  w-f h-f  ${
+        className={`w-f h-f flex flex-col  items-center justify-center  ${
           !show && `160k:mt-0 1400:mt-4 1200:mt-[100px] mt-[150px]`
         } transition duration-75 `}
       >
-        <TAPREDONEcontainer demo={demo} />
+        <TAPREDONEcontainer demo={demo} trainingLanguage={trainingLanguage} />
         <div
-          className={`flex-grow h-f w-f `}
+          className={`h-f w-f flex-grow `}
           style={{ width: `100%`, height: `100%` }}
         />
       </div>

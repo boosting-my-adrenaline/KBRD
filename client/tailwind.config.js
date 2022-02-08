@@ -199,6 +199,7 @@ module.exports = {
         Nuvo: ['Nuvo'],
         Pitch: ['Pitch'],
         CourierC: [`CourierC`],
+        RobotoMono: [`Roboto Mono`],
       },
 
       transform: {

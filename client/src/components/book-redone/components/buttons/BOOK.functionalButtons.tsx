@@ -16,6 +16,8 @@ interface IProps {
   caps: boolean
   capsError: any
   handleReset(): void
+  fontW: boolean
+  handleFW: () => void
 }
 
 export const BOOKfunctionalButtons: React.FC<IProps> = ({
@@ -28,15 +30,17 @@ export const BOOKfunctionalButtons: React.FC<IProps> = ({
   caps,
   capsError,
   handleReset,
+  fontW,
+  handleFW,
 }) => {
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(true)
 
-  useEffect(() => {
-    let id = setTimeout(() => {
-      setShow(true)
-    }, 900)
-    return () => clearTimeout(id)
-  }, [])
+  // useEffect(() => {
+  //   let id = setTimeout(() => {
+  //     setShow(true)
+  //   }, 900)
+  //   return () => clearTimeout(id)
+  // }, [])
 
   const { isEng } = useLanguage()
 
@@ -59,7 +63,6 @@ export const BOOKfunctionalButtons: React.FC<IProps> = ({
           onClick={setHighlighter}
           active={highlighter}
         />
-
         <BOOKbuttonVisual
           tag={isEng ? `punctuation` : `пунктуация`}
           active={punctuation}
@@ -70,14 +73,17 @@ export const BOOKfunctionalButtons: React.FC<IProps> = ({
           active={caseSensitivity}
           onClick={setCaseSensetivity}
         />
+        <BOOKbuttonVisual
+          tag={isEng ? `A` : `A`}
+          active={fontW}
+          onClick={handleFW}
+        />
         <div className={'flex-grow'}></div>
-
         <BOOKbuttonVisualFunctional
           title={isEng ? `reset` : `сброс`}
           onClick={handleReset}
         />
         <div className={'px-2'}></div>
-
         <BOOKcapsLockButton caps={caps} capsError={capsError} />
       </div>
     </div>

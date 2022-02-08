@@ -4,9 +4,13 @@ import { TAPREDONEshooting } from './shooting/TAP.REDONE.main'
 
 interface IProps {
   demo: boolean
+  trainingLanguage: boolean
 }
 
-export const TAPREDONEcontainer: React.FC<IProps> = ({ demo }) => {
+export const TAPREDONEcontainer: React.FC<IProps> = ({
+  demo,
+  trainingLanguage,
+}) => {
   const [perspective, setPerspective] = useState<[number, number]>([0, 100])
 
   const handleSetPerspective = (perspective: number, margin: number) => {
@@ -28,7 +32,7 @@ export const TAPREDONEcontainer: React.FC<IProps> = ({ demo }) => {
           className={`-translate-y-0px flex flex-col items-center  justify-center transition-opacity duration-700 ease-in-out`}
           style={{ transition: `0.7s ease-in-out` }}
         >
-          <TAPREDONEshooting demo={demo} />
+          <TAPREDONEshooting demo={demo} trainingLanguage={trainingLanguage} />
         </div>
       </div>
       <PerspectiveController setTap={handleSetPerspective} />

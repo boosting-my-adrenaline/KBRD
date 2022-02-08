@@ -8,10 +8,12 @@ import { MAINTAPinside } from './MAIN.TAP.inside'
 interface IProps {
   mainState: MainState
   setMainState: (state: MainState) => void
+  trainingLanguage: boolean
 }
 export const MAINREDONEtap: React.FC<IProps> = ({
   mainState,
   setMainState,
+  trainingLanguage,
 }) => {
   const keybs: [string, number][] = [
     ['T', 2],
@@ -197,7 +199,10 @@ export const MAINREDONEtap: React.FC<IProps> = ({
             transition={{ delay: 0.3, duration: 0.4 }}
             className={`flex-grow! bg-emerald-20 w-f flex items-center justify-center `}
           >
-            <MAINTAPinside show={transformation} />
+            <MAINTAPinside
+              show={transformation}
+              trainingLanguage={trainingLanguage}
+            />
           </motion.div>
           <div className={`flex-grow`}></div>
           <motion.div
@@ -222,7 +227,7 @@ export const MAINREDONEtap: React.FC<IProps> = ({
               animate={{ opacity: 0 }}
               transition={{ delay: 1 }}
               className={`w-f h-2 border border-sky-100 bg-sky-100`}
-            ></motion.div>
+            />
           </motion.div>
         </motion.div>
       </motion.div>

@@ -3,9 +3,10 @@ import useLanguage from '../../../hooks/useLanguage'
 
 interface IProps {
   STRING: string
+  fontW: boolean
 }
 
-export const BOOKBook: React.FC<IProps> = ({ STRING }) => {
+export const BOOKBook: React.FC<IProps> = ({ STRING, fontW }) => {
   const RIGHT: string = STRING.slice(0, 35)
   const RIGHT1: string = STRING.slice(35, 105)
   const RIGHT2: string = STRING.slice(105, 175)
@@ -30,7 +31,9 @@ export const BOOKBook: React.FC<IProps> = ({ STRING }) => {
 
   return (
     <div
-      className={`w-1000 ${`font-courier`} visible z-40 flex flex-col space-y-4 text-2xl  transition duration-700 ease-in-out`}
+      className={`w-1000 ${
+        fontW ? `font-courier font-[100]` : ``
+      } visible z-40 flex flex-col space-y-4 text-2xl  transition duration-700 ease-in-out`}
     >
       <div
         className={`w-1000  z-40 flex flex-col space-y-4 text-2xl text-gray-800 `}

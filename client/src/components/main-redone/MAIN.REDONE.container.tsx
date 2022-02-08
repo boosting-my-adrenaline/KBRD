@@ -29,7 +29,11 @@ export const MAINREDONEcontainer: React.FC<IProps> = ({
       }}
     >
       <MAINREDONEinfo mainState={mainState} setMainState={setMainState} />
-      <MAINREDONEtap mainState={mainState} setMainState={setMainState} />
+      <MAINREDONEtap
+        mainState={mainState}
+        setMainState={setMainState}
+        trainingLanguage={trainingLanguage}
+      />
       <MAINREDONEbook
         mainState={mainState}
         setMainState={setMainState}

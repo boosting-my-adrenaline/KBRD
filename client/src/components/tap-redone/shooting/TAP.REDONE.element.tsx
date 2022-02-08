@@ -1,13 +1,19 @@
 import { motion } from 'framer-motion'
 import React, { useState } from 'react'
+import useLanguage from '../../../hooks/useLanguage'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 
 interface IProps {
   char: null | string
   color: string
+  trainingLanguage: boolean
 }
 
-export const TAPREDONEelement: React.FC<IProps> = ({ char, color }) => {
+export const TAPREDONEelement: React.FC<IProps> = ({
+  char,
+  color,
+  trainingLanguage,
+}) => {
   const [show, setShow] = useState(false)
   const [tag, setTag] = useState(``)
 
@@ -23,10 +29,14 @@ export const TAPREDONEelement: React.FC<IProps> = ({ char, color }) => {
     return () => clearTimeout(id)
   }, [char])
 
+  const { isEng } = useLanguage()
+
   // char = `A`
   return (
     <div
-      className={`font-courier w-100px h-100px flex items-center justify-center text-gray-900 `}
+      className={`${
+        trainingLanguage ? `font-courier` : `font-CourierC`
+      } w-100px h-100px flex items-center justify-center text-gray-900 `}
     >
       {show ? (
         <motion.div
@@ -49,7 +59,7 @@ export const TAPREDONEelement: React.FC<IProps> = ({ char, color }) => {
             }}
           >
             {tag}
-            {[`f`, 'j'].includes(tag) && (
+            {[`f`, 'j', 'а', 'о'].includes(tag) && (
               <div
                 className={` w-10px h-2px translate-y-18px absolute rounded-full bg-gray-800`}
               />

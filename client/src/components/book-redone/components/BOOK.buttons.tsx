@@ -16,6 +16,8 @@ interface IProps {
   running: boolean
   handleReset(): void
   handleTest(): void
+  fontW: boolean
+  handleFW: () => void
 }
 
 export const BOOKbuttons: React.FC<IProps> = ({
@@ -31,6 +33,8 @@ export const BOOKbuttons: React.FC<IProps> = ({
   running,
   handleReset,
   handleTest,
+  fontW,
+  handleFW,
 }) => {
   const [hover, setHover] = useState(false)
 
@@ -69,6 +73,8 @@ export const BOOKbuttons: React.FC<IProps> = ({
               caps={caps}
               capsError={capsError}
               handleReset={handleReset}
+              fontW={fontW}
+              handleFW={handleFW}
             />
           </div>
           <div className={`py w-1000px px my-4 h-[1px] bg-red-200`}></div>

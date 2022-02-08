@@ -101,21 +101,15 @@ export const RUSBOOKstring: React.FC<IProps> = ({
   ]
 
   const { isEng } = useLanguage()
-  // const examples = [
-  //   { title: `Example #1`, str: letter1 },
-  //   { title: `Example #2`, str: letter2 },
-  //   { title: `Example #3`, str: letter3 },
-  //   { title: `Example #4`, str: letter4 },
-  //   { title: `Example #5`, str: letter5 },
-  //   { title: `Example #6`, str: letter6 },
-  //   { title: `Example #7`, str: letter7 },
-  //   { title: `Example #8`, str: letter8 },
-  // ]
 
   const handleSetString = (str: string, num: number) => {
     setNow(str)
     choosenString.current = num
   }
+
+  useEffect(() => {
+    handleRandom()
+  }, [])
 
   const handleRandom = () => {
     let n = Math.floor(Math.random() * letters.length)
@@ -151,7 +145,7 @@ export const RUSBOOKstring: React.FC<IProps> = ({
   // return <>do something with STRING length</>
   return (
     <div
-      className={`${'font-CourierC'} w-1000px borde z-50 mt-4 flex  transform select-none flex-col items-center gap-4 border-black text-xl text-gray-800 ${
+      className={`font-CourierC w-1000px borde z-50 mt-4 flex  transform select-none flex-col items-center gap-4 border-black text-xl text-gray-800 ${
         show || `opacity-0`
       } transition duration-700 ease-in-out`}
       onMouseEnter={() => setHover(true)}

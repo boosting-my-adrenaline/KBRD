@@ -259,6 +259,9 @@ export const RUSBOOKContainer: React.FC<IProps> = ({ demo = false }) => {
     // SUCCESS()
   }
 
+  const [fontW, setFontW] = useLocalStorage(`BC-fontWeight`, true)
+  const handleFW = () => setFontW((prev) => !prev)
+
   return (
     <div
       style={{
@@ -287,6 +290,8 @@ export const RUSBOOKContainer: React.FC<IProps> = ({ demo = false }) => {
           running={running}
           handleReset={handleReset}
           handleTest={handleTest}
+          fontW={fontW}
+          handleFW={handleFW}
         />
         <div className={`z-60`}>
           <BOOKstats
@@ -301,7 +306,7 @@ export const RUSBOOKContainer: React.FC<IProps> = ({ demo = false }) => {
             className={`1k:visible bordr  invisible my-10
         flex flex-col items-center justify-center border-red-900`}
           >
-            <RUSBOOKBook STRING={STRING} />
+            <RUSBOOKBook STRING={STRING} fontW={fontW} />
             <BOOKLayout STRING={STRING} highlighter={hightlighter} />
             <BOOKfailures failedTypesIndexes={failedTypesIndexes.current} />
             <BOOKpointer overall={successAndFailedTypes.current} />
