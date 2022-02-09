@@ -9,13 +9,13 @@ app.use(express.json({ extended: true }))
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/link', require('./routes/link.routes'))
 
-if (process.env.NODE_EMV === 'production') {
-  app.use('/', express.static(path.join(__dirname, `client`, 'build')))
+// if (process.env.NODE_EMV === 'production') {
+app.use('/', express.static(path.join(__dirname + `/client` + '/build')))
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname + 'client', 'build', 'index.html'))
-  })
-}
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/client', '/build', '/index.html'))
+})
+// }
 
 const PORT = config.get('port') || 5005
 
