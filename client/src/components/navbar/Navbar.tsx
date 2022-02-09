@@ -134,7 +134,7 @@ ${BorderColor}   ${ThemeColor}  shadow-6th ${ShadowColor} font-courier flex sele
                 {/* <HexagonRounded onClick={() => changeChapter(Chapters.MAIN)} /> */}
                 {/* 1 */}
                 <NAVlogo onClick={() => setMainState(MainState.MAIN)} />
-                <Width />
+                {/* <Width /> */}
               </div>
             </a>
 
