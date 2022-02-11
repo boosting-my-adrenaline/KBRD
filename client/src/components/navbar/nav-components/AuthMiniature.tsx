@@ -58,12 +58,12 @@ export const AuthMiniature: React.FC<IProps> = ({ authOpen, setAuthOpen }) => {
       {
         <motion.div
           animate={{
-            borderRadius: !authOpen ? 1000 : 10,
+            borderRadius: !authOpen ? 1000 : 50,
             // opacity: 0.2,
             marginLeft: authOpen ? perspective[2] : 0,
             marginTop: authOpen ? perspective[1] : 0,
-            width: !authOpen ? 80 : 1150,
-            height: !authOpen ? 50 : 700,
+            width: !authOpen ? 60 : 1150,
+            height: !authOpen ? 28 : 700,
             x: !authOpen ? 0 : -490,
             y: !authOpen ? 0 : 410,
           }}
@@ -109,7 +109,7 @@ export const AuthMiniature: React.FC<IProps> = ({ authOpen, setAuthOpen }) => {
                   }`}
                 >
                   {' '}
-                  {isEng ? `Log in` : `Войти`}
+                  {isEng ? `Login` : `Войти`}
                 </div>
               )}
             </>

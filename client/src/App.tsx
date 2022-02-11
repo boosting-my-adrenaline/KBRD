@@ -117,7 +117,6 @@ export const App: React.FC = () => {
               toggleTrainingLanguage={toggleTrainingLanguage}
             />
             <Footer mainState={mainState} />
-
             <div
               className={`fixed inset-0 z-[2023]  bg-gray-400 blur-[5px] ${
                 authOpen

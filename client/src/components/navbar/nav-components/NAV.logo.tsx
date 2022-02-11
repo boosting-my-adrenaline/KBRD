@@ -12,10 +12,10 @@ interface IProps {
 }
 
 export const NAVlogo: React.FC<IProps> = ({
-  k = 40,
-  b = 40,
-  r = 40,
-  d = 40,
+  k = 35,
+  b = 35,
+  r = 35,
+  d = 35,
   onClick,
   tsition = 0.175,
 }) => {
@@ -79,7 +79,7 @@ export const NAVlogo: React.FC<IProps> = ({
         x: -size * 2.5,
       }}
       key={key}
-      className={`text-gray-800 mx-1`}
+      className={`mx-1 text-gray-800`}
       // style={{ transition: `${tsition}s ease-in-out`, fontSize: size }}
     >
       {letter}
@@ -101,7 +101,7 @@ export const NAVlogo: React.FC<IProps> = ({
         repeatCount: Infinity,
         scale: 1.1,
       }}
-      className={`select-none flex items-center justify-center`}
+      className={`flex select-none items-center justify-center`}
       style={{ width: 500 }}
       onMouseDown={handleClick}
     >

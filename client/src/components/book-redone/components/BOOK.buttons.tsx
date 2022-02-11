@@ -77,7 +77,7 @@ export const BOOKbuttons: React.FC<IProps> = ({
               handleFW={handleFW}
             />
           </div>
-          <div className={`py w-1000px px my-4 h-[1px] bg-red-200`}></div>
+          <div className={`py w-1000px px my-3 h-[1px] bg-emerald-200`}></div>
         </div>
       </div>
     </>

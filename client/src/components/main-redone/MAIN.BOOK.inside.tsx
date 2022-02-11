@@ -67,7 +67,7 @@ export const MAINBOOKinside: React.FC<IProps> = ({
       initial={{ scale: 0.5 }}
       animate={!show ? { scale: 0.75 } : { scale: 1 }}
       className={` w-f h-f flex items-center justify-center ${
-        bg && `bg-red-100`
+        bg && `bg-emerald-100`
       } duration-0 transition-colors ease-in-out`}
       style={{
         backgroundImage: !bg2 ? `none` : `url(${svgbook2})`,

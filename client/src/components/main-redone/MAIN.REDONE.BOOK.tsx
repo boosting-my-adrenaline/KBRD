@@ -115,7 +115,7 @@ export const MAINREDONEbook: React.FC<IProps> = ({
               position: 'absolute',
             }
       }
-      className={`absolute select-none bg-red-100`}
+      className={`absolute select-none bg-emerald-100`}
       transition={{ delay: 0.0, duration: 1 }}
     >
       <motion.div
@@ -197,7 +197,7 @@ export const MAINREDONEbook: React.FC<IProps> = ({
             initial={{ height: `0%` }}
             animate={!transformation ? { height: `43%` } : { height: `100%` }}
             transition={{ delay: 0.3, duration: 0.4 }}
-            className={`flex-grow! w-f flex items-center justify-center bg-red-100 `}
+            className={`flex-grow! w-f flex items-center justify-center bg-emerald-100 `}
           >
             <MAINBOOKinside
               show={transformation}

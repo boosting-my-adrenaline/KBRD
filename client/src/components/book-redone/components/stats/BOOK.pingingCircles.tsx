@@ -25,10 +25,10 @@ export const PingingCircles: React.FC<IProps> = ({}) => {
   }, [])
 
   const circle = (num: number, key: any) => (
-    <div key={key} className={`flex justify-center items-center`}>
+    <div key={key} className={`flex items-center justify-center`}>
       {'\u00a0'}
       <div
-        className={`absolute rounded-full bg-red-${
+        className={`absolute rounded-full bg-emerald-${
           refs[num] * 100
         } w-8px h-8px transition duration-500 ease-in-out`}
       ></div>

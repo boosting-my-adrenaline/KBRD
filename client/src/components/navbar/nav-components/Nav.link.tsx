@@ -32,7 +32,7 @@ export const NAVlink: React.FC<IProps> = ({ link, mainState, onClick }) => {
     >
       <a
         className={`text:xl select-none flex-row  rounded-md lowercase
-         outline-none transition-all md:text-3xl  ${
+         outline-none transition-all md:text-2xl  ${
            isClicked && 'animate-bounce'
          }
          ${

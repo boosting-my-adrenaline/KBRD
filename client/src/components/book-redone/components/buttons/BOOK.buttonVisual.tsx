@@ -40,7 +40,9 @@ export const BOOKbuttonVisual: React.FC<IProps> = ({
     >
       <button
         className={`relative z-10 justify-self-end overflow-hidden rounded-xl px-4  py-2 outline-none ${
-          active ? 'bg-red-400 text-gray-800' : 'bg-gray-300/60 text-gray-600'
+          active
+            ? 'bg-emerald-400 text-gray-800'
+            : 'bg-gray-200/60 text-gray-600'
         } transition duration-1000 ease-in-out`}
         onMouseDown={(e) => {
           e.preventDefault()
@@ -57,13 +59,13 @@ export const BOOKbuttonVisual: React.FC<IProps> = ({
             transform: `translate(${!isHovered ? `-250` : '-20'}px, -100px)`,
           }}
         >
-          <div className={`w-220px h-150px rotate-20deg bg-red-200`} />
+          <div className={`w-220px h-150px rotate-20deg bg-emerald-200`} />
         </div>
       </button>
       <button
         className={`absolute  animate-pulse rounded-xl px-3  py-1 ${
           active && `shadow-8th`
-        }  ease bg-transparent shadow-red-600 transition duration-500`}
+        }  ease bg-transparent shadow-emerald-600 transition duration-500`}
         disabled
       >
         {tag}
@@ -89,7 +91,7 @@ export const BOOKbuttonVisualFunctional: React.FC<IProps2> = ({
       className={`overflow-hidden rounded-xl `}
     >
       <div
-        className={`duration-250 relative cursor-pointer overflow-hidden rounded-xl  border border-red-400 px-4 py-2 transition ease-in-out active:bg-red-100`}
+        className={`duration-250 relative cursor-pointer overflow-hidden rounded-xl  border border-emerald-400 px-4 py-2 transition ease-in-out active:bg-red-100`}
         onMouseDown={onClick}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -101,10 +103,10 @@ export const BOOKbuttonVisualFunctional: React.FC<IProps2> = ({
             transform: `translate(${!hover ? `-245` : '-120'}px, -100px)`,
           }}
         >
-          <div className={`w-220px h-150px rotate-20deg bg-red-400`} />
+          <div className={`w-220px h-150px rotate-20deg bg-emerald-400`} />
         </div>
         <div
-          className={`w-200px h-100px absolute -z-20 bg-red-200 `}
+          className={`w-200px h-100px absolute -z-20 bg-emerald-200 `}
           style={{
             transform: `translate(-100px, -50px)`,
           }}

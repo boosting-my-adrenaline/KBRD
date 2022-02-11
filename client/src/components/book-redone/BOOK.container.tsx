@@ -67,7 +67,8 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
   const successAndFailedTypes = useRef(0)
   const failureTypes = useRef(0)
   const failureInARow = useRef(0)
-  const streakRow = useRef(0)
+  // const streakRow = useRef(0)
+  const [streakRow, setStreakRow] = useState(0)
 
   const failedTypeStatus = useRef(false)
   const escapeFailedTypeStatus = useRef(false)
@@ -117,11 +118,11 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
 
   const handleEvent = (event: KeyboardEvent) => {
     const { key } = event
-    console.log(
-      `key: ${key} , STRING[0]: ${STRING[0]}, is===? ${
-        key === STRING[0] ? `yes` : `no`
-      }`
-    )
+    // console.log(
+    //   `key: ${key} , STRING[0]: ${STRING[0]}, is===? ${
+    //     key === STRING[0] ? `yes` : `no`
+    //   }`
+    // )
 
     if (KEYS.includes(key)) {
       setKeyDown(key)
@@ -144,7 +145,8 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
     // }
 
     if (keyDown === STRING[0]) {
-      SUCCESS()
+      // SUCCESS()
+      setIncreaser((prev) => prev + 1)
     } else if (keyDown !== STRING[0] && KEYS.includes(keyDown)) {
       FAILURE()
       if (keyDown.toLowerCase() === STRING[0].toLowerCase() && capsKey) {
@@ -159,13 +161,25 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
     }
   }, [keyDown])
 
-  function SUCCESS(): void {
+  const [increaser, setIncreaser] = useState(0)
+
+  useDidMountEffect(() => {
+    SUCCESS()
+  }, [increaser])
+
+  const [test, setTest] = useState(0)
+
+  const SUCCESS = (): void => {
+    // setStreakRow(0)
     setSTRING((str) => str.substring(1) + str[0])
     successAndFailedTypes.current++
     failedTypesIndexes.current = failedTypesIndexes.current.map((el) => el + 1)
     // .filter((el) => el <= 245)
     if (failedTypeStatus.current && !escapeFailedTypeStatus.current) {
+      // setTimeout(() => {
+      // setTest((prev) => prev + 10)
       failedTypesIndexes.current = [...failedTypesIndexes.current, 1]
+      // }, 10)
     }
     failedTypeStatus.current = false
     if (escapeFailedTypeStatus.current) {
@@ -177,45 +191,74 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
   }
 
   function FAILURE(): void {
-    if (streakRow.current === 0 && keyDown === STRING[1]) {
-      streakRow.current++
-    } else if (streakRow.current === 1 && keyDown === STRING[2]) {
-      streakRow.current++
-    } else if (streakRow.current === 2 && keyDown === STRING[3]) {
+    if (streakRow === 0 && keyDown === STRING[1]) {
+      setStreakRow((prev) => prev + 1)
+      // console.log(1)
+    } else if (streakRow === 1 && keyDown === STRING[2]) {
+      setStreakRow((prev) => prev + 1)
+      // console.log(2)
+    } else if (streakRow === 2 && keyDown === STRING[3]) {
+      // setIncreaser((prev) => prev + 1)
       SUCCESS()
-      SUCCESS()
-      SUCCESS()
-      SUCCESS()
+      // setIncreaser((prev) => prev + 1)
+      // setIncreaser((prev) => prev + 1)
+      // setIncreaser((prev) => prev + 1)
+      setTimeout(() => setIncreaser((prev) => prev + 1))
+      setTimeout(() => setIncreaser((prev) => prev + 1))
+      setTimeout(() => setIncreaser((prev) => prev + 1))
+      // setIncreaser((prev) => prev + 1)
+      // setIncreaser((prev) => prev + 1)
       escapeFailedTypeStatus.current = true
       failureTypes.current--
-      streakRow.current = 0
+      setStreakRow(0)
+      // console.log(3)
     } else {
-      streakRow.current = 0
+      setStreakRow(0)
+      // console.log(0)
     }
 
     if (failureInARow.current === 0) {
+      setTest((prev) => prev + 1)
+      // setTimeout(() => {
       failureInARow.current = 1
       failureTypes.current++
-      historyOfFailed.current = [
-        ...historyOfFailed.current,
-        {
-          desired: STRING[0] === ' ' ? 'Space' : STRING[0],
-          pressed: keyDown === ' ' ? 'Space' : keyDown,
-          previous: prelastKey.current,
-        },
-      ]
+      // historyOfFailed.current = [
+      //   ...historyOfFailed.current,
+      //   {
+      //     desired: STRING[0] === ' ' ? 'Space' : STRING[0],
+      //     pressed: keyDown === ' ' ? 'Space' : keyDown,
+      //     previous: prelastKey.current,
+      //   },
+      // ]
       // console.log(historyOfFailed.current)
 
       failedTypeStatus.current = true
+      // })
     }
   }
+
+  useDidMountEffect(() => {
+    failureInARow.current = 1
+    failureTypes.current++
+    historyOfFailed.current = [
+      ...historyOfFailed.current,
+      {
+        desired: STRING[0] === ' ' ? 'Space' : STRING[0],
+        pressed: keyDown === ' ' ? 'Space' : keyDown,
+        previous: prelastKey.current,
+      },
+    ]
+    // console.log(historyOfFailed.current)
+
+    failedTypeStatus.current = true
+  }, [test])
   const [reseting, setReseting] = useState(0)
 
   const handleReset = () => {
     successAndFailedTypes.current = 0
     failureTypes.current = 0
     failureInARow.current = 0
-    streakRow.current = 0
+    setStreakRow(0)
 
     failedTypeStatus.current = false
     escapeFailedTypeStatus.current = false
@@ -255,23 +298,25 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
   }
   // const { isEng } = useLanguage()
 
-  const handleTest = () => {
-    // setSTRING((str) => str.substring(1) + str[0])
-    // SUCCESS()
-  }
+  // const handleTest = () => {
+  //   // setSTRING((str) => str.substring(1) + str[0])
+  //   // SUCCESS()
+  // }
   const [fontW, setFontW] = useLocalStorage(`BC-fontWeight`, true)
   const handleFW = () => setFontW((prev) => !prev)
 
   return (
     <div
-      style={{
-        marginTop: perspective[1],
-        marginBottom: perspective[1],
-        transform: `perspective(1000px) translateZ(${perspective[0]}px)`,
-      }}
+      style={
+        {
+          // marginTop: perspective[1] - 120,
+          // marginBottom: perspective[1],
+          // transform: `perspective(1000px) translateZ(${perspective[0]}px)`,
+        }
+      }
     >
       <div
-        className={`borde order-black w-f  font-courier flex ${`font-CourierC`}
+        className={`w-f font-courier mt-4 flex  border-black ${`font-CourierC`}
        flex-col items-center justify-center opacity-${
          //  appear || demo || 0
          100
@@ -289,7 +334,7 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
           capsError={capsError.current}
           running={running}
           handleReset={handleReset}
-          handleTest={handleTest}
+          handleTest={() => {}}
           fontW={fontW}
           handleFW={handleFW}
         />
@@ -310,6 +355,7 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
             <BOOKLayout STRING={STRING} highlighter={hightlighter} />
             <BOOKfailures failedTypesIndexes={failedTypesIndexes.current} />
             <BOOKpointer overall={successAndFailedTypes.current} />
+            {/* test */}
           </div>
         </div>
         <BOOKstring
@@ -324,13 +370,21 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
           running={running}
         />
       </div>
-      <PerspectiveController setBook={handleSetPerspective} />
-      {/* <BOOKautopilot
-        mode={1}
-        SUCCESS={SUCCESS}
-        FAILURE={FAILURE}
-        handleTest={handleTest}
-      /> */}
+      {/* <div className={`z-50`}>streakRow: {streakRow}</div>{' '}
+      <div>
+        fail:{' '}
+        {failedTypesIndexes.current.map((el) => (
+          <>--{el}--</>
+        ))}
+      </div>
+      <div>test: {test}</div>
+      <div>
+        escapeFailedTypeStatus:{' '}
+        {escapeFailedTypeStatus.current ? `true` : `false`}
+        <br />
+        failedTypeStatus: {failedTypeStatus.current ? `true` : `false`}
+      </div> */}
+      {/* <PerspectiveController setBook={handleSetPerspective} /> */}
     </div>
   )
 }

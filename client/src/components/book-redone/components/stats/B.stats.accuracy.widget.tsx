@@ -61,7 +61,7 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
     >
       <div
         className={`borde z-10 flex flex-row rounded-xl border-black px-2 ${
-          (isHovered || isHovered2) && `bg-red-100`
+          (isHovered || isHovered2) && `bg-emerald-100`
         }`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -89,7 +89,7 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
       </div>
       {isHovered || isHovered2 ? (
         <div
-          className={`w-340px h-260px shadow-10th -translate-y-85px absolute flex rounded-xl  border  border-red-500 bg-red-200 p-2 px-6 `}
+          className={`w-340px h-260px shadow-10th -translate-y-85px absolute flex rounded-xl  border  border-emerald-500 bg-emerald-200 p-2 px-6 `}
           onMouseEnter={() => setIsHovered2(true)}
           onMouseLeave={() => setIsHovered2(false)}
         >
@@ -102,7 +102,7 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                   {isEng ? `accuracy` : `точность`}
                 </div>
                 <div
-                  className={`w-f mx-2 my-2 h-px rounded-full bg-red-400`}
+                  className={`w-f mx-2 my-2 h-px rounded-full bg-emerald-400`}
                 ></div>
                 <div className={`w-f flex flex-col items-start gap-4`}>
                   {/* ////////// */}
@@ -214,20 +214,20 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                   <div className={`  w-f flex justify-center`}>
                     <div className={`borde flex items-center justify-center `}>
                       <div
-                        className={`cursor-pointer rounded-l-xl border-l border-t border-b  border-red-400 py-1   px-7 ${
+                        className={`cursor-pointer rounded-l-xl border-l border-t border-b  border-emerald-400 py-1   px-7 ${
                           showType === `.`
-                            ? `bg-red-400 text-gray-900`
-                            : `bg-red-200`
+                            ? `bg-emerald-400 text-gray-900`
+                            : `bg-emerald-200`
                         } transition duration-300 ease-in-out`}
                         onMouseDown={() => setShowType(`.`)}
                       >
                         .{(currentAccuracy && accuracyValue) || 967}
                       </div>
                       <div
-                        className={`cursor-pointer rounded-r-xl border-r border-t border-b border-red-400 py-1 px-6 ${
+                        className={`cursor-pointer rounded-r-xl border-r border-t border-b border-emerald-400 py-1 px-6 ${
                           showType === `%`
-                            ? `bg-red-400 text-gray-900`
-                            : `bg-red-200`
+                            ? `bg-emerald-400 text-gray-900`
+                            : `bg-emerald-200`
                         } transition duration-300 ease-in-out`}
                         style={{ transition: `0.3s ease-in-out` }}
                         onMouseDown={() => setShowType(`%`)}

@@ -71,7 +71,7 @@ export const BOOKstats: React.FC<IProps> = ({
           show || `opacity-0`
         } transition duration-500 ease-in-out ${isEng || `font-CourierC`}`}
         style={{
-          transform: `translateY(${appear && show ? -155 : -400}px)`,
+          transform: `translateY(${appear && show ? 555 : 2000}px)`,
         }}
       >
         <LEVELcontainer

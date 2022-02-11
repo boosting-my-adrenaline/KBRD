@@ -37,10 +37,10 @@ export const Navbar: React.FC<IProps> = ({
   const getColors = (): string[] => {
     switch (mainState) {
       case MainState.MAIN:
-        return ['bg-emerald-400', 'border-emerald-500', 'shadow-emerald-500']
+        return ['bg-emerald-400', 'border-emerald-500', 'shadow-emerald-700']
 
       case MainState.BOOK:
-        return ['bg-red-400', 'border-red-500', 'shadow-red-700']
+        return ['bg-emerald-400', 'border-emerald-500', 'shadow-emerald-700']
 
       case MainState.TAP:
         return ['bg-sky-400', 'border-sky-500', 'shadow-sky-700']
@@ -134,7 +134,7 @@ ${BorderColor}   ${ThemeColor}  shadow-6th ${ShadowColor} font-courier flex sele
                 {/* <HexagonRounded onClick={() => changeChapter(Chapters.MAIN)} /> */}
                 {/* 1 */}
                 <NAVlogo onClick={() => setMainState(MainState.MAIN)} />
-                {/* <Width /> */}
+                <Width />
               </div>
             </a>
 

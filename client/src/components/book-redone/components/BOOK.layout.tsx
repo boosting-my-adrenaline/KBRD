@@ -35,7 +35,7 @@ export const BOOKLayout: React.FC<IProps> = ({ STRING, highlighter }) => {
             {'\u00A0'}
             {/* {el} */}
             <div
-              className={`absolute rounded-sm bg-red-200`}
+              className={`absolute rounded-sm bg-emerald-200`}
               style={{ padding: '0 2px' }}
             >
               {'\u00A0'}
@@ -60,8 +60,9 @@ export const BOOKLayout: React.FC<IProps> = ({ STRING, highlighter }) => {
     >
       <div className="w-1000 font-courier z-10 flex flex-col space-y-4 text-2xl  ">
         {/* <div className="flex flex-row ">{'\u00A0'}</div> */}
+        {/* <div>{`\u00a0`}</div> */}
 
-        {rowing(rawLEFT3, 2)}
+        {/* {rowing(rawLEFT3, 2)} */}
         {rowing(rawLEFT2, 1)}
         {rowing(rawLEFT1)}
 
@@ -73,7 +74,8 @@ export const BOOKLayout: React.FC<IProps> = ({ STRING, highlighter }) => {
 
         {rowing(rawRIGHT1)}
         {rowing(rawRIGHT2, 1)}
-        {rowing(rawRIGHT3, 2)}
+        {/* {rowing(rawRIGHT3, 2)} */}
+        {/* <div>{`\u00a0`}</div> */}
         {/* <div className="flex flex-row ">{'\u00A0'}</div> */}
       </div>
     </div>

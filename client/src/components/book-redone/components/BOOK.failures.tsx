@@ -10,7 +10,7 @@ export const BOOKfailures: React.FC<{
         <div
           key={i}
           className={`rounded-sm ${
-            failedTypesIndexes.includes(i) ? `bg-red-400` : `bg-transparent`
+            failedTypesIndexes.includes(i) ? `bg-red-200` : `bg-transparent`
           }`}
         >
           {'\u00A0'}
@@ -24,9 +24,9 @@ export const BOOKfailures: React.FC<{
     <div
       className={`z-35 w-1000 font-courier  align-center absolute flex flex-col justify-center space-y-4 text-2xl  transition duration-500 ease-in-out`}
     >
-      <div className={`flex flex-row-reverse opacity-60`}>
+      {/* <div className={`flex flex-row-reverse opacity-60`}>
         {fillWithAreas(176, 245)}
-      </div>
+      </div> */}
       <div className={`flex flex-row-reverse opacity-70`}>
         {fillWithAreas(106, 175)}
       </div>
@@ -38,7 +38,7 @@ export const BOOKfailures: React.FC<{
       </div>
       <div className="flex flex-row ">{'\u00A0'}</div>
       <div className="flex flex-row ">{'\u00A0'}</div>
-      <div className="flex flex-row ">{'\u00A0'}</div>
+      {/* <div className="flex flex-row ">{'\u00A0'}</div> */}
     </div>
   )
 }

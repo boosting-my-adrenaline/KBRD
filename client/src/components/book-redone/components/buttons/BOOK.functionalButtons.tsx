@@ -60,8 +60,8 @@ export const BOOKfunctionalButtons: React.FC<IProps> = ({
       >
         <BOOKbuttonVisual
           tag={isEng ? 'hightlighter' : `выделитель`}
-          onClick={setHighlighter}
           active={highlighter}
+          onClick={setHighlighter}
         />
         <BOOKbuttonVisual
           tag={isEng ? `punctuation` : `пунктуация`}

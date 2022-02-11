@@ -14,7 +14,7 @@ export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
   const [isHovered2, setIsHovered2] = useState(false)
   const [showType, setShowType] = useLocalStorage<
     `electronic` | `physical` | 'simple'
-  >(`overall-widget`, 'electronic')
+  >(`overall-widget`, 'simple')
 
   const { isEng } = useLanguage()
 
@@ -24,7 +24,7 @@ export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
     >
       <div
         className={`w-140px borde z-10 flex flex-row justify-center rounded-xl border-black px-2 ${
-          (isHovered || isHovered2) && `bg-red-100`
+          (isHovered || isHovered2) && `bg-emerald-100`
         }`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -39,7 +39,7 @@ export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
       </div>
       {isHovered || isHovered2 ? (
         <div
-          className={`w-250px h-260px shadow-10th  -translate-y-85px  absolute flex rounded-xl border border-red-500 bg-red-200 p-2 px-6`}
+          className={`w-250px h-260px shadow-10th  -translate-y-85px  absolute flex rounded-xl border border-emerald-500 bg-emerald-200 p-2 px-6`}
           onMouseEnter={() => setIsHovered2(true)}
           onMouseLeave={() => setIsHovered2(false)}
         >
@@ -52,7 +52,7 @@ export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
                   {isEng ? `overall` : ` всего`}
                 </div>
                 <div
-                  className={`w-f mx-2 my-2 h-px rounded-full bg-red-400`}
+                  className={`w-f mx-2 my-2 h-px rounded-full bg-emerald-400`}
                 ></div>
                 <div className={`w-f flex flex-col items-start gap-4`}>
                   <motion.div
@@ -62,8 +62,8 @@ export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
                   >
                     <div
                       className={`cursor-pointer p-1 px-8 ${
-                        showType === 'physical' && `bg-red-400`
-                      } w-180px h-35px flex items-center justify-center rounded-xl border border-red-400`}
+                        showType === 'physical' && `bg-emerald-400`
+                      } w-180px h-35px flex items-center justify-center rounded-xl border border-emerald-400`}
                       onMouseDown={() => setShowType(`physical`)}
                     >
                       <BOOKphysicalmeter
@@ -81,8 +81,8 @@ export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
                   >
                     <div
                       className={`cursor-pointer p-1 px-8 ${
-                        showType === 'electronic' && `bg-red-400`
-                      } w-180px h-35px flex items-center justify-center rounded-xl border border-red-400`}
+                        showType === 'electronic' && `bg-emerald-400`
+                      } w-180px h-35px flex items-center justify-center rounded-xl border border-emerald-400`}
                       onMouseDown={() => setShowType(`electronic`)}
                     >
                       <BOOKelectronicmeter mileage={overall || 1043} />
@@ -96,8 +96,8 @@ export const BOOKstatsOverallWidget: React.FC<IProps> = ({ overall }) => {
                   >
                     <div
                       className={`cursor-pointer p-1 px-8 ${
-                        showType === 'simple' && `bg-red-400`
-                      } w-180px h-35px flex items-center justify-center rounded-xl border border-red-400 text-emerald-500`}
+                        showType === 'simple' && `bg-emerald-400`
+                      } w-180px h-35px flex items-center justify-center rounded-xl border border-emerald-400 text-emerald-500`}
                       onMouseDown={() => setShowType(`simple`)}
                     >
                       <BOOKelectronicmeter mileage={overall || 1043} hidden />

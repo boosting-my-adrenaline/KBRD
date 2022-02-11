@@ -20,13 +20,13 @@ export const BOOKstatsErrorsWidget: React.FC<IProps> = ({ errors }) => {
   const [isHovered2, setIsHovered2] = useState(false)
   const [showType, setShowType] = useLocalStorage<
     `electronic` | `physical` | 'simple'
-  >(`error-widget`, 'electronic')
+  >(`error-widget`, 'simple')
 
   return (
     <div className={`flex items-center justify-center`}>
       <div
         className={`borde z-10  flex flex-row justify-center rounded-xl border-black px-2 ${
-          (isHovered || isHovered2) && `bg-red-100`
+          (isHovered || isHovered2) && `bg-emerald-100`
         }`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -41,7 +41,7 @@ export const BOOKstatsErrorsWidget: React.FC<IProps> = ({ errors }) => {
       </div>
       {isHovered || isHovered2 ? (
         <div
-          className={`w-200px h-260px -translate-y-85px  shadow-10th  absolute flex rounded-xl border border-red-500 bg-red-200 p-2 px-6 ${
+          className={`w-200px h-260px -translate-y-85px  shadow-10th  absolute flex rounded-xl border border-emerald-500 bg-emerald-200 p-2 px-6 ${
             isEng || `font-CourierC`
           }`}
           onMouseEnter={() => setIsHovered2(true)}
@@ -56,7 +56,7 @@ export const BOOKstatsErrorsWidget: React.FC<IProps> = ({ errors }) => {
                   {isEng ? ` errors` : `ошибки`}
                 </div>
                 <div
-                  className={`w-f mx-2 my-2 h-px rounded-full bg-red-400`}
+                  className={`w-f mx-2 my-2 h-px rounded-full bg-emerald-400`}
                 ></div>
                 <div className={`w-f flex flex-col items-start gap-4`}>
                   <motion.div
@@ -66,8 +66,8 @@ export const BOOKstatsErrorsWidget: React.FC<IProps> = ({ errors }) => {
                   >
                     <div
                       className={`cursor-pointer p-1 px-8 ${
-                        showType === 'physical' && `bg-red-400`
-                      } w-120px h-35px flex items-center justify-center rounded-xl border border-red-400`}
+                        showType === 'physical' && `bg-emerald-400`
+                      } w-120px h-35px flex items-center justify-center rounded-xl border border-emerald-400`}
                       onMouseDown={() => setShowType(`physical`)}
                     >
                       <BOOKphysicalmeter
@@ -86,8 +86,8 @@ export const BOOKstatsErrorsWidget: React.FC<IProps> = ({ errors }) => {
                   >
                     <div
                       className={`cursor-pointer p-1 px-8 ${
-                        showType === 'electronic' && `bg-red-400`
-                      } w-120px h-35px flex items-center justify-center rounded-xl border border-red-400`}
+                        showType === 'electronic' && `bg-emerald-400`
+                      } w-120px h-35px flex items-center justify-center rounded-xl border border-emerald-400`}
                       onMouseDown={() => setShowType(`electronic`)}
                     >
                       <BOOKelectronicmeter mileage={errors || 41} red />
@@ -101,8 +101,8 @@ export const BOOKstatsErrorsWidget: React.FC<IProps> = ({ errors }) => {
                   >
                     <div
                       className={`cursor-pointer p-1 px-8 ${
-                        showType === 'simple' && `bg-red-400`
-                      } w-120px h-35px flex items-center justify-center rounded-xl border border-red-400`}
+                        showType === 'simple' && `bg-emerald-400`
+                      } w-120px h-35px flex items-center justify-center rounded-xl border border-emerald-400`}
                       onMouseDown={() => setShowType(`simple`)}
                     >
                       <BOOKelectronicmeter mileage={errors || 41} hidden red />
