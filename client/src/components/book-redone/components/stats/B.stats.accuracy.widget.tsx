@@ -1,9 +1,7 @@
-import { InfoRounded } from '@material-ui/icons'
 import React, { useState } from 'react'
 import { FadeText } from '../../../../utils/FadeText'
 import { useDidMountEffect } from '../../../../utils/useDidMountEffect'
 import { PingingCircles } from './BOOK.pingingCircles'
-import { motion } from 'framer-motion'
 import useLocalStorage from '../../../../hooks/useLocalStorage'
 import useLanguage from '../../../../hooks/useLanguage'
 import useColor from '../../../../hooks/useColor'
@@ -153,20 +151,32 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                       </div>
                     </div>
                   ) : (
-                    <div className={` `}>
+                    <div className={`flex items-center`}>
                       <span
-                        className={`${
+                        className={`flex ${
                           isDarkMode ? `text-gray-200` : `text-gray-900`
                         } `}
                       >
-                        <InfoRounded
+                        <span
+                          className={` flex translate-x-[-10px] translate-y-[6px] items-center justify-center rounded-full border text-sm ${
+                            isDarkMode
+                              ? `border-blue-200 bg-blue-700 text-blue-200`
+                              : `border-blue-500 bg-blue-200 text-blue-500`
+                          }`}
+                          style={{ width: 16, height: 16 }}
+                          onMouseEnter={() => setIsHoveredCurrent(true)}
+                          onMouseLeave={() => setIsHoveredCurrent(false)}
+                        >
+                          i
+                        </span>
+                        {/* <InfoRounded
                           className={`h-12px w-12px mr-2 ${
                             isDarkMode ? `text-blue-300` : `text-blue-500`
                           }`}
                           style={{ width: 16, height: 16 }}
                           onMouseEnter={() => setIsHoveredCurrent(true)}
                           onMouseLeave={() => setIsHoveredCurrent(false)}
-                        />
+                        /> */}
                         {isEng ? `current` : `текущая`}:{' '}
                         {cond1 && showType === `.` ? `.` : ``}
                       </span>
@@ -177,8 +187,8 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                       >
                         {!currentAccuracy
                           ? isEng
-                            ? `to be defined`
-                            : `не определено`
+                            ? `\u00a0to be defined`
+                            : `\u00a0не определено`
                           : showType === `.`
                           ? `${accuracyValue}`
                           : currentAccuracy % 10 === 0
@@ -211,13 +221,13 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                       </div>
                     </div>
                   ) : (
-                    <div>
+                    <div className={`flex items-center`}>
                       <span
-                        className={`${
+                        className={`flex flex-nowrap items-center whitespace-nowrap ${
                           isDarkMode ? `text-gray-200` : `text-gray-900`
                         } `}
                       >
-                        <InfoRounded
+                        {/* <InfoRounded
                           className={`mr-2 ${overall >= 245 && `opacity-0`} ${
                             isDarkMode ? `text-blue-300` : `text-blue-500`
                           } w-12px h-12px`}
@@ -227,7 +237,22 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                             setIsHoveredChapter(true)
                           }}
                           onMouseLeave={() => setIsHoveredChapter(false)}
-                        />
+                        /> */}
+                        <span
+                          className={` flex translate-x-[-10px] translate-y-[0px] items-center justify-center rounded-full border text-sm ${
+                            isDarkMode
+                              ? `border-blue-200 bg-blue-700 text-blue-200`
+                              : `border-blue-500 bg-blue-200 text-blue-500`
+                          }`}
+                          style={{ width: 16, height: 16 }}
+                          onMouseEnter={() => {
+                            if (overall >= 245) return
+                            setIsHoveredChapter(true)
+                          }}
+                          onMouseLeave={() => setIsHoveredChapter(false)}
+                        >
+                          i
+                        </span>
                         {isEng ? `average` : `средняя`}:{' '}
                         {cond2 && showType === `.` ? `.` : ``}
                       </span>
@@ -238,8 +263,8 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                       >
                         {!cond2
                           ? isEng
-                            ? `to be defined`
-                            : `не определено`
+                            ? `\u00a0to be defined`
+                            : `\u00a0не определено`
                           : showType === `.`
                           ? `${accuracyChapterValue}`
                           : chapterAccuracy % 10 === 0

@@ -1,5 +1,4 @@
 import React, { useEffect, useState, KeyboardEvent } from 'react'
-import { ThemeProvider, createTheme } from '@mui/material'
 import {
   PasswordState,
   SignupPasswordColor,
@@ -10,13 +9,6 @@ import { NBAbutton } from '../../profile/NBA.button'
 import { NBAinput } from '../../profile/NBA.input'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 import useLanguage from '../../../hooks/useLanguage'
-
-const theme = createTheme({
-  typography: {
-    // fontFamily: ['Chilanka', 'cursive'].join(','),
-    fontFamily: 'courier new',
-  },
-})
 
 interface IProps {
   username: string
@@ -145,98 +137,96 @@ export const AUTHlsignup: React.FC<IProps> = ({
       className={`font-courier no-select box-border flex flex-col items-center justify-evenly gap-2`}
       style={{ width: '400px', height: '400px' }}
     >
-      <ThemeProvider theme={theme}>
-        <div style={{ width: '100%', marginBottom: '' }}>
-          <NBAinput
-            value={username}
-            onChange={setUsername}
-            id={`usernameSignUp`}
-            placeholder={isEng ? `USERNAME` : ` ЛОГИН`}
-            helper={usernameMessage || ` `}
-            error={usernameState === 'error'}
-            success={usernameState === `success`}
-            onEnter={handleEnterUser}
-            focus={userFocus}
+      <div style={{ width: '100%', marginBottom: '' }}>
+        <NBAinput
+          value={username}
+          onChange={setUsername}
+          id={`usernameSignUp`}
+          placeholder={isEng ? `USERNAME` : ` ЛОГИН`}
+          helper={usernameMessage || ` `}
+          error={usernameState === 'error'}
+          success={usernameState === `success`}
+          onEnter={handleEnterUser}
+          focus={userFocus}
+        />
+      </div>
+      <div className={``} style={{ width: '100%' }}>
+        <NBAinput
+          value={password}
+          onChange={setPassword}
+          id={`passwordSignUp`}
+          type={`password`}
+          placeholder={isEng ? `PASSWORD` : `ПАРОЛЬ`}
+          helper={passwordMessage || ` `}
+          error={passwordState === 'error'}
+          success={passwordState === `success`}
+          warning={passwordState === `warning`}
+          onEnter={handleEnterPass}
+          focus={passFocus}
+          password
+        />
+      </div>
+      <div style={{ width: '100%' }}>
+        <NBAinput
+          value={password2}
+          onChange={setPassword2}
+          id={`password2SignUp`}
+          type={`password`}
+          placeholder={isEng ? `PASSWORD` : `ПАРОЛЬ`}
+          helper={password2Message || ` `}
+          error={password2State === 'error'}
+          success={password2State === `success`}
+          warning={password2State === `warning`}
+          onEnter={handleEnterPass2}
+          focus={pass2Focus}
+          password
+          the34
+        />
+      </div>
+      <div className={`flex flex-col gap-2`}>
+        <div className={`flex w-full justify-center`}>
+          <NBAbutton
+            onClick={handleSubmit}
+            tag={isEng ? `SUBMIT` : `ОТПРАВИТЬ `}
+            border={
+              passwordState === `error` ||
+              password2State === `error` ||
+              usernameState === `error` ||
+              !username ||
+              !password
+                ? `border-red-500`
+                : `border-sky-500`
+            }
+            hov={
+              passwordState === `error` ||
+              password2State === `error` ||
+              usernameState === `error` ||
+              !username ||
+              !password
+                ? `bg-red-500`
+                : `bg-sky-500`
+            }
+            bg={
+              passwordState === `error` ||
+              password2State === `error` ||
+              usernameState === `error` ||
+              !username ||
+              !password
+                ? `bg-red-300`
+                : `bg-sky-300`
+            }
+            px={`px-16`}
+            disableCursor={
+              passwordState === `error` ||
+              password2State === `error` ||
+              usernameState === `error` ||
+              !username ||
+              !password ||
+              !password2
+            }
           />
         </div>
-        <div className={``} style={{ width: '100%' }}>
-          <NBAinput
-            value={password}
-            onChange={setPassword}
-            id={`passwordSignUp`}
-            type={`password`}
-            placeholder={isEng ? `PASSWORD` : `ПАРОЛЬ`}
-            helper={passwordMessage || ` `}
-            error={passwordState === 'error'}
-            success={passwordState === `success`}
-            warning={passwordState === `warning`}
-            onEnter={handleEnterPass}
-            focus={passFocus}
-            password
-          />
-        </div>
-        <div style={{ width: '100%' }}>
-          <NBAinput
-            value={password2}
-            onChange={setPassword2}
-            id={`password2SignUp`}
-            type={`password`}
-            placeholder={isEng ? `PASSWORD` : `ПАРОЛЬ`}
-            helper={password2Message || ` `}
-            error={password2State === 'error'}
-            success={password2State === `success`}
-            warning={password2State === `warning`}
-            onEnter={handleEnterPass2}
-            focus={pass2Focus}
-            password
-            the34
-          />
-        </div>
-        <div className={`flex flex-col gap-2`}>
-          <div className={`flex w-full justify-center`}>
-            <NBAbutton
-              onClick={handleSubmit}
-              tag={isEng ? `SUBMIT` : `ОТПРАВИТЬ `}
-              border={
-                passwordState === `error` ||
-                password2State === `error` ||
-                usernameState === `error` ||
-                !username ||
-                !password
-                  ? `border-red-500`
-                  : `border-sky-500`
-              }
-              hov={
-                passwordState === `error` ||
-                password2State === `error` ||
-                usernameState === `error` ||
-                !username ||
-                !password
-                  ? `bg-red-500`
-                  : `bg-sky-500`
-              }
-              bg={
-                passwordState === `error` ||
-                password2State === `error` ||
-                usernameState === `error` ||
-                !username ||
-                !password
-                  ? `bg-red-300`
-                  : `bg-sky-300`
-              }
-              px={`px-16`}
-              disableCursor={
-                passwordState === `error` ||
-                password2State === `error` ||
-                usernameState === `error` ||
-                !username ||
-                !password ||
-                !password2
-              }
-            />
-          </div>
-        </div>
-      </ThemeProvider>
+      </div>
     </div>
   )
 }

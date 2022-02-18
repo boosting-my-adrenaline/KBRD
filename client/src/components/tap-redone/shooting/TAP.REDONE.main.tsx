@@ -1,4 +1,3 @@
-import { SettingsEthernet } from '@material-ui/icons'
 import React, { useEffect, useState, useRef } from 'react'
 import useLanguage from '../../../hooks/useLanguage'
 import useLocalStorage from '../../../hooks/useLocalStorage'

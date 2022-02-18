@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
 import { Navbar } from './components/navbar/Navbar'
-import { Routes, Route, useNavigate } from 'react-router-dom'
 import { Width } from './utils/GetWidth'
 import { Background } from './components/Background'
 import { InitialScreen } from './components/InitialScreen'
@@ -72,7 +71,6 @@ export const App: React.FC = () => {
   const isAuthenticated = !!token
 
   const [mainState, setMainState] = useState(MainState.MAIN)
-  const navigate = useNavigate()
 
   // useDidMountEffect(() => {
   //   if (mainState === MainState.MAIN) {

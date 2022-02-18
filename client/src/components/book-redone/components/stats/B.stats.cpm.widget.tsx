@@ -1,4 +1,3 @@
-import { InfoRounded } from '@material-ui/icons'
 import React, { useState } from 'react'
 import useColor from '../../../../hooks/useColor'
 import useDarkMode from '../../../../hooks/useDarkMode'
@@ -6,6 +5,7 @@ import useLanguage from '../../../../hooks/useLanguage'
 import useLocalStorage from '../../../../hooks/useLocalStorage'
 import { FadeText } from '../../../../utils/FadeText'
 import { PingingCircles } from './BOOK.pingingCircles'
+import INFO from '../../../../static/profiles/info.svg'
 
 interface IProps {
   CPM: number
@@ -108,32 +108,46 @@ export const BOOKstatsCPMWidget: React.FC<IProps> = ({ CPM, avgCPM }) => {
                       </div>
                     </div>
                   ) : (
-                    <div className={` `}>
+                    <div className={` flex `}>
                       <span
-                        className={`${
+                        className={`flex ${
                           isDarkMode ? `text-gray-200` : `text-gray-900`
                         } `}
                       >
-                        <InfoRounded
-                          className={`mr-2 ${
-                            isDarkMode ? `text-blue-300` : `text-blue-500`
+                        <span
+                          className={` flex translate-x-[-10px] translate-y-[6px] items-center justify-center rounded-full border text-sm ${
+                            isDarkMode
+                              ? `border-blue-200 bg-blue-700 text-blue-200`
+                              : `border-blue-500 bg-blue-200 text-blue-500`
                           }`}
                           style={{ width: 16, height: 16 }}
                           onMouseEnter={() => setIsHoveredCurrent(true)}
                           onMouseLeave={() => setIsHoveredCurrent(false)}
-                        />
+                        >
+                          i
+                        </span>
+                        {/* <img
+                          alt=""
+                          src={INFO}
+                          className={`mr-2 ${
+                            isDarkMode ? `fill-blue-300` : `fill-blue-500`
+                          }`}
+                          style={{ width: 16, height: 16 }}
+                          onMouseEnter={() => setIsHoveredCurrent(true)}
+                          onMouseLeave={() => setIsHoveredCurrent(false)}
+                        /> */}
                         {isEng ? `current` : `текущая`}:{' '}
                       </span>
                       <span
-                        className={`${
+                        className={`whitespace-nowrap ${
                           isDarkMode ? `text-gray-200` : `text-gray-900`
                         }`}
                       >
                         {CPM === 0 ? (
                           isEng ? (
-                            `to be defined`
+                            `\u00a0to be defined`
                           ) : (
-                            `не определено`
+                            `\u00a0не определено`
                           )
                         ) : (
                           <>
@@ -169,34 +183,50 @@ export const BOOKstatsCPMWidget: React.FC<IProps> = ({ CPM, avgCPM }) => {
                       </div>
                     </div>
                   ) : (
-                    <div>
+                    <div className={`flex items-center`}>
                       <span
-                        className={` ${
+                        className={`flex  ${
                           isDarkMode ? `text-gray-200` : `text-gray-900`
                         }`}
                       >
-                        <InfoRounded
-                          className={`mr-2 ${
-                            isDarkMode ? `text-blue-300` : `text-blue-500`
-                          } `}
+                        <span
+                          className={` flex translate-x-[-10px] translate-y-[6px] items-center justify-center rounded-full border text-sm ${
+                            isDarkMode
+                              ? `border-blue-200 bg-blue-700 text-blue-200`
+                              : `border-blue-500 bg-blue-200 text-blue-500`
+                          }`}
                           style={{ width: 16, height: 16 }}
                           onMouseEnter={() => {
                             setIsHoveredChapter(true)
                           }}
                           onMouseLeave={() => setIsHoveredChapter(false)}
-                        />
+                        >
+                          {/* <img
+                          alt=""
+                          src={INFO}
+                          className={`mr-2 ${
+                            isDarkMode ? `fill-blue-300` : `fill-blue-500`
+                          }`}
+                          style={{ width: 16, height: 16 }}
+                          onMouseEnter={() => {
+                            setIsHoveredChapter(true)
+                          }}
+                          onMouseLeave={() => setIsHoveredChapter(false)}
+                        /> */}
+                          i
+                        </span>
                         {isEng ? `average` : `средняя`}:{' '}
                       </span>
                       <span
-                        className={`${
+                        className={`whitespace-nowrap  ${
                           isDarkMode ? `text-gray-200` : `text-gray-900`
                         }`}
                       >
                         {avgCPM === 0 ? (
                           isEng ? (
-                            `to be defined`
+                            `\u00a0to be defined`
                           ) : (
-                            `не определено`
+                            `\u00a0не определено`
                           )
                         ) : (
                           <>

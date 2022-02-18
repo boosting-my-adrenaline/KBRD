@@ -1,9 +1,9 @@
-import { GitHub } from '@material-ui/icons'
 import React, { useState, useEffect } from 'react'
 import { MainState } from '../App'
 import useDarkMode from '../hooks/useDarkMode'
 import { useDidMountEffect } from '../utils/useDidMountEffect'
 import { PerspectiveController } from './PerspectiveController'
+import GH from '../static/profiles/GH.svg'
 
 interface IProps {
   below?: boolean
@@ -95,7 +95,9 @@ export const Footer: React.FC<IProps> = ({ below = false, mainState = 1 }) => {
           target={'_blank'}
           className={`flex cursor-pointer items-center gap-2 underline decoration-sky-500`}
         >
-          <GitHub
+          <img
+            src={GH}
+            alt=""
             className={`cursor-pointer`}
             style={{ width: params[0] + 6, height: params[0] + 6 }}
           />

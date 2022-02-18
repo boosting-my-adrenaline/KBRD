@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { GitHub } from '@material-ui/icons'
+import GH from '../../static/profiles/GH.svg'
 
 // https://github.com/boosting-my-adrenaline
 
@@ -17,13 +17,15 @@ export const BelowNavbar: React.FC<{ isHorizontal: boolean }> = ({
 
   return (
     <div
-      className={`bg-gray-200 z-51 fixed top-0 right-0 left-0   ${
+      className={`z-51 fixed top-0 right-0 left-0 bg-gray-200   ${
         isHorizontal ? `h-43px` : `h-43px`
-      } opacity-90 flex justify-center items-center px-4 select-none shadow-11th`}
+      } shadow-11th flex select-none items-center justify-center px-4 opacity-90`}
     >
-      <div className={`flew-grow flex justify-end w-70%`}>
+      <div className={`flew-grow w-70% flex justify-end`}>
         <a href={`https://github.com/boosting-my-adrenaline`} target={'_blank'}>
-          <GitHub
+          <img
+            alt=""
+            src={GH}
             className={`cursor-pointer ${
               isHorizontal ? `w-40px h-40px` : `w-30px h-30px`
             } transition duration-1000 ease-in-out`}
