@@ -2,7 +2,7 @@ import useLocalStorage from './useLocalStorage'
 import useMediaQuery from './useMediaQuery'
 import useUpdateEffect from './useUpdateEffect'
 
-const COLOR_SCHEME_QUERY = '(prefers-color-scheme: dark)'
+const COLOR_SCHEME_QUERY = '(prefers-color-scheme: light)'
 
 interface UseDarkModeOutput {
   isDarkMode: boolean
