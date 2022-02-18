@@ -84,22 +84,21 @@ export const TAPREDONEappear: React.FC<IProps> = ({
           isDarkMode ? themeColor2.border.t700 : themeColor2.border.t300
         } pb-1.5`}
       >
-        <div
-          className={`duration-400 absolute -z-10 w-[199px] origin-right  border-b border-r  ${
-            isDarkMode ? themeColor2.border.t700 : themeColor2.border.t300
-          }  ${
+        {/* <div
+          className={`duration-400 absolute -z-10 w-[199px] origin-right border-b  border-r   ${
             isDarkMode
-              ? `text-gray-100 ${themeColor2.bg.t800}`
-              : themeColor2.bg.t200
-          } transition ease-in-out`}
+              ? `themeColor2.border.t700 text-gray-100 ${themeColor2.bg.t800}`
+              : `themeColor2.border.t300 text-gray-100 ${themeColor2.bg.t800}`
+          }   transition ease-in-out`}
           style={{
+            backgroundColor: `red`,
             borderBottomRightRadius: 6,
             transform: `rotateY(${prepared ? 0 : 180}deg)`,
           }}
         >
           {' '}
           {`\u00a0`}
-        </div>
+        </div> */}
 
         <div
           className={`flex items-start justify-evenly ${
@@ -107,13 +106,25 @@ export const TAPREDONEappear: React.FC<IProps> = ({
           }`}
         >
           <div
-            className={`w-full cursor-pointer text-center `}
+            className={`w-full cursor-pointer rounded-r-md rounded-t-none border-r border-b  text-center ${
+              appearType !== AppearType.PREPARED
+                ? isDarkMode
+                  ? `${themeColor2.bg.t900} ${themeColor2.border.t700}`
+                  : `${themeColor2.bg.t200} ${themeColor2.border.t300}`
+                : `border-transparent`
+            }`}
             onMouseDown={() => setAppearType(AppearType.PREPARED)}
           >
             {isEng ? `prepared` : `по готовности`}
           </div>
           <div
-            className={`w-full cursor-pointer text-center `}
+            className={`w-full cursor-pointer rounded-l-md rounded-t-none border-l border-b  text-center ${
+              appearType == AppearType.PREPARED
+                ? isDarkMode
+                  ? `${themeColor2.bg.t900} ${themeColor2.border.t700}`
+                  : `${themeColor2.bg.t200} ${themeColor2.border.t300}`
+                : `border-transparent`
+            }`}
             onMouseDown={() => setAppearType(AppearType.INTERVAL)}
           >
             {isEng ? `interval` : `интервал`}
