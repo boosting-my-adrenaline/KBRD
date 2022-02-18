@@ -6,6 +6,7 @@ import { NBAinput } from '../../profile/NBA.input'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 import { NBAcheckbox } from '../../profile/NBA.checkbox'
 import useLanguage from '../../../hooks/useLanguage'
+import useDarkMode from '../../../hooks/useDarkMode'
 
 const theme = createTheme({
   typography: {
@@ -44,6 +45,8 @@ export const AUTHlogin: React.FC<IProps> = ({
       setRememberMe(true)
     }
   }
+
+  const { isDarkMode } = useDarkMode()
 
   const [userEnter, setUserEnter] = useState(0)
   const [passEnter, setPassEnter] = useState(0)
@@ -135,7 +138,9 @@ export const AUTHlogin: React.FC<IProps> = ({
           >
             <div className={`flex flex-grow items-center justify-start pl-4 `}>
               <span
-                className={`flex outline-none transition duration-150 ease-in-out hover:text-blue-400 focus:text-red-800`}
+                className={`flex outline-none transition duration-150 ${
+                  isDarkMode && `text-gray-100`
+                } ease-in-out hover:text-blue-400 focus:text-red-800`}
                 onMouseDown={handleRememberMeChange}
               >
                 <NBAcheckbox active={rememberMe} />
@@ -145,7 +150,10 @@ export const AUTHlogin: React.FC<IProps> = ({
               </span>
             </div>
             <div
-              className={`mr-2 flex cursor-pointer items-center justify-center outline-none transition duration-150 ease-in-out hover:text-blue-400 focus:text-red-800`}
+              className={`mr-2 flex cursor-pointer items-center justify-center outline-none transition duration-150 ease-in-out 
+              ${
+                isDarkMode && `text-gray-100`
+              } hover:text-blue-400 focus:text-red-800`}
               onMouseDown={() => {}}
             >
               {isEng ? `forgot password?` : 'забыли пароль?'}

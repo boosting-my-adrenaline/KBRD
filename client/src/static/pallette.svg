@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+	<style type="text/css">
+		.st0 {
+			fill: url(#SVGID_1_);
+			stroke: #000000;
+			stroke-width: 3;
+			stroke-miterlimit: 10;
+		}
+
+		.st1 {
+			fill: #FFFFFF;
+			stroke: #000000;
+			stroke-width: 6;
+			stroke-miterlimit: 10;
+		}
+
+		.st2 {
+			fill: #FF6F91;
+		}
+
+		.st3 {
+			fill: #FF9671;
+		}
+
+		.st4 {
+			fill: #FFC75F;
+		}
+
+		.st5 {
+			fill: #F9F871;
+		}
+
+		.st6 {
+			fill: #0089BA;
+		}
+
+		.st7 {
+			fill: #008F7A;
+		}
+
+		.st8 {
+			fill: #008F7A;
+		}
+	</style>
+	<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="3.2891" y1="256.068" x2="508.2891" y2="256.068">
+		<stop offset="0" style="stop-color:#CCE0F4" />
+		<stop offset="6.405089e-02" style="stop-color:#C3DCF2" />
+		<stop offset="0.1706" style="stop-color:#A9D2EE" />
+		<stop offset="0.3066" style="stop-color:#80C2E7" />
+		<stop offset="0.4649" style="stop-color:#47ACDE" />
+		<stop offset="0.5674" style="stop-color:#1E9CD7" />
+		<stop offset="0.8652" style="stop-color:#0075BE" />
+		<stop offset="0.9944" style="stop-color:#005B97" />
+	</linearGradient>
+	<path class="st0" d="M255.8,3.6C116.3,3.6,3.3,116.6,3.3,256.1s113,252.5,252.5,252.5c43.6,0,106.9-7.8,107.8-45.9
+	c1.1-47.8-74.4-102.3-59.8-133.2c14.5-30.8,115.1-4.5,167.7-19.9c26.5-7.8,36.9-25.3,36.9-53.5C508.3,116.6,395.2,3.6,255.8,3.6z
+	 M302.5,289.6c-10.8,2.7-31.2,0.8-38.1,7.6c-2.8,2.8-8.6,12-8.2,20.4c0.4,10.4,5,20.4-7.8,24.7c-21.7,7.4-49-16.7-49-53.1
+	c0-32.6,26.5-60.9,59.1-59.1c23.8,1.3,48.2,14.1,53,37.6C313.2,276.1,311.8,287.3,302.5,289.6z" />
+	<path class="st1" d="M309.7,303" />
+	<circle class="st2" cx="130.6" cy="128.2" r="42" />
+	<circle class="st3" cx="258.5" cy="78.1" r="42" />
+	<circle class="st4" cx="371.1" cy="128.2" r="42" />
+	<circle class="st5" cx="438.3" cy="236.2" r="42" />
+	<circle class="st6" cx="78.8" cy="256.1" r="42" />
+	<circle class="st7" cx="133.8" cy="383.9" r="42" />
+	<circle class="st8" cx="258.5" cy="433.6" r="42" />
+</svg>

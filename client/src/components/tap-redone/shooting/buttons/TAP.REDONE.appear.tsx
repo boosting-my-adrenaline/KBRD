@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
 import React from 'react'
+import useColor from '../../../../hooks/useColor'
+import useDarkMode from '../../../../hooks/useDarkMode'
 import useLanguage from '../../../../hooks/useLanguage'
 import { NBAslider } from '../../../profile/NBA.slider'
 import { AppearType, KeyColor } from '../TAP.REDONE.main'
@@ -32,45 +34,64 @@ export const TAPREDONEappear: React.FC<IProps> = ({
   const getColor = () => {
     switch (keyColor) {
       case `emerald`:
-        return [`bg-emerald-500 `, `bg-emerald-200`, `border-emerald-300`]
+        return [
+          isDarkMode ? `bg-emerald-300 ` : `bg-emerald-500 `,
+          `bg-emerald-200`,
+          `border-emerald-300`,
+        ]
       case `cyan`:
-        return [`bg-cyan-500 `, `bg-cyan-200`, `border-cyan-300`]
+        return [
+          isDarkMode ? `bg-cyan-300 ` : `bg-cyan-500 `,
+          `bg-cyan-200`,
+          `border-cyan-300`,
+        ]
       case `amber`:
-        return [`bg-amber-500 `, `bg-amber-200`, `border-amber-300`]
+        return [
+          isDarkMode ? `bg-amber-300 ` : `bg-amber-500 `,
+          `bg-amber-200`,
+          `border-amber-300`,
+        ]
       case `fuchsia`:
-        return [`bg-fuchsia-500 `, `bg-fuchsia-200`, `border-fuchsia-300`]
+        return [
+          isDarkMode ? `bg-fuchsia-300 ` : `bg-fuchsia-500 `,
+          `bg-fuchsia-200`,
+          `border-fuchsia-300`,
+        ]
       case `pink`:
-        return [`bg-pink-500 `, `bg-pink-200`, `border-pink-300`]
+        return [
+          isDarkMode ? `bg-pink-300 ` : `bg-pink-500 `,
+          `bg-pink-200`,
+          `border-pink-300`,
+        ]
       default:
-        return [`bg-red-500 `, `bg-red-200`, `border-red-300`]
+        return [
+          isDarkMode ? `bg-red-300 ` : `bg-red-500 `,
+          `bg-red-200`,
+          `border-red-300`,
+        ]
     }
   }
 
   let prepared = appearType !== AppearType.PREPARED
-
+  const { isDarkMode } = useDarkMode()
   const { isEng } = useLanguage()
+  const { themeColor2 } = useColor()
 
   return (
     <>
-      {/* <div
-        onMouseDown={() => {
-          appearType === AppearType.PREPARED
-            ? setAppearType(AppearType.INTERVAL)
-            : setAppearType(AppearType.PREPARED)
-        }}
-        className={`absolute top-12 bg-black`}
-      >
-        Test
-      </div> */}
       <div
         className={` h-[70px] w-[400px] overflow-hidden rounded-md border ${
-          getColor()[2]
+          isDarkMode ? themeColor2.border.t700 : themeColor2.border.t300
         } pb-1.5`}
       >
         <div
           className={`duration-400 absolute -z-10 w-[199px] origin-right  border-b border-r  ${
-            getColor()[2]
-          }  ${getColor()[1]} transition ease-in-out`}
+            isDarkMode ? themeColor2.border.t700 : themeColor2.border.t300
+          }  ${
+            isDarkMode
+              ? `text-gray-100 ${themeColor2.bg.t800}`
+              : themeColor2.bg.t200
+          } transition ease-in-out`}
           style={{
             borderBottomRightRadius: 6,
             transform: `rotateY(${prepared ? 0 : 180}deg)`,
@@ -80,19 +101,19 @@ export const TAPREDONEappear: React.FC<IProps> = ({
           {`\u00a0`}
         </div>
 
-        <div className={`flex items-start justify-evenly `}>
+        <div
+          className={`flex items-start justify-evenly ${
+            isDarkMode ? `text-gray-100` : ``
+          }`}
+        >
           <div
-            className={`w-full cursor-pointer text-center ${
-              !prepared ? `text-sky-900` : `text-gray-700`
-            }`}
+            className={`w-full cursor-pointer text-center `}
             onMouseDown={() => setAppearType(AppearType.PREPARED)}
           >
             {isEng ? `prepared` : `по готовности`}
           </div>
           <div
-            className={`w-full cursor-pointer text-center ${
-              prepared ? `text-sky-900` : `text-gray-700`
-            }`}
+            className={`w-full cursor-pointer text-center `}
             onMouseDown={() => setAppearType(AppearType.INTERVAL)}
           >
             {isEng ? `interval` : `интервал`}
@@ -108,7 +129,7 @@ export const TAPREDONEappear: React.FC<IProps> = ({
             className={`flex items-center justify-start`}
           >
             <div
-              className={`flex w-[400px] shrink-0 items-center justify-center gap-8`}
+              className={`flex w-[400px] shrink-0 items-center justify-center gap-8 `}
             >
               <NBAslider
                 tag={isEng ? `interval` : `интервал `}
@@ -118,6 +139,7 @@ export const TAPREDONEappear: React.FC<IProps> = ({
                 value={interval}
                 setValue={setInterval}
                 postTag={isEng ? `ms` : 'мс'}
+                isDark={isDarkMode}
               />
               <NBAslider
                 tag={isEng ? `limit` : ` лимит`}
@@ -126,6 +148,7 @@ export const TAPREDONEappear: React.FC<IProps> = ({
                 step={1}
                 value={limit}
                 setValue={setLimit}
+                isDark={isDarkMode}
               />
             </div>
             <div
@@ -149,6 +172,7 @@ export const TAPREDONEappear: React.FC<IProps> = ({
                 step={1}
                 value={targets}
                 setValue={setTargets}
+                isDark={isDarkMode}
               />
             </div>
           </motion.div>

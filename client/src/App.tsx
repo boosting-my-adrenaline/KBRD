@@ -16,6 +16,8 @@ import { MAINREDONEcontainer } from './components/main-redone/MAIN.REDONE.contai
 import { useDidMountEffect } from './utils/useDidMountEffect'
 import { Test } from './components/Test'
 import useLocalStorage from './hooks/useLocalStorage'
+import { NEWContainer } from './components/main-redone/NEW.container'
+import { motion } from 'framer-motion'
 
 export enum MainState {
   MAIN = 'MAIN',
@@ -72,13 +74,13 @@ export const App: React.FC = () => {
   const [mainState, setMainState] = useState(MainState.MAIN)
   const navigate = useNavigate()
 
-  useDidMountEffect(() => {
-    if (mainState === MainState.MAIN) {
-      navigate(`/`)
-    } else {
-      navigate(`/${mainState.toLowerCase()}`)
-    }
-  }, [mainState])
+  // useDidMountEffect(() => {
+  //   if (mainState === MainState.MAIN) {
+  //     navigate(`/`)
+  //   } else {
+  //     navigate(`/${mainState.toLowerCase()}`)
+  //   }
+  // }, [mainState])
 
   const [authOpen, setAuthOpen] = useState(false)
 
@@ -91,46 +93,62 @@ export const App: React.FC = () => {
     setTrainingLanguage((prev) => !prev)
   }
 
+  const [BOOK, setBOOK] = useLocalStorage(`mainmainmain`, true)
+
+  const [navHeight, setNavHeight] = useState(0)
+
   return (
-    <AuthContext.Provider
-      value={{ token, login, logout, userId, isAuthenticated, email }}
-    >
-      <div className={`  flex items-center justify-center`}>
-        <InitialScreen show={initialScreen} />
-        <PerspectiveController setPerspective={handleSetPerspective} />
+    // <AuthContext.Provider
+    //   value={{ token, login, logout, userId, isAuthenticated, email }}
+    // >
+    <div className={`  flex items-center justify-center`}>
+      <InitialScreen show={initialScreen} />
+      <PerspectiveController setPerspective={handleSetPerspective} />
 
-        {perspective[2] ? null : <Below1000 />}
+      {perspective[2] ? null : <Below1000 />}
 
-        {perspective[2] ? (
+      {perspective[2] ? (
+        <div
+          style={{
+            opacity: initialScreen ? 0 : 1,
+            transition: '1.5s ease',
+          }}
+        >
+          <Navbar
+            mainState={mainState}
+            setMainState={setMainState}
+            authOpen={authOpen}
+            setAuthOpen={setAuthOpen}
+            trainingLanguage={trainingLanguage}
+            toggleTrainingLanguage={toggleTrainingLanguage}
+            BOOK={BOOK}
+            setBOOK={setBOOK}
+            setNavHeight={setNavHeight}
+          />
+          <Footer mainState={mainState} />
           <div
+            className={`fixed inset-0 z-[2023]  bg-gray-400 blur-[5px] ${
+              authOpen ? 'block cursor-pointer opacity-50' : 'hidden opacity-0'
+            } duration-400 transition ease-in-out `}
             style={{
-              opacity: initialScreen ? 0 : 1,
-              transition: '1.5s ease',
+              display: authOpen ? 'block' : 'none',
             }}
+            onMouseDown={() => setAuthOpen(false)}
+          ></div>
+
+          <motion.div
+            animate={{ paddingTop: navHeight - 30 }}
+            className={` flex items-center justify-center `}
           >
-            <Navbar
+            <NEWContainer
               mainState={mainState}
               setMainState={setMainState}
-              authOpen={authOpen}
-              setAuthOpen={setAuthOpen}
               trainingLanguage={trainingLanguage}
-              toggleTrainingLanguage={toggleTrainingLanguage}
+              handleLanguage={toggleTrainingLanguage}
+              BOOK={BOOK}
+              navHeight={navHeight}
             />
-            <Footer mainState={mainState} />
-            <div
-              className={`fixed inset-0 z-[2023]  bg-gray-400 blur-[5px] ${
-                authOpen
-                  ? 'block cursor-pointer opacity-50'
-                  : 'hidden opacity-0'
-              } duration-400 transition ease-in-out `}
-              style={{
-                display: authOpen ? 'block' : 'none',
-              }}
-              onMouseDown={() => setAuthOpen(false)}
-            ></div>
-
-            <div className={` flex items-center justify-center`}>
-              <Routes>
+            {/* <Routes>
                 <Route
                   path="*"
                   element={
@@ -138,14 +156,17 @@ export const App: React.FC = () => {
                       mainState={mainState}
                       setMainState={setMainState}
                       trainingLanguage={trainingLanguage}
+                      handleLanguage={toggleTrainingLanguage}
                     />
                   }
                 />
-              </Routes>
-            </div>
-          </div>
-        ) : null}
-      </div>
-    </AuthContext.Provider>
+              </Routes> */}
+          </motion.div>
+        </div>
+      ) : null}
+    </div>
   )
+}
+{
+  /* </AuthContext.Provider> */
 }

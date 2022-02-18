@@ -1,6 +1,7 @@
 import { GitHub } from '@material-ui/icons'
 import React, { useState, useEffect } from 'react'
 import { MainState } from '../App'
+import useDarkMode from '../hooks/useDarkMode'
 import { useDidMountEffect } from '../utils/useDidMountEffect'
 import { PerspectiveController } from './PerspectiveController'
 
@@ -51,13 +52,17 @@ export const Footer: React.FC<IProps> = ({ below = false, mainState = 1 }) => {
     }
   }
 
+  const { isDarkMode } = useDarkMode()
+
   return (
     <>
       <div
-        className={`z-2022 w-full fixed bottom-0 right-0 left-0  border-t border-gray-500 py-2  flex ${
+        className={`z-2022 font-Cooper fixed bottom-0 right-0 left-0  flex w-full border-t border-gray-500 py-2 ${
           appear || `translate-y-20`
         }  flex-between ${
-          below ? `justify-around text-white bg-gray-800 ` : `gap-6 `
+          below
+            ? `justify-around bg-gray-800 text-white `
+            : `gap-6  ${isDarkMode ? 'text-gray-100' : ''}`
         } items-center bg-gray-400/30 opacity-100 transition duration-500 ease-in-out `}
         style={{
           padding: !below ? `5px ${params[1]}px` : `6px 2px`,
@@ -71,14 +76,14 @@ export const Footer: React.FC<IProps> = ({ below = false, mainState = 1 }) => {
         )}
         {below || <a className={`flex-grow`}></a>}
         <div
-          className={`flex items-center justify-center hover:bg-emerald-100 hover:text-gray-800 relative text-md px-2 rounded-xl transition-colors duration-150`}
+          className={`text-md relative flex items-center justify-center rounded-xl px-2 transition-colors duration-150 hover:bg-emerald-100 hover:text-gray-800`}
         >
           <a onMouseDown={handleCopyEmail}>away.float.away@gmail.com</a>
           {emailCopy && (
             <div
               className={`absolute ${
                 !emailCopy && `opacity-0`
-              }  bg-emerald-300 w-f h-f flex justify-center items-center rounded-xl  font-courier transition duration-300 ease-in-out`}
+              }  w-f h-f font-courier flex items-center justify-center rounded-xl  bg-emerald-300 transition duration-300 ease-in-out`}
             >
               Copied!
             </div>
@@ -88,7 +93,7 @@ export const Footer: React.FC<IProps> = ({ below = false, mainState = 1 }) => {
         <a
           href={`https://github.com/boosting-my-adrenaline`}
           target={'_blank'}
-          className={`flex items-center gap-2 cursor-pointer underline decoration-sky-500`}
+          className={`flex cursor-pointer items-center gap-2 underline decoration-sky-500`}
         >
           <GitHub
             className={`cursor-pointer`}

@@ -14,6 +14,7 @@ interface IProps {
   setHide(hide: boolean): void
   errors: number
   overallLocal: number
+  keyboard: boolean
 
   // appear: boolean
 }
@@ -41,6 +42,29 @@ export enum ExpMessage {
 
   Pianist = `Pianist`,
   AbsoluteMaster = `Absolute Master`,
+
+  PracticeRus = `Так Держать`,
+  TaskAheadOfYouRus = `Прогресс Налицо`,
+  HardWorkerRus = `Полноценная Тренировка`,
+  MaraphonRunnerRus = `Марафонец`,
+
+  FastFingersRus = `Молниеносный`,
+  WayTooFastRus = `Ооочень Быстро`,
+  FastAndFuriousRus = `Со Скоростью Света`,
+
+  MarksmanRus = `Снайпер`,
+  TheBullsEyeRus = `В Яблочко`,
+  AccurateAsStephCurryRus = `Точен Как Стеф Карри`,
+
+  FastRunRus = `Хорошая Заявка`,
+  FastAndPerfectRaceRus = `Лучше Не Бывает`,
+
+  NotAverageRus = `Выше Остальных`,
+  ExcellenceRus = `Вне Конкуренции`,
+  TopSkillsRus = `Навыки На Высшем Уровне`,
+
+  PianistRus = `Пианист`,
+  AbsoluteMasterRus = `Лучший В Своем Деле`,
 }
 
 export type ExpMSG = null | string | ExpMessage
@@ -54,6 +78,7 @@ export const LEVELcontainer: React.FC<IProps> = ({
   setHide,
   errors,
   overallLocal,
+  keyboard,
   // appear,
 }) => {
   // const levels = [250, 500, 1_000, 2_000, 3_750, 6_000, 10_000, 15_000, 25_000]
@@ -121,6 +146,7 @@ export const LEVELcontainer: React.FC<IProps> = ({
         level={level}
         expMSG={expMSG}
         setHide={setHide}
+        keyboard={keyboard}
       />
       {/* <div className={`flex flex-row justify-evenly items-center w-f`}> */}
       {/* <div onMouseDown={() => handleSetExp(10)}>+10</div> */}

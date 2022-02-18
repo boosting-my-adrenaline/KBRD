@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import useDarkMode from '../../hooks/useDarkMode'
 import star from '../../static/awardstar.svg'
 
 interface IProps {
@@ -16,6 +17,7 @@ export const LEVELelement: React.FC<IProps> = ({
   award,
 }) => {
   const [hover, setHover] = useState(false)
+  const { isDarkMode } = useDarkMode()
 
   return (
     <div
@@ -25,7 +27,11 @@ export const LEVELelement: React.FC<IProps> = ({
       <div className={`flex flex-nowrap items-start gap-4 `}>
         <img
           src={image}
-          className={`h-40px w-40px shadow-6th hover:-translate-y-3px  rounded-lg border border-gray-800 bg-red-100 p-1 shadow-red-300 ${
+          className={`h-40px w-40px shadow-6th hover:-translate-y-3px rounded-lg border p-1 ${
+            isDarkMode
+              ? `border-gray-200 bg-gray-800 shadow-gray-200`
+              : `border-gray-800 bg-gray-100  shadow-gray-800`
+          } ${
             hover && `shadow-3xl shadow-red-500`
           } transition duration-200 ease-linear `}
           onMouseEnter={() => setHover(true)}

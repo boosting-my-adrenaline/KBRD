@@ -12,6 +12,7 @@ interface IProps {
   max: number
   step: number
   postTag?: string
+  isDark?: boolean
 }
 
 export const NBAslider: React.FC<IProps> = ({
@@ -22,6 +23,7 @@ export const NBAslider: React.FC<IProps> = ({
   max,
   step,
   postTag = ``,
+  isDark = false,
 }) => {
   const getColor1 = () => {
     const progress =
@@ -54,9 +56,9 @@ export const NBAslider: React.FC<IProps> = ({
 
   return (
     <div
-      className={`w-150px flex flex-col items-center justify-center text-gray-800 ${
-        isEng ? `font-courier` : `font-CourierC`
-      } w`}
+      className={`w-150px flex flex-col items-center justify-center ${
+        isDark ? `text-gray-200` : `text-gray-800`
+      }  ${isEng ? `font-courier` : `font-CourierC`} w`}
     >
       <span className={`flex items-center justify-center whitespace-nowrap`}>
         {tag}: {value}

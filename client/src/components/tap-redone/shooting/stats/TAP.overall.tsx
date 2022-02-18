@@ -4,6 +4,8 @@ import useLocalStorage from '../../../../hooks/useLocalStorage'
 import { BOOKelectronicmeter } from '../../../book-redone/components/stats/B.electronic.meter'
 import { BOOKphysicalmeter } from '../../../book-redone/components/stats/BOOK.physical.meter'
 import useLanguage from '../../../../hooks/useLanguage'
+import useColor from '../../../../hooks/useColor'
+import useDarkMode from '../../../../hooks/useDarkMode'
 
 interface IProps {
   overall: number
@@ -16,13 +18,16 @@ export const TAPoverall: React.FC<IProps> = ({ overall }) => {
     `electronic` | `physical` | 'simple'
   >(`T-overall-widget`, 'electronic')
 
+  const { isDarkMode } = useDarkMode()
   const { isEng } = useLanguage()
+  const { themeColor2 } = useColor()
 
   return (
     <div className={`flex items-center justify-center`}>
       <div
-        className={`w-140px borde z-10 flex flex-row justify-center rounded-xl border-black px-2 ${
-          (isHovered || isHovered2) && `bg-sky-100`
+        className={`w-140px  rounded-xlpx-2 z-10 flex flex-row justify-center ${
+          (isHovered || isHovered2) &&
+          (isDarkMode ? themeColor2.bg.t90030 : themeColor2.bg.t100)
         }`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -37,7 +42,13 @@ export const TAPoverall: React.FC<IProps> = ({ overall }) => {
       </div>
       {isHovered || isHovered2 ? (
         <div
-          className={`w-250px h-260px shadow-10th  absolute  flex translate-y-[100px] rounded-xl border border-sky-500 bg-sky-200 p-2 px-6`}
+          className={`w-250px h-260px shadow-10th  ${
+            isDarkMode && 'shadow-gray-200/50'
+          }  absolute  flex translate-y-[100px] rounded-xl border  ${
+            isDarkMode ? themeColor2.border.t300 : themeColor2.border.t500
+          }  ${
+            isDarkMode ? themeColor2.bg.t900 : themeColor2.bg.t200
+          } p-2 px-6`}
           onMouseEnter={() => setIsHovered2(true)}
           onMouseLeave={() => setIsHovered2(false)}
         >
@@ -45,15 +56,21 @@ export const TAPoverall: React.FC<IProps> = ({ overall }) => {
             {
               <div className={`w-f flex  flex-col items-center`}>
                 <div
-                  className={`w-f mx-2 my-2 h-[1px] rounded-full bg-sky-400`}
+                  className={`w-f mx-2 my-2 h-[1px] rounded-full ${
+                    isDarkMode ? themeColor2.bg.t200 : themeColor2.bg.t400
+                  }`}
                 />
                 <div
-                  className={`w-f flex justify-center text-xl text-gray-900`}
+                  className={`w-f flex justify-center text-xl ${
+                    isDarkMode ? `text-gray-200` : `text-gray-900`
+                  }`}
                 >
                   {isEng ? `overall` : ` всего`}
                 </div>
                 <div
-                  className={`w-f mx-2 my-2 h-[1px] rounded-full bg-sky-400`}
+                  className={`w-f mx-2 my-2 h-[1px] rounded-full ${
+                    isDarkMode ? themeColor2.bg.t200 : themeColor2.bg.t400
+                  }`}
                 />
                 <div className={`w-f flex flex-col items-start gap-4`}>
                   <motion.div
@@ -64,8 +81,14 @@ export const TAPoverall: React.FC<IProps> = ({ overall }) => {
                     <div
                       className={`cursor-pointer p-1 px-8 ${
                         showType === 'physical'
-                          ? `border-emerald-500 bg-emerald-200`
-                          : `border-sky-400 bg-sky-100`
+                          ? isDarkMode
+                            ? `border-emerald-200 bg-emerald-700`
+                            : `border-emerald-500 bg-emerald-300`
+                          : `${themeColor2.border.t400} ${
+                              isDarkMode
+                                ? themeColor2.bg.t800
+                                : themeColor2.bg.t200
+                            }`
                       } w-180px h-35px flex items-center justify-center rounded-xl border `}
                       onMouseDown={() => setShowType(`physical`)}
                     >
@@ -85,8 +108,14 @@ export const TAPoverall: React.FC<IProps> = ({ overall }) => {
                     <div
                       className={`cursor-pointer p-1 px-8 ${
                         showType === 'electronic'
-                          ? `border-emerald-500 bg-emerald-200`
-                          : `border-sky-400 bg-sky-100`
+                          ? isDarkMode
+                            ? `border-emerald-200 bg-emerald-700`
+                            : `border-emerald-500 bg-emerald-300`
+                          : `${themeColor2.border.t400} ${
+                              isDarkMode
+                                ? themeColor2.bg.t800
+                                : themeColor2.bg.t200
+                            }`
                       } w-180px h-35px flex items-center justify-center rounded-xl border `}
                       onMouseDown={() => setShowType(`electronic`)}
                     >
@@ -102,8 +131,14 @@ export const TAPoverall: React.FC<IProps> = ({ overall }) => {
                     <div
                       className={`cursor-pointer p-1 px-8 ${
                         showType === 'simple'
-                          ? `border-emerald-500 bg-emerald-200`
-                          : `border-sky-400 bg-sky-100`
+                          ? isDarkMode
+                            ? `border-emerald-200 bg-emerald-700`
+                            : `border-emerald-500 bg-emerald-300`
+                          : `${themeColor2.border.t400} ${
+                              isDarkMode
+                                ? themeColor2.bg.t800
+                                : themeColor2.bg.t200
+                            }`
                       } w-180px h-35px flex items-center justify-center rounded-xl border `}
                       onMouseDown={() => setShowType(`simple`)}
                     >

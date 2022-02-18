@@ -18,6 +18,8 @@ interface IProps {
   handleReset(): void
   fontW: boolean
   handleFW: () => void
+  pointer: boolean
+  setPointer: (pointer: boolean) => void
 }
 
 export const BOOKfunctionalButtons: React.FC<IProps> = ({
@@ -32,6 +34,8 @@ export const BOOKfunctionalButtons: React.FC<IProps> = ({
   handleReset,
   fontW,
   handleFW,
+  pointer,
+  setPointer,
 }) => {
   const [show, setShow] = useState(true)
 
@@ -46,7 +50,7 @@ export const BOOKfunctionalButtons: React.FC<IProps> = ({
 
   return (
     <div
-      className={`borde ease z-10 flex flex-grow  flex-row items-center justify-start border-red-900 transition duration-500 ${
+      className={`borde ease z-10 flex w-[100%] flex-grow flex-row  items-center justify-start border-red-900  transition duration-500 ${
         isEng || `font-CourierC`
       }`}
     >
@@ -67,6 +71,7 @@ export const BOOKfunctionalButtons: React.FC<IProps> = ({
           tag={isEng ? `punctuation` : `пунктуация`}
           active={punctuation}
           onClick={setPunctuation}
+          // onClick={(test: boolean) => {}}
         />
         <BOOKbuttonVisual
           tag={isEng ? `case` : `регистр`}
@@ -77,6 +82,11 @@ export const BOOKfunctionalButtons: React.FC<IProps> = ({
           tag={isEng ? `A` : `A`}
           active={fontW}
           onClick={handleFW}
+        />
+        <BOOKbuttonVisual
+          tag={isEng ? `pointer` : 'указатель'}
+          active={pointer}
+          onClick={setPointer}
         />
         <div className={'flex-grow'}></div>
         <BOOKbuttonVisualFunctional

@@ -45,7 +45,7 @@ export const MAINREDONEbook: React.FC<IProps> = ({
         // whileHover={{ rotate: [0, 15, -15, 0], scale: 1.05 }}
         animate={{ y: !transformation ? 0 : -700 }}
         transition={{ delay: i * 0.1 + 0.15 }}
-        className={`font-courier  py shadow-4th flex items-center justify-center rounded-xl border-2 border-gray-800 bg-red-200 text-gray-800 shadow-gray-500`}
+        className={`font-courier  py shadow-4th flex items-center justify-center rounded-xl border-2 border-gray-800 bg-emerald-200 text-gray-800 shadow-gray-500`}
       >
         {char}
       </motion.div>
@@ -53,8 +53,6 @@ export const MAINREDONEbook: React.FC<IProps> = ({
   )
 
   const [transformation, setTransformation] = useState(false)
-
-  const [card, setCard] = useState<`sm` | `md` | `lg`>()
 
   useDidMountEffect(() => {
     if (mainState === MainState.BOOK) {
@@ -115,22 +113,22 @@ export const MAINREDONEbook: React.FC<IProps> = ({
               position: 'absolute',
             }
       }
-      className={`absolute select-none bg-emerald-100`}
+      className={`absolute select-none bg-emerald-50`}
       transition={{ delay: 0.0, duration: 1 }}
     >
       <motion.div
         initial={{
           width: `100%`,
           height: `100%`,
-          boxShadow: `4px 4px 11px 8px rgba(153, 27 ,27, 0.8)`,
+          boxShadow: `4px 4px 11px 8px rgba(4, 120, 87, 0.8)`,
         }}
         whileHover={{
           scale: !transformation ? 1.15 : 1,
           x: !transformation ? -10 : 0,
-          backgroundImage: !transformation
-            ? `linear-gradient(to bottom, #fecaca, #feaead, #fa938f, #f57670, #ec5851, #ea4551, #e72e52, #e40054, #de0077, #c7009f, #9816c7, #0e41e9)`
-            : `none`,
-          boxShadow: `4px 4px 11px 11px rgba(153, 27 ,27, 0.65)`,
+          // backgroundImage: !transformation
+          //   ? `linear-gradient(to bottom, #fecaca, #feaead, #fa938f, #f57670, #ec5851, #ea4551, #e72e52, #e40054, #de0077, #c7009f, #9816c7, #0e41e9)`
+          //   : `none`,
+          boxShadow: `4px 4px 11px 11px rgba(4, 120, 87, 0.65)`,
         }}
         animate={
           !transformation
@@ -138,13 +136,13 @@ export const MAINREDONEbook: React.FC<IProps> = ({
                 padding: 4,
                 borderRadius: 25,
                 border: `1px solid white`,
-                backgroundImage: `linear-gradient(to bottom, #ffffff, #faf6fd, #f9ecf7, #fbe2ee, #fdd7e1, #f7c4cc, #f1b1b6, #e99f9d, #d87f7c, #c5605b, #b0403a, #991b1b)`,
+                // backgroundImage: `linear-gradient(to bottom, #ffffff, #faf6fd, #f9ecf7, #fbe2ee, #fdd7e1, #f7c4cc, #f1b1b6, #e99f9d, #d87f7c, #c5605b, #b0403a, #991b1b)`,
               }
             : {
                 padding: 0,
                 border: `none`,
                 borderRadius: 0,
-                backgroundImage: `none`,
+                // backgroundImage: `none`,
                 // backgroundSize: `cover`,
                 // backgroundPosition: `bottom`,
                 // backgroundImage: `url(${MainTap})`,
@@ -159,7 +157,7 @@ export const MAINREDONEbook: React.FC<IProps> = ({
           animate={
             !transformation
               ? {
-                  backgroundColor: `rgb(254, 226, 226)`,
+                  backgroundColor: `rgb(209 250 229)`,
                   border: `2px solid white`,
                   borderRadius: 20,
                 }
@@ -171,7 +169,7 @@ export const MAINREDONEbook: React.FC<IProps> = ({
           }
           // transition={{ duration: 0.5 }}
           // whileTap={{ scale: 1.15 }}
-          className={`    flex flex-col items-center justify-center overflow-hidden `}
+          className={`flex flex-col items-center justify-center overflow-hidden bg-emerald-700`}
         >
           {(mainState === MainState.MAIN || mainState == MainState.INFO) && (
             <div
@@ -179,7 +177,7 @@ export const MAINREDONEbook: React.FC<IProps> = ({
               onMouseDown={handleOnClick}
             ></div>
           )}
-
+          {/* 
           <motion.div
             initial={{}}
             animate={
@@ -191,7 +189,7 @@ export const MAINREDONEbook: React.FC<IProps> = ({
             className={`bg-sky-20 flex items-center  justify-center gap-3 `}
           >
             {keybs.map((el) => keyb(el[0], el[1]))}
-          </motion.div>
+          </motion.div> */}
 
           <motion.div
             initial={{ height: `0%` }}
@@ -231,7 +229,7 @@ export const MAINREDONEbook: React.FC<IProps> = ({
             <motion.div
               animate={{ opacity: 0 }}
               transition={{ delay: 1 }}
-              className={`w-f h-2 border border-red-100 bg-red-100`}
+              className={`w-f h-2 border border-emerald-100 bg-emerald-100`}
             />
           </motion.div>
         </motion.div>
@@ -270,7 +268,7 @@ export const MAINREDONEbook: React.FC<IProps> = ({
 //         whileHover={{ rotate: [0, 15, -15, 0], scale: 1.05 }}
 //         animate={{ y: !transformation ? 0 : -700 }}
 //         transition={{ delay: i * 0.1 + 0.15 }}
-//         className={`font-courier bg-red-200 text-gray-800 border-2 border-gray-800 flex justify-center items-center rounded-xl py shadow-4th shadow-gray-500`}
+//         className={`font-courier bg-emerald-200 text-gray-800 border-2 border-gray-800 flex justify-center items-center rounded-xl py shadow-4th shadow-gray-500`}
 //       >
 //         {char}
 //       </motion.div>
@@ -412,7 +410,7 @@ export const MAINREDONEbook: React.FC<IProps> = ({
 //           <motion.div
 //             animate={{ opacity: 0 }}
 //             transition={{ delay: 1 }}
-//             className={`w-f h-2 border border-red-100 bg-red-100`}
+//             className={`w-f h-2 border border-emerald-100 bg-emerald-100`}
 //           ></motion.div>
 //         </motion.div>
 //       </motion.div>

@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
+import useColor from '../../../hooks/useColor'
+import useDarkMode from '../../../hooks/useDarkMode'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 import { TAPREDONEelement } from './TAP.REDONE.element'
 import { TAPREDONEframe } from './TAP.REDONE.frame'
@@ -33,47 +35,65 @@ export const TAPREDONEtap: React.FC<IProps> = ({
   setBlock,
   trainingLanguage,
 }) => {
-  const [frameColor, setFrameColor] = useState(`bg-sky-400`)
+  const { themeColor2 } = useColor()
+
+  const [missTime, setMissTime] = useState(false)
+
+  // const [frameColor, setFrameColor] = useState(`bg-black`)
+
+  const { isDarkMode } = useDarkMode()
 
   const getColor = () => {
     switch (keyColor) {
       case `red`:
-        return `bg-red-500`
+        return isDarkMode ? `bg-red-300` : `bg-red-500`
       case `emerald`:
-        return `bg-emerald-500`
+        return isDarkMode ? `bg-emerald-300` : `bg-emerald-500`
       case `cyan`:
-        return `bg-cyan-500`
+        return isDarkMode ? `bg-cyan-300` : `bg-cyan-500`
       case `amber`:
-        return `bg-amber-500`
+        return isDarkMode ? `bg-amber-300` : `bg-amber-500`
       case `fuchsia`:
-        return `bg-fuchsia-500`
+        return isDarkMode ? `bg-fuchsia-300` : `bg-fuchsia-500`
       case `pink`:
-        return `bg-pink-500`
+        return isDarkMode ? `bg-pink-300` : `bg-pink-500`
     }
   }
 
-  useEffect(() => {
-    if (state === State.STOP) {
-      setFrameColor(`bg-sky-500`)
-    } else if (state === State.PAUSE) {
-      setFrameColor(`bg-sky-400`)
-    } else {
-      setFrameColor(`bg-transparent`)
-    }
-  }, [state])
-
-  useEffect(() => {
-    if (!missclicks) return
-
-    setFrameColor(`bg-red-500`)
-
-    let id = setTimeout(() => setFrameColor(`bg-transparent`), 175)
+  useDidMountEffect(() => {
+    setMissTime(true)
+    let id = setTimeout(() => setMissTime(false), 175)
 
     return () => {
       clearTimeout(id)
-      setFrameColor(`bg-transparent`)
+      setMissTime(false)
     }
   }, [missclicks])
+
+  useDidMountEffect(() => {}, [state])
+
+  // useEffect(() => {
+  //   if (state === State.STOP) {
+  //     setFrameColor(themeColor2.bg.t500)
+  //   } else if (state === State.PAUSE) {
+  //     setFrameColor(themeColor2.bg.t400)
+  //   } else {
+  //     setFrameColor(`bg-transparent`)
+  //   }
+  // }, [state])
+
+  // useEffect(() => {
+  //   if (!missclicks) return
+
+  //   setFrameColor(`bg-red-500`)
+
+  //   let id = setTimeout(() => setFrameColor(`bg-transparent`), 175)
+
+  //   return () => {
+  //     clearTimeout(id)
+  //     setFrameColor(`bg-transparent`)
+  //   }
+  // }, [missclicks])
 
   let element = (cell: number) => {
     return (
@@ -86,10 +106,20 @@ export const TAPREDONEtap: React.FC<IProps> = ({
   }
 
   return (
-    <div className={`w-1100px  flex items-center justify-center `}>
+    <div
+      className={`w-1100px  flex translate-y-[-30px] items-center justify-center`}
+    >
       <TAPREDONEframe
         state={state}
-        color={frameColor}
+        color={
+          missTime
+            ? `bg-red-500`
+            : state === State.RUN
+            ? `bg-transparent`
+            : isDarkMode
+            ? themeColor2.bg.t300
+            : themeColor2.bg.t500
+        }
         limit={limit}
         handleStart={handleStart}
         started={started}

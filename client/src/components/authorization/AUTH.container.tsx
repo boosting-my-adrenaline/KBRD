@@ -3,6 +3,7 @@ import { AUTHloginContainer } from './login/AUTH.login.container'
 import { AUTHsignupContainer } from './signup/AUTH.signup.container'
 import { motion } from 'framer-motion'
 import useLanguage from '../../hooks/useLanguage'
+import useDarkMode from '../../hooks/useDarkMode'
 
 interface IProps {
   authOpen: boolean
@@ -25,25 +26,29 @@ export const AUTHcontainer: React.FC<IProps> = ({ authOpen, setAuthOpen }) => {
 
   const WIDTH = 1150
 
+  const { isDarkMode } = useDarkMode()
+
   const { isEng } = useLanguage()
   return (
     <>
       <div
-        className={`fixed top-0 right-0 left-0 bottom-0 z-20 flex items-center justify-center bg-yellow-100 ${
-          isEng ? `font-courier` : `font-CourierC`
-        }`}
+        className={`fixed top-0 right-0 left-0 bottom-0 z-20 flex items-center justify-center ${
+          isDarkMode ? `bg-[#296073]` : `bg-yellow-100 `
+        } ${isEng ? `font-courier` : `font-CourierC`}`}
       >
         <div
           className={`z-20  items-center justify-center transition duration-1000 ease-in-out`}
         >
           <div
-            className={` absolute top-0 left-0 z-20 flex flex-row `}
+            className={` absolute top-0 left-0 z-20 flex flex-row ${
+              isDarkMode && `text-gray-100`
+            }`}
             style={{ width: WIDTH }}
           >
             <div
               className={`no-select flex items-center justify-center ${
                 !isSigningUp ? `cursor-pointer` : ``
-              }`}
+              } `}
               style={{ fontSize: '2em', width: '50%', height: 65 }}
               onMouseDown={() => setISU(true)}
             >
@@ -81,12 +86,14 @@ export const AUTHcontainer: React.FC<IProps> = ({ authOpen, setAuthOpen }) => {
               }}
             ></div>
             <div
-              className={` flex items-center justify-center bg-yellow-300`}
+              className={` flex items-center justify-center ${
+                isDarkMode ? `bg-sky-900/80` : `bg-yellow-300`
+              }`}
               style={{
                 width: '50%',
                 border: '2px solid transparent',
-                borderLeftColor: 'black',
-                borderBottomColor: 'black',
+                borderLeftColor: isDarkMode ? `rgb(243 244 246)` : 'black',
+                borderBottomColor: isDarkMode ? `rgb(243 244 246)` : 'black',
                 borderBottomLeftRadius: 10,
                 borderTopRightRadius: 10,
               }}

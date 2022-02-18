@@ -24,11 +24,13 @@ export enum AppearType {
 interface IProps {
   demo: boolean
   trainingLanguage: boolean
+  handleLanguage: () => void
 }
 
 export const TAPREDONEshooting: React.FC<IProps> = ({
   demo,
   trainingLanguage,
+  handleLanguage,
 }) => {
   const success = useRef(0)
   const errors = useRef(0)
@@ -343,7 +345,7 @@ export const TAPREDONEshooting: React.FC<IProps> = ({
 
   return (
     <div
-      className={`flex flex-col items-center justify-center gap-8 ${
+      className={`flex flex-col items-center justify-center gap-4 ${
         isEng || `font-CourierC`
       }`}
     >
@@ -366,6 +368,8 @@ export const TAPREDONEshooting: React.FC<IProps> = ({
         setAppearType={setAppearType}
         targets={targets}
         setTargets={setTargets}
+        trainingLanguage={trainingLanguage}
+        handleLanguage={handleLanguage}
       />
       <TAPREDONEstats
         succesed={success.current}

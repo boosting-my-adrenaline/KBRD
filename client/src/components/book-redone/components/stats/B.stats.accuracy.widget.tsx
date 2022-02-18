@@ -6,6 +6,8 @@ import { PingingCircles } from './BOOK.pingingCircles'
 import { motion } from 'framer-motion'
 import useLocalStorage from '../../../../hooks/useLocalStorage'
 import useLanguage from '../../../../hooks/useLanguage'
+import useColor from '../../../../hooks/useColor'
+import useDarkMode from '../../../../hooks/useDarkMode'
 
 interface IProps {
   currentAccuracy: number
@@ -24,6 +26,8 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
   const [isHoveredChapter, setIsHoveredChapter] = useState(false)
 
   const { isEng } = useLanguage()
+  const { themeColor1 } = useColor()
+  const { isDarkMode } = useDarkMode()
 
   const [showType, setShowType] = useLocalStorage<`.` | `%`>(
     `accuracy-widget`,
@@ -61,8 +65,9 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
     >
       <div
         className={`borde z-10 flex flex-row rounded-xl border-black px-2 ${
-          (isHovered || isHovered2) && `bg-emerald-100`
-        }`}
+          (isHovered || isHovered2) &&
+          (isDarkMode ? themeColor1.bg.t90030 : themeColor1.bg.t100)
+        } ${isDarkMode ? `text-gray-300` : `text-gray-900`}`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -89,7 +94,11 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
       </div>
       {isHovered || isHovered2 ? (
         <div
-          className={`w-340px h-260px shadow-10th -translate-y-85px absolute flex rounded-xl  border  border-emerald-500 bg-emerald-200 p-2 px-6 `}
+          className={`w-340px h-260px shadow-10th -translate-y-85px absolute flex rounded-xl  border ${
+            isDarkMode ? themeColor1.border.t300 : themeColor1.border.t500
+          }  ${
+            isDarkMode ? themeColor1.bg.t900 : themeColor1.bg.t200
+          } p-2 px-6 `}
           onMouseEnter={() => setIsHovered2(true)}
           onMouseLeave={() => setIsHovered2(false)}
         >
@@ -97,12 +106,16 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
             {
               <div className={`w-f flex  flex-col items-center`}>
                 <div
-                  className={`w-f flex justify-center text-xl text-gray-900`}
+                  className={`w-f flex justify-center text-xl ${
+                    isDarkMode ? `text-gray-200` : `text-gray-900`
+                  }`}
                 >
                   {isEng ? `accuracy` : `точность`}
                 </div>
                 <div
-                  className={`w-f mx-2 my-2 h-px rounded-full bg-emerald-400`}
+                  className={`w-f mx-2 my-2 h-px rounded-full ${
+                    isDarkMode ? themeColor1.bg.t200 : themeColor1.bg.t400
+                  }`}
                 ></div>
                 <div className={`w-f flex flex-col items-start gap-4`}>
                   {/* ////////// */}
@@ -112,12 +125,16 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                       <div
                         className={`w-270px h-0px translate-x-10px translate-y-5px absolute`}
                         style={{
-                          borderBottom: '30px solid #fca5a5',
+                          borderBottom: isDarkMode
+                            ? '30px solid rgb(153 27 27)'
+                            : '30px solid #fca5a5',
                           borderLeft: '30px solid transparent',
                         }}
                       >
                         <div
-                          className={`flex flex-row flex-nowrap items-center whitespace-nowrap`}
+                          className={`flex flex-row flex-nowrap items-center whitespace-nowrap ${
+                            isDarkMode ? `text-gray-200` : `text-gray-900`
+                          }`}
                         >
                           {overall >= 245 ? (
                             ` `
@@ -137,9 +154,15 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                     </div>
                   ) : (
                     <div className={` `}>
-                      <span className={`text-gray-800 `}>
+                      <span
+                        className={`${
+                          isDarkMode ? `text-gray-200` : `text-gray-900`
+                        } `}
+                      >
                         <InfoRounded
-                          className={`h-12px w-12px mr-2 text-blue-500`}
+                          className={`h-12px w-12px mr-2 ${
+                            isDarkMode ? `text-blue-300` : `text-blue-500`
+                          }`}
                           style={{ width: 16, height: 16 }}
                           onMouseEnter={() => setIsHoveredCurrent(true)}
                           onMouseLeave={() => setIsHoveredCurrent(false)}
@@ -147,7 +170,11 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                         {isEng ? `current` : `текущая`}:{' '}
                         {cond1 && showType === `.` ? `.` : ``}
                       </span>
-                      <span className={`whitespace-nowrap text-gray-800`}>
+                      <span
+                        className={`whitespace-nowrap ${
+                          isDarkMode ? `text-gray-200` : `text-gray-900`
+                        }`}
+                      >
                         {!currentAccuracy
                           ? isEng
                             ? `to be defined`
@@ -166,13 +193,17 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                     <div className={`w-f flex items-center justify-center `}>
                       {`\u00a0`}
                       <div
-                        className={`w-270px h-0px translate-x-10px -translate-y-5px absolute `}
+                        className={`w-270px h-0px translate-x-10px -translate-y-5px absolute ${
+                          isDarkMode ? `text-gray-200` : `text-gray-900`
+                        }`}
                         style={{
-                          borderTop: '30px solid #fca5a5',
+                          borderBottom: isDarkMode
+                            ? '30px solid rgb(153 27 27)'
+                            : '30px solid #fca5a5',
                           borderLeft: '30px solid transparent',
                         }}
                       >
-                        <div className={`-translate-y-30px`}>
+                        <div className={`translate-y-2px`}>
                           {isEng
                             ? ` last 245 characters`
                             : `последние 245 симв.`}
@@ -181,10 +212,14 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                     </div>
                   ) : (
                     <div>
-                      <span className={`text-gray-800 `}>
+                      <span
+                        className={`${
+                          isDarkMode ? `text-gray-200` : `text-gray-900`
+                        } `}
+                      >
                         <InfoRounded
-                          className={`mr-2 text-blue-500 opacity-${
-                            overall >= 245 && 0
+                          className={`mr-2 ${overall >= 245 && `opacity-0`} ${
+                            isDarkMode ? `text-blue-300` : `text-blue-500`
                           } w-12px h-12px`}
                           style={{ width: 16, height: 16 }}
                           onMouseEnter={() => {
@@ -196,7 +231,11 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                         {isEng ? `average` : `средняя`}:{' '}
                         {cond2 && showType === `.` ? `.` : ``}
                       </span>
-                      <span className={`text-gray-800`}>
+                      <span
+                        className={`${
+                          isDarkMode ? `text-gray-200` : `text-gray-900`
+                        }`}
+                      >
                         {!cond2
                           ? isEng
                             ? `to be defined`
@@ -214,21 +253,36 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                   <div className={`  w-f flex justify-center`}>
                     <div className={`borde flex items-center justify-center `}>
                       <div
-                        className={`cursor-pointer rounded-l-xl border-l border-t border-b  border-emerald-400 py-1   px-7 ${
+                        className={`cursor-pointer rounded-l-xl border-l border-t border-b  ${
+                          themeColor1.border.t400
+                        } py-1   px-7 ${
                           showType === `.`
-                            ? `bg-emerald-400 text-gray-900`
-                            : `bg-emerald-200`
-                        } transition duration-300 ease-in-out`}
+                            ? isDarkMode
+                              ? `${themeColor1.bg.t500} text-gray-200`
+                              : ` ${themeColor1.bg.t400} text-gray-900`
+                            : isDarkMode
+                            ? themeColor1.bg.t900
+                            : themeColor1.bg.t200
+                        } transition duration-300 ease-in-out ${
+                          isDarkMode ? `text-gray-200` : `text-gray-900`
+                        }`}
                         onMouseDown={() => setShowType(`.`)}
                       >
                         .{(currentAccuracy && accuracyValue) || 967}
                       </div>
                       <div
-                        className={`cursor-pointer rounded-r-xl border-r border-t border-b border-emerald-400 py-1 px-6 ${
+                        className={`cursor-pointer rounded-r-xl border-r border-t border-b ${
+                          themeColor1.border.t400
+                        } py-1 px-6 ${
                           showType === `%`
-                            ? `bg-emerald-400 text-gray-900`
-                            : `bg-emerald-200`
-                        } transition duration-300 ease-in-out`}
+                            ? isDarkMode
+                              ? `${themeColor1.bg.t500} text-gray-200`
+                              : ` ${themeColor1.bg.t400} text-gray-900`
+                            : isDarkMode
+                            ? themeColor1.bg.t900
+                            : themeColor1.bg.t200
+                        } transition duration-300 ease-in-out 
+                        ${isDarkMode ? `text-gray-200` : `text-gray-900`}`}
                         style={{ transition: `0.3s ease-in-out` }}
                         onMouseDown={() => setShowType(`%`)}
                       >

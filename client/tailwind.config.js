@@ -200,6 +200,8 @@ module.exports = {
         Pitch: ['Pitch'],
         CourierC: [`CourierC`],
         RobotoMono: [`Roboto Mono`],
+        SF: [`sf`],
+        BungeeShade: [`Bungee Shade`],
       },
 
       transform: {
@@ -217,6 +219,11 @@ module.exports = {
         '10th': '2px 1px 12px 4px rgba(0, 0, 0, 0.3)',
         '11th': '2px 0 4px 4px rgba(50, 50, 50, 0.3)',
         '12th': '2px 5px 20px 10px rgba(0,0,0,0.1)',
+        '13th': `-2px 2px 3px 4px rgba(0, 0, 0, 0.01)`,
+        '14th': `0px 2px 3px 4px rgba(0, 0, 0, 0.01)`,
+        '15th': '0px 5px 20px 10px rgba(0,0,0,0.1)',
+        '16th': `0px 0px 8px 4px rgba(0, 0, 0, 0.01)`,
+        '17th': `2px 2px 8px 4px rgba(0, 0, 0, 0.01)`,
       },
     },
   },

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import React from 'react'
+import useDarkMode from '../../hooks/useDarkMode'
 import { ExpMSG } from './LEVEL.container'
 import { LEVELicon } from './LEVEL.icon'
 import { LEVELinfo } from './LEVEL.info'
@@ -9,6 +10,7 @@ interface IProps {
   level: number
   expMSG: ExpMSG
   setHide(hide: boolean): void
+  keyboard: boolean
 }
 
 export const LEVELlevel: React.FC<IProps> = ({
@@ -16,15 +18,18 @@ export const LEVELlevel: React.FC<IProps> = ({
   level,
   expMSG,
   setHide,
+  keyboard,
 }) => {
+  const { isDarkMode } = useDarkMode()
+
   const bgColor = (): [string, string] => {
     switch (level) {
       case 1:
         return ['bg-yellow-300', 'bg-yellow-50']
       case 2:
-        return ['bg-red-200', 'bg-red-50']
+        return ['bg-emerald-200', 'bg-emerald-50']
       case 3:
-        return ['bg-red-300', 'bg-red-50']
+        return ['bg-emerald-300', 'bg-emerald-50']
       case 4:
         return ['bg-rose-400', 'bg-rose-50']
       case 5:
@@ -34,7 +39,7 @@ export const LEVELlevel: React.FC<IProps> = ({
       case 7:
         return ['bg-yellow-400', 'bg-yellow-50']
       case 8:
-        return ['bg-emerald-400', 'bg-emerald-50']
+        return ['bg-red-400', 'bg-red-50']
       case 9:
         return ['bg-teal-300', 'bg-teal-50']
       case 10:
@@ -49,7 +54,9 @@ export const LEVELlevel: React.FC<IProps> = ({
       <LEVELicon level={level} expMSG={expMSG} />
       <div className={`w-f flex flex-row items-center`}>
         <div
-          className={` w-f h-40px flex items-center justify-center overflow-hidden rounded-xl border border-gray-900 
+          className={` w-f h-40px flex items-center justify-center overflow-hidden rounded-xl border ${
+            isDarkMode ? `border-gray-300` : `border-gray-900 `
+          }
             ${bgColor()[1]} 
           `}
         >
@@ -78,7 +85,7 @@ export const LEVELlevel: React.FC<IProps> = ({
           <div className={`flex-grow`}></div>
         </div>
       </div>{' '}
-      <LEVELinfo setHide={setHide} />
+      <LEVELinfo setHide={setHide} keyboard={keyboard} />
     </div>
   )
 }

@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../../context/AuthContext'
+import useDarkMode from '../../../hooks/useDarkMode'
+import { useWindowSize } from '../../../hooks/useDimensions'
 import useLanguage from '../../../hooks/useLanguage'
 
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
@@ -17,6 +19,8 @@ interface IProps {
 export const AuthMiniature: React.FC<IProps> = ({ authOpen, setAuthOpen }) => {
   const auth = useContext(AuthContext)
 
+  const { isDarkMode } = useDarkMode()
+
   const { isAuthenticated: isLoggedIn } = auth
 
   const [appear, setAppear] = useState(true)
@@ -30,19 +34,11 @@ export const AuthMiniature: React.FC<IProps> = ({ authOpen, setAuthOpen }) => {
     }
   }, [authOpen])
 
-  const [perspective, setPerspective] = useState([0, 0, 48])
-
-  const handleSetPerspective = (
-    perspective: number,
-    marginTop: number,
-    marginLeft: number
-  ) => {
-    setPerspective([perspective, marginTop, marginLeft])
-  }
-
   const [hover, setHover] = useState(false)
 
   const { isEng } = useLanguage()
+
+  const { width } = useWindowSize()
 
   return (
     <div
@@ -54,18 +50,19 @@ export const AuthMiniature: React.FC<IProps> = ({ authOpen, setAuthOpen }) => {
         // opacity: 0.6,
       }}
     >
-      <PerspectiveController setPerspective2={handleSetPerspective} />
       {
         <motion.div
           animate={{
-            borderRadius: !authOpen ? 1000 : 50,
+            borderRadius: !authOpen ? 500 : 10,
             // opacity: 0.2,
-            marginLeft: authOpen ? perspective[2] : 0,
-            marginTop: authOpen ? perspective[1] : 0,
+            // marginLeft: authOpen ? perspective[2] : 0,
+            // marginTop: authOpen ? perspective[1] : 0,
             width: !authOpen ? 60 : 1150,
             height: !authOpen ? 28 : 700,
-            x: !authOpen ? 0 : -490,
-            y: !authOpen ? 0 : 410,
+            // x: !authOpen ? 0 : -490,
+            right: !authOpen ? 67 : (width - 1150) / 2,
+
+            y: !authOpen ? 0 : 380,
           }}
           transition={{
             default: { duration: 0.15, type: `spring` },
@@ -75,9 +72,15 @@ export const AuthMiniature: React.FC<IProps> = ({ authOpen, setAuthOpen }) => {
             y: { duration: 0.4, type: `tween` },
           }}
           // whileHover={{ y: !authOpen ? -2 : 0 }}
-          className={`absolute z-50  overflow-hidden border ${
-            isLoggedIn ? `border-gray-600` : `border-gray-600`
-          }  ${authOpen ? 'shadow-12th' : 'cursor-pointer'}`}
+          className={`absolute z-50  overflow-hidden border-2 ${
+            isDarkMode ? `border-gray-100` : `border-gray-600`
+          }  ${
+            authOpen
+              ? isDarkMode
+                ? 'shadow-12th shadow-gray-300'
+                : 'shadow-12th'
+              : 'cursor-pointer'
+          }`}
           onMouseDown={() => {
             if (!authOpen) setAuthOpen(true)
           }}
@@ -93,7 +96,13 @@ export const AuthMiniature: React.FC<IProps> = ({ authOpen, setAuthOpen }) => {
                   {!appear ? (
                     <div
                       className={`h-[1050px] w-[100%] ${
-                        isLoggedIn ? `bg-purple-100` : `bg-yellow-200`
+                        isLoggedIn
+                          ? isDarkMode
+                            ? ``
+                            : `bg-purple-100`
+                          : isDarkMode
+                          ? `bg-yellow-200`
+                          : `bg-yellow-200`
                       }`}
                     >
                       {' '}
@@ -104,9 +113,9 @@ export const AuthMiniature: React.FC<IProps> = ({ authOpen, setAuthOpen }) => {
                 </div>
               ) : (
                 <div
-                  className={`w-f h-f flex items-center justify-center bg-yellow-100 ${
-                    isEng || `font-CourierC`
-                  }`}
+                  className={`w-f h-f flex items-center justify-center ${
+                    isDarkMode ? `bg-yellow-100` : `bg-yellow-100`
+                  } ${isEng || `font-CourierC`}`}
                 >
                   {' '}
                   {isEng ? `Login` : `Войти`}

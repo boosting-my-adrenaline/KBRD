@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import useColor from '../../../../hooks/useColor'
 
 interface IProps {
   // amount?: number
@@ -12,6 +13,8 @@ export const PingingCircles: React.FC<IProps> = ({}) => {
   const ref3 = useRef(6)
 
   const refs = [ref1.current, ref2.current, ref3.current]
+
+  const { mainColor1 } = useColor()
 
   useEffect(() => {
     let id = setInterval(() => {
@@ -28,7 +31,7 @@ export const PingingCircles: React.FC<IProps> = ({}) => {
     <div key={key} className={`flex items-center justify-center`}>
       {'\u00a0'}
       <div
-        className={`absolute rounded-full bg-emerald-${
+        className={`absolute rounded-full bg-${mainColor1}-${
           refs[num] * 100
         } w-8px h-8px transition duration-500 ease-in-out`}
       ></div>

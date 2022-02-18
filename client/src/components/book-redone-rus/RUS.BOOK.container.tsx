@@ -258,6 +258,7 @@ export const RUSBOOKContainer: React.FC<IProps> = ({ demo = false }) => {
     // setSTRING((str) => str.substring(1) + str[0])
     // SUCCESS()
   }
+  const [pointer, setPointer] = useLocalStorage(`BC-pointer`, true)
 
   const [fontW, setFontW] = useLocalStorage(`BC-fontWeight`, true)
   const handleFW = () => setFontW((prev) => !prev)
@@ -278,7 +279,6 @@ export const RUSBOOKContainer: React.FC<IProps> = ({ demo = false }) => {
        } duration-00 transition ease-in-out`}
       >
         <BOOKbuttons
-          show={!demo}
           highlighter={hightlighter}
           setHighlighter={setHighlighter}
           punctuation={punctuation}
@@ -292,6 +292,8 @@ export const RUSBOOKContainer: React.FC<IProps> = ({ demo = false }) => {
           handleTest={handleTest}
           fontW={fontW}
           handleFW={handleFW}
+          pointer={pointer}
+          setPointer={setPointer}
         />
         <div className={`z-60`}>
           <BOOKstats
@@ -299,6 +301,7 @@ export const RUSBOOKContainer: React.FC<IProps> = ({ demo = false }) => {
             overall={successAndFailedTypes.current}
             failedTypesIndexes={failedTypesIndexes.current}
             reseting={reseting}
+            keyboard={true}
           />
         </div>
         <div className="1k:visible w-f  borde invisible flex flex-col items-center justify-center border-black">
@@ -308,7 +311,10 @@ export const RUSBOOKContainer: React.FC<IProps> = ({ demo = false }) => {
           >
             <RUSBOOKBook STRING={STRING} fontW={fontW} />
             <BOOKLayout STRING={STRING} highlighter={hightlighter} />
-            <BOOKfailures failedTypesIndexes={failedTypesIndexes.current} />
+            <BOOKfailures
+              failedTypesIndexes={failedTypesIndexes.current}
+              highlighter={hightlighter}
+            />
             <BOOKpointer overall={successAndFailedTypes.current} />
           </div>
         </div>

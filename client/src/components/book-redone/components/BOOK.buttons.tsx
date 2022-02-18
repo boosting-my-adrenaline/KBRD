@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { BOOKfunctionalButtons } from './buttons/BOOK.functionalButtons'
 
 interface IProps {
-  show: boolean
   punctuation: boolean
   caseSensitivity: boolean
   setCaseSensetivity(cs: boolean): void
@@ -18,10 +17,11 @@ interface IProps {
   handleTest(): void
   fontW: boolean
   handleFW: () => void
+  pointer: boolean
+  setPointer: (pointer: boolean) => void
 }
 
 export const BOOKbuttons: React.FC<IProps> = ({
-  show,
   setHighlighter,
   highlighter,
   punctuation,
@@ -35,6 +35,8 @@ export const BOOKbuttons: React.FC<IProps> = ({
   handleTest,
   fontW,
   handleFW,
+  pointer,
+  setPointer,
 }) => {
   const [hover, setHover] = useState(false)
 
@@ -49,16 +51,14 @@ export const BOOKbuttons: React.FC<IProps> = ({
   return (
     <>
       <div
-        className={`bg-rd-200 borde w-1000px z-10 mt-10 flex  select-none flex-col items-center justify-center  border-red-800 ${
-          show || `opacity-0`
-        } transition duration-500 ease-in-out`}
+        className={`bg-rd-200  w-1000px z-10 flex select-none  flex-col items-center justify-center transition duration-500 ease-in-out`}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
         <div
           className={`${
             running && !hover && `opacity-80`
-          }  flex flex-col items-center justify-center  transition duration-200 ease-in-out`}
+          } flex  w-full flex-col items-center justify-center  transition duration-200 ease-in-out`}
         >
           <div className={`w-f flex flex-col  justify-center `}>
             {/* <div onMouseDown={handleTest}>TEST</div> */}
@@ -75,9 +75,11 @@ export const BOOKbuttons: React.FC<IProps> = ({
               handleReset={handleReset}
               fontW={fontW}
               handleFW={handleFW}
+              pointer={pointer}
+              setPointer={setPointer}
             />
           </div>
-          <div className={`py w-1000px px my-3 h-[1px] bg-emerald-200`}></div>
+          {/* <div className={`py w-1000px px my-3 h-[1px] bg-emerald-200`}></div> */}
         </div>
       </div>
     </>

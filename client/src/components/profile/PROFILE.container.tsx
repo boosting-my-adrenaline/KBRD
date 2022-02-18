@@ -5,6 +5,7 @@ import { PROFILEstats } from './PROFILE.stats'
 import { AuthContext } from '../../context/AuthContext'
 import { NBAbutton } from './NBA.button'
 import useLanguage from '../../hooks/useLanguage'
+import useDarkMode from '../../hooks/useDarkMode'
 
 interface IProps {
   authOpen: boolean
@@ -49,11 +50,11 @@ export const PROFILEcontainer: React.FC<IProps> = ({
 
   const { isEng } = useLanguage()
 
+  const { isDarkMode } = useDarkMode()
+
   return (
     <div
-      className={`fixed top-0 bottom-0 right-0 left-0 bg-purple-200 ${
-        isEng ? `font-courier` : `font-CourierC`
-      }`}
+      className={`fixed inset-0    ${isEng ? `font-courier` : `font-CourierC`}`}
     >
       <>
         <div
@@ -65,17 +66,27 @@ export const PROFILEcontainer: React.FC<IProps> = ({
           }}
           // onMouseDown={handleLogout}
         >
-          <NBAbutton tag={isEng ? `Log Out` : 'Выйти'} onClick={handleLogout} />
+          <NBAbutton
+            tag={isEng ? `Log Out` : 'Выйти'}
+            onClick={handleLogout}
+            bg={isDarkMode ? `bg-purple-900/40` : `bg-purple-300`}
+            isDark={isDarkMode}
+          />
         </div>
 
         <div
-          className={`fixed top-0 right-0 left-0 bottom-0 z-20 flex items-center justify-center bg-purple-200`}
+          className={`fixed top-0 right-0 left-0 bottom-0 z-20 flex items-center justify-center ${
+            isDarkMode ? `bg-[#296073]` : `bg-purple-200`
+          }`}
         >
           <div
             className={`z-20  items-center justify-center transition duration-1000 ease-linear`}
           >
             <div
-              className={`absolute top-0 left-0 z-20 flex flex-row `}
+              className={`absolute top-0 left-0 z-20 flex flex-row ${
+                isDarkMode && `text-gray-100`
+              }
+              `}
               style={{ width: WIDTH }}
             >
               <div
@@ -109,11 +120,13 @@ export const PROFILEcontainer: React.FC<IProps> = ({
                 }}
               ></div>
               <div
-                className={`w-50% flex items-center justify-center bg-purple-300`}
+                className={`w-50% flex items-center justify-center ${
+                  isDarkMode ? `bg-purple-900/40` : `bg-purple-300`
+                }`}
                 style={{
                   border: '2px solid transparent',
-                  borderLeftColor: 'black',
-                  borderBottomColor: 'black',
+                  borderLeftColor: isDarkMode ? `rgb(243 244 246)` : 'black',
+                  borderBottomColor: isDarkMode ? `rgb(243 244 246)` : 'black',
                   borderBottomLeftRadius: 10,
                   borderTopRightRadius: 10,
                 }}

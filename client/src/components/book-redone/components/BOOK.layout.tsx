@@ -1,4 +1,7 @@
 import React from 'react'
+import useColor from '../../../hooks/useColor'
+import useDarkMode from '../../../hooks/useDarkMode'
+import { useWindowSize } from '../../../hooks/useDimensions'
 
 interface IProps {
   STRING: string
@@ -14,6 +17,9 @@ export const BOOKLayout: React.FC<IProps> = ({ STRING, highlighter }) => {
   const rawLEFT1: string = STRING.slice(-105, -35)
   const rawLEFT2: string = STRING.slice(-175, -105)
   const rawLEFT3: string = STRING.slice(-245, -175)
+
+  const { themeColor1 } = useColor()
+  const { isDarkMode } = useDarkMode()
 
   const formating = (str: string) => {
     return str.split('').map((el, i) => {
@@ -35,7 +41,9 @@ export const BOOKLayout: React.FC<IProps> = ({ STRING, highlighter }) => {
             {'\u00A0'}
             {/* {el} */}
             <div
-              className={`absolute rounded-sm bg-emerald-200`}
+              className={`absolute rounded-sm ${
+                isDarkMode ? themeColor1.bg.t700 : themeColor1.bg.t200
+              }`}
               style={{ padding: '0 2px' }}
             >
               {'\u00A0'}
@@ -53,17 +61,18 @@ export const BOOKLayout: React.FC<IProps> = ({ STRING, highlighter }) => {
       <div className={`flex w-full flex-row ${bluring}`}>{formating(str)}</div>
     )
   }
+  let xl = true
 
   return (
     <div
-      className={`z-31 visible absolute rounded-xl transition duration-700 ease-in-out `}
+      className={`z-31 visible absolute space-y-4 rounded-xl text-2xl transition duration-700 ease-in-out`}
     >
-      <div className="w-1000 font-courier z-10 flex flex-col space-y-4 text-2xl  ">
+      <div className="w-1000 font-courier z-10 flex flex-col   space-y-4 text-2xl">
         {/* <div className="flex flex-row ">{'\u00A0'}</div> */}
         {/* <div>{`\u00a0`}</div> */}
 
         {/* {rowing(rawLEFT3, 2)} */}
-        {rowing(rawLEFT2, 1)}
+        {/* {rowing(rawLEFT2, 1)} */}
         {rowing(rawLEFT1)}
 
         <div className="flex flex-row">
@@ -73,7 +82,7 @@ export const BOOKLayout: React.FC<IProps> = ({ STRING, highlighter }) => {
         </div>
 
         {rowing(rawRIGHT1)}
-        {rowing(rawRIGHT2, 1)}
+        {/* {rowing(rawRIGHT2, 1)} */}
         {/* {rowing(rawRIGHT3, 2)} */}
         {/* <div>{`\u00a0`}</div> */}
         {/* <div className="flex flex-row ">{'\u00A0'}</div> */}

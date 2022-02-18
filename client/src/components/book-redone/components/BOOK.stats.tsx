@@ -14,6 +14,7 @@ interface IProps {
   overall: number
   failedTypesIndexes: number[]
   reseting: any
+  keyboard: boolean
 }
 
 export const BOOKstats: React.FC<IProps> = ({
@@ -21,6 +22,7 @@ export const BOOKstats: React.FC<IProps> = ({
   overall,
   failedTypesIndexes: fti,
   reseting,
+  keyboard,
 }) => {
   // const successfulRow = fti.length > 0 ? fti[fti.length - 1] - 1 : overall
   const [accuracy, setAccuracy] = useState(0)
@@ -43,7 +45,6 @@ export const BOOKstats: React.FC<IProps> = ({
   }, [fti.length])
 
   const [running, setRunning] = useState(false)
-  const [appear, setAppear] = useState(true)
 
   useDidMountEffect(() => {
     setAccuracy(0)
@@ -69,10 +70,14 @@ export const BOOKstats: React.FC<IProps> = ({
       <div
         className={`absolute ${
           show || `opacity-0`
-        } transition duration-500 ease-in-out ${isEng || `font-CourierC`}`}
-        style={{
-          transform: `translateY(${appear && show ? 555 : 2000}px)`,
-        }}
+        } transition duration-500 ease-in-out ${
+          isEng || `font-CourierC`
+        } translate-y-[225px]`}
+        style={
+          {
+            // transform: `translateY(${appear && show ? 220 : 2000}px)`,
+          }
+        }
       >
         <LEVELcontainer
           overall={overall}
@@ -83,12 +88,11 @@ export const BOOKstats: React.FC<IProps> = ({
           CPM={CPM}
           accuracy={accuracy}
           setHide={setHide}
+          keyboard={keyboard}
         />
       </div>
       <div
-        className={`w-1000  borde flex select-none items-center justify-center border-black pt-2 pb-6 transition duration-500 ease-in-out ${
-          (appear && show) || `opacity-0`
-        }`}
+        className={`w-1000  borde duration-800 flex select-none items-center justify-center border-black pt-2 pb-2 transition ease-in-out `}
       >
         <div
           className={`w-f borde-red-800 borde mx-8 flex flex-row items-center justify-between text-xl text-gray-600 ${

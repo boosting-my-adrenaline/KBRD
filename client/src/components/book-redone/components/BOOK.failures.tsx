@@ -1,8 +1,17 @@
 import React from 'react'
+import useDarkMode from '../../../hooks/useDarkMode'
 
-export const BOOKfailures: React.FC<{
+interface IProps {
   failedTypesIndexes: number[]
-}> = ({ failedTypesIndexes }) => {
+  highlighter: boolean
+}
+
+export const BOOKfailures: React.FC<IProps> = ({
+  failedTypesIndexes,
+  highlighter,
+}) => {
+  const { isDarkMode } = useDarkMode()
+
   function fillWithAreas(from: number, to: number) {
     let row = []
     for (let i = from; i <= to; i++) {
@@ -10,7 +19,11 @@ export const BOOKfailures: React.FC<{
         <div
           key={i}
           className={`rounded-sm ${
-            failedTypesIndexes.includes(i) ? `bg-red-200` : `bg-transparent`
+            failedTypesIndexes.includes(i)
+              ? isDarkMode
+                ? `bg-red-700`
+                : `bg-red-300`
+              : `bg-transparent`
           }`}
         >
           {'\u00A0'}
@@ -27,9 +40,10 @@ export const BOOKfailures: React.FC<{
       {/* <div className={`flex flex-row-reverse opacity-60`}>
         {fillWithAreas(176, 245)}
       </div> */}
-      <div className={`flex flex-row-reverse opacity-70`}>
+      {/* <div className={`flex flex-row-reverse opacity-70`}>
         {fillWithAreas(106, 175)}
-      </div>
+      </div> */}
+      <div className="flex flex-row ">{'\u00A0'}</div>
 
       <div className="flex flex-row-reverse ">{fillWithAreas(36, 105)}</div>
       <div className="flex flex-row">

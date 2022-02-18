@@ -9,11 +9,13 @@ interface IProps {
   mainState: MainState
   setMainState: (state: MainState) => void
   trainingLanguage: boolean
+  handleLanguage: () => void
 }
 export const MAINREDONEtap: React.FC<IProps> = ({
   mainState,
   setMainState,
   trainingLanguage,
+  handleLanguage,
 }) => {
   const keybs: [string, number][] = [
     ['T', 2],
@@ -84,8 +86,8 @@ export const MAINREDONEtap: React.FC<IProps> = ({
             }
           : mainState === MainState.BOOK
           ? {
-              y: `0%`,
-              x: `355%`,
+              y: `-150%`,
+              x: `55%`,
               width: `22%`,
               height: `40%`,
               position: 'absolute',
@@ -202,6 +204,7 @@ export const MAINREDONEtap: React.FC<IProps> = ({
             <MAINTAPinside
               show={transformation}
               trainingLanguage={trainingLanguage}
+              handleLanguage={handleLanguage}
             />
           </motion.div>
           <div className={`flex-grow`}></div>

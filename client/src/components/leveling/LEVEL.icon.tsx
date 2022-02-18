@@ -31,9 +31,9 @@ export const LEVELicon: React.FC<IProps> = ({ level, expMSG }) => {
   const bgColor = (): [string, string] => {
     switch (lvl) {
       case 2:
-        return ['bg-red-200', 'shadow-red-400']
+        return ['bg-emerald-200', 'shadow-emerald-400']
       case 3:
-        return ['bg-red-300', 'shadow-red-500']
+        return ['bg-emerald-300', 'shadow-emerald-500']
       case 4:
         return ['bg-rose-400', 'shadow-rose-600']
       case 5:
@@ -43,7 +43,7 @@ export const LEVELicon: React.FC<IProps> = ({ level, expMSG }) => {
       case 7:
         return ['bg-yellow-400', 'shadow-yellow-600']
       case 8:
-        return ['bg-emerald-400', 'shadow-emerald-600']
+        return ['bg-red-400', 'shadow-red-600']
       case 9:
         return ['bg-teal-300', 'shadow-teal-500']
       case 10:

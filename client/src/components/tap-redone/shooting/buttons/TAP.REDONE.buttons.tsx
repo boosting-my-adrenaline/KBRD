@@ -7,6 +7,12 @@ import { TAPREDONEappear } from './TAP.REDONE.appear'
 import { TAPREDONEkeyColor } from './TAP.REDONE.key.color'
 import { TAPREDONEkeyType } from './TAP.REDONE.key.type'
 
+import R from '../../../../static/profiles/russia.png'
+import E from '../../../../static/profiles/uk.png'
+import { motion } from 'framer-motion'
+import useColor from '../../../../hooks/useColor'
+import useDarkMode from '../../../../hooks/useDarkMode'
+
 interface IProps {
   demo: boolean
   state: State
@@ -26,6 +32,8 @@ interface IProps {
   setAppearType: (type: AppearType) => void
   targets: number
   setTargets: (targets: number) => void
+  trainingLanguage: boolean
+  handleLanguage: () => void
 }
 
 export const TAPREDONEbuttons: React.FC<IProps> = ({
@@ -47,23 +55,12 @@ export const TAPREDONEbuttons: React.FC<IProps> = ({
   setAppearType,
   targets,
   setTargets,
+  trainingLanguage,
+  handleLanguage,
 }) => {
-  const getColor = () => {
-    switch (keyColor) {
-      case `emerald`:
-        return [`bg-emerald-500 `, `bg-emerald-200`, `border-emerald-300`]
-      case `cyan`:
-        return [`bg-cyan-500 `, `bg-cyan-200`, `border-cyan-300`]
-      case `amber`:
-        return [`bg-amber-500 `, `bg-amber-200`, `border-amber-300`]
-      case `fuchsia`:
-        return [`bg-fuchsia-500 `, `bg-fuchsia-200`, `border-fuchsia-300`]
-      case `pink`:
-        return [`bg-pink-500 `, `bg-pink-200`, `border-pink-300`]
-      default:
-        return [`bg-red-500 `, `bg-red-200`, `border-red-300`]
-    }
-  }
+  const { themeColor2 } = useColor()
+
+  const { isDarkMode } = useDarkMode()
 
   const { isEng } = useLanguage()
 
@@ -71,7 +68,7 @@ export const TAPREDONEbuttons: React.FC<IProps> = ({
     <div
       className={`w-1000px borde ${
         isEng ? `font-courier` : `font-CourierC`
-      } flex select-none items-center justify-center gap-10 border-sky-800 ${
+      } flex select-none items-center justify-center gap-10  ${
         demo && `opacity-0`
       } grid-cols-custom1 grid transition duration-500 ease-in-out`}
     >
@@ -107,32 +104,51 @@ export const TAPREDONEbuttons: React.FC<IProps> = ({
           onClick={handleStart}
           bg={
             started && state !== State.RUN
-              ? `bg-sky-200`
+              ? isDarkMode
+                ? themeColor2.bg.t700
+                : themeColor2.bg.t200
               : state === State.RUN
-              ? `bg-red-200`
+              ? isDarkMode
+                ? `bg-red-700`
+                : `bg-red-200`
+              : isDarkMode
+              ? `bg-emerald-700`
               : `bg-emerald-200`
           }
           hov={
             started && state !== State.RUN
-              ? `bg-sky-300`
+              ? isDarkMode
+                ? themeColor2.bg.t800
+                : themeColor2.bg.t300
               : state === State.RUN
-              ? `bg-red-300`
+              ? isDarkMode
+                ? `bg-red-800`
+                : `bg-red-300`
+              : isDarkMode
+              ? `bg-emerald-800`
               : `bg-emerald-300`
           }
           border={
             started && state !== State.RUN
-              ? `border-sky-400`
+              ? isDarkMode
+                ? themeColor2.border.t200
+                : themeColor2.border.t400
               : state === State.RUN
-              ? `border-red-400`
+              ? isDarkMode
+                ? `border-red-200`
+                : `border-red-400`
+              : isDarkMode
+              ? `border-emerald-200`
               : `border-emerald-400`
           }
           space
           extraActive={spaceDown}
+          isDark={isDarkMode}
         />
       </div>
       <div
-        className={`flex h-[70px] w-[400px] items-center justify-evenly gap-8 rounded-md border ${
-          getColor()[2]
+        className={`flex h-[70px] w-[400px] items-center justify-evenly gap-8 rounded-md border  ${
+          isDarkMode ? themeColor2.border.t700 : themeColor2.border.t300
         }`}
       >
         <TAPREDONEkeyColor setKeyColor={setKeyColor} keyColor={keyColor} />
@@ -141,6 +157,17 @@ export const TAPREDONEbuttons: React.FC<IProps> = ({
           handleKeyType={handleKeyType}
           keyColor={keyColor}
         />
+        <motion.div
+          initial={{ x: -11 }}
+          whileHover={{ scale: 1.16 }}
+          whileTap={{ scale: 0.9 }}
+          onMouseDown={handleLanguage}
+          className={`h-[30px] w-[30px]  cursor-pointer rounded-full border ${
+            isDarkMode ? `border-gray-100` : `border-gray-600`
+          }`}
+        >
+          <img alt="" src={trainingLanguage ? E : R} />
+        </motion.div>
       </div>
     </div>
   )

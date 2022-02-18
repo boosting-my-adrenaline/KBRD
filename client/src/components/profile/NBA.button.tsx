@@ -16,6 +16,7 @@ interface IProps {
   disableCursor?: boolean
   space?: boolean
   extraActive?: boolean
+  isDark?: boolean
 }
 
 export const NBAbutton: React.FC<IProps> = ({
@@ -31,6 +32,7 @@ export const NBAbutton: React.FC<IProps> = ({
   disableCursor = false,
   space = false,
   extraActive = false,
+  isDark = false,
 }) => {
   const [hover, setHover] = useState(false)
 
@@ -45,17 +47,23 @@ export const NBAbutton: React.FC<IProps> = ({
     if (active || extraActive) {
       return {
         scale: 0.9,
-        boxShadow: `1px 2px 8px 2px rgba(50, 50, 50, 0.75)`,
+        boxShadow: isDark
+          ? `1px 2px 8px 2px rgba(209, 213, 219, 0.75) `
+          : `1px 2px 8px 2px rgba(50, 50, 50, 0.75)`,
       }
     } else if (hover) {
       return {
         scale: 1.1,
-        boxShadow: `4px 8px 8px 3px rgba(50, 50, 50, 0.5)`,
+        boxShadow: isDark
+          ? `4px 8px 8px 3px rgba(209, 213, 219, 0.5) `
+          : `4px 8px 8px 3px rgba(50, 50, 50, 0.5)`,
       }
     } else {
       return {
         scale: 1,
-        boxShadow: `2px 5px 8px 3px rgba(50, 50, 50, 0.65)`,
+        boxShadow: isDark
+          ? `2px 5px 8px 3px rgba(209, 213, 219, 0.65) `
+          : `2px 5px 8px 3px rgba(50, 50, 50, 0.65)`,
       }
     }
   }
@@ -79,12 +87,16 @@ export const NBAbutton: React.FC<IProps> = ({
         className={`z-60 relative flex items-center justify-center overflow-hidden rounded   ${py} ${px} `}
       >
         <div
-          className={`${text}  w-f h-f overflow-hidde relative z-50 flex items-center justify-center whitespace-nowrap rounded-xl`}
+          className={`${text} ${
+            isDark ? `text-gray-100` : `text-gray-900`
+          } w-f h-f overflow-hidde relative z-50 flex items-center justify-center whitespace-nowrap rounded-xl`}
         >
           {tag}
           {space && (
             <div
-              className={` h-2px w-50px absolute rounded-sm bg-gray-800`}
+              className={` h-2px w-50px absolute rounded-sm ${
+                isDark ? `bg-gray-100` : `bg-gray-900`
+              }`}
               style={{ transform: `translateY(17px)` }}
             />
           )}

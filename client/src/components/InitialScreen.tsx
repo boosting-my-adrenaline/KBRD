@@ -24,11 +24,11 @@ export const InitialScreen: React.FC<IProps> = ({ show }) => {
 
   return (
     <div
-      className={`fixed top-0 left-0 bottom-0 right-0 bg-black/985 ${
+      className={`bg-black/985 fixed top-0 left-0 bottom-0 right-0 ${
         `` //getColors()[0]
       } ${
         show || `opacity-0`
-      } transition duration-1000 flex justify-center items-center ease-in-out font-courier text-5em`}
+      } font-courier text-5em flex items-center justify-center  transition duration-1000 ease-in-out`}
     >
       <motion.div
         initial={{ opacity: 0 }}

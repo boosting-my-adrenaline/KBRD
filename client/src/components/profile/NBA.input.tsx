@@ -5,6 +5,7 @@ import animationGif2 from '../../static/animation2.gif'
 import animationGif3 from '../../static/animation3.gif'
 import animationGif4 from '../../static/animation4.gif'
 import useLanguage from '../../hooks/useLanguage'
+import useDarkMode from '../../hooks/useDarkMode'
 
 // onChange={(e) => setUsername(e.target.value.replaceAll(' ', ''))}
 
@@ -22,9 +23,13 @@ interface IProps {
   success?: boolean
   warning?: boolean
   border?: string
+  borderDark?: string
   borderActive?: string
+  borderActiveDark?: string
   bg?: string
+  bgDark?: string
   hov?: string
+  hovDark?: string
   text?: string
   height?: number
   the34?: boolean
@@ -43,10 +48,14 @@ export const NBAinput: React.FC<IProps> = ({
   success = false,
   warning = false,
   border = `border-sky-300`,
+  borderDark = `border-sky-200`,
   borderActive = `border-sky-500`,
+  borderActiveDark = `border-sky-100`,
   id = `login`,
   bg = `bg-sky-100`,
+  bgDark = `bg-sky-900`,
   hov = `bg-sky-300/80`,
+  hovDark = `bg-sky-700`,
   text = `text-2xl`,
   height = 60,
   the34 = false,
@@ -54,6 +63,8 @@ export const NBAinput: React.FC<IProps> = ({
   const [hover, setHover] = useState(false)
   const [active, setActive] = useState(false)
   const [placeholderState, setPlaceholderState] = useState(false)
+
+  const { isDarkMode } = useDarkMode()
 
   useDidMountEffect(() => {
     if (!hover && !active && !value) {
@@ -76,61 +87,61 @@ export const NBAinput: React.FC<IProps> = ({
 
   const placeholderColor = () => {
     if (error) {
-      return `text-red-500`
+      return isDarkMode ? `text-red-300` : `text-red-500`
     } else if (success) {
-      return `text-emerald-500`
+      return isDarkMode ? `text-emerald-300` : `text-emerald-500`
     } else if (warning) {
-      return `text-amber-500`
+      return isDarkMode ? `text-amber-300` : `text-amber-500`
     } else {
-      return `text-gray-600/80`
+      return isDarkMode ? `text-gray-300` : `text-gray-600/80`
     }
   }
 
   const borderColor = () => {
     if (error) {
-      return `border-red-300`
+      return isDarkMode ? `border-red-400` : `border-red-300`
     } else if (success) {
-      return `border-emerald-300`
+      return isDarkMode ? `border-emerald-400` : `border-emerald-300`
     } else if (warning) {
-      return `border-amber-300`
+      return isDarkMode ? `border-amber-400` : `border-amber-300`
     } else {
-      return border
+      return isDarkMode ? borderDark : border
     }
   }
 
   const borderActiveColor = () => {
     if (error) {
-      return `border-red-500`
+      return isDarkMode ? `border-red-200` : `border-red-500`
     } else if (success) {
-      return `border-emerald-500`
+      return isDarkMode ? `border-emerald-200` : `border-emerald-500`
     } else if (warning) {
-      return `border-amber-500`
+      return isDarkMode ? `border-amber-200` : `border-amber-500`
     } else {
-      return borderActive
+      return isDarkMode ? borderActiveDark : borderActive
     }
   }
 
   const bgColor = () => {
     if (error) {
-      return `bg-red-100`
+      return isDarkMode ? `bg-red-900` : `bg-red-100`
     } else if (success) {
-      return `bg-emerald-100`
+      return isDarkMode ? `bg-emerald-900` : `bg-emerald-100`
     } else if (warning) {
-      return `bg-amber-100`
+      return isDarkMode ? `bg-amber-900` : `bg-amber-100`
     } else {
-      return bg
+      return isDarkMode ? bgDark : bg
     }
   }
 
   const hoverColor = () => {
     if (error) {
-      return `bg-red-300`
+      return isDarkMode ? `bg-red-700` : `bg-red-300`
     } else if (success) {
-      return `bg-emerald-300`
+      return isDarkMode ? `bg-emerald-700` : `bg-emerald-300`
     } else if (warning) {
-      return `bg-amber-300`
+      return isDarkMode ? `bg-amber-700` : `bg-amber-300`
     } else {
-      return hov
+      return isDarkMode ? hovDark : hov
     }
   }
 
@@ -175,10 +186,18 @@ export const NBAinput: React.FC<IProps> = ({
       >
         <div className={`w-f h-f flex items-center justify-center`}>
           <input
-            className={`w-f h-f border pl-4 ${
+            className={`} w-f h-f border pl-4 ${
               active || hover ? borderActiveColor() : borderColor()
             } 
-          ${active ? `text-gray-800` : `text-gray-700`}
+          ${
+            active
+              ? isDarkMode
+                ? `text-gray-100`
+                : `text-gray-800`
+              : isDarkMode
+              ? `text-gray-300`
+              : `text-gray-700`
+          }
           rounded-lg bg-transparent outline-none hover:bg-transparent focus:bg-transparent active:bg-transparent ${text}`}
             id={id}
             type={!show ? type : ``}

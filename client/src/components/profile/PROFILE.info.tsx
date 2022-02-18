@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import React from 'react'
 import { useAuth } from '../../hooks/auth.hook'
+import useDarkMode from '../../hooks/useDarkMode'
 import { PhotoMiniature } from '../navbar/nav-components/PhotoMiniature'
 
 interface IProps {
@@ -9,6 +10,8 @@ interface IProps {
 
 export const PROFILEinfo: React.FC<IProps> = ({ statsSection }) => {
   const { email } = useAuth()
+
+  const { isDarkMode } = useDarkMode()
 
   return (
     <motion.div
@@ -24,7 +27,9 @@ export const PROFILEinfo: React.FC<IProps> = ({ statsSection }) => {
       <div
         className={`w-100px h-60px rounded-40px overflow-hidden `}
         style={{
-          border: '1px solid black',
+          border: isDarkMode
+            ? '1px solid rgb(168 85 247)'
+            : '1px solid rgb(23, 23, 23)',
         }}
       >
         <PhotoMiniature />

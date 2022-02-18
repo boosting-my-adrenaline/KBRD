@@ -23,12 +23,18 @@ import { lionwitch as letter8 } from './../../static/letters/lionwitch'
 import { PerspectiveController } from '../PerspectiveController'
 import useLocalStorage from '../../hooks/useLocalStorage'
 import useLanguage from '../../hooks/useLanguage'
+import { BOOKkeyboard } from './components/BOOK.keyboard'
+
+import R from '../../static/profiles/russia.png'
+import { motion } from 'framer-motion'
+import { useWindowSize } from '../../hooks/useDimensions'
+import useColor from '../../hooks/useColor'
 
 interface IProps {
-  demo?: boolean
+  handleLanguage: () => void
 }
 
-export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
+export const BOOKContainer: React.FC<IProps> = ({ handleLanguage }) => {
   // const startingLetter = Array.from({ length: 500 }, () => 'A').join('') /////////////////////////////////
 
   // const [currentString, setCurrentString] = useLocalStorage(
@@ -85,7 +91,7 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
   const lastKey = useRef('')
   const prelastKey = useRef('')
 
-  const [hightlighter, setHighlighter] = useLocalStorage('highlight', true)
+  const [hightlighter, setHighlighter] = useLocalStorage('highlight', false)
 
   const caps = useKeyPress('CapsLock')
   const shift = useKeyPress('Shift')
@@ -138,12 +144,6 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
   }, [])
 
   useEffect(() => {
-    if (demo) return
-    //   return console.log(`demo true`)
-    // } else {
-    //   return console.log(`demo false`)
-    // }
-
     if (keyDown === STRING[0]) {
       // SUCCESS()
       setIncreaser((prev) => prev + 1)
@@ -270,10 +270,7 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
   }
 
   const [punctuation, setPunctuation] = useLocalStorage(`BK-punctuation`, true)
-  const [caseSensitivity, setCaseSensetivity] = useLocalStorage(
-    `BK-punctuation`,
-    true
-  )
+  const [caseSensitivity, setCaseSensetivity] = useLocalStorage(`BK-case`, true)
 
   const renders = useRef<number>(0)
 
@@ -291,39 +288,70 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
     return () => clearTimeout(id)
   }, [successAndFailedTypes.current])
 
-  const [perspective, setPerspective] = useState<[number, number]>([0, 100])
-
-  const handleSetPerspective = (perspective: number, margin: number) => {
-    setPerspective([perspective, margin])
-  }
-  // const { isEng } = useLanguage()
-
-  // const handleTest = () => {
-  //   // setSTRING((str) => str.substring(1) + str[0])
-  //   // SUCCESS()
-  // }
-  const [fontW, setFontW] = useLocalStorage(`BC-fontWeight`, true)
+  const [fontW, setFontW] = useLocalStorage(`BC-fontWeight`, false)
   const handleFW = () => setFontW((prev) => !prev)
 
+  const [pointer, setPointer] = useLocalStorage(`BC-pointer`, true)
+
+  const [show, setShow] = useLocalStorage<[boolean, boolean, boolean, boolean]>(
+    `BC-show`,
+    [false, true, true, true]
+  )
+
+  const handleShow = (num: 0 | 1 | 2 | 3) => {
+    if (num === 0) {
+      setShow((prev) => [!prev[0], prev[1], prev[2], prev[3]])
+    }
+  }
+
+  const { themeColor1 } = useColor()
+
+  const [isFirst, setIsFirst] = useLocalStorage(`BC-isFIrst`, false)
+
+  useDidMountEffect(() => {}, [successAndFailedTypes])
+
   return (
-    <div
-      style={
-        {
-          // marginTop: perspective[1] - 120,
-          // marginBottom: perspective[1],
-          // transform: `perspective(1000px) translateZ(${perspective[0]}px)`,
-        }
-      }
-    >
-      <div
-        className={`w-f font-courier mt-4 flex  border-black ${`font-CourierC`}
-       flex-col items-center justify-center opacity-${
+    <>
+      <motion.div
+        // animate={{ scale: width >= 1500 ? 1 : width > 1300 ? 0.85 : 0.75 }}
+        className={`w-f font-courier my-12 flex min-h-[830px] border-black  ${`font-CourierC`}
+       flex-col items-center justify-start opacity-${
          //  appear || demo || 0
          100
        } duration-00 transition ease-in-out`}
       >
+        <div className=" w-f  flex flex-col items-center justify-center border-black">
+          <div
+            className={` mt-6
+        flex flex-col items-center justify-center `}
+          >
+            <BOOKBook STRING={STRING} fontW={fontW} />
+            {hightlighter && (
+              <BOOKLayout STRING={STRING} highlighter={hightlighter} />
+            )}
+            {hightlighter && (
+              <BOOKfailures
+                failedTypesIndexes={failedTypesIndexes.current}
+                highlighter={hightlighter}
+              />
+            )}
+            {pointer && <BOOKpointer overall={successAndFailedTypes.current} />}
+            {/* test */}
+          </div>
+        </div>
+        <div
+          className={`py px translate -x-[50px] my-3 mt-10 h-[1px] w-[1000px] ${themeColor1.bg.t200}`}
+        />
+        <BOOKkeyboard
+          isLocalEng={true}
+          show={show}
+          handleShow={handleShow}
+          handleLanguage={handleLanguage}
+        />
+        <div
+          className={`py px translate-x- [50px] my-3 h-[1px] w-[1000px] ${themeColor1.bg.t200}`}
+        />
         <BOOKbuttons
-          show={!demo}
           highlighter={hightlighter}
           setHighlighter={setHighlighter}
           punctuation={punctuation}
@@ -337,29 +365,27 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
           handleTest={() => {}}
           fontW={fontW}
           handleFW={handleFW}
+          pointer={pointer}
+          setPointer={setPointer}
         />
+        <div
+          className={`py px translate-x- [50px] my-3 h-[1px] w-[1000px] ${themeColor1.bg.t200}`}
+        />
+
         <div className={`z-60`}>
           <BOOKstats
-            show={!demo}
+            show={true}
             overall={successAndFailedTypes.current}
             failedTypesIndexes={failedTypesIndexes.current}
             reseting={reseting}
+            keyboard={show[0]}
           />
         </div>
-        <div className="1k:visible w-f  borde invisible flex flex-col items-center justify-center border-black">
-          <div
-            className={`1k:visible bordr  invisible my-10
-        flex flex-col items-center justify-center border-red-900`}
-          >
-            <BOOKBook STRING={STRING} fontW={fontW} />
-            <BOOKLayout STRING={STRING} highlighter={hightlighter} />
-            <BOOKfailures failedTypesIndexes={failedTypesIndexes.current} />
-            <BOOKpointer overall={successAndFailedTypes.current} />
-            {/* test */}
-          </div>
-        </div>
+        <div
+          className={`py px translate-x- [50px] my-3 h-[1px] w-[1000px] ${themeColor1.bg.t200}`}
+        />
         <BOOKstring
-          show={!demo}
+          show={true}
           currentString={currentString}
           handleStringErase={handleStringErase}
           handleStringNoErase={handleStringNoErase}
@@ -369,22 +395,7 @@ export const BOOKContainer: React.FC<IProps> = ({ demo = false }) => {
           caseSensitivity={caseSensitivity}
           running={running}
         />
-      </div>
-      {/* <div className={`z-50`}>streakRow: {streakRow}</div>{' '}
-      <div>
-        fail:{' '}
-        {failedTypesIndexes.current.map((el) => (
-          <>--{el}--</>
-        ))}
-      </div>
-      <div>test: {test}</div>
-      <div>
-        escapeFailedTypeStatus:{' '}
-        {escapeFailedTypeStatus.current ? `true` : `false`}
-        <br />
-        failedTypeStatus: {failedTypeStatus.current ? `true` : `false`}
-      </div> */}
-      {/* <PerspectiveController setBook={handleSetPerspective} /> */}
-    </div>
+      </motion.div>
+    </>
   )
 }

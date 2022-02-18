@@ -18,7 +18,7 @@ export const TAPREDONEstats: React.FC<IProps> = ({
   const { isEng } = useLanguage()
   return (
     <div
-      className={`w-1000 ${
+      className={`w-[1080px] ${
         isEng ? `font-courier` : `font-CourierC`
       } borde  z-50 flex select-none items-center justify-center border-black  transition duration-500 ease-in-out ${
         show || `opacity-0`
@@ -53,7 +53,7 @@ export const TAPREDONEstats: React.FC<IProps> = ({
             {/* <BOOKstatsCPMWidget CPM={CPM} avgCPM={avgCPM} /> */}
           </div>
         </div>
-        <div className={`flex items-center justify-center`}>
+        <div className={`flex translate-x-[-60px] items-center justify-center`}>
           <TAPerrors errors={errors} />
         </div>
       </div>

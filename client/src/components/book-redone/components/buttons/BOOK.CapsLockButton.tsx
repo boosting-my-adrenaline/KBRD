@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import useDarkMode from '../../../../hooks/useDarkMode'
 import { useDidMountEffect } from '../../../../utils/useDidMountEffect'
 
 interface IProps {
@@ -8,6 +9,7 @@ interface IProps {
 
 export const BOOKcapsLockButton: React.FC<IProps> = ({ caps, capsError }) => {
   const [blinking, setBlinking] = useState(false)
+  const { isDarkMode } = useDarkMode()
 
   useDidMountEffect(() => {
     setBlinking(true)
@@ -21,10 +23,16 @@ export const BOOKcapsLockButton: React.FC<IProps> = ({ caps, capsError }) => {
 
   return (
     <div
-      className={` rounded-md p-3 border-2 ${
-        blinking ? 'bg-red-300 animate-ping' : ''
+      className={` rounded-md border-2 p-3 ${
+        blinking ? '${bg-red-300} animate-ping' : ''
       } ${
-        caps ? 'border-red-500 text-red-500' : 'border-gray-300 text-gray-300'
+        caps
+          ? isDarkMode
+            ? 'border-red-400 text-red-400'
+            : 'border-red-500 text-red-500'
+          : isDarkMode
+          ? 'border-gray-800/80 text-gray-800/80'
+          : 'border-gray-300 text-gray-300'
       } `}
     >
       CAPS LOCK

@@ -1,4 +1,7 @@
 import React from 'react'
+import useColor from '../../../hooks/useColor'
+import useDarkMode from '../../../hooks/useDarkMode'
+import { useWindowSize } from '../../../hooks/useDimensions'
 import useLanguage from '../../../hooks/useLanguage'
 
 interface IProps {
@@ -27,38 +30,52 @@ export const BOOKBook: React.FC<IProps> = ({ STRING, fontW }) => {
       </div>
     )
   }
+
+  const { isDarkMode } = useDarkMode()
   const { isEng } = useLanguage()
 
+  const { width } = useWindowSize()
+  let xl = width >= 1500
+
+  const { themeColor1 } = useColor()
   return (
     <div
       className={`w-1000 ${
         fontW ? `font-courier font-[100]` : ``
-      } visible z-40 flex flex-col space-y-4 text-2xl  transition duration-700 ease-in-out`}
+      } visible z-40 flex flex-col  transition duration-700 ease-in-out`}
     >
       <div
-        className={`w-1000  z-40 flex flex-col space-y-4 text-2xl text-gray-800 `}
+        className={`w-1000  z-40 flex flex-col space-y-4 text-2xl ${
+          isDarkMode ? `text-[rgb(17 24 39)]` : themeColor1.text.t100
+        } `}
       >
         {/* <div>{`\u00a0`}</div> */}
-        <div>{`\u00a0`}</div>
+        {/* <div>{`\u00a0`}</div> */}
 
         {/* {rowing(LEFT3)} */}
         {/* <div className={`text-gray-700`}>{rowing(LEFT3)}</div> */}
 
         {/* <div className={`text-gray-800`}>{rowing(LEFT2)}</div> */}
-        <div className={`text-gray-100`}>{rowing(LEFT1)}</div>
+        <div className={``}>{rowing(LEFT1)}</div>
 
-        <div className={`flex flex-row text-black`}>
-          <div className={`text-gray-100`}>{rowing(LEFT)}</div>
+        <div
+          className={`flex flex-row  ${
+            `` // isDarkMode ? `text-gray-50` : `text-black`
+          }`}
+        >
+          <div>{rowing(LEFT)}</div>
 
-          <div>{rowing(RIGHT)}</div>
+          <div className={isDarkMode ? `text-gray-50` : `text-black`}>
+            {rowing(RIGHT)}
+          </div>
         </div>
 
-        <div className={`text-gray-100`}>{rowing(RIGHT1)}</div>
+        <div className={``}>{rowing(RIGHT1)}</div>
 
         {/* <div className={`text-gray-800`}>{rowing(RIGHT2)}</div> */}
         {/* <div className={`text-gray-700`}>{rowing(RIGHT3)}</div> */}
 
-        <div>{`\u00a0`}</div>
+        {/* <div>{`\u00a0`}</div> */}
         {/* <div>{`\u00a0`}</div> */}
       </div>
     </div>

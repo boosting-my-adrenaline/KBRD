@@ -9,9 +9,14 @@ import svg5 from '../../static/svg5.svg'
 interface IProps {
   show: boolean
   trainingLanguage: boolean
+  handleLanguage: () => void
 }
 
-export const MAINTAPinside: React.FC<IProps> = ({ show, trainingLanguage }) => {
+export const MAINTAPinside: React.FC<IProps> = ({
+  show,
+  trainingLanguage,
+  handleLanguage,
+}) => {
   const [demo, setDemo] = useState(true)
   const [bg, setBg] = useState(false)
   const [bg2, setBg2] = useState(false)
@@ -74,7 +79,11 @@ export const MAINTAPinside: React.FC<IProps> = ({ show, trainingLanguage }) => {
           !show && `160k:mt-0 1400:mt-4 1200:mt-[100px] mt-[150px]`
         } transition duration-75 `}
       >
-        <TAPREDONEcontainer demo={demo} trainingLanguage={trainingLanguage} />
+        <TAPREDONEcontainer
+          demo={demo}
+          trainingLanguage={trainingLanguage}
+          handleLanguage={handleLanguage}
+        />
         <div
           className={`h-f w-f flex-grow `}
           style={{ width: `100%`, height: `100%` }}

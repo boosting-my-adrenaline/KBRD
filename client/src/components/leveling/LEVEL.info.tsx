@@ -20,38 +20,66 @@ import Piano from '../../static/piano.png'
 import { ExpMessage } from './LEVEL.container'
 import { LEVELelement } from './LEVEL.element'
 import { motion } from 'framer-motion'
+import useColor from '../../hooks/useColor'
+import useLanguage from '../../hooks/useLanguage'
+import useDarkMode from '../../hooks/useDarkMode'
 
 interface IProps {
   setHide(hide: boolean): void
+  keyboard: boolean
 }
 
-export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
+export const LEVELinfo: React.FC<IProps> = ({ setHide, keyboard }) => {
   const [hover, setHover] = useState(false)
+  const { isEng } = useLanguage()
+
   // const [hover2, setHover2] = useState(true)
 
   const achievements: [title: string, image: any, award: number][] = [
-    [ExpMessage.Practice, Grow, 1],
-    [ExpMessage.TaskAheadOfYou, Mountain, 2],
-    [ExpMessage.HardWorker, Dumbbell, 3],
-    [ExpMessage.MaraphonRunner, Maraphon, 4],
+    [isEng ? ExpMessage.Practice : ExpMessage.PracticeRus, Grow, 1],
+    [
+      isEng ? ExpMessage.TaskAheadOfYou : ExpMessage.TaskAheadOfYouRus,
+      Mountain,
+      2,
+    ],
+    [isEng ? ExpMessage.HardWorker : ExpMessage.HardWorkerRus, Dumbbell, 3],
+    [
+      isEng ? ExpMessage.MaraphonRunner : ExpMessage.MaraphonRunnerRus,
+      Maraphon,
+      4,
+    ],
 
-    [ExpMessage.FastFingers, Lightning, 3],
-    [ExpMessage.FastAndFurious, FastAndFurious, 4],
-    [ExpMessage.WayTooFast, Rocket, 5],
+    [isEng ? ExpMessage.FastFingers : ExpMessage.FastFingersRus, Lightning, 3],
+    [
+      isEng ? ExpMessage.FastAndFurious : ExpMessage.FastAndFuriousRus,
+      FastAndFurious,
+      4,
+    ],
+    [isEng ? ExpMessage.WayTooFast : ExpMessage.WayTooFastRus, Rocket, 5],
 
-    [ExpMessage.Marksman, Marksman, 2],
-    [ExpMessage.TheBullsEye, BullsEye, 3],
-    [ExpMessage.AccurateAsStephCurry, Steph, 5],
+    [isEng ? ExpMessage.Marksman : ExpMessage.MarksmanRus, Marksman, 2],
+    [isEng ? ExpMessage.TheBullsEye : ExpMessage.TheBullsEyeRus, BullsEye, 3],
+    [
+      isEng
+        ? ExpMessage.AccurateAsStephCurry
+        : ExpMessage.AccurateAsStephCurryRus,
+      Steph,
+      5,
+    ],
 
-    [ExpMessage.FastRun, Run2, 3],
-    [ExpMessage.FastAndPerfectRace, Run, 5],
+    [isEng ? ExpMessage.FastRun : ExpMessage.FastRunRus, Run2, 3],
+    [
+      isEng ? ExpMessage.FastAndPerfectRace : ExpMessage.FastAndPerfectRaceRus,
+      Run,
+      5,
+    ],
 
-    [ExpMessage.NotAverage, Star, 2],
-    [ExpMessage.Excellence, Excellence, 3],
-    [ExpMessage.TopSkills, Award, 4],
+    [isEng ? ExpMessage.NotAverage : ExpMessage.NotAverageRus, Star, 2],
+    [isEng ? ExpMessage.Excellence : ExpMessage.ExcellenceRus, Excellence, 3],
+    [isEng ? ExpMessage.TopSkills : ExpMessage.TopSkillsRus, Award, 4],
 
-    [ExpMessage.Pianist, Piano, 3],
-    [ExpMessage.AbsoluteMaster, Cup, 5],
+    [isEng ? ExpMessage.Pianist : ExpMessage.PianistRus, Piano, 3],
+    [isEng ? ExpMessage.AbsoluteMaster : ExpMessage.AbsoluteMasterRus, Cup, 5],
   ]
 
   useEffect(() => {
@@ -60,6 +88,8 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
       setHide(true)
     }
   }, [hover])
+
+  const { isDarkMode } = useDarkMode()
 
   const elements = (from: number, to: number, width: number | string) =>
     achievements
@@ -77,13 +107,31 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
   let hr = <></>
   // let hr = <div className={`w-f bg-gray-800 mx-4 rounded-full h-1px`} />
   let title = (title: string) => (
-    <div className={`bg-red-300 px-2 text-center text-lg`}>{title}</div>
+    <div
+      className={`${
+        isDarkMode ? themeColor1.bg.t900 : themeColor1.bg.t300
+      } px-2 text-center text-lg`}
+    >
+      {title}
+    </div>
   )
+
+  const { themeColor1 } = useColor()
 
   return (
     <>
       <div
-        className={`h-40px w-42px font-courier shadow-3xl  z-20 flex cursor-help items-center justify-center rounded-xl border border-gray-800 text-3xl shadow-red-300/75 transition duration-150 ease-in-out hover:bg-red-200 hover:shadow-red-500/75`}
+        className={`h-40px w-42px font-courier shadow-3xl z-[2000]  flex cursor-help items-center justify-center rounded-xl border ${
+          isDarkMode ? `border-gray-300` : `border-gray-900 `
+        } text-3xl  transition duration-150 ease-in-out  ${
+          hover
+            ? isDarkMode
+              ? `${themeColor1.bg.t700} ${themeColor1.shadow.t500}`
+              : `${themeColor1.bg.t300} ${themeColor1.shadow.t500}`
+            : isDarkMode
+            ? `${themeColor1.shadow.t900} ${themeColor1.bg.t800} `
+            : `${themeColor1.shadow.t700} ${themeColor1.bg.t300} `
+        }`}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
@@ -96,17 +144,25 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
       </div>
       {hover && (
         <div
-          className={`w-1040px opacity-985 -translate-x-6px translate-y-55px shadow-12th absolute flex flex-wrap items-start justify-between overflow-hidden rounded-xl border  border-gray-800 bg-red-200 text-sm shadow-gray-400`}
+          className={` opacity-985  shadow-15th absolute ${
+            keyboard
+              ? `w-1040px -translate-x-6px translate-y-[-725px]`
+              : `w-[920px] translate-y-[-520px] translate-x-[54px]`
+          } flex  flex-wrap items-start justify-between overflow-hidden rounded-xl border  text-sm ${
+            isDarkMode
+              ? `border-gray-200 text-gray-200 shadow-gray-700`
+              : `border-gray-800 shadow-gray-400`
+          }  ${isDarkMode ? themeColor1.bg.t800 : themeColor1.bg.t200}`}
         >
           <div className={`w-f flex flex-col pb-1 pt-1`}>
-            {title(`Volume Of Work`)}
+            {title(isEng ? `Volume Of Work` : `Объем Работы`)}
             <div className={`flex flex-wrap px-1 pt-1`}>
               {elements(0, 4, `50%`)}
             </div>
           </div>
           {hr}
           <div className={`w-f flex flex-col pb-1`}>
-            {title(`Speed`)}
+            {title(isEng ? `Speed` : `Скорость`)}
 
             <div className={`flex flex-wrap px-1 pt-1`}>
               {' '}
@@ -115,7 +171,7 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
           </div>
           {hr}{' '}
           <div className={`w-f flex flex-col pb-1`}>
-            {title(`Row With No Errors`)}
+            {title(isEng ? `Row With No Errors` : `Безошибочная Печать`)}
 
             <div className={`flex flex-wrap px-1 pt-1`}>
               {elements(0, 3, `50%`)}{' '}
@@ -123,7 +179,9 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
           </div>
           {hr}{' '}
           <div className={`w-f flex flex-col pb-1`}>
-            {title(`Speed Row With No Errors`)}
+            {title(
+              isEng ? `Speed Row With No Errors` : `Быстрая Безошибочная Печать`
+            )}
 
             <div className={`flex flex-wrap px-1 pt-1`}>
               {elements(0, 2, `50%`)}{' '}
@@ -131,7 +189,7 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
           </div>
           {hr}{' '}
           <div className={`w-f flex flex-col pb-1`}>
-            {title(`Average Accuracy`)}
+            {title(isEng ? `Average Accuracy` : `Средняя Точность`)}
 
             <div className={`flex flex-wrap px-1 pt-1`}>
               {elements(0, 3, `50%`)}{' '}
@@ -139,7 +197,11 @@ export const LEVELinfo: React.FC<IProps> = ({ setHide }) => {
           </div>
           {hr}{' '}
           <div className={`w-f flex flex-col pb-1`}>
-            {title(`Average Speed And Accuracy`)}
+            {title(
+              isEng
+                ? `Average Speed And Accuracy`
+                : `Средняя Скорость И Точность`
+            )}
 
             <div className={`flex flex-wrap px-1 pt-1`}>
               {elements(0, 2, `50%`)}{' '}

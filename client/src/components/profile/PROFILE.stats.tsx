@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
+import useDarkMode from '../../hooks/useDarkMode'
 
 export const PROFILEstats: React.FC = () => {
   const [turn, setTurn] = useState([0, 0, 0, 0])
@@ -23,6 +24,9 @@ export const PROFILEstats: React.FC = () => {
     }
   }, [])
 
+  const { isDarkMode } = useDarkMode()
+
+  let finalColor = isDarkMode ? `rgb(186 230 253)` : `rgb(107 33 168)`
   let fontsize = '120px'
 
   return (
@@ -49,7 +53,7 @@ export const PROFILEstats: React.FC = () => {
                 x: 0,
                 y: 0,
                 fontSize: fontsize,
-                color: `rgb(107 33 168)`,
+                color: finalColor,
               }
         }
       >
@@ -74,7 +78,7 @@ export const PROFILEstats: React.FC = () => {
                 x: 0,
                 y: 0,
                 fontSize: fontsize,
-                color: `rgb(107 33 168)`,
+                color: finalColor,
               }
         }
       >
@@ -102,7 +106,7 @@ export const PROFILEstats: React.FC = () => {
                 x: 0,
                 y: 0,
                 fontSize: fontsize,
-                color: `rgb(107 33 168)`,
+                color: finalColor,
               }
         }
       >
@@ -128,7 +132,7 @@ export const PROFILEstats: React.FC = () => {
                 x: 0,
                 y: 0,
                 fontSize: fontsize,
-                color: `rgb(107 33 168)`,
+                color: finalColor,
               }
         }
       >

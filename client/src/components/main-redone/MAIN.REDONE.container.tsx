@@ -10,18 +10,21 @@ interface IProps {
   mainState: MainState
   setMainState: (state: MainState) => void
   trainingLanguage: boolean
+  handleLanguage: () => void
 }
 
 export const MAINREDONEcontainer: React.FC<IProps> = ({
   mainState,
   setMainState,
   trainingLanguage,
+  handleLanguage,
 }) => {
   return (
     <div
-      className={`fixed inset-0 z-50 flex
-       min-h-[700px]  items-center justify-center  transition duration-200 ease-in-out
-        `}
+      // className={`fixed inset-0 z-50 flex
+      //  min-h-[700px]  items-center justify-center  transition duration-200 ease-in-out
+      //   `}
+      className={` flex min-h-[100vh] w-[100vw] items-center justify-center `}
       style={{
         backgroundImage: `url(${mainsvg})`,
         backgroundSize: `cover`,
@@ -33,6 +36,7 @@ export const MAINREDONEcontainer: React.FC<IProps> = ({
         mainState={mainState}
         setMainState={setMainState}
         trainingLanguage={trainingLanguage}
+        handleLanguage={handleLanguage}
       />
       <MAINREDONEbook
         mainState={mainState}

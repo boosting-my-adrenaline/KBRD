@@ -65,8 +65,8 @@ export const MAINREDONEinfo: React.FC<IProps> = ({
           : [MainState.BOOK, MainState.TAP].includes(mainState)
           ? {
               z: -10,
-              y: '100%',
-              x: 1000,
+              y: '-400%',
+              // x: 1000,
               width: `10%`,
               height: `10%`,
               position: `absolute`,

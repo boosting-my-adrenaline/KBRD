@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
 import React, { useState } from 'react'
+import useColor from '../../../hooks/useColor'
+import useDarkMode from '../../../hooks/useDarkMode'
 import useLanguage from '../../../hooks/useLanguage'
 import { useDidMountEffect } from '../../../utils/useDidMountEffect'
 import {
@@ -28,6 +30,8 @@ export const TAPREDONEinside: React.FC<IProps> = ({
 }) => {
   const [turn, setTurn] = useState(0)
 
+  const { themeColor2 } = useColor()
+
   // useDidMountEffect(() => {
   //   if (block) return
   //   if (state !== State.RUN && started) {
@@ -47,6 +51,7 @@ export const TAPREDONEinside: React.FC<IProps> = ({
   //     setTimeout(() => setBlock(false), 200)
   //   }
   // }, [started, setBlock, setState])
+  const { isDarkMode } = useDarkMode()
 
   useDidMountEffect(() => {
     let id0 = setTimeout(() => {})
@@ -131,11 +136,11 @@ export const TAPREDONEinside: React.FC<IProps> = ({
         className={`gap-70px absolute flex items-center justify-center`}
       >
         <div
-          className={`rounded-xl border-2 border-sky-600 bg-sky-400`}
+          className={`rounded-xl border-2  ${themeColor2.border.t600} ${themeColor2.bg.t400}`}
           style={{ width: 90, height: 350 }}
         />
         <div
-          className={`rounded-xl border-2 border-sky-600 bg-sky-400`}
+          className={`rounded-xl border-2 ${themeColor2.border.t600} ${themeColor2.bg.t400}`}
           style={{ width: 90, height: 350 }}
         />
       </motion.div>
@@ -148,7 +153,9 @@ export const TAPREDONEinside: React.FC<IProps> = ({
           }}
           // whileInView={{ scale: [1, 0.95, 1.05, 0.95, 1] }}
           // transition={{ repeat: Infinity, duration: 2.5, repeatDelay: 2 }}
-          className={` absolute flex flex-col items-center justify-center text-sky-600 `}
+          className={` absolute flex flex-col items-center justify-center ${
+            isDarkMode ? themeColor2.text.t300 : themeColor2.text.t500
+          } `}
         >
           <motion.div
             animate={{
