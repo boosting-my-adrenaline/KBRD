@@ -32,6 +32,28 @@ export const NEWContainer: React.FC<IProps> = ({
 
   const { isDarkMode } = useDarkMode()
 
+  // return (
+  //   <div className={`font-BebasNeue pt-10 text-[6.5rem]`}>
+  //     <div
+  //       className={` flex h-[10rem] w-[10rem] flex-col items-center justify-center`}
+  //     >
+  //       {[
+  //         ['K', `rotate-[-45deg] translate-x-[-2px] translate-y-[2px]`],
+  //         ['B', `rotate-[45deg]`],
+  //         ['R', `rotate-[135deg] translate-x-[1px] translate-y-[-1px]`],
+  //         ['D', `rotate-[225deg]`],
+  //       ].map((el) => (
+  //         <div
+  //           className={`absolute flex h-[2px] w-[2px] ${el[1]} items-center justify-center `}
+  //         >
+  //           {' '}
+  //           <div className={`absolute translate-y-[-3.1rem]`}>{el[0]}</div>
+  //         </div>
+  //       ))}
+  //     </div>
+  //   </div>
+  // )
+
   return (
     <motion.div
       className={`min-h-100vh flex w-[100vw] justify-start overflow-hidden `}

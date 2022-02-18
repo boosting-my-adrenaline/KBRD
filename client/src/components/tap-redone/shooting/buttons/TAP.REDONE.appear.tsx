@@ -125,6 +125,9 @@ export const TAPREDONEappear: React.FC<IProps> = ({
                   : `${themeColor2.bg.t200} ${themeColor2.border.t300}`
                 : `border-transparent`
             }`}
+            style={{
+              borderTopLeftRadius: 0,
+            }}
             onMouseDown={() => setAppearType(AppearType.INTERVAL)}
           >
             {isEng ? `interval` : `интервал`}
