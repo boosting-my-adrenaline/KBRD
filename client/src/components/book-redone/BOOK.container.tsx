@@ -20,14 +20,10 @@ import { the1984 as letter5 } from './../../static/letters/the1984'
 import { thegreatgatsby as letter6 } from './../../static/letters/thegreatgatsby'
 import { tokillamockinbird as letter7 } from './../../static/letters/tokillamockinbird'
 import { lionwitch as letter8 } from './../../static/letters/lionwitch'
-import { PerspectiveController } from '../PerspectiveController'
 import useLocalStorage from '../../hooks/useLocalStorage'
-import useLanguage from '../../hooks/useLanguage'
 import { BOOKkeyboard } from './components/BOOK.keyboard'
 
-import R from '../../static/profiles/russia.png'
 import { motion } from 'framer-motion'
-import { useWindowSize } from '../../hooks/useDimensions'
 import useColor from '../../hooks/useColor'
 
 interface IProps {

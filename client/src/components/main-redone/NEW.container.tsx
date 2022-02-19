@@ -10,6 +10,7 @@ import { motion } from 'framer-motion'
 import useColor from '../../hooks/useColor'
 import useElementSize from '../../hooks/useElementSize'
 import useDarkMode from '../../hooks/useDarkMode'
+import { RUSBOOKContainer } from '../book-redone-rus/RUS.BOOK.container'
 
 interface IProps {
   mainState: MainState
@@ -72,7 +73,11 @@ export const NEWContainer: React.FC<IProps> = ({
             isDarkMode ? themeColor1.bg.t90030 : themeColor1.bg.t50
           } transition-colors duration-200 ease-in-out`}
         >
-          <BOOKContainer handleLanguage={handleLanguage} />
+          {trainingLanguage ? (
+            <BOOKContainer handleLanguage={handleLanguage} />
+          ) : (
+            <RUSBOOKContainer handleLanguage={handleLanguage} />
+          )}
         </div>
         <div
           className={`flex min-h-[100vh] w-[100vw] items-start justify-center  ${

@@ -63,11 +63,11 @@ export const MAINBOOKinside: React.FC<IProps> = ({
     }
   }, [show])
 
-  const [eng, setEng] = useLocalStorage(`B-language`, true)
+  const [eng, setEng] = useLocalStorage(`B-language`, false)
 
-  useEffect(() => {
-    setEng(true)
-  }, [])
+  // useEffect(() => {
+  //   setEng(true)
+  // }, [])
   const handleLanguage = () => setEng((prev) => !prev)
 
   return (
@@ -92,7 +92,7 @@ export const MAINBOOKinside: React.FC<IProps> = ({
         {eng ? (
           <BOOKContainer handleLanguage={handleLanguage} />
         ) : (
-          <RUSBOOKContainer demo={demo} />
+          <RUSBOOKContainer handleLanguage={handleLanguage} />
         )}
         <div
           className={`h-f w-f flex-grow `}
