@@ -207,13 +207,13 @@ export const BOOKstatsAccuracyWidget: React.FC<IProps> = ({
                           isDarkMode ? `text-gray-200` : `text-gray-900`
                         }`}
                         style={{
-                          borderBottom: isDarkMode
+                          borderTop: isDarkMode
                             ? '30px solid rgb(153 27 27)'
                             : '30px solid #fca5a5',
                           borderLeft: '30px solid transparent',
                         }}
                       >
-                        <div className={`translate-y-2px`}>
+                        <div className={`translate-y-[-28px]`}>
                           {isEng
                             ? ` last 245 characters`
                             : `последние 245 симв.`}

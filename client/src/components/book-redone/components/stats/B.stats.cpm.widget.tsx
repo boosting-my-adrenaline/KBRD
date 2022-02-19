@@ -167,7 +167,7 @@ export const BOOKstatsCPMWidget: React.FC<IProps> = ({ CPM, avgCPM }) => {
                           isDarkMode ? `text-gray-200` : `text-gray-900`
                         }`}
                         style={{
-                          borderBottom: isDarkMode
+                          borderTop: isDarkMode
                             ? '30px solid rgb(153 27 27)'
                             : '30px solid #fca5a5',
                           borderLeft: '30px solid transparent',
@@ -175,7 +175,7 @@ export const BOOKstatsCPMWidget: React.FC<IProps> = ({ CPM, avgCPM }) => {
                       >
                         <div
                           style={{
-                            transform: 'translateY(2px) translateX(16px)',
+                            transform: 'translateY(-28px) translateX(16px)',
                           }}
                         >
                           {isEng ? `last 40 chars` : `последние 40 симв.`}{' '}
