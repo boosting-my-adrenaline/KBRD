@@ -347,7 +347,7 @@ export const RUSBOOKContainer: React.FC<IProps> = ({ handleLanguage }) => {
           className={`py px translate -x-[50px] my-3 mt-10 h-[1px] w-[1000px] ${themeColor1.bg.t200}`}
         />
         <BOOKkeyboard
-          isLocalEng={true}
+          isLocalEng={false}
           show={show}
           handleShow={handleShow}
           handleLanguage={handleLanguage}
